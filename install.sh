@@ -1,3 +1,9 @@
+passwordgen() {
+    l=$1
+    [ "$l" == "" ] && l=16
+    tr -dc A-Za-z0-9 < /dev/urandom | head -c ${l} | xargs
+}
+
 export DEBIAN_FRONTEND="noninteractive"
 
 sudo apt-get update -y
@@ -24,9 +30,9 @@ chown -R www-data:www-data /var/www/html
 chmod -R 755 /var/www/html
 
 DATABASE_PASS=root
-mysql -u root password "$DATABASE_PASS"
-mysql -u root -p"$DATABASE_PASS" -e "UPDATE mysql.user SET Password=PASSWORD('$DATABASE_PASS') WHERE User='root'"
-mysql -u root -p"K11Janina!" -e "UPDATE mysql.user SET Password=PASSWORD('K11Janina!') WHERE User='root'"
+RAND_PASS=$(passwordgen);
+
+mysql -u root -p"$DATABASE_PASS" -e "UPDATE mysql.user SET authentication_string=PASSWORD('$RAND_PASS') WHERE User='root'"
 mysql -u root -p"$DATABASE_PASS" -e "DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1')"
 mysql -u root -p"$DATABASE_PASS" -e "DELETE FROM mysql.user WHERE User=''"
 mysql -u root -p"$DATABASE_PASS" -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\_%'"
