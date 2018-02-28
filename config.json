@@ -4,5 +4,11 @@
         "username": "root",
         "password": "ROOT_PASSWORD_HERE",
         "confrom": "localhost"
+    },
+    "phpmyadmin": {
+        "htaccess": {
+            "username": "PHPMYADMIN_HTACCESS_USERNAME",
+            "password": "PHPMYADMIN_HTACCESS_PASSWORD"
+        }
     }
 }
