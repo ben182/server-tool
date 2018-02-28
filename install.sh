@@ -57,6 +57,7 @@ phpenmod mbstring
 service apache2 reload
 
 cp phpmyadmin.conf /etc/apache2/conf-available/phpmyadmin.conf
+cp dir.conf /etc/apache2/mods-enabled/dir.conf
 service apache2 reload
 
 cp .htaccess /usr/share/phpmyadmin/.htaccess
@@ -64,3 +65,7 @@ htpasswd -c -b /etc/phpmyadmin/.htpasswd $RAND_PHPMYADMIN_HTACCESS_USER $RAND_PH
 
 sudo sed -i "s|PHPMYADMIN_HTACCESS_USERNAME|$RAND_PHPMYADMIN_HTACCESS_USER|" config.json
 sudo sed -i "s|PHPMYADMIN_HTACCESS_PASSWORD|$RAND_PHPMYADMIN_HTACCESS_PASS|" config.json
+
+add-apt-repository -y ppa:certbot/certbot
+apt-get -y update
+apt-get install -y python-certbot-apache
