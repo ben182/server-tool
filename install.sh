@@ -54,10 +54,10 @@ apt-get install -y phpmyadmin
 
 phpenmod mcrypt
 phpenmod mbstring
-systemctl restart apache2
+service apache2 reload
 
-cp phpmyadmin.conf /etc/apache2/conf-available/phpmyadmin.conf
-systemctl restart apache2
+#cp phpmyadmin.conf /etc/apache2/conf-available/phpmyadmin.conf
+service apache2 reload
 
 cp .htaccess /usr/share/phpmyadmin/.htaccess
 htpasswd -c -b /etc/phpmyadmin/.htpasswd $RAND_PHPMYADMIN_HTACCESS_USER $RAND_PHPMYADMIN_HTACCESS_PASS
