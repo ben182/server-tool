@@ -37,3 +37,5 @@ mysql -u root -p"$DATABASE_PASS" -e "DELETE FROM mysql.user WHERE User='root' AN
 mysql -u root -p"$DATABASE_PASS" -e "DELETE FROM mysql.user WHERE User=''"
 mysql -u root -p"$DATABASE_PASS" -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\_%'"
 mysql -u root -p"$DATABASE_PASS" -e "FLUSH PRIVILEGES"
+
+sudo sed -i "s|ROOT_PASSWORD_HERE|$RAND_PASS|" config.json;

@@ -1,0 +1,8 @@
+{
+    "mysql": {
+        "host": "localhost",
+        "username": "root",
+        "password": "ROOT_PASSWORD_HERE",
+        "confrom": "localhost"
+    }
+}
