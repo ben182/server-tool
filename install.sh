@@ -56,7 +56,7 @@ phpenmod mcrypt
 phpenmod mbstring
 service apache2 reload
 
-#cp phpmyadmin.conf /etc/apache2/conf-available/phpmyadmin.conf
+cp phpmyadmin.conf /etc/apache2/conf-available/phpmyadmin.conf
 service apache2 reload
 
 cp .htaccess /usr/share/phpmyadmin/.htaccess
