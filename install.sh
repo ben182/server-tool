@@ -8,7 +8,9 @@ apt install aptitude -y
 sudo apt-get install apache2 -y
 sudo ufw allow in "Apache Full"
 
-sudo apt-get install mysql-server -y
+sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password root"
+sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password root"
+sudo apt-get -y install mysql-server
 
 apt-get install python-software-properties -y
 add-apt-repository ppa:ondrej/php -y
@@ -22,8 +24,9 @@ chown -R www-data:www-data /var/www/html
 chmod -R 755 /var/www/html
 
 DATABASE_PASS=K11Janina!
-mysqladmin -u root password "$DATABASE_PASS"
+mysql -u root password "$DATABASE_PASS"
 mysql -u root -p"$DATABASE_PASS" -e "UPDATE mysql.user SET Password=PASSWORD('$DATABASE_PASS') WHERE User='root'"
+mysql -u root -p"K11Janina!" -e "UPDATE mysql.user SET Password=PASSWORD('K11Janina!') WHERE User='root'"
 mysql -u root -p"$DATABASE_PASS" -e "DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1')"
 mysql -u root -p"$DATABASE_PASS" -e "DELETE FROM mysql.user WHERE User=''"
 mysql -u root -p"$DATABASE_PASS" -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\_%'"
