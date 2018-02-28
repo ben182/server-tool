@@ -23,7 +23,7 @@ mv composer.phar /usr/bin/composer
 chown -R www-data:www-data /var/www/html
 chmod -R 755 /var/www/html
 
-DATABASE_PASS=K11Janina!
+DATABASE_PASS=root
 mysql -u root password "$DATABASE_PASS"
 mysql -u root -p"$DATABASE_PASS" -e "UPDATE mysql.user SET Password=PASSWORD('$DATABASE_PASS') WHERE User='root'"
 mysql -u root -p"K11Janina!" -e "UPDATE mysql.user SET Password=PASSWORD('K11Janina!') WHERE User='root'"
