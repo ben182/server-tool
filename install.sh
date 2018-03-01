@@ -63,6 +63,7 @@ service apache2 reload
 
 cp apache/phpmyadmin.conf /etc/apache2/conf-available/phpmyadmin.conf
 cp apache/dir.conf /etc/apache2/mods-enabled/dir.conf
+echo "ServerName $PUBLIC_IP" >> /etc/apache2/apache2.conf
 service apache2 reload
 
 cp phpmyadmin/.htaccess /usr/share/phpmyadmin/.htaccess
