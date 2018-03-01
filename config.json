@@ -10,5 +10,8 @@
             "username": "PHPMYADMIN_HTACCESS_USERNAME",
             "password": "PHPMYADMIN_HTACCESS_PASSWORD"
         }
+    },
+    "github": {
+        "ssh": "GITHUB_SSH"
     }
 }

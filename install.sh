@@ -75,3 +75,10 @@ sudo sed -i "s|PHPMYADMIN_HTACCESS_PASSWORD|$PHPMYADMIN_HTACCESS_PASS|" config.j
 add-apt-repository -y ppa:certbot/certbot
 apt-get -y update
 apt-get install -y python-certbot-apache
+
+# GITHUB SSH KEY
+sudo mkdir -m 0700  /var/www/.ssh
+sudo chown -R www-data:www-data /var/www/.ssh
+sudo -u www-data ssh-keygen -f "/var/www/.ssh/id_rsa" -t rsa -b 4096 -N ''
+SSH_KEY=$(cat /var/www/.ssh/id_rsa.pub)
+sudo sed -i "s|GITHUB_SSH|$SSH_KEY|" config.json
