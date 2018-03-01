@@ -61,8 +61,14 @@ phpenmod mcrypt
 phpenmod mbstring
 service apache2 reload
 
+# APACHE CONF
 cp apache/phpmyadmin.conf /etc/apache2/conf-available/phpmyadmin.conf
 cp apache/dir.conf /etc/apache2/mods-enabled/dir.conf
+
+cp apache/ip.conf /etc/apache2/sites-enabled/ip.conf
+sudo sed -i "s|IP_HERE|$PUBLIC_IP|" /etc/apache2/sites-enabled/ip.conf
+cp -a ip /var/www/ip
+
 echo "ServerName $PUBLIC_IP" >> /etc/apache2/apache2.conf
 service apache2 reload
 
