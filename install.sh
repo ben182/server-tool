@@ -1,3 +1,5 @@
+#!/bin/bash
+
 passwordgen() {
     l=$1
     [ "$l" == "" ] && l=16
@@ -71,6 +73,7 @@ a2ensite ip.conf
 cp -a ip /var/www/ip
 
 echo "ServerName localhost" >> /etc/apache2/apache2.conf
+sudo sed -i "s|Options Indexes FollowSymLinks|Options -Indexes +FollowSymLinks|" /etc/apache2/apache2.conf
 service apache2 reload
 
 cp phpmyadmin/.htaccess /usr/share/phpmyadmin/.htaccess
@@ -92,7 +95,7 @@ SSH_KEY=$(cat /var/www/.ssh/id_rsa.pub)
 sudo sed -i "s|GITHUB_SSH|$SSH_KEY|" config.json
 
 # NODE
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
+curl -o- -sS https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
