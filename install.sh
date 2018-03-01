@@ -11,7 +11,7 @@ DATABASE_TEMP_PASS=root
 NEW_DB_PASS=$(passwordgen);
 PHPMYADMIN_HTACCESS_USER=$(passwordgen);
 PHPMYADMIN_HTACCESS_PASS=$(passwordgen);
-PUBLIC_IP=$(curl ipinfo.io/ip)
+PUBLIC_IP=$(curl -sS ipinfo.io/ip)
 
 # UPDATE
 sudo apt-get update -y
