@@ -65,7 +65,7 @@ service apache2 reload
 cp apache/phpmyadmin.conf /etc/apache2/conf-available/phpmyadmin.conf
 cp apache/dir.conf /etc/apache2/mods-enabled/dir.conf
 
-cp apache/ip.conf /etc/apache2/sites-enabled/ip.conf
+cp apache/ip.conf /etc/apache2/sites-available/ip.conf
 sudo sed -i "s|IP_HERE|$PUBLIC_IP|" /etc/apache2/sites-available/ip.conf
 a2ensite ip.conf
 cp -a ip /var/www/ip
