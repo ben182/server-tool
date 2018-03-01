@@ -1,5 +1,7 @@
 #!/bin/bash
 
+ABSOLUTE_PATH=/etc/server-tool/
+
 #echo "Name?"
 #read NAME
 
@@ -12,7 +14,7 @@
 echo "Domain?"
 read DOMAIN
 
-cp apache/vhost.conf /etc/apache2/sites-available/$DOMAIN.conf
+cp ${ABSOLUTE_PATH}apache/vhost.conf /etc/apache2/sites-available/$DOMAIN.conf
 sudo sed -i "s|SERVER_NAME|$DOMAIN|" /etc/apache2/sites-available/$DOMAIN.conf
 sudo sed -i "s|DOCUMENT_ROOT|$DOMAIN|" /etc/apache2/sites-available/$DOMAIN.conf
 sudo sed -i "s|NAME|$DOMAIN|" /etc/apache2/sites-available/$DOMAIN.conf
