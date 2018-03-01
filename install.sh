@@ -14,6 +14,7 @@ NEW_DB_PASS=$(passwordgen);
 PHPMYADMIN_HTACCESS_USER=$(passwordgen);
 PHPMYADMIN_HTACCESS_PASS=$(passwordgen);
 PUBLIC_IP=$(curl -sS ipinfo.io/ip)
+ABSOLUTE_PATH=/etc/server-tool/
 
 # UPDATE
 sudo apt-get update -y
@@ -34,7 +35,7 @@ mysql -u root -p"$DATABASE_TEMP_PASS" -e "DELETE FROM mysql.user WHERE User=''"
 mysql -u root -p"$DATABASE_TEMP_PASS" -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\_%'"
 mysql -u root -p"$DATABASE_TEMP_PASS" -e "FLUSH PRIVILEGES"
 
-sudo sed -i "s|ROOT_PASSWORD_HERE|$NEW_DB_PASS|" config.json
+sudo sed -i "s|ROOT_PASSWORD_HERE|$NEW_DB_PASS|" ${ABSOLUTE_PATH}config.json
 
 # PHP
 apt-get install python-software-properties -y
@@ -64,23 +65,23 @@ phpenmod mbstring
 service apache2 reload
 
 # APACHE CONF
-cp apache/phpmyadmin.conf /etc/apache2/conf-available/phpmyadmin.conf
-cp apache/dir.conf /etc/apache2/mods-enabled/dir.conf
+cp ${ABSOLUTE_PATH}apache/phpmyadmin.conf /etc/apache2/conf-available/phpmyadmin.conf
+cp ${ABSOLUTE_PATH}apache/dir.conf /etc/apache2/mods-enabled/dir.conf
 
-cp apache/ip.conf /etc/apache2/sites-available/ip.conf
+cp ${ABSOLUTE_PATH}apache/ip.conf /etc/apache2/sites-available/ip.conf
 sudo sed -i "s|IP_HERE|$PUBLIC_IP|" /etc/apache2/sites-available/ip.conf
 a2ensite ip.conf
-cp -a ip /var/www/ip
+cp -a ${ABSOLUTE_PATH}ip /var/www/ip
 
 echo "ServerName localhost" >> /etc/apache2/apache2.conf
 sudo sed -i "s|Options Indexes FollowSymLinks|Options -Indexes +FollowSymLinks|" /etc/apache2/apache2.conf
 service apache2 reload
 
-cp phpmyadmin/.htaccess /usr/share/phpmyadmin/.htaccess
+cp ${ABSOLUTE_PATH}phpmyadmin/.htaccess /usr/share/phpmyadmin/.htaccess
 htpasswd -c -b /etc/phpmyadmin/.htpasswd $PHPMYADMIN_HTACCESS_USER $PHPMYADMIN_HTACCESS_PASS
 
-sudo sed -i "s|PHPMYADMIN_HTACCESS_USERNAME|$PHPMYADMIN_HTACCESS_USER|" config.json
-sudo sed -i "s|PHPMYADMIN_HTACCESS_PASSWORD|$PHPMYADMIN_HTACCESS_PASS|" config.json
+sudo sed -i "s|PHPMYADMIN_HTACCESS_USERNAME|$PHPMYADMIN_HTACCESS_USER|" ${ABSOLUTE_PATH}config.json
+sudo sed -i "s|PHPMYADMIN_HTACCESS_PASSWORD|$PHPMYADMIN_HTACCESS_PASS|" ${ABSOLUTE_PATH}config.json
 
 # CERTBOT
 add-apt-repository -y ppa:certbot/certbot
@@ -92,7 +93,7 @@ sudo mkdir -m 0700  /var/www/.ssh
 sudo chown -R www-data:www-data /var/www/.ssh
 sudo -u www-data ssh-keygen -f "/var/www/.ssh/id_rsa" -t rsa -b 4096 -N ''
 SSH_KEY=$(cat /var/www/.ssh/id_rsa.pub)
-sudo sed -i "s|GITHUB_SSH|$SSH_KEY|" config.json
+sudo sed -i "s|GITHUB_SSH|$SSH_KEY|" ${ABSOLUTE_PATH}config.json
 
 # NODE
 curl -o- -sS https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
