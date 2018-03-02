@@ -77,6 +77,7 @@ git clone https://github.com/ben182/git-auto-deploy.git /var/www/ip/git-auto-dep
 cp /var/www/ip/git-auto-deploy/.env.example /var/www/ip/git-auto-deploy/.env
 sudo sed -i "s|localhost|$PUBLIC_IP|" /var/www/ip/git-auto-deploy/.env
 ln -s /var/www/ip/git-auto-deploy/public /var/www/ip/html/git-auto-deploy
+composer install -d=/var/www/ip/git-auto-deploy
 
 echo "ServerName localhost" >> /etc/apache2/apache2.conf
 sudo sed -i "s|Options Indexes FollowSymLinks|Options -Indexes +FollowSymLinks|" /etc/apache2/apache2.conf
