@@ -74,7 +74,7 @@ a2enmod rewrite
 cp ${ABSOLUTE_PATH}apache/ip.conf /etc/apache2/sites-available/ip.conf
 sudo sed -i "s|IP_HERE|$PUBLIC_IP|" /etc/apache2/sites-available/ip.conf
 a2ensite ip.conf
-mkdir /var/www/ip/html
+mkdir -p /var/www/ip/html
 cp -a ${ABSOLUTE_PATH}ip /var/www/ip/html
 git clone https://github.com/ben182/git-auto-deploy.git /var/www/ip/git-auto-deploy
 cp /var/www/ip/git-auto-deploy/.env.example /var/www/ip/git-auto-deploy/.env
@@ -82,6 +82,8 @@ sudo sed -i "s|localhost|${PUBLIC_IP}/git-auto-deploy|" /var/www/ip/git-auto-dep
 php /var/www/ip/git-auto-deploy/artisan key:generate
 ln -s /var/www/ip/git-auto-deploy/public /var/www/ip/html/git-auto-deploy
 composer install -d=/var/www/ip/git-auto-deploy
+ln -s /var/www/ip/git-auto-deploy/artisan /usr/bin/git-auto-deploy
+chmod +x /usr/bin/git-auto-deploy
 
 echo "ServerName localhost" >> /etc/apache2/apache2.conf
 sudo sed -i "s|Options Indexes FollowSymLinks|Options -Indexes +FollowSymLinks|" /etc/apache2/apache2.conf
