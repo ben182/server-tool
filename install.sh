@@ -48,8 +48,9 @@ curl -sS https://getcomposer.org/installer | php
 mv composer.phar /usr/bin/composer
 
 # APACHE PERMISSIONS
-chown -R www-data:www-data /var/www/html
-chmod -R 755 /var/www/html
+chown -R www-data:www-data /var/www
+chmod -R 755 /var/www
+chmod g+s /var/www
 
 # PHPMYADMIN
 debconf-set-selections <<< 'phpmyadmin phpmyadmin/dbconfig-install boolean true'
@@ -71,7 +72,11 @@ cp ${ABSOLUTE_PATH}apache/dir.conf /etc/apache2/mods-enabled/dir.conf
 cp ${ABSOLUTE_PATH}apache/ip.conf /etc/apache2/sites-available/ip.conf
 sudo sed -i "s|IP_HERE|$PUBLIC_IP|" /etc/apache2/sites-available/ip.conf
 a2ensite ip.conf
-cp -a ${ABSOLUTE_PATH}ip /var/www/ip
+cp -a ${ABSOLUTE_PATH}ip /var/www/ip/html
+git clone https://github.com/ben182/git-auto-deploy.git /var/www/ip/git-auto-deploy
+cp /var/www/ip/git-auto-deploy/.env.example /var/www/ip/git-auto-deploy/.env
+sudo sed -i "s|localhost|$PUBLIC_IP|" /var/www/ip/git-auto-deploy/.env
+ln -s /var/www/ip/git-auto-deploy/public /var/www/ip/html/git-auto-deploy
 
 echo "ServerName localhost" >> /etc/apache2/apache2.conf
 sudo sed -i "s|Options Indexes FollowSymLinks|Options -Indexes +FollowSymLinks|" /etc/apache2/apache2.conf
@@ -103,3 +108,8 @@ export NVM_DIR="$HOME/.nvm"
 
 nvm install node
 nvm use node
+
+# APACHE PERMISSIONS
+chown -R www-data:www-data /var/www
+chmod -R 755 /var/www
+chmod g+s /var/www
