@@ -69,13 +69,17 @@ service apache2 reload
 cp ${ABSOLUTE_PATH}apache/phpmyadmin.conf /etc/apache2/conf-available/phpmyadmin.conf
 cp ${ABSOLUTE_PATH}apache/dir.conf /etc/apache2/mods-enabled/dir.conf
 
+a2enmod rewrite
+
 cp ${ABSOLUTE_PATH}apache/ip.conf /etc/apache2/sites-available/ip.conf
 sudo sed -i "s|IP_HERE|$PUBLIC_IP|" /etc/apache2/sites-available/ip.conf
 a2ensite ip.conf
+mkdir /var/www/ip/html
 cp -a ${ABSOLUTE_PATH}ip /var/www/ip/html
 git clone https://github.com/ben182/git-auto-deploy.git /var/www/ip/git-auto-deploy
 cp /var/www/ip/git-auto-deploy/.env.example /var/www/ip/git-auto-deploy/.env
-sudo sed -i "s|localhost|$PUBLIC_IP|" /var/www/ip/git-auto-deploy/.env
+sudo sed -i "s|localhost|${PUBLIC_IP}/git-auto-deploy|" /var/www/ip/git-auto-deploy/.env
+php /var/www/ip/git-auto-deploy/artisan key:generate
 ln -s /var/www/ip/git-auto-deploy/public /var/www/ip/html/git-auto-deploy
 composer install -d=/var/www/ip/git-auto-deploy
 
