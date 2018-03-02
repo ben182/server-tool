@@ -75,7 +75,7 @@ cp ${ABSOLUTE_PATH}apache/ip.conf /etc/apache2/sites-available/ip.conf
 sudo sed -i "s|IP_HERE|$PUBLIC_IP|" /etc/apache2/sites-available/ip.conf
 a2ensite ip.conf
 mkdir -p /var/www/ip/html
-cp -a ${ABSOLUTE_PATH}ip /var/www/ip/html
+cp ${ABSOLUTE_PATH}ip/. /var/www/ip/html -r
 git clone https://github.com/ben182/git-auto-deploy.git /var/www/ip/git-auto-deploy
 cp /var/www/ip/git-auto-deploy/.env.example /var/www/ip/git-auto-deploy/.env
 sudo sed -i "s|localhost|${PUBLIC_IP}/git-auto-deploy|" /var/www/ip/git-auto-deploy/.env

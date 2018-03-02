@@ -21,6 +21,6 @@ sudo sed -i "s|NAME|$DOMAIN|" /etc/apache2/sites-available/$DOMAIN.conf
 a2ensite $DOMAIN.conf
 service apache2 reload
 
-mkdir /var/www/$DOMAIN
+mkdir -p /var/www/$DOMAIN/html
 
 
