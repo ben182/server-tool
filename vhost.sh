@@ -51,3 +51,20 @@ select yn in "Yes" "No"; do
     esac
 done
 
+echo "htaccess?"
+select yn in "Non SSL to SSL and www to non www" "www to non www" "Nothing"; do
+    case $yn in
+        "Non SSL to SSL and www to non www" )
+
+        cp ${ABSOLUTE_PATH}apache/nonSSL_to_SSL_and_www_to_nonwww.htaccess /var/www/$DOMAIN/html/.htaccess
+        break;;
+
+        "www to non www" )
+        cp ${ABSOLUTE_PATH}apache/www_to_nonwww.htaccess /var/www/$DOMAIN/html/.htaccess
+        break;;
+
+        "Nothing" )
+        break;;
+    esac
+done
+
