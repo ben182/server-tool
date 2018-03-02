@@ -23,4 +23,17 @@ service apache2 reload
 
 mkdir -p /var/www/$DOMAIN/html
 
+echo "SSL?"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes )
+
+        echo "Email?"
+        read EMAIL
+        certbot --non-interactive --agree-tos --email $EMAIL --apache --domains $DOMAIN
+
+        break;;
+        No ) break;;
+    esac
+done
 
