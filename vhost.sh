@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ABSOLUTE_PATH=/etc/server-tool/
+source /etc/server-tool/helper.sh
 
 #echo "Name?"
 #read NAME
@@ -33,7 +33,6 @@ sudo sed -i "s|SERVER_NAME|$DOMAIN|" /etc/apache2/sites-available/$DOMAIN.conf
 sudo sed -i "s|NAME|$DOMAIN|" /etc/apache2/sites-available/$DOMAIN.conf
 
 a2ensite $DOMAIN.conf
-service apache2 reload
 
 mkdir -p /var/www/$DOMAIN/html
 
@@ -68,3 +67,5 @@ select yn in "Non SSL to SSL and www to non www" "www to non www" "Nothing"; do
     esac
 done
 
+apache_permissions
+service apache2 reload

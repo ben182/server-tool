@@ -1,10 +1,6 @@
 #!/bin/bash
 
-passwordgen() {
-    l=$1
-    [ "$l" == "" ] && l=16
-    tr -dc A-Za-z0-9 < /dev/urandom | head -c ${l} | xargs
-}
+source /etc/server-tool/helper.sh
 
 export DEBIAN_FRONTEND="noninteractive"
 
@@ -14,7 +10,6 @@ NEW_DB_PASS=$(passwordgen);
 PHPMYADMIN_HTACCESS_USER=$(passwordgen);
 PHPMYADMIN_HTACCESS_PASS=$(passwordgen);
 PUBLIC_IP=$(curl -sS ipinfo.io/ip)
-ABSOLUTE_PATH=/etc/server-tool/
 
 # UPDATE
 sudo apt-get update -y
@@ -46,11 +41,6 @@ apt install -y php7.1 php7.1-xml php7.1-mbstring php7.1-mysql php7.1-json php7.1
 # COMPOSER
 curl -sS https://getcomposer.org/installer | php
 mv composer.phar /usr/bin/composer
-
-# APACHE PERMISSIONS
-chown -R www-data:www-data /var/www
-chmod -R 755 /var/www
-chmod g+s /var/www
 
 # PHPMYADMIN
 debconf-set-selections <<< 'phpmyadmin phpmyadmin/dbconfig-install boolean true'
@@ -87,7 +77,6 @@ chmod +x /usr/bin/git-auto-deploy
 
 echo "ServerName localhost" >> /etc/apache2/apache2.conf
 sudo sed -i "s|Options Indexes FollowSymLinks|Options -Indexes +FollowSymLinks|" /etc/apache2/apache2.conf
-service apache2 reload
 
 cp ${ABSOLUTE_PATH}phpmyadmin/.htaccess /usr/share/phpmyadmin/.htaccess
 htpasswd -c -b /etc/phpmyadmin/.htpasswd $PHPMYADMIN_HTACCESS_USER $PHPMYADMIN_HTACCESS_PASS
@@ -101,11 +90,16 @@ apt-get -y update
 apt-get install -y python-certbot-apache
 
 # GITHUB SSH KEY
-sudo mkdir -m 0700  /var/www/.ssh
+sudo mkdir -m 0700 /var/www/.ssh
 sudo chown -R www-data:www-data /var/www/.ssh
-sudo -u www-data ssh-keygen -f "/var/www/.ssh/id_rsa" -t rsa -b 4096 -N ''
+sudo -Hu www-data ssh-keygen -f "/var/www/.ssh/id_rsa" -t rsa -b 4096 -N ''
+ssh-keyscan github.com >> /var/www/.ssh/known_hosts
+
 SSH_KEY=$(cat /var/www/.ssh/id_rsa.pub)
 sudo sed -i "s|GITHUB_SSH|$SSH_KEY|" ${ABSOLUTE_PATH}config.json
+
+cp /var/www/.ssh/id_rsa /root/.ssh/id_rsa
+cp /var/www/.ssh/id_rsa.pub /root/.ssh/id_rsa.pub
 
 # NODE
 curl -o- -sS https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
@@ -117,6 +111,5 @@ nvm install node
 nvm use node
 
 # APACHE PERMISSIONS
-chown -R www-data:www-data /var/www
-chmod -R 755 /var/www
-chmod g+s /var/www
+apache_permissions
+service apache2 reload
