@@ -39,8 +39,11 @@ Artisan::command('gad:list', function () {
     $aRoutes = RouteController::getAll();
 
     foreach ($aRoutes as $sKey => $aRoute) {
-        $this->line($sKey . ' : ');
+        $this->line($sKey . ':');
 
+        $this->line(' - Url: ' . route('api.gad.deploy', [
+            'id' => $aRoute['id']
+        ]));
         foreach ($aRoute as $sKey => $sItem) {
             $this->line(' - ' . $sKey . ': ' . $sItem);
         }

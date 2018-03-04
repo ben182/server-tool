@@ -74,6 +74,8 @@ ln -s ${ABSOLUTE_PATH}public /var/www/ip/html/server-tools
 composer install -d=$ABSOLUTE_PATH
 ln -s ${ABSOLUTE_PATH}artisan /usr/bin/server-tools
 chmod +x /usr/bin/server-tools
+chown -R www-data:www-data /etc/server-tool
+chmod -R 755 /etc/server-tool
 
 echo "ServerName localhost" >> /etc/apache2/apache2.conf
 sudo sed -i "s|Options Indexes FollowSymLinks|Options -Indexes +FollowSymLinks|" /etc/apache2/apache2.conf
