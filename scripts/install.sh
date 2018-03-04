@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /etc/server-tool/helper.sh
+source /etc/server-tool/scripts/helper.sh
 
 export DEBIAN_FRONTEND="noninteractive"
 
