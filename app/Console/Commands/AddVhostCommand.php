@@ -37,6 +37,12 @@ class AddVhostCommand extends Command
      */
     public function handle()
     {
+        $option = $this->menu('Pizza menu', [
+            'Freshly baked muffins',
+            'Freshly baked croissants',
+            'Turnovers, crumb cake, cinnamon buns, scones',
+        ])->open();
+        return;
         $sDomain = $this->ask('Domain?');
 
         $this->task('Creating vHost', function () use ($sDomain) {
