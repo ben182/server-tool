@@ -58,6 +58,8 @@ class AddVhostCommand extends Command
 
         $this->task('Configuring vHost', function () use ($sDomain, $bWwwAlias) {
 
+            echo PHP_EOL;
+
             try {
 
                 if (!$bWwwAlias) {
@@ -67,7 +69,7 @@ class AddVhostCommand extends Command
                 replace_string_in_file("/etc/apache2/sites-available/$sDomain.conf", 'SERVER_NAME', $sDomain);
                 replace_string_in_file("/etc/apache2/sites-available/$sDomain.conf", 'NAME', $sDomain);
 
-                echo shell_exec("a2ensite $sDomain.conf 2>&1");
+                echo shell_exec("a2ensite $sDomain.conf -q 2>&1");
 
                 if (!file_exists("/var/www/$sDomain/html")) {
                     mkdir("/var/www/$sDomain/html", 755, TRUE);
@@ -86,9 +88,11 @@ class AddVhostCommand extends Command
 
             $this->task('Setting up SSL', function () use ($sDomain, $sEmail) {
 
+                echo PHP_EOL;
+
                 try {
 
-                    echo shell_exec("certbot --non-interactive --agree-tos --email $sEmail --apache --domains $sDomain 2>&1");
+                    echo shell_exec("certbot --non-interactive --agree-tos --email $sEmail --apache --domains $sDomain --quiet 2>&1");
 
                 } catch(\Exception $e) {
                     return FALSE;
