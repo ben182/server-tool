@@ -50,10 +50,10 @@ class DeleteVhostCommand extends Command
             try {
 
                 shell_exec("a2dissite $sDomain.conf -q 2>&1");
-                shell_exec("a2dissite $sDomaine-le-ssl.conf -q 2>&1");
+                shell_exec("a2dissite $sDomain-le-ssl.conf -q 2>&1");
 
                 unlink("/etc/apache2/sites-available/$sDomain.conf");
-                unlink("/etc/apache2/sites-available/$sDomaine-le-ssl.conf");
+                unlink("/etc/apache2/sites-available/$sDomain-le-ssl.conf");
 
             } catch(\Exception $e) {
                 echo $e;
