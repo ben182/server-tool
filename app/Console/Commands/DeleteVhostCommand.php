@@ -38,12 +38,13 @@ class DeleteVhostCommand extends Command
     public function handle()
     {
         $sDomain = $this->ask('Domain?');
-        $bDeleteDir = $this->confirm('Delete folder in /var/www?', 0);
 
         if (!file_exists("/var/www/$sDomain")) {
             $this->error($sDomain . 'does not exist');
             return;
         }
+
+        $bDeleteDir = $this->confirm('Delete folder in /var/www?', 0);
 
         $this->task('Deleting vHost', function () use ($sDomain) {
 
@@ -80,6 +81,21 @@ class DeleteVhostCommand extends Command
                 return TRUE;
             });
         }
+
+        $this->task('Clean up & Finishing', function () {
+
+            try {
+
+                apache_permissions();
+                echo shell_exec('service apache2 reload 2>&1');
+
+            } catch(\Exception $e) {
+                echo $e;
+                return FALSE;
+            }
+
+            return TRUE;
+        });
 
     }
 }
