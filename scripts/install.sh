@@ -76,6 +76,8 @@ ln -s ${ABSOLUTE_PATH}artisan /usr/bin/server-tools
 chmod +x /usr/bin/server-tools
 chown -R www-data:www-data /etc/server-tool
 chmod -R 755 /etc/server-tool #todo auto hook pull
+cp ${TEMPLATES_PATH}git/post-merge-this ${ABSOLUTE_PATH}.git/hooks/post-merge
+chmod +x ${ABSOLUTE_PATH}.git/hooks/post-merge
 
 echo "ServerName localhost" >> /etc/apache2/apache2.conf
 sudo sed -i "s|Options Indexes FollowSymLinks|Options -Indexes +FollowSymLinks|" /etc/apache2/apache2.conf
