@@ -50,6 +50,6 @@ class ApplicationInstall extends Command
         $sGit = $this->ask('Which Github repository?');
         $sGitBranch = $this->ask('Which Branch?');
 
-        echo shell_exec("git clone $sGit /var/www/$sDomain -b $sGitBranch 2>&1");
+        echo shell_exec("git clone -b $sGitBranch --single-branch $sGit /var/www/$sDomain/ 2>&1");
     }
 }
