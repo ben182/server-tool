@@ -97,6 +97,7 @@ class AddVhostCommand extends Command
                     return FALSE;
                 }
 
+                $this->line('Check your SSL installation on https://www.ssllabs.com/ssltest/analyze.html?d=' . $sDomain);
                 return TRUE;
             });
         }
