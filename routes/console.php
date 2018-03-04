@@ -49,3 +49,12 @@ Artisan::command('gad:list', function () {
         }
     }
 });
+
+Artisan::command('vhost:add', function () {
+
+    $sDomain = $this->ask('Domain?');
+
+    copy(templates_path() . 'apache/vhost.conf', "/etc/apache2/sites-available/$sDomain.conf");
+
+    replace_string_in_file("/etc/apache2/sites-available/$sDomain.conf", 'DOCUMENT_ROOT', $sDomain);
+});
