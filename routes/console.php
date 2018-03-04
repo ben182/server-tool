@@ -67,9 +67,9 @@ Artisan::command('vhost:add', function () {
     replace_string_in_file("/etc/apache2/sites-available/$sDomain.conf", 'SERVER_NAME', $sDomain);
     replace_string_in_file("/etc/apache2/sites-available/$sDomain.conf", 'NAME', $sDomain);
 
-    echo shell_exec("a2ensite $DOMAIN.conf 2>&1");
+    echo shell_exec("a2ensite $sDomain.conf 2>&1");
 
-    mkdir("/var/www/$DOMAIN/html", 755, TRUE);
+    mkdir("/var/www/$sDomain/html", 755, TRUE);
 
     $bSsl = $this->confirm('SSL?', 1);
 
@@ -84,12 +84,12 @@ Artisan::command('vhost:add', function () {
     switch ($sHtaccess) {
         case 'Non SSL to SSL and www to non www':
 
-            copy(templates_path() . 'apache/nonSSL_to_SSL_and_www_to_nonwww.htaccess', "/var/www/$DOMAIN/html/.htaccess");
+            copy(templates_path() . 'apache/nonSSL_to_SSL_and_www_to_nonwww.htaccess', "/var/www/$sDomain/html/.htaccess");
             break;
 
         case 'www to non www':
 
-            copy(templates_path() . 'apache/www_to_nonwww.htaccess', "/var/www/$DOMAIN/html/.htaccess");
+            copy(templates_path() . 'apache/www_to_nonwww.htaccess', "/var/www/$sDomain/html/.htaccess");
             break;
 
         default:
