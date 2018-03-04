@@ -42,6 +42,7 @@ class AddVhostCommand extends Command
             'Freshly baked croissants',
             'Turnovers, crumb cake, cinnamon buns, scones',
         ])->open();
+        $this->info("You have chosen the option number #$option");
         return;
         $sDomain = $this->ask('Domain?');
 
