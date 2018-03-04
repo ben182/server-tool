@@ -30,7 +30,7 @@ mysql -u root -p"$DATABASE_TEMP_PASS" -e "DELETE FROM mysql.user WHERE User=''"
 mysql -u root -p"$DATABASE_TEMP_PASS" -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\_%'"
 mysql -u root -p"$DATABASE_TEMP_PASS" -e "FLUSH PRIVILEGES"
 
-sudo sed -i "s|ROOT_PASSWORD_HERE|$NEW_DB_PASS|" ${ABSOLUTE_PATH}config.json
+sudo sed -i "s|ROOT_PASSWORD_HERE|$NEW_DB_PASS|" $CONFIG_PATH
 
 # PHP
 apt-get install python-software-properties -y
@@ -56,33 +56,33 @@ phpenmod mbstring
 service apache2 reload
 
 # APACHE CONF
-cp ${ABSOLUTE_PATH}apache/phpmyadmin.conf /etc/apache2/conf-available/phpmyadmin.conf
-cp ${ABSOLUTE_PATH}apache/dir.conf /etc/apache2/mods-enabled/dir.conf
+cp ${TEMPLATES_PATH}apache/phpmyadmin.conf /etc/apache2/conf-available/phpmyadmin.conf
+cp ${TEMPLATES_PATH}apache/dir.conf /etc/apache2/mods-enabled/dir.conf
 
 a2enmod rewrite
 
-cp ${ABSOLUTE_PATH}apache/ip.conf /etc/apache2/sites-available/ip.conf
+cp ${TEMPLATES_PATH}apache/ip.conf /etc/apache2/sites-available/ip.conf
 sudo sed -i "s|IP_HERE|$PUBLIC_IP|" /etc/apache2/sites-available/ip.conf
 a2ensite ip.conf
 mkdir -p /var/www/ip/html
-cp ${ABSOLUTE_PATH}ip/. /var/www/ip/html -r
-git clone https://github.com/ben182/git-auto-deploy.git /var/www/ip/git-auto-deploy
-cp /var/www/ip/git-auto-deploy/.env.example /var/www/ip/git-auto-deploy/.env
-sudo sed -i "s|localhost|${PUBLIC_IP}/git-auto-deploy|" /var/www/ip/git-auto-deploy/.env
-php /var/www/ip/git-auto-deploy/artisan key:generate
-ln -s /var/www/ip/git-auto-deploy/public /var/www/ip/html/git-auto-deploy
-composer install -d=/var/www/ip/git-auto-deploy
-ln -s /var/www/ip/git-auto-deploy/artisan /usr/bin/git-auto-deploy
-chmod +x /usr/bin/git-auto-deploy
+cp ${TEMPLATES_PATH}ip/. /var/www/ip/html -r
+#git clone https://github.com/ben182/git-auto-deploy.git /var/www/ip/git-auto-deploy
+cp ${ABSOLUTE_PATH}.env.example ${ABSOLUTE_PATH}.env
+sudo sed -i "s|localhost|${PUBLIC_IP}/server-tools|" ${ABSOLUTE_PATH}.env
+php ${ABSOLUTE_PATH}artisan key:generate
+ln -s ${ABSOLUTE_PATH}public /var/www/ip/html/server-tools
+composer install -d=$ABSOLUTE_PATH
+ln -s ${ABSOLUTE_PATH}artisan /usr/bin/server-tools
+chmod +x /usr/bin/server-tools
 
 echo "ServerName localhost" >> /etc/apache2/apache2.conf
 sudo sed -i "s|Options Indexes FollowSymLinks|Options -Indexes +FollowSymLinks|" /etc/apache2/apache2.conf
 
-cp ${ABSOLUTE_PATH}phpmyadmin/.htaccess /usr/share/phpmyadmin/.htaccess
+cp ${TEMPLATES_PATH}phpmyadmin/.htaccess /usr/share/phpmyadmin/.htaccess
 htpasswd -c -b /etc/phpmyadmin/.htpasswd $PHPMYADMIN_HTACCESS_USER $PHPMYADMIN_HTACCESS_PASS
 
-sudo sed -i "s|PHPMYADMIN_HTACCESS_USERNAME|$PHPMYADMIN_HTACCESS_USER|" ${ABSOLUTE_PATH}config.json
-sudo sed -i "s|PHPMYADMIN_HTACCESS_PASSWORD|$PHPMYADMIN_HTACCESS_PASS|" ${ABSOLUTE_PATH}config.json
+sudo sed -i "s|PHPMYADMIN_HTACCESS_USERNAME|$PHPMYADMIN_HTACCESS_USER|" $CONFIG_PATH
+sudo sed -i "s|PHPMYADMIN_HTACCESS_PASSWORD|$PHPMYADMIN_HTACCESS_PASS|" $CONFIG_PATH
 
 # CERTBOT
 add-apt-repository -y ppa:certbot/certbot
@@ -97,7 +97,7 @@ ssh-keyscan github.com >> /var/www/.ssh/known_hosts
 ssh-keyscan github.com >> ~/.ssh/known_hosts
 
 SSH_KEY=$(cat /var/www/.ssh/id_rsa.pub)
-sudo sed -i "s|GITHUB_SSH|$SSH_KEY|" ${ABSOLUTE_PATH}config.json
+sudo sed -i "s|GITHUB_SSH|$SSH_KEY|" $CONFIG_PATH
 
 cp /var/www/.ssh/id_rsa /root/.ssh/id_rsa
 cp /var/www/.ssh/id_rsa.pub /root/.ssh/id_rsa.pub
