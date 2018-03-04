@@ -1,11 +1,11 @@
 <?php
 
 function scripts_path() {
-    return base_path('scripts') . '\\';
+    return str_replace('\\', '/', base_path('scripts')) . '/';
 }
 
 function templates_path() {
-    return base_path('templates') . '\\';
+    return str_replace('\\', '/', base_path('templates')) . '/';
 }
 
 function replace_string_in_file($filename, $string_to_replace, $replace_with){
