@@ -69,7 +69,9 @@ Artisan::command('vhost:add', function () {
 
     echo shell_exec("a2ensite $sDomain.conf 2>&1");
 
-    mkdir("/var/www/$sDomain/html", 755, TRUE);
+    if (!file_exists("/var/www/$sDomain/html")) {
+        mkdir("/var/www/$sDomain/html", 755, TRUE);
+    }
 
     $bSsl = $this->confirm('SSL?', 1);
 
