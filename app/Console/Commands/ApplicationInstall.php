@@ -94,6 +94,8 @@ class ApplicationInstall extends Command
                 break;
         }
 
+        apache_permissions();
+
         $this->line("I cloned the repository to /var/www/$sDomain/$sGitName");
     }
 }
