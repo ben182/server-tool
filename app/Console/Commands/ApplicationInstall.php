@@ -40,16 +40,17 @@ class ApplicationInstall extends Command
         $sDomain = $this->ask('Domain?');
         $sRootOrSub = $this->choice('Root or Subdirectory?', ['Root', 'Sub']);
         if ($sRootOrSub === 'Sub') {
-            $sSubDir = $this->ask("Which one (relative to /var/www/$sDomain?");
+            $sSubDir = $this->ask("Which one (relative to /var/www/$sDomain/html?");
         }
         $sDirectoryOrSymlink = $this->choice('Install in directory or add symlink for a directory', ['directory', 'symlink']);
         if ($sDirectoryOrSymlink === 'symlink') {
             $sSymlinkRootDir = $this->ask("Which source directory?");
-            $sSymlinkSymlinkDir = $this->ask("Which symlink directory?");
         }
         $sGit = $this->ask('Which Github repository?');
         $sGitBranch = $this->ask('Which Branch?');
 
         echo shell_exec("cd /var/www/$sDomain && git clone -b $sGitBranch $sGit 2>&1");
+
+        $sGitName = preg_match("(?<=\/)(.*)(?=.git)", $sGit);
     }
 }
