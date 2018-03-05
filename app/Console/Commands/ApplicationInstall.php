@@ -97,5 +97,12 @@ class ApplicationInstall extends Command
         apache_permissions();
 
         $this->line("I cloned the repository to /var/www/$sDomain/$sGitName");
+
+        if ($sRootOrSub == 'Root') {
+            $this->line("Repository Url is $sDomain");
+        }else{
+            $this->line("Repository Url is $sDomain/$sSubDir");
+        }
+
     }
 }
