@@ -38,6 +38,12 @@ class ApplicationInstall extends Command
     public function handle()
     {
         $sDomain = $this->ask('Domain?');
+
+        if (!file_exists("/var/www/$sDomain")) {
+            $this->error('The domain directory does not exist');
+            return;
+        }
+
         $sRootOrSub = $this->choice('Root or Subdirectory?', ['Root', 'Sub']);
         if ($sRootOrSub === 'Sub') {
             $sSubDir = $this->ask("Which one (relative to /var/www/$sDomain/html/?");
@@ -53,7 +59,7 @@ class ApplicationInstall extends Command
 
         $sGitName = getStringBetween($sGit, '/', '.git');
 
-        switch ($sRootOrSub) {
+        switch ($sRootOrSub) { // TODO clean up
             case 'Root':
 
                 if (file_exists("/var/www/$sDomain/html")) {
@@ -72,6 +78,10 @@ class ApplicationInstall extends Command
                 break;
             case 'Sub':
 
+                if (!file_exists("/var/www/$sDomain/html")) {
+                    mkdir("/var/www/$sDomain/html", 755, TRUE);
+                }
+
                 if ($sDirectoryOrSymlink == 'directory') {
                     shell_exec("ln -s /var/www/$sDomain/$sGitName /var/www/$sDomain/html/$sSubDir");
                 }
@@ -83,5 +93,7 @@ class ApplicationInstall extends Command
             default:
                 break;
         }
+
+        $this->line("I cloned the repository to /var/www/$sDomain/$sGitName");
     }
 }
