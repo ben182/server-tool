@@ -131,7 +131,7 @@ class AddVhostCommand extends Command
                 switch ($sHtaccess) {
                     case 'Non SSL to SSL and www to non www':
 
-                        replace_string_in_file("/etc/apache2/sites-available/$sDomain.conf", 'INCLUDE', 'Include ' . templates_path() . 'redirectSslAndWww.80.conf');
+                        replace_string_in_file("/etc/apache2/sites-available/$sDomain.conf", '</VirtualHost>', 'Include ' . templates_path() . 'redirectSslAndWww.80.conf' . PHP_EOL . '</VirtualHost>');
 
                         replace_string_in_file("/etc/apache2/sites-available/$sDomain-le-ssl.conf", '</VirtualHost>', 'Include ' . templates_path() . 'redirectSslAndWww.443.conf' . PHP_EOL . '</VirtualHost>');
 
