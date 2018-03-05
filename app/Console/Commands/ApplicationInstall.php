@@ -93,6 +93,8 @@ class ApplicationInstall extends Command
                 break;
         }
 
+        // TODO Laravel specific config and git post hook
+
         apache_permissions();
 
         $this->line("I cloned the repository to /var/www/$sDomain/$sGitName");
