@@ -30,10 +30,6 @@ class AddVhostCommand extends Command
     public function __construct()
     {
         parent::__construct();
-
-        if ($this->argument('dev')) {
-            $this->bDev = TRUE;
-        }
     }
 
     /**
@@ -43,6 +39,10 @@ class AddVhostCommand extends Command
      */
     public function handle()
     {
+        if ($this->argument('dev')) {
+            $this->bDev = TRUE;
+        }
+
         $sDomain = $this->ask('Domain?');
 
         $this->task('Creating vHost', function () use ($sDomain) {
