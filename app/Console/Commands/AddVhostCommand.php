@@ -97,20 +97,6 @@ class AddVhostCommand extends Command
                 try {
 
                     echo shell_exec("certbot --non-interactive --agree-tos --email $sEmail --apache -d $sDomain" . ($bWwwAlias ? " -d www.$sDomain" : '') . " --quiet" . ($this->bDev ? ' --staging' : '') . " 2>&1");
-                    /*
-                    htaccess
-                    RewriteEngine on
-                    RewriteCond %{HTTP_HOST} ^(www\.)(.+) [OR]
-                    RewriteCond %{HTTPS} off
-                    RewriteCond %{HTTP_HOST} ^(www\.)?(.+)
-                    RewriteRule ^ https://%2%{REQUEST_URI} [R=301,L]
-
-                    RewriteEngine On
-
-                    # match any URL with www and rewrite it to https without the www
-                    RewriteCond %{HTTP_HOST} ^(www\.)(.*) [NC]
-                    RewriteRule (.*) https://%2%{REQUEST_URI} [L,R=301]
-                    */
 
                 } catch(\Exception $e) {
                     echo $e;
@@ -139,12 +125,11 @@ class AddVhostCommand extends Command
 
                     case 'www to non www':
 
-                        copy(templates_path() . 'apache/www_to_nonwww.htaccess', "/var/www/$sDomain/html/.htaccess");
+                        replace_string_in_file("/etc/apache2/sites-available/$sDomain.conf", '</VirtualHost>', 'Include ' . templates_path() . 'apache/www_to_nonwww.htaccess' . PHP_EOL . '</VirtualHost>');
+
                         break;
 
                     default:
-
-                        replace_string_in_file("/etc/apache2/sites-available/$sDomain.conf", 'INCLUDE', '');
                         break;
                 }
 
