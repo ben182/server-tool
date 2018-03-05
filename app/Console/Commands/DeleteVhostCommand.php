@@ -40,8 +40,7 @@ class DeleteVhostCommand extends Command
         $sDomain = $this->ask('Domain?');
 
         if (!file_exists("/var/www/$sDomain")) {
-            $this->error($sDomain . 'does not exist');
-            return;
+            $this->abort($sDomain . 'does not exist');
         }
 
         $bDeleteDir = $this->confirm('Delete folder in /var/www?', 0);

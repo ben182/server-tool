@@ -40,8 +40,7 @@ class ApplicationInstall extends Command
         $sDomain = $this->ask('Domain?');
 
         if (!file_exists("/var/www/$sDomain")) {
-            $this->error('The domain directory does not exist');
-            return;
+            $this->abort('The domain directory does not exist');
         }
 
         $sRootOrSub = $this->choice('Root or Subdirectory?', ['Root', 'Sub']);
