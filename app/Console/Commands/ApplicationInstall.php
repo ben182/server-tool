@@ -40,7 +40,7 @@ class ApplicationInstall extends Command
         $sDomain = $this->ask('Domain?');
         $sRootOrSub = $this->choice('Root or Subdirectory?', ['Root', 'Sub']);
         if ($sRootOrSub === 'Sub') {
-            $sSubDir = $this->ask("Which one (relative to /var/www/$sDomain/html?");
+            $sSubDir = $this->ask("Which one (relative to /var/www/$sDomain/html/?");
         }
         $sDirectoryOrSymlink = $this->choice('Install in directory or add symlink for a directory', ['directory', 'symlink']);
         if ($sDirectoryOrSymlink === 'symlink') {
@@ -49,7 +49,7 @@ class ApplicationInstall extends Command
         $sGit = $this->ask('Which Github repository?');
         $sGitBranch = $this->ask('Which Branch?');
 
-        //echo shell_exec("cd /var/www/$sDomain && git clone -b $sGitBranch $sGit 2>&1");
+        echo shell_exec("cd /var/www/$sDomain && git clone -b $sGitBranch $sGit 2>&1");
 
         $sGitName = getStringBetween($sGit, '/', '.git');
 
@@ -57,11 +57,24 @@ class ApplicationInstall extends Command
             case 'Root':
 
                 if ($sDirectoryOrSymlink == 'directory') {
+                    shell_exec("mv /var/www/$sDomain/html /var/www/$sDomain/html2");
                     shell_exec("ln -s /var/www/$sDomain/$sGitName /var/www/$sDomain/html");
+                }
+
+                if ($sDirectoryOrSymlink == 'symlink') {
+                    shell_exec("mv /var/www/$sDomain/html /var/www/$sDomain/html2");
+                    shell_exec("ln -s /var/www/$sDomain/$sGitName/$sSymlinkRootDir /var/www/$sDomain/html");
                 }
                 break;
             case 'Sub':
-                # code...
+
+                if ($sDirectoryOrSymlink == 'directory') {
+                    shell_exec("ln -s /var/www/$sDomain/$sGitName /var/www/$sDomain/html/$sSubDir");
+                }
+
+                if ($sDirectoryOrSymlink == 'symlink') {
+                    shell_exec("ln -s /var/www/$sDomain/$sGitName/$sSymlinkRootDir /var/www/$sDomain/html/$sSubDir");
+                }
                 break;
             default:
                 break;
