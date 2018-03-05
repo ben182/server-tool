@@ -11,7 +11,7 @@ class AddVhostCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'vhost:add';
+    protected $signature = 'vhost:add {dev?}';
 
     /**
      * The console command description.
@@ -19,6 +19,8 @@ class AddVhostCommand extends Command
      * @var string
      */
     protected $description = 'Command description';
+
+    protected $bDev = FALSE;
 
     /**
      * Create a new command instance.
@@ -28,6 +30,10 @@ class AddVhostCommand extends Command
     public function __construct()
     {
         parent::__construct();
+
+        if ($this->argument('dev')) {
+            $this->bDev = TRUE;
+        }
     }
 
     /**
@@ -86,13 +92,12 @@ class AddVhostCommand extends Command
         if ($bSsl) {
             $sEmail = $this->ask('Email?');
 
-            $this->task('Setting up SSL', function () use ($sDomain, $sEmail) {
+            $this->task('Setting up SSL', function () use ($sDomain, $sEmail, $bWwwAlias) {
 
                 try {
 
-                    echo shell_exec("certbot --non-interactive --agree-tos --email $sEmail --apache --domains $sDomain --quiet 2>&1");
+                    echo shell_exec("certbot --non-interactive --agree-tos --email $sEmail --apache -d $sDomain" . ($bWwwAlias ? " -d www.$sDomain" : '') . " --quiet" . ($this->bDev ? ' --staging' : '') . " 2>&1");
                     /*
-                    TODO www domain
                     htaccess
                     RewriteEngine on
                     RewriteCond %{HTTP_HOST} ^(www\.)(.+) [OR]
@@ -119,35 +124,39 @@ class AddVhostCommand extends Command
 
         $sHtaccess = $this->choice('htaccess?', ['Non SSL to SSL and www to non www', 'www to non www', 'Nothing']);
 
-        if ($sHtaccess !== 'Nothing') {
-            $this->task('Configuring htaccess', function () use ($sDomain, $sHtaccess) {
+        $this->task('Configuring htaccess', function () use ($sDomain, $sHtaccess) {
 
-                try {
+            try {
 
-                    switch ($sHtaccess) {
-                        case 'Non SSL to SSL and www to non www':
+                switch ($sHtaccess) {
+                    case 'Non SSL to SSL and www to non www':
 
-                            copy(templates_path() . 'apache/nonSSL_to_SSL_and_www_to_nonwww.htaccess', "/var/www/$sDomain/html/.htaccess");
-                            break;
+                        replace_string_in_file("/etc/apache2/sites-available/$sDomain.conf", 'INCLUDE', 'Include ' . templates_path() . 'redirectSslAndWww.80.conf');
 
-                        case 'www to non www':
+                        replace_string_in_file("/etc/apache2/sites-available/$sDomain-le-ssl.conf", '</VirtualHost>', 'Include ' . templates_path() . 'redirectSslAndWww.443.conf' . PHP_EOL . '</VirtualHost>');
 
-                            copy(templates_path() . 'apache/www_to_nonwww.htaccess', "/var/www/$sDomain/html/.htaccess");
-                            break;
+                        break;
 
-                        default:
-                            break;
-                    }
+                    case 'www to non www':
 
-                } catch(\Exception $e) {
-                    echo $e;
-                    return FALSE;
+                        copy(templates_path() . 'apache/www_to_nonwww.htaccess', "/var/www/$sDomain/html/.htaccess");
+                        break;
+
+                    default:
+
+                        replace_string_in_file("/etc/apache2/sites-available/$sDomain.conf", 'INCLUDE', '');
+                        break;
                 }
 
-                return TRUE;
-            });
+            } catch(\Exception $e) {
+                echo $e;
+                return FALSE;
+            }
 
-        }
+            return TRUE;
+        });
+
+
 
         $this->task('Clean up & Finishing', function () {
 
