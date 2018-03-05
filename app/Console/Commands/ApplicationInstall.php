@@ -49,8 +49,22 @@ class ApplicationInstall extends Command
         $sGit = $this->ask('Which Github repository?');
         $sGitBranch = $this->ask('Which Branch?');
 
-        echo shell_exec("cd /var/www/$sDomain && git clone -b $sGitBranch $sGit 2>&1");
+        //echo shell_exec("cd /var/www/$sDomain && git clone -b $sGitBranch $sGit 2>&1");
 
-        $sGitName = preg_match("(?<=\/)(.*)(?=.git)", $sGit);
+        $sGitName = getStringBetween($sGit, '/', '.git');
+
+        switch ($sRootOrSub) {
+            case 'Root':
+
+                if ($sDirectoryOrSymlink == 'directory') {
+                    shell_exec("ln -s /var/www/$sDomain/$sGitName /var/www/$sDomain/html");
+                }
+                break;
+            case 'Sub':
+                # code...
+                break;
+            default:
+                break;
+        }
     }
 }

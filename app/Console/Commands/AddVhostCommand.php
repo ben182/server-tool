@@ -91,6 +91,21 @@ class AddVhostCommand extends Command
                 try {
 
                     echo shell_exec("certbot --non-interactive --agree-tos --email $sEmail --apache --domains $sDomain --quiet 2>&1");
+                    /*
+                    TODO www domain
+                    htaccess
+                    RewriteEngine on
+                    RewriteCond %{HTTP_HOST} ^(www\.)(.+) [OR]
+                    RewriteCond %{HTTPS} off
+                    RewriteCond %{HTTP_HOST} ^(www\.)?(.+)
+                    RewriteRule ^ https://%2%{REQUEST_URI} [R=301,L]
+
+                    RewriteEngine On
+
+                    # match any URL with www and rewrite it to https without the www
+                    RewriteCond %{HTTP_HOST} ^(www\.)(.*) [NC]
+                    RewriteRule (.*) https://%2%{REQUEST_URI} [L,R=301]
+                    */
 
                 } catch(\Exception $e) {
                     echo $e;

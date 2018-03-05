@@ -21,3 +21,9 @@ function apache_permissions() {
     echo shell_exec('chmod g+s /var/www 2>&1');
     echo shell_exec('chmod -R 700 /var/www/.ssh 2>&1');
 }
+
+function getStringBetween($str,$from,$to)
+{
+    $sub = substr($str, strpos($str,$from)+strlen($from),strlen($str));
+    return substr($sub,0,strpos($sub,$to));
+}
