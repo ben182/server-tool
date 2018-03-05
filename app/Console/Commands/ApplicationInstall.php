@@ -56,13 +56,17 @@ class ApplicationInstall extends Command
         switch ($sRootOrSub) {
             case 'Root':
 
-                if ($sDirectoryOrSymlink == 'directory') {
+                if (file_exists("/var/www/$sDomain/html")) {
                     shell_exec("mv /var/www/$sDomain/html /var/www/$sDomain/html2");
+                }
+
+                if ($sDirectoryOrSymlink == 'directory') {
+
                     shell_exec("ln -s /var/www/$sDomain/$sGitName /var/www/$sDomain/html");
                 }
 
                 if ($sDirectoryOrSymlink == 'symlink') {
-                    shell_exec("mv /var/www/$sDomain/html /var/www/$sDomain/html2");
+
                     shell_exec("ln -s /var/www/$sDomain/$sGitName/$sSymlinkRootDir /var/www/$sDomain/html");
                 }
                 break;
