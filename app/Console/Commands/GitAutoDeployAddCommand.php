@@ -12,7 +12,7 @@ class GitAutoDeployAddCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'gad:add';
+    protected $signature = 'gad:add {--dir=} {--branch=} {--hardreset}';
 
     /**
      * The console command description.
@@ -36,11 +36,11 @@ class GitAutoDeployAddCommand extends Command
      *
      * @return mixed
      */
-    public function handle($sDir = NULL, $sBranch = NULL, $iReset = NULL)
+    public function handle()
     {
-        $sDir = $sDir ?? $this->ask('Path (from /var/www/)?');
-        $sBranch = $sBranch ?? $this->ask('Branch?');
-        $iReset = $iReset ?? (int) $this->confirm('Hard Reset?', 1);
+        $sDir = $this->option('dir') ?? $this->ask('Path (from /var/www/)?');
+        $sBranch = $this->option('branch') ?? $this->ask('Branch?');
+        $iReset = (int) ($this->option('hardreset') ??  $this->confirm('Hard Reset?', 1));
 
         $aRoute = RouteController::add([
             'dir' => $sDir,

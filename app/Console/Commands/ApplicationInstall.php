@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Http\Controllers\DomainController;
 use PhpParser\Node\Expr\ShellExec;
+use Illuminate\Support\Facades\Artisan;
 
 class ApplicationInstall extends Command
 {
@@ -160,8 +161,10 @@ class ApplicationInstall extends Command
 
         $bGitAutoDeploy = $this->confirm('Git auto deploy?');
         if ($bGitAutoDeploy) {
-            $oGad = new GitAutoDeployAddCommand();
-            $oGad->handle("/var/www/$sDomain/$sGitName", $sGitBranch);
+            $exitCode = Artisan::call('gad:add', [
+                '--dir' => "/var/www/$sDomain/$sGitName",
+                '--branch' => $sGitBranch,
+            ]);
         }
 
         apache_permissions();
