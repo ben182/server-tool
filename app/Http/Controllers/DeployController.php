@@ -18,7 +18,7 @@ class DeployController extends Controller
         $postBody = file_get_contents( 'php://input' );
 
         if( 'sha1=' . hash_hmac( 'sha1', $postBody, $aRoute['secret'] ) !== $_SERVER[ 'HTTP_X_HUB_SIGNATURE' ]) {
-                return 'wrong secret';
+            return response('Wrong Secret', 500);
         }
 
         $sCommand = 'cd ' . $aRoute['dir'];

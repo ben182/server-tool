@@ -25,11 +25,11 @@ class RouteController extends Controller
         $aRoutes = self::getAll();
 
         do {
-            $sId = urlencode(str_random(10));
+            $sId = random_string_random_length();
         } while (isset($aRoutes[$sId]));
 
         $aData = array_merge($aData, [
-            'secret' => str_random(10)
+            'secret' => random_string_random_length(),
         ]);
 
         $aData['dir'] = '/var/www/' . $aData['dir'];

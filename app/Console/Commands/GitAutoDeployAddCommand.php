@@ -42,6 +42,10 @@ class GitAutoDeployAddCommand extends Command
         $sBranch = $this->option('branch') ?? $this->ask('Branch?');
         $iReset = (int) ($this->option('hardreset') ??  $this->confirm('Hard Reset?', 1));
 
+        if (!file_exists("/var/www/$sDir")) {
+            $this->abort("/var/www/$sDir does not exist");
+        }
+
         $aRoute = RouteController::add([
             'dir' => $sDir,
             'branch' => $sBranch,
