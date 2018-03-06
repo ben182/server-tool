@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Http\Controllers\DomainController;
+use PhpParser\Node\Expr\ShellExec;
 
 class ApplicationInstall extends Command
 {
@@ -39,7 +41,9 @@ class ApplicationInstall extends Command
     {
         $sDomain = $this->ask('Domain?');
 
-        if (!file_exists("/var/www/$sDomain")) {
+        $oDomain = new DomainController($sDomain);
+
+        if ($oDomain->doesNotExist()) {
             $this->abort('The domain directory does not exist');
         }
 
@@ -77,9 +81,7 @@ class ApplicationInstall extends Command
                 break;
             case 'Sub':
 
-                if (!file_exists("/var/www/$sDomain/html")) {
-                    mkdir("/var/www/$sDomain/html", 755, TRUE);
-                }
+                $oDomain->createHtmlFolder();
 
                 if ($sDirectoryOrSymlink == 'directory') {
                     shell_exec("ln -s /var/www/$sDomain/$sGitName /var/www/$sDomain/html/$sSubDir");
@@ -94,6 +96,14 @@ class ApplicationInstall extends Command
         }
 
         // TODO Laravel specific config and git post hook
+        $bLaravel = $this->confirm('Laravel specific config?');
+
+        if ($bLaravel) {
+            copy("/var/www/$sDomain/$sGitName/.env.example", "/var/www/$sDomain/$sGitName/.env");
+            replace_string_in_file("/var/www/$sDomain/$sGitName/.env", 'localhost', $oDomain->getFullUrl() . $sSubDir);
+            shell_exec("php /var/www/$sDomain/$sGitName/artisan key:generate");
+            shell_exec("composer install -d=/var/www/$sDomain/$sGitName");
+        }
 
         apache_permissions();
 
