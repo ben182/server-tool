@@ -13,7 +13,7 @@ class ModCommand extends Command
         ModCommand::$aReturn[] = $sMessage;
     }
 
-    public static function getReturn()
+    public function getReturn()
     {
         if ($this->option('nooutput')) {
             return;
