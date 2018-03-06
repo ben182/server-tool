@@ -60,6 +60,10 @@ class GitAutoDeployAddCommand extends ModCommand
         $this->addToReturn('Put this as a secret');
         $this->addToReturn($aRoute['secret']);
 
+        if ($this->option('quiet')) {
+            return;
+        }
+
         echo $this->getReturn();
     }
 }

@@ -186,6 +186,11 @@ class ApplicationInstall extends ModCommand
 
         $this->line("I cloned the repository to /var/www/$sDomain/$sGitName");
         $this->line('Repository Url is ' . $oDomain->getFullUrl() . $sSubDir);
+
+        if ($this->option('quiet')) {
+            return;
+        }
+
         echo $this->getReturn();
     }
 }
