@@ -113,6 +113,10 @@ class ApplicationInstall extends ModCommand
             $sSubDir = "/$sSubDir";
         }
 
+        $this->addToReturn('[APPLICATION]');
+        $this->addToReturn("I cloned the repository to /var/www/$sDomain/$sGitName");
+        $this->addToReturn('Repository Url is ' . $oDomain->getFullUrl() . $sSubDir);
+
         // TODO Laravel specific config and git post hook
         $bLaravel = $this->confirm('Laravel specific config?');
 
@@ -141,9 +145,10 @@ class ApplicationInstall extends ModCommand
                     }
                 }
 
-                $this->addToReturn('DB Database: ' . $sDatabaseName);
-                $this->addToReturn('DB User: ' . $aUserData['user']);
-                $this->addToReturn('DB Password: ' . $aUserData['password']);
+                $this->addToReturn('[DB]');
+                $this->addToReturn('Database: ' . $sDatabaseName);
+                $this->addToReturn('User: ' . $aUserData['user']);
+                $this->addToReturn('Password: ' . $aUserData['password']);
             }
         } else {
             $ComposerInstall = $this->confirm('Composer install in cloned git folder?');
@@ -166,6 +171,7 @@ class ApplicationInstall extends ModCommand
 
         $bGitAutoDeploy = $this->confirm('Git auto deploy?');
         if ($bGitAutoDeploy) {
+            $this->addToReturn('[GIT AUTO DEPLOY]');
             $this->call('gad:add', [
                 '--dir' => "$sDomain/$sGitName",
                 '--branch' => $sGitBranch,
@@ -183,9 +189,6 @@ class ApplicationInstall extends ModCommand
 
             return true;
         });
-
-        $this->line("I cloned the repository to /var/www/$sDomain/$sGitName");
-        $this->line('Repository Url is ' . $oDomain->getFullUrl() . $sSubDir);
 
         echo $this->getReturn();
     }
