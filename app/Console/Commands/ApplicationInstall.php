@@ -123,6 +123,8 @@ class ApplicationInstall extends Command
                 replace_string_in_file("/var/www/$sDomain/$sGitName/.env", 'DB_USERNAME=homestead', 'DB_USERNAME=' . $aUserData['user']);
                 replace_string_in_file("/var/www/$sDomain/$sGitName/.env", 'DB_PASSWORD=secret', 'DB_PASSWORD=' . $aUserData['password']);
 
+                echo shell_exec("cat /var/www/$sDomain/$sGitName/.env");
+
                 $sMigrateOrSeed = $this->choice('Migrate Or Seed?', ['Migrate', 'Migrate & Seed', 'Nothing']);
                 if ($sMigrateOrSeed != 'Nothing') {
                     echo shell_exec("php /var/www/$sDomain/$sGitName/artisan migrate");
