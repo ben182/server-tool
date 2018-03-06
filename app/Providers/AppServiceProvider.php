@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
         Command::macro('addToReturn', function ($sMessage) {
             $this->aReturn[] = $sMessage;
         });
-        Command::macro('getReturn', function ($sMessage) {
+        Command::macro('getReturn', function () {
             return implode("\n", $this->aReturn);
         });
     }
