@@ -52,11 +52,11 @@ class GitAutoDeployAddCommand extends Command
             'reset' => $iReset,
         ]);
 
-        $this->line('Route');
-        $this->line(route('api.gad.deploy', [
+        $this->addToReturn('Route');
+        $this->addToReturn(route('api.gad.deploy', [
             'id' => $aRoute['id']
         ]));
-        $this->line('Secret');
-        $this->line($aRoute['secret']);
+        $this->addToReturn('Secret');
+        $this->addToReturn($aRoute['secret']);
     }
 }

@@ -64,10 +64,18 @@ class ApplicationInstall extends Command
         }
         $sGit = $this->ask('Which Github repository?');
         $sGitBranch = $this->ask('Which Branch?');
-
-        echo shell_exec("cd /var/www/$sDomain && git clone -b $sGitBranch $sGit 2>&1");
-
         $sGitName = getStringBetween($sGit, '/', '.git');
+
+        $this->task('Cloning Repository', function () use ($sDomain, $sGitBranch, $sGit) {
+            try {
+                shell_exec("cd /var/www/$sDomain && git clone -b $sGitBranch $sGit");
+            } catch (\Exception $e) {
+                echo $e;
+                return false;
+            }
+
+            return true;
+        });
 
         switch ($sRootOrSub) { // TODO clean up
             case 'Root':
@@ -157,13 +165,22 @@ class ApplicationInstall extends Command
 
         $bGitAutoDeploy = $this->confirm('Git auto deploy?');
         if ($bGitAutoDeploy) {
-            echo $this->call('gad:add', [
+            $this->callSilent('gad:add', [
                 '--dir' => "/var/www/$sDomain/$sGitName",
                 '--branch' => $sGitBranch,
             ]);
         }
 
-        apache_permissions();
+        $this->task('Clean up & Finishing', function () {
+            try {
+                apache_permissions();
+            } catch (\Exception $e) {
+                echo $e;
+                return false;
+            }
+
+            return true;
+        });
 
         $this->line("I cloned the repository to /var/www/$sDomain/$sGitName");
         $this->line('Repository Url is ' . $oDomain->getFullUrl() . $sSubDir);
