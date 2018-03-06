@@ -110,31 +110,30 @@ class ApplicationInstall extends Command
         if ($bLaravel) {
             shell_exec("composer install -d=/var/www/$sDomain/$sGitName");
 
-            copy("/var/www/$sDomain/$sGitName/.env.example", "/var/www/$sDomain/$sGitName/env");
-            replace_string_in_file("/var/www/$sDomain/$sGitName/env", 'http://localhost', $oDomain->getFullUrl() . $sSubDir);
-            //shell_exec("php /var/www/$sDomain/$sGitName/artisan key:generate");
+            copy("/var/www/$sDomain/$sGitName/.env.example", "/var/www/$sDomain/$sGitName/.env");
+            replace_string_in_file("/var/www/$sDomain/$sGitName/.env", 'http://localhost', $oDomain->getFullUrl() . $sSubDir);
+            shell_exec("php /var/www/$sDomain/$sGitName/artisan key:generate");
 
             $bDatabase = $this->confirm('Create Database?');
             if ($bDatabase) {
                 $sDatabaseName = createMysqlDatabase($sGitName);
                 $aUserData = createMysqlUserAndGiveAccessToDatabase($sDatabaseName);
 
-                replace_string_in_file("/var/www/$sDomain/$sGitName/env", 'DB_DATABASE=homestead', "DB_DATABASE=$sDatabaseName");
-                replace_string_in_file("/var/www/$sDomain/$sGitName/env", 'DB_USERNAME=homestead', 'DB_USERNAME=' . $aUserData['user']);
-                replace_string_in_file("/var/www/$sDomain/$sGitName/env", 'DB_PASSWORD=secret', 'DB_PASSWORD=' . $aUserData['password']);
+                replace_string_in_file("/var/www/$sDomain/$sGitName/.env", 'DB_DATABASE=homestead', "DB_DATABASE=$sDatabaseName");
+                replace_string_in_file("/var/www/$sDomain/$sGitName/.env", 'DB_USERNAME=homestead', 'DB_USERNAME=' . $aUserData['user']);
+                replace_string_in_file("/var/www/$sDomain/$sGitName/.env", 'DB_PASSWORD=secret', 'DB_PASSWORD=' . $aUserData['password']);
 
                 // Refresh .env file
                 echo shell_exec("php /var/www/$sDomain/$sGitName/artisan config:clear");
+                echo shell_exec("cd var/www/$sDomain/$sGitName && composer dump-autoload -o");
                 echo shell_exec("service apache2 restart");
 
                 $sMigrateOrSeed = $this->choice('Migrate Or Seed?', ['Migrate', 'Migrate & Seed', 'Nothing']);
                 if ($sMigrateOrSeed != 'Nothing') {
-                    //copy("/var/www/$sDomain/$sGitName/.env", "/var/www/$sDomain/$sGitName/.env2");
-
-                    echo shell_exec("php /var/www/$sDomain/$sGitName/artisan migrate --env=env");
+                    echo shell_exec("cd /var/www/$sDomain/$sGitName && php artisan migrate");
 
                     if ($sMigrateOrSeed != 'Migrate & Seed') {
-                        echo shell_exec("php /var/www/$sDomain/$sGitName/artisan db:seed --env=env");
+                        echo shell_exec("cd /var/www/$sDomain/$sGitName && php artisan db:seed");
                     }
                 }
             }
