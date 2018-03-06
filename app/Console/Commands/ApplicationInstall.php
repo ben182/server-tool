@@ -111,7 +111,7 @@ class ApplicationInstall extends Command
             shell_exec("composer install -d=/var/www/$sDomain/$sGitName");
 
             copy("/var/www/$sDomain/$sGitName/.env.example", "/var/www/$sDomain/$sGitName/.env");
-            replace_string_in_file("/var/www/$sDomain/$sGitName/.env", 'localhost', $oDomain->getFullUrl() . $sSubDir);
+            replace_string_in_file("/var/www/$sDomain/$sGitName/.env", 'http://localhost', $oDomain->getFullUrl() . $sSubDir);
             shell_exec("php /var/www/$sDomain/$sGitName/artisan key:generate");
         }
 
@@ -122,7 +122,7 @@ class ApplicationInstall extends Command
         if ($sRootOrSub == 'Root') {
             $this->line("Repository Url is $sDomain");
         }else{
-            $this->line("Repository Url is $oDomain->getFullUrl()$sSubDir");
+            $this->line("Repository Url is " . $oDomain->getFullUrl() . $sSubDir);
         }
 
     }
