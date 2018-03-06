@@ -47,6 +47,8 @@ class ApplicationInstall extends Command
             $this->abort('The domain directory does not exist');
         }
 
+        $aReturn = [];
+
         $sSubDir = '';
 
         $sRootOrSub = $this->choice('Root or Subdirectory?', ['Root', 'Sub']);
@@ -127,19 +129,15 @@ class ApplicationInstall extends Command
                 if ($sMigrateOrSeed != 'Nothing') {
                     echo shell_exec("cd /var/www/$sDomain/$sGitName && sudo php artisan migrate");
 
-                    if ($sMigrateOrSeed != 'Migrate & Seed') {
+                    if ($sMigrateOrSeed == 'Migrate & Seed') {
                         echo shell_exec("cd /var/www/$sDomain/$sGitName && sudo php artisan db:seed");
                     }
                 }
 
-                $this->line('DB Database: ' . $sDatabaseName);
-                $this->line('DB User: ' . $aUserData['user']);
-                $this->line('DB Password: ' . $aUserData['password']);
+                $aReturn[] = 'DB Database: ' . $sDatabaseName;
+                $aReturn[] = 'DB User: ' . $aUserData['user'];
+                $aReturn[] = 'DB Password: ' . $aUserData['password'];
             }
-
-            /* if ($sRootOrSub == 'Sub') {
-                replace_string_in_file("/var/www/$sDomain/$sGitName/public/.htaccess", 'RewriteEngine On', $sSubDir . '/');
-            } */
 
         }else{
             $ComposerInstall = $this->confirm('Composer install in cloned git folder?');
@@ -166,7 +164,6 @@ class ApplicationInstall extends Command
 
         $this->line("I cloned the repository to /var/www/$sDomain/$sGitName");
         $this->line("Repository Url is " . $oDomain->getFullUrl() . $sSubDir);
-
-
+        echo implode("\n", $aReturn);
     }
 }
