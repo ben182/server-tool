@@ -124,9 +124,11 @@ class ApplicationInstall extends Command
                 replace_string_in_file("/var/www/$sDomain/$sGitName/.env", 'DB_PASSWORD=secret', 'DB_PASSWORD=' . $aUserData['password']);
 
                 // Refresh .env file
+                echo shell_exec("php /var/www/$sDomain/$sGitName/artisan config:cache");
                 echo shell_exec("php /var/www/$sDomain/$sGitName/artisan config:clear");
                 echo shell_exec("cd /var/www/$sDomain/$sGitName && composer dump-autoload -o");
                 echo shell_exec("service apache2 restart");
+                echo shell_exec("cat /var/www/$sDomain/$sGitName/.env");
 
                 $sMigrateOrSeed = $this->choice('Migrate Or Seed?', ['Migrate', 'Migrate & Seed', 'Nothing']);
                 if ($sMigrateOrSeed != 'Nothing') {
