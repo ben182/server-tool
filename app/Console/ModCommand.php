@@ -15,6 +15,6 @@ class ModCommand extends Command
 
     public static function getReturn()
     {
-        return implode("\n", self::aReturn) . "\n";
+        return implode("\n", ModCommand::$aReturn) . "\n";
     }
 }
