@@ -12,7 +12,7 @@ class GitAutoDeployAddCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'gad:add {--dir=} {--branch=} {--hardreset}';
+    protected $signature = 'gad:add {--dir=} {--branch=} {--hardreset=}';
 
     /**
      * The console command description.

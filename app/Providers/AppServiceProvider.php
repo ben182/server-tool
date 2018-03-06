@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
             $this->aReturn[] = $sMessage;
         });
         Command::macro('getReturn', function () {
-            return implode("\n", $this->aReturn);
+            return implode("\n", $this->aReturn) . "\n";
         });
     }
 
