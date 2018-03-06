@@ -19,6 +19,8 @@ sudo apt-get upgrade -y
 sudo apt-get install apache2 -y
 sudo ufw allow in "Apache Full"
 
+cp ${ABSOLUTE_PATH}config.example.json ${ABSOLUTE_PATH}config.json
+
 # MYSQL
 sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password $DATABASE_TEMP_PASS"
 sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $DATABASE_TEMP_PASS"
@@ -68,7 +70,6 @@ a2disconf phpmyadmin
 a2ensite ip.conf
 mkdir -p /var/www/ip/html
 cp ${TEMPLATES_PATH}ip/. /var/www/ip/html -r
-#git clone https://github.com/ben182/git-auto-deploy.git /var/www/ip/git-auto-deploy
 cp ${ABSOLUTE_PATH}.env.example ${ABSOLUTE_PATH}.env
 sudo sed -i "s|localhost|${PUBLIC_IP}/server-tools|" ${ABSOLUTE_PATH}.env
 ln -s ${ABSOLUTE_PATH}public /var/www/ip/html/server-tools
