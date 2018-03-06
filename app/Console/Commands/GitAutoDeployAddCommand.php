@@ -13,7 +13,7 @@ class GitAutoDeployAddCommand extends ModCommand
      *
      * @var string
      */
-    protected $signature = 'gad:add {--dir=} {--branch=} {--hardreset=}';
+    protected $signature = 'gad:add {--dir=} {--branch=} {--hardreset=} {--quiet}';
 
     /**
      * The console command description.
@@ -53,11 +53,13 @@ class GitAutoDeployAddCommand extends ModCommand
             'reset' => $iReset,
         ]);
 
-        $this->addToReturn('Route');
+        $this->addToReturn('Add this route to a new github repo webhook');
         $this->addToReturn(route('api.gad.deploy', [
             'id' => $aRoute['id']
         ]));
-        $this->addToReturn('Secret');
+        $this->addToReturn('Put this as a secret');
         $this->addToReturn($aRoute['secret']);
+
+        echo $this->getReturn();
     }
 }
