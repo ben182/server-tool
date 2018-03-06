@@ -10,11 +10,11 @@ class ModCommand extends Command
 
     public static function addToReturn($sMessage)
     {
-        $this->aReturn[] = $sMessage;
+        ModCommand::$aReturn[] = $sMessage;
     }
 
     public static function getReturn()
     {
-        return implode("\n", $this->aReturn) . "\n";
+        return implode("\n", self::aReturn) . "\n";
     }
 }
