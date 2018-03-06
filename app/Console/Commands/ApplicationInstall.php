@@ -125,7 +125,7 @@ class ApplicationInstall extends Command
 
                 // Refresh .env file
                 echo shell_exec("php /var/www/$sDomain/$sGitName/artisan config:clear");
-                echo shell_exec("cd var/www/$sDomain/$sGitName && composer dump-autoload -o");
+                echo shell_exec("cd /var/www/$sDomain/$sGitName && composer dump-autoload -o");
                 echo shell_exec("service apache2 restart");
 
                 $sMigrateOrSeed = $this->choice('Migrate Or Seed?', ['Migrate', 'Migrate & Seed', 'Nothing']);
