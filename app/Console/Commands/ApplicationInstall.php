@@ -113,17 +113,33 @@ class ApplicationInstall extends Command
             copy("/var/www/$sDomain/$sGitName/.env.example", "/var/www/$sDomain/$sGitName/.env");
             replace_string_in_file("/var/www/$sDomain/$sGitName/.env", 'http://localhost', $oDomain->getFullUrl() . $sSubDir);
             shell_exec("php /var/www/$sDomain/$sGitName/artisan key:generate");
+
+        }else{
+            $ComposerInstall = $this->confirm('Composer install in cloned git folder?');
+
+            if ($ComposerInstall) {
+                shell_exec("composer install -d=/var/www/$sDomain/$sGitName");
+            }
+        }
+
+        $bNpmInstall = $this->confirm('NPM install in cloned git folder?');
+
+        if ($bNpmInstall) {
+            shell_exec("cd /var/www/$sDomain/$sGitName && npm install");
+        }
+
+        $bGitPostPullHook = $this->confirm('Git post pull hook?');
+
+        if ($bGitPostPullHook) {
+            copy(templates_path() . 'git/post-merge', "/var/www/$sDomain/$sGitName/.git/hooks/post-merge");
+            shell_exec("chmod +x /var/www/$sDomain/$sGitName/.git/hooks/post-merge");
         }
 
         apache_permissions();
 
         $this->line("I cloned the repository to /var/www/$sDomain/$sGitName");
+        $this->line("Repository Url is " . $oDomain->getFullUrl() . $sSubDir);
 
-        if ($sRootOrSub == 'Root') {
-            $this->line("Repository Url is $sDomain");
-        }else{
-            $this->line("Repository Url is " . $oDomain->getFullUrl() . $sSubDir);
-        }
 
     }
 }
