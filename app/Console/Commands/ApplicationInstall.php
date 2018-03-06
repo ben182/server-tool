@@ -47,10 +47,15 @@ class ApplicationInstall extends Command
             $this->abort('The domain directory does not exist');
         }
 
+        $sSubDir = '';
+
         $sRootOrSub = $this->choice('Root or Subdirectory?', ['Root', 'Sub']);
         if ($sRootOrSub === 'Sub') {
             $sSubDir = $this->ask("Which one (relative to /var/www/$sDomain/html/?");
         }
+
+        $sSymlinkRootDir = '';
+
         $sDirectoryOrSymlink = $this->choice('Install in directory or add symlink for a directory', ['directory', 'symlink']);
         if ($sDirectoryOrSymlink === 'symlink') {
             $sSymlinkRootDir = $this->ask("Which source directory?");
@@ -95,6 +100,10 @@ class ApplicationInstall extends Command
                 break;
         }
 
+        if ($sSubDir) {
+            $sSubDir = "/$sSubDir";
+        }
+
         // TODO Laravel specific config and git post hook
         $bLaravel = $this->confirm('Laravel specific config?');
 
@@ -112,7 +121,7 @@ class ApplicationInstall extends Command
         if ($sRootOrSub == 'Root') {
             $this->line("Repository Url is $sDomain");
         }else{
-            $this->line("Repository Url is $sDomain/$sSubDir");
+            $this->line("Repository Url is $sDomain$sSubDir");
         }
 
     }
