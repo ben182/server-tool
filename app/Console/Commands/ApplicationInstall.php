@@ -114,6 +114,25 @@ class ApplicationInstall extends Command
             replace_string_in_file("/var/www/$sDomain/$sGitName/.env", 'http://localhost', $oDomain->getFullUrl() . $sSubDir);
             shell_exec("php /var/www/$sDomain/$sGitName/artisan key:generate");
 
+            $bDatabase = $this->confirm('Create Database?');
+            if ($bDatabase) {
+                $sDatabaseName = createMysqlDatabase($sGitName);
+                $aUserData = createMysqlUserAndGiveAccessToDatabase($sDatabaseName);
+
+                replace_string_in_file("/var/www/$sDomain/$sGitName/.env", 'DB_DATABASE=homestead', "DB_DATABASE=$sDatabaseName");
+                replace_string_in_file("/var/www/$sDomain/$sGitName/.env", 'DB_USERNAME=homestead', 'DB_USERNAME=' . $aUserData['user']);
+                replace_string_in_file("/var/www/$sDomain/$sGitName/.env", 'DB_PASSWORD=secret', 'DB_PASSWORD=' . $aUserData['password']);
+
+                $sMigrateOrSeed = $this->choice('Migrate Or Seed?', ['Migrate', 'Migrate & Seed', 'Nothing']);
+                if ($sMigrateOrSeed != 'Nothing') {
+                    echo shell_exec("server-tools migrate");
+
+                    if ($sMigrateOrSeed != 'Migrate & Seed') {
+                        echo shell_exec("server-tools db:seed");
+                    }
+                }
+            }
+
             /* if ($sRootOrSub == 'Sub') {
                 replace_string_in_file("/var/www/$sDomain/$sGitName/public/.htaccess", 'RewriteEngine On', $sSubDir . '/');
             } */

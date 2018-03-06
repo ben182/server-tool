@@ -32,6 +32,10 @@ function getConfig() {
     return json_decode(file_get_contents(base_path('config.json')), TRUE);
 }
 
+function random_string_random_length() {
+    return str_random(random_int(15, 30));
+}
+
 function buildMysqlCommand($sCommand) {
     $aMysql = getConfig()['mysql'];
 
@@ -43,9 +47,28 @@ function buildMysqlCommand($sCommand) {
 
 function createMysqlDatabase($sDatabase) {
 
-    return buildMysqlCommand("CREATE DATABASE $sDatabase;");
+    $sDatabase = str_slug($sDatabase, NULL, 'de');
+
+    buildMysqlCommand("CREATE DATABASE $sDatabase;");
+
+    return $sDatabase;
 }
 
-function createMysqlUserAndGiveAccessToDatabase($sUser, $sPassword, $sDatabase) {
-    return buildMysqlCommand("CREATE USER '$sUser'@'localhost';") . buildMysqlCommand("GRANT ALL PRIVILEGES ON $sDatabase.* To '$sUser'@'localhost' IDENTIFIED BY '$sPassword';");
+function createMysqlUserAndGiveAccessToDatabase(sDatabase, $sUser = NULL, $sPassword = NULL) {
+    if (!$sUser) {
+        $sUser = random_string_random_length();
+    }
+    if (!$sPassword) {
+        $sPassword = random_string_random_length();
+    }
+    buildMysqlCommand("CREATE USER '$sUser'@'localhost';") . buildMysqlCommand("GRANT ALL PRIVILEGES ON $sDatabase.* To '$sUser'@'localhost' IDENTIFIED BY '$sPassword';") . buildMysqlCommand("FLUSH PRIVILEGES;");
+
+    return [
+        'user' => $sUser,
+        'password' => $sPassword,
+    ];
+}
+
+function deleteMysqlUser($sUser) {
+    return buildMysqlCommand("DROP USER '$sUser'@'localhost';");
 }
