@@ -112,7 +112,7 @@ class ApplicationInstall extends Command
 
             copy("/var/www/$sDomain/$sGitName/.env.example", "/var/www/$sDomain/$sGitName/.env");
             replace_string_in_file("/var/www/$sDomain/$sGitName/.env", 'http://localhost', $oDomain->getFullUrl() . $sSubDir);
-            shell_exec("php /var/www/$sDomain/$sGitName/artisan key:generate");
+            echo shell_exec("cd /var/www/$sDomain/$sGitName && sudo php artisan key:generate");
 
             $bDatabase = $this->confirm('Create Database?');
             if ($bDatabase) {
@@ -152,7 +152,7 @@ class ApplicationInstall extends Command
         $bNpmInstall = $this->confirm('NPM install in cloned git folder?');
 
         if ($bNpmInstall) {
-            shell_exec("cd /var/www/$sDomain/$sGitName && npm install");
+            shell_exec("cd /var/www/$sDomain/$sGitName && sudo npm install");
         }
 
         $bGitPostPullHook = $this->confirm('Git post pull hook?');
