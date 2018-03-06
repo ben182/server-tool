@@ -51,7 +51,7 @@ class ApplicationInstall extends Command
 
         $sRootOrSub = $this->choice('Root or Subdirectory?', ['Root', 'Sub']);
         if ($sRootOrSub === 'Sub') {
-            $sSubDir = $this->ask("Which one (relative to /var/www/$sDomain/html/?");
+            $sSubDir = $this->ask("Which one (relative to " . $oDomain->getFullUrl() . "/?");
         }
 
         $sSymlinkRootDir = '';
@@ -113,6 +113,10 @@ class ApplicationInstall extends Command
             copy("/var/www/$sDomain/$sGitName/.env.example", "/var/www/$sDomain/$sGitName/.env");
             replace_string_in_file("/var/www/$sDomain/$sGitName/.env", 'http://localhost', $oDomain->getFullUrl() . $sSubDir);
             shell_exec("php /var/www/$sDomain/$sGitName/artisan key:generate");
+
+            /* if ($sRootOrSub == 'Sub') {
+                replace_string_in_file("/var/www/$sDomain/$sGitName/public/.htaccess", 'RewriteEngine On', $sSubDir . '/');
+            } */
 
         }else{
             $ComposerInstall = $this->confirm('Composer install in cloned git folder?');

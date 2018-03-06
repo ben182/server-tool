@@ -63,6 +63,8 @@ a2enmod rewrite
 
 cp ${TEMPLATES_PATH}apache/ip.conf /etc/apache2/sites-available/ip.conf
 sudo sed -i "s|IP_HERE|$PUBLIC_IP|" /etc/apache2/sites-available/ip.conf
+sudo sed -i "s|</VirtualHost>|Include /etc/apache2/conf-available/phpmyadmin.conf\n</VirtualHost>|" /etc/apache2/sites-available/ip.conf
+a2disconf phpmyadmin
 a2ensite ip.conf
 mkdir -p /var/www/ip/html
 cp ${TEMPLATES_PATH}ip/. /var/www/ip/html -r
