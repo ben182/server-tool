@@ -18,6 +18,12 @@ class AppServiceProvider extends ServiceProvider
             $this->error($sMessage);
             exit();
         });
+        Command::macro('addToReturn', function ($sMessage) {
+            $this->aReturn[] = $sMessage;
+        });
+        Command::macro('getReturn', function ($sMessage) {
+            return implode("\n", $this->aReturn);
+        });
     }
 
     /**

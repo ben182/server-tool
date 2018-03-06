@@ -36,16 +36,16 @@ class GitAutoDeployAddCommand extends Command
      *
      * @return mixed
      */
-    public function handle()
+    public function handle($sDir = NULL, $sBranch = NULL, $iReset = NULL)
     {
-        $dir = $this->ask('Path (from /var/www/)?');
-        $branch = $this->ask('Branch?');
-        $reset = (int) $this->confirm('Hard Reset?', 1);
+        $sDir = $sDir ?? $this->ask('Path (from /var/www/)?');
+        $sBranch = $sBranch ?? $this->ask('Branch?');
+        $iReset = $iReset ?? (int) $this->confirm('Hard Reset?', 1);
 
         $aRoute = RouteController::add([
-            'dir' => $dir,
-            'branch' => $branch,
-            'reset' => $reset,
+            'dir' => $sDir,
+            'branch' => $sBranch,
+            'reset' => $iReset,
         ]);
 
         $this->line('Route');

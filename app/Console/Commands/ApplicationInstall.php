@@ -134,9 +134,9 @@ class ApplicationInstall extends Command
                     }
                 }
 
-                $aReturn[] = 'DB Database: ' . $sDatabaseName;
-                $aReturn[] = 'DB User: ' . $aUserData['user'];
-                $aReturn[] = 'DB Password: ' . $aUserData['password'];
+                $this->addToReturn('DB Database: ' . $sDatabaseName);
+                $this->addToReturn('DB User: ' . $aUserData['user']);
+                $this->addToReturn('DB Password: ' . $aUserData['password']);
             }
 
         }else{
@@ -148,22 +148,26 @@ class ApplicationInstall extends Command
         }
 
         $bNpmInstall = $this->confirm('NPM install in cloned git folder?');
-
         if ($bNpmInstall) {
             shell_exec("cd /var/www/$sDomain/$sGitName && sudo npm install");
         }
 
         $bGitPostPullHook = $this->confirm('Git post pull hook?');
-
         if ($bGitPostPullHook) {
             copy(templates_path() . 'git/post-merge', "/var/www/$sDomain/$sGitName/.git/hooks/post-merge");
             shell_exec("chmod +x /var/www/$sDomain/$sGitName/.git/hooks/post-merge");
+        }
+
+        $bGitAutoDeploy = $this->confirm('Git auto deploy?');
+        if ($bGitAutoDeploy) {
+            $oGad = new GitAutoDeployAddCommand();
+            $oGad->handle("/var/www/$sDomain/$sGitName", $sGitBranch);
         }
 
         apache_permissions();
 
         $this->line("I cloned the repository to /var/www/$sDomain/$sGitName");
         $this->line("Repository Url is " . $oDomain->getFullUrl() . $sSubDir);
-        echo implode("\n", $aReturn);
+        echo $this->getReturn();
     }
 }
