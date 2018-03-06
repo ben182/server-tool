@@ -165,7 +165,7 @@ class ApplicationInstall extends Command
 
         $bGitAutoDeploy = $this->confirm('Git auto deploy?');
         if ($bGitAutoDeploy) {
-            $this->callSilent('gad:add', [
+            $this->call('gad:add', [
                 '--dir' => "/var/www/$sDomain/$sGitName",
                 '--branch' => $sGitBranch,
             ]);
