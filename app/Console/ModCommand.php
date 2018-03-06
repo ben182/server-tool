@@ -15,9 +15,10 @@ class ModCommand extends Command
 
     public function getReturn()
     {
-        if ($this->option('nooutput')) {
+        var_dump($this->options());
+        /* if (isset($this->options()['nooutput'])) {
             return;
-        }
+        } */
 
         return implode("\n", ModCommand::$aReturn) . "\n";
     }

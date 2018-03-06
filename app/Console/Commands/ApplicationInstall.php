@@ -169,7 +169,7 @@ class ApplicationInstall extends ModCommand
             $this->call('gad:add', [
                 '--dir' => "$sDomain/$sGitName",
                 '--branch' => $sGitBranch,
-                '--quiet' => true,
+                '--nooutput' => true,
             ]);
         }
 
