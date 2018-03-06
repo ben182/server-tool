@@ -2,26 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class RouteController extends Controller
 {
-    public static function getAll() {
+    public static function getAll()
+    {
         $aRoutes = [];
         if (Storage::exists('routes')) {
-            $aRoutes = json_decode(Storage::get('routes'), TRUE);
+            $aRoutes = json_decode(Storage::get('routes'), true);
         }
         return $aRoutes;
     }
 
-    public static function get($sIndex) {
+    public static function get($sIndex)
+    {
         $aRoutes = self::getAll();
-        return $aRoutes[$sIndex] ?? FALSE;
+        return $aRoutes[$sIndex] ?? false;
     }
 
-    public static function add($aData) {
-
+    public static function add($aData)
+    {
         $aRoutes = self::getAll();
 
         do {
@@ -35,7 +36,6 @@ class RouteController extends Controller
         $aData['dir'] = '/var/www/' . $aData['dir'];
 
         $aRoutes[$sId] = $aData;
-
 
         Storage::put('routes', json_encode($aRoutes));
 

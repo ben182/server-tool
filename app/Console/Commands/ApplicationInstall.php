@@ -2,9 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Helper\Domain;
 use Illuminate\Console\Command;
-use App\Http\Controllers\DomainController;
-use PhpParser\Node\Expr\ShellExec;
 use Illuminate\Support\Facades\Artisan;
 
 class ApplicationInstall extends Command
@@ -42,7 +41,7 @@ class ApplicationInstall extends Command
     {
         $sDomain = $this->ask('Domain?');
 
-        $oDomain = new DomainController($sDomain);
+        $oDomain = new Domain($sDomain);
 
         if ($oDomain->doesNotExist()) {
             $this->abort('The domain directory does not exist');
@@ -54,14 +53,14 @@ class ApplicationInstall extends Command
 
         $sRootOrSub = $this->choice('Root or Subdirectory?', ['Root', 'Sub']);
         if ($sRootOrSub === 'Sub') {
-            $sSubDir = $this->ask("Which one (relative to " . $oDomain->getFullUrl() . "/?");
+            $sSubDir = $this->ask('Which one (relative to ' . $oDomain->getFullUrl() . '/?');
         }
 
         $sSymlinkRootDir = '';
 
         $sDirectoryOrSymlink = $this->choice('Install in directory or add symlink for a directory', ['directory', 'symlink']);
         if ($sDirectoryOrSymlink === 'symlink') {
-            $sSymlinkRootDir = $this->ask("Which source directory?");
+            $sSymlinkRootDir = $this->ask('Which source directory?');
         }
         $sGit = $this->ask('Which Github repository?');
         $sGitBranch = $this->ask('Which Branch?');
@@ -78,12 +77,10 @@ class ApplicationInstall extends Command
                 }
 
                 if ($sDirectoryOrSymlink == 'directory') {
-
                     shell_exec("ln -s /var/www/$sDomain/$sGitName /var/www/$sDomain/html");
                 }
 
                 if ($sDirectoryOrSymlink == 'symlink') {
-
                     shell_exec("ln -s /var/www/$sDomain/$sGitName/$sSymlinkRootDir /var/www/$sDomain/html");
                 }
                 break;
@@ -139,8 +136,7 @@ class ApplicationInstall extends Command
                 $this->addToReturn('DB User: ' . $aUserData['user']);
                 $this->addToReturn('DB Password: ' . $aUserData['password']);
             }
-
-        }else{
+        } else {
             $ComposerInstall = $this->confirm('Composer install in cloned git folder?');
 
             if ($ComposerInstall) {
@@ -170,7 +166,7 @@ class ApplicationInstall extends Command
         apache_permissions();
 
         $this->line("I cloned the repository to /var/www/$sDomain/$sGitName");
-        $this->line("Repository Url is " . $oDomain->getFullUrl() . $sSubDir);
+        $this->line('Repository Url is ' . $oDomain->getFullUrl() . $sSubDir);
         echo $this->getReturn();
     }
 }

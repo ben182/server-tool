@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Helper\Domain;
 use Illuminate\Console\Command;
 
 class DeleteVhostCommand extends Command
@@ -39,7 +40,7 @@ class DeleteVhostCommand extends Command
     {
         $sDomain = $this->ask('Domain?');
 
-        $oDomain = new DomainController($sDomain);
+        $oDomain = new Domain($sDomain);
 
         if ($oDomain->doesNotExist()) {
             $this->abort('The domain directory does not exist');
@@ -48,55 +49,43 @@ class DeleteVhostCommand extends Command
         $bDeleteDir = $this->confirm('Delete folder in /var/www?', 0);
 
         $this->task('Deleting vHost', function () use ($sDomain) {
-
             try {
-
                 shell_exec("a2dissite $sDomain.conf -q 2>&1");
                 shell_exec("a2dissite $sDomain-le-ssl.conf -q 2>&1");
 
                 unlink("/etc/apache2/sites-available/$sDomain.conf");
                 unlink("/etc/apache2/sites-available/$sDomain-le-ssl.conf");
-
-            } catch(\Exception $e) {
+            } catch (\Exception $e) {
                 echo $e;
-                return FALSE;
+                return false;
             }
 
-            return TRUE;
+            return true;
         });
-
-
 
         if ($bDeleteDir) {
             $this->task('Deleting html folder', function () use ($sDomain) {
-
                 try {
-
                     shell_exec("rm -r /var/www/$sDomain 2>&1");
-
-                } catch(\Exception $e) {
+                } catch (\Exception $e) {
                     echo $e;
-                    return FALSE;
+                    return false;
                 }
 
-                return TRUE;
+                return true;
             });
         }
 
         $this->task('Clean up & Finishing', function () {
-
             try {
-
                 apache_permissions();
                 echo shell_exec('service apache2 reload 2>&1');
-
-            } catch(\Exception $e) {
+            } catch (\Exception $e) {
                 echo $e;
-                return FALSE;
+                return false;
             }
 
-            return TRUE;
+            return true;
         });
-
     }
 }

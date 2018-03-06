@@ -20,7 +20,7 @@ class AddVhostCommand extends Command
      */
     protected $description = 'Command description';
 
-    protected $bDev = FALSE;
+    protected $bDev = false;
 
     /**
      * Create a new command instance.
@@ -40,33 +40,28 @@ class AddVhostCommand extends Command
     public function handle()
     {
         if ($this->argument('dev')) {
-            $this->bDev = TRUE;
+            $this->bDev = true;
         }
 
         $sDomain = $this->ask('Domain?');
 
         $this->task('Creating vHost', function () use ($sDomain) {
-
             try {
-
                 copy(templates_path() . 'apache/vhost.conf', "/etc/apache2/sites-available/$sDomain.conf");
 
                 replace_string_in_file("/etc/apache2/sites-available/$sDomain.conf", 'DOCUMENT_ROOT', $sDomain);
-
-            } catch(\Exception $e) {
+            } catch (\Exception $e) {
                 echo $e;
-                return FALSE;
+                return false;
             }
 
-            return TRUE;
+            return true;
         });
 
         $bWwwAlias = $this->confirm('www Alias?', 1);
 
         $this->task('Configuring vHost', function () use ($sDomain, $bWwwAlias) {
-
             try {
-
                 if (!$bWwwAlias) {
                     replace_string_in_file("/etc/apache2/sites-available/$sDomain.conf", 'ServerAlias www.SERVER_NAME', '');
                 }
@@ -77,15 +72,14 @@ class AddVhostCommand extends Command
                 shell_exec("a2ensite $sDomain.conf -q 2>&1");
 
                 if (!file_exists("/var/www/$sDomain/html")) {
-                    mkdir("/var/www/$sDomain/html", 755, TRUE);
+                    mkdir("/var/www/$sDomain/html", 755, true);
                 }
-
-            } catch(\Exception $e) {
+            } catch (\Exception $e) {
                 echo $e;
-                return FALSE;
+                return false;
             }
 
-            return TRUE;
+            return true;
         });
 
         $bSsl = $this->confirm('SSL?', 1);
@@ -93,27 +87,22 @@ class AddVhostCommand extends Command
             $sEmail = $this->ask('Email?');
 
             $this->task('Setting up SSL', function () use ($sDomain, $sEmail, $bWwwAlias) {
-
                 try {
-
-                    echo shell_exec("certbot --non-interactive --agree-tos --email $sEmail --apache -d $sDomain" . ($bWwwAlias ? " -d www.$sDomain" : '') . " --quiet" . ($this->bDev ? ' --staging' : '') . " 2>&1");
-
-                } catch(\Exception $e) {
+                    echo shell_exec("certbot --non-interactive --agree-tos --email $sEmail --apache -d $sDomain" . ($bWwwAlias ? " -d www.$sDomain" : '') . ' --quiet' . ($this->bDev ? ' --staging' : '') . ' 2>&1');
+                } catch (\Exception $e) {
                     echo $e;
-                    return FALSE;
+                    return false;
                 }
 
                 $this->line('Check your SSL installation on https://www.ssllabs.com/ssltest/analyze.html?d=' . $sDomain);
-                return TRUE;
+                return true;
             });
         }
 
         $sHtaccess = $this->choice('htaccess?', ['Non SSL to SSL and www to non www', 'www to non www', 'Nothing']);
 
         $this->task('Configuring htaccess', function () use ($sDomain, $sHtaccess) {
-
             try {
-
                 switch ($sHtaccess) {
                     case 'Non SSL to SSL and www to non www':
 
@@ -132,31 +121,24 @@ class AddVhostCommand extends Command
                     default:
                         break;
                 }
-
-            } catch(\Exception $e) {
+            } catch (\Exception $e) {
                 echo $e;
-                return FALSE;
+                return false;
             }
 
-            return TRUE;
+            return true;
         });
-
-
 
         $this->task('Clean up & Finishing', function () {
-
             try {
-
                 apache_permissions();
                 echo shell_exec('service apache2 reload 2>&1');
-
-            } catch(\Exception $e) {
+            } catch (\Exception $e) {
                 echo $e;
-                return FALSE;
+                return false;
             }
 
-            return TRUE;
+            return true;
         });
-
     }
 }

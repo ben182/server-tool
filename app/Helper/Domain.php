@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Helper;
 
-use Illuminate\Http\Request;
-
-class DomainController extends Controller
+class Domain
 {
     protected $sName;
 
@@ -13,33 +11,40 @@ class DomainController extends Controller
         $this->sName = $sName;
     }
 
-    public function doesExist() {
+    public function doesExist()
+    {
         return file_exists("/etc/apache2/sites-enabled/$this->sName.conf");
     }
 
-    public function doesNotExist() {
+    public function doesNotExist()
+    {
         return !file_exists("/etc/apache2/sites-enabled/$this->sName.conf");
     }
 
-    public function isSSL() {
+    public function isSSL()
+    {
         return file_exists("/etc/apache2/sites-enabled/$this->sName-le-ssl.conf");
     }
 
-    public function isNotSSL() {
+    public function isNotSSL()
+    {
         return !file_exists("/etc/apache2/sites-enabled/$this->sName-le-ssl.conf");
     }
 
-    public function createHtmlFolder() {
+    public function createHtmlFolder()
+    {
         if (!file_exists("/var/www/$this->sName/html")) {
-            mkdir("/var/www/$this->sName/html", 755, TRUE);
+            mkdir("/var/www/$this->sName/html", 755, true);
         }
     }
 
-    public function getProtocol() {
+    public function getProtocol()
+    {
         return $this->isSSL() ? 'https://' : 'http://';
     }
 
-    public function getFullUrl() {
+    public function getFullUrl()
+    {
         return $this->getProtocol() . $this->sName;
     }
 }

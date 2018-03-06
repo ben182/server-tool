@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Http\Controllers\RouteController;
+use Illuminate\Console\Command;
 
 class GitAutoDeployAddCommand extends Command
 {
@@ -40,7 +40,7 @@ class GitAutoDeployAddCommand extends Command
     {
         $sDir = $this->option('dir') ?? $this->ask('Path (from /var/www/)?');
         $sBranch = $this->option('branch') ?? $this->ask('Branch?');
-        $iReset = (int) ($this->option('hardreset') ??  $this->confirm('Hard Reset?', 1));
+        $iReset = (int) ($this->option('hardreset') ?? $this->confirm('Hard Reset?', 1));
 
         if (!file_exists("/var/www/$sDir")) {
             $this->abort("/var/www/$sDir does not exist");
