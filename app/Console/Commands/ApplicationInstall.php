@@ -161,7 +161,7 @@ class ApplicationInstall extends Command
 
         $bGitAutoDeploy = $this->confirm('Git auto deploy?');
         if ($bGitAutoDeploy) {
-            $exitCode = Artisan::call('gad:add', [
+            echo $this->call('gad:add', [
                 '--dir' => "/var/www/$sDomain/$sGitName",
                 '--branch' => $sGitBranch,
             ]);
