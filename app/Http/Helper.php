@@ -43,9 +43,9 @@ function buildMysqlCommand($sCommand) {
 
 function createMysqlDatabase($sDatabase) {
 
-    echo buildMysqlCommand("CREATE DATABASE $sDatabase;");
+    return buildMysqlCommand("CREATE DATABASE $sDatabase;");
 }
 
-function createMysqlUserAndGiveAccessToDatabase() {
-
+function createMysqlUserAndGiveAccessToDatabase($sUser, $sPassword, $sDatabase) {
+    return buildMysqlCommand("CREATE USER '$sUser'@'localhost';") . buildMysqlCommand("GRANT ALL PRIVILEGES ON $sDatabase.* To '$sUser'@'localhost' IDENTIFIED BY '$sPassword';");
 }
