@@ -15,6 +15,10 @@ class ModCommand extends Command
 
     public static function getReturn()
     {
+        if ($this->option('nooutput')) {
+            return;
+        }
+
         return implode("\n", ModCommand::$aReturn) . "\n";
     }
 }

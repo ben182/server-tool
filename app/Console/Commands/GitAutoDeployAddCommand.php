@@ -13,7 +13,7 @@ class GitAutoDeployAddCommand extends ModCommand
      *
      * @var string
      */
-    protected $signature = 'gad:add {--dir=} {--branch=} {--hardreset=} {--quiet}';
+    protected $signature = 'gad:add {--dir=} {--branch=} {--hardreset=} {--nooutput}';
 
     /**
      * The console command description.
@@ -59,10 +59,6 @@ class GitAutoDeployAddCommand extends ModCommand
         ]));
         $this->addToReturn('Put this as a secret');
         $this->addToReturn($aRoute['secret']);
-
-        if ($this->option('quiet')) {
-            return;
-        }
 
         echo $this->getReturn();
     }
