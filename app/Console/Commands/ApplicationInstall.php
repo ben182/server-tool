@@ -129,10 +129,12 @@ class ApplicationInstall extends Command
 
                 $sMigrateOrSeed = $this->choice('Migrate Or Seed?', ['Migrate', 'Migrate & Seed', 'Nothing']);
                 if ($sMigrateOrSeed != 'Nothing') {
-                    echo shell_exec("php /var/www/$sDomain/$sGitName/artisan migrate --env=/var/www/$sDomain/$sGitName/.env");
+                    copy("/var/www/$sDomain/$sGitName/.env", "/var/www/$sDomain/$sGitName/.env2");
+
+                    echo shell_exec("php /var/www/$sDomain/$sGitName/artisan migrate --env=/var/www/$sDomain/$sGitName/.env2");
 
                     if ($sMigrateOrSeed != 'Migrate & Seed') {
-                        echo shell_exec("php /var/www/$sDomain/$sGitName/artisan db:seed --env=/var/www/$sDomain/$sGitName/.env");
+                        echo shell_exec("php /var/www/$sDomain/$sGitName/artisan db:seed --env=/var/www/$sDomain/$sGitName/.env2");
                     }
                 }
             }
