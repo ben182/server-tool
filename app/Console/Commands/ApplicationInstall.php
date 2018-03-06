@@ -108,10 +108,11 @@ class ApplicationInstall extends Command
         $bLaravel = $this->confirm('Laravel specific config?');
 
         if ($bLaravel) {
+            shell_exec("composer install -d=/var/www/$sDomain/$sGitName");
+
             copy("/var/www/$sDomain/$sGitName/.env.example", "/var/www/$sDomain/$sGitName/.env");
             replace_string_in_file("/var/www/$sDomain/$sGitName/.env", 'localhost', $oDomain->getFullUrl() . $sSubDir);
             shell_exec("php /var/www/$sDomain/$sGitName/artisan key:generate");
-            shell_exec("composer install -d=/var/www/$sDomain/$sGitName");
         }
 
         apache_permissions();
@@ -121,7 +122,7 @@ class ApplicationInstall extends Command
         if ($sRootOrSub == 'Root') {
             $this->line("Repository Url is $sDomain");
         }else{
-            $this->line("Repository Url is $sDomain$sSubDir");
+            $this->line("Repository Url is $oDomain->getFullUrl()$sSubDir");
         }
 
     }

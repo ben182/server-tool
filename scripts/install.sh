@@ -69,9 +69,9 @@ cp ${TEMPLATES_PATH}ip/. /var/www/ip/html -r
 #git clone https://github.com/ben182/git-auto-deploy.git /var/www/ip/git-auto-deploy
 cp ${ABSOLUTE_PATH}.env.example ${ABSOLUTE_PATH}.env
 sudo sed -i "s|localhost|${PUBLIC_IP}/server-tools|" ${ABSOLUTE_PATH}.env
-php ${ABSOLUTE_PATH}artisan key:generate
 ln -s ${ABSOLUTE_PATH}public /var/www/ip/html/server-tools
 composer install -d=$ABSOLUTE_PATH
+php ${ABSOLUTE_PATH}artisan key:generate
 ln -s ${ABSOLUTE_PATH}artisan /usr/bin/server-tools
 chmod +x /usr/bin/server-tools
 cp ${TEMPLATES_PATH}git/post-merge-this ${ABSOLUTE_PATH}.git/hooks/post-merge
