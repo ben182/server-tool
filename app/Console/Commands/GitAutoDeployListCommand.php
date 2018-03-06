@@ -2,10 +2,11 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
+use App\Console\ModCommand;
 use App\Http\Controllers\RouteController;
+use Illuminate\Console\Command;
 
-class GitAutoDeployListCommand extends Command
+class GitAutoDeployListCommand extends ModCommand
 {
     /**
      * The name and signature of the console command.

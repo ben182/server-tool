@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Console\Command;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,12 +17,6 @@ class AppServiceProvider extends ServiceProvider
         Command::macro('abort', function ($sMessage) {
             $this->error($sMessage);
             exit();
-        });
-        Command::macro('addToReturn', function ($sMessage) {
-            $this->aReturn[] = $sMessage;
-        });
-        Command::macro('getReturn', function () {
-            return implode("\n", $this->aReturn) . "\n";
         });
     }
 

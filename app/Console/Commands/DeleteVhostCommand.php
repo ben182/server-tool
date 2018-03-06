@@ -2,10 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Console\ModCommand;
 use App\Helper\Domain;
 use Illuminate\Console\Command;
 
-class DeleteVhostCommand extends Command
+class DeleteVhostCommand extends ModCommand
 {
     /**
      * The name and signature of the console command.

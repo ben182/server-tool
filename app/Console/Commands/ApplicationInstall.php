@@ -2,11 +2,12 @@
 
 namespace App\Console\Commands;
 
+use App\Console\ModCommand;
 use App\Helper\Domain;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 
-class ApplicationInstall extends Command
+class ApplicationInstall extends ModCommand
 {
     /**
      * The name and signature of the console command.
