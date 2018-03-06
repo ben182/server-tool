@@ -54,7 +54,7 @@ function createMysqlDatabase($sDatabase) {
     return $sDatabase;
 }
 
-function createMysqlUserAndGiveAccessToDatabase(sDatabase, $sUser = NULL, $sPassword = NULL) {
+function createMysqlUserAndGiveAccessToDatabase($sDatabase, $sUser = NULL, $sPassword = NULL) {
     if (!$sUser) {
         $sUser = random_string_random_length();
     }
