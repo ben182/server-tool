@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Foundation\Inspiring;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,3 +11,8 @@ use Illuminate\Foundation\Inspiring;
 | simple approach to interacting with each command's IO methods.
 |
 */
+
+Artisan::command('test', function () {
+    preg_match('/(?<=MAIL_DRIVER=).*/', file_get_contents(base_path('.env')), $match);
+    dd($match);
+});
