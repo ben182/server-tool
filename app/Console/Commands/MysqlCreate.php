@@ -2,9 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Console\ModCommand;
 use Illuminate\Console\Command;
 
-class MysqlCreate extends Command
+class MysqlCreate extends ModCommand
 {
     /**
      * The name and signature of the console command.
