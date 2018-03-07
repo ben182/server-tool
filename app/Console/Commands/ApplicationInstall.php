@@ -48,6 +48,8 @@ class ApplicationInstall extends ModCommand
             $this->abort('The domain directory does not exist');
         }
 
+        $env = new DotenvEditor();
+
         $aReturn = [];
 
         $sSubDir = '';
@@ -124,7 +126,9 @@ class ApplicationInstall extends ModCommand
             shell_exec("composer install -d=/var/www/$sDomain/$sGitName");
 
             copy("/var/www/$sDomain/$sGitName/.env.example", "/var/www/$sDomain/$sGitName/.env");
-            replace_string_in_file("/var/www/$sDomain/$sGitName/.env", 'http://localhost', $oDomain->getFullUrl() . $sSubDir);
+            $env->changeEnv([
+                'APP_URL' => $oDomain->getFullUrl() . $sSubDir,
+            ]);
             echo shell_exec("cd /var/www/$sDomain/$sGitName && sudo php artisan key:generate");
 
             $bDatabase = $this->confirm('Create Database?');
@@ -132,9 +136,11 @@ class ApplicationInstall extends ModCommand
                 $sDatabaseName = createMysqlDatabase($sGitName);
                 $aUserData = createMysqlUserAndGiveAccessToDatabase($sDatabaseName);
 
-                replace_string_in_file("/var/www/$sDomain/$sGitName/.env", 'DB_DATABASE=homestead', "DB_DATABASE=$sDatabaseName");
-                replace_string_in_file("/var/www/$sDomain/$sGitName/.env", 'DB_USERNAME=homestead', 'DB_USERNAME=' . $aUserData['user']);
-                replace_string_in_file("/var/www/$sDomain/$sGitName/.env", 'DB_PASSWORD=secret', 'DB_PASSWORD=' . $aUserData['password']);
+                $env->changeEnv([
+                    'DB_DATABASE' => $sDatabaseName,
+                    'DB_USERNAME' => $aUserData['user'],
+                    'DB_PASSWORD' => $aUserData['password'],
+                ]);
 
                 $sMigrateOrSeed = $this->choice('Migrate Or Seed?', ['Migrate', 'Migrate & Seed', 'Nothing']);
                 if ($sMigrateOrSeed != 'Nothing') {
