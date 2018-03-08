@@ -38,7 +38,7 @@ sudo sed -i "s|ROOT_PASSWORD_HERE|$NEW_DB_PASS|" $CONFIG_PATH
 apt-get install python-software-properties -y
 add-apt-repository ppa:ondrej/php -y
 apt-get update -y
-apt install -y php7.1 php7.1-xml php7.1-mbstring php7.1-mysql php7.1-json php7.1-curl php7.1-cli php7.1-common php7.1-mcrypt php7.1-gd libapache2-mod-php7.1 php7.1-zip
+apt install -y php7.1 php7.1-xml php7.1-mbstring php7.1-mysql php7.1-json php7.1-curl php7.1-cli php7.1-common php7.1-mcrypt php7.1-gd libapache2-mod-php7.1 php7.1-zip php7.1-intl
 
 # COMPOSER
 curl -sS https://getcomposer.org/installer | php
@@ -83,7 +83,15 @@ chown -R www-data:www-data /etc/server-tool
 chmod -R 755 /etc/server-tool
 
 echo "ServerName localhost" >> /etc/apache2/apache2.conf
-sudo sed -i "s|Options Indexes FollowSymLinks|Options -Indexes +FollowSymLinks|" /etc/apache2/apache2.conf
+echo "ServerTokens Prod" >> /etc/apache2/apache2.conf
+echo "ServerSignature Off" >> /etc/apache2/apache2.conf
+echo "FileETag None" >> /etc/apache2/apache2.conf
+echo "LoadModule headers_module /usr/lib/apache2/modules/mod_headers.so" >> /etc/apache2/apache2.conf
+echo "Header always append X-Frame-Options SAMEORIGIN" >> /etc/apache2/apache2.conf
+echo "Header set X-XSS-Protection \"1; mode=block\"" >> /etc/apache2/apache2.conf
+sudo sed -i "s|Options Indexes FollowSymLinks|Options -Indexes -Includes +FollowSymLinks|" /etc/apache2/apache2.conf
+sudo sed -i "s|Timeout 300|Timeout 60|" /etc/apache2/apache2.conf
+
 
 cp ${TEMPLATES_PATH}phpmyadmin/.htaccess /usr/share/phpmyadmin/.htaccess
 htpasswd -c -b /etc/phpmyadmin/.htpasswd $PHPMYADMIN_HTACCESS_USER $PHPMYADMIN_HTACCESS_PASS
