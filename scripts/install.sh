@@ -103,6 +103,7 @@ sudo sed -i "s|PHPMYADMIN_HTACCESS_PASSWORD|$PHPMYADMIN_HTACCESS_PASS|" $CONFIG_
 add-apt-repository -y ppa:certbot/certbot
 apt-get -y update
 apt-get install -y python-certbot-apache
+crontab -l | { cat; echo "0 */12 * * * certbot renew --post-hook \"systemctl reload apache2\""; } | crontab -
 
 # GITHUB SSH KEY
 sudo mkdir -m 0700 /var/www/.ssh
