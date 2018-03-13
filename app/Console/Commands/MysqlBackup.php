@@ -57,8 +57,7 @@ class MysqlBackup extends ModCommand
 
         $sFileName = ($bAllDatabases ? 'alldatabases' : $sAskedDbName) . '_' . date('d-m-Y_H-i-s') . '.sql';
 
-        echo('mysqldump ' . getMysqlCredentials() . ' ' . implode(' ', $aParams) . ($bAllDatabases ? '' : ' ' . $sAskedDbName) . ' > ' . base_path($sFileName));
-        return;
+        shell_exec('mysqldump ' . getMysqlCredentials() . ' ' . implode(' ', $aParams) . ($bAllDatabases ? '' : ' ' . $sAskedDbName) . ' > ' . base_path($sFileName));
 
         Storage::disk($sUploadDriver)->put(buildBackupPath('mysql', $sFileName), file_get_contents(base_path($sFileName)));
 
@@ -73,7 +72,7 @@ class MysqlBackup extends ModCommand
                     '--storage' => $sUploadDriver,
                     '--cronjob' => false,
                 ],
-                'frequency' => 'daily'
+                'frequency' => 'everyMinute'
             ]); // TODO schedule & create database for server tools in init command
         }
     }

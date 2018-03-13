@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Task;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -24,8 +25,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $tasks = Task::all();
+
+        // Go through each task to dynamically set them up.
+        foreach ($tasks as $task) {
+            call_user_func_array([$schedule->command($task->command, $task->parameter), $task->frequency], $task->frequency_parameter);
+        }
     }
 
     /**
@@ -35,7 +40,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }
