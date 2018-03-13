@@ -44,7 +44,7 @@ class ModCommand extends Command
         return $sValue;
     } */
 
-    public function choiseOption($sOption, $aAllowedValues)
+    public function choiceOption($sOption, $aAllowedValues)
     {
         $sValue = $this->option($sOption);
         if (!in_array($sValue, $aAllowedValues)) {
