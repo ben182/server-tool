@@ -5,6 +5,7 @@ namespace App\Console;
 use App\Task;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Schema;
 
 class Kernel extends ConsoleKernel
 {
@@ -25,7 +26,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        if (env('DB_DATABASE') === 'homestead') {
+        if (env('DB_DATABASE') === 'homestead' || !Schema::hasTable('tasks')) {
             return;
         }
 
