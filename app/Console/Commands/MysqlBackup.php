@@ -41,7 +41,7 @@ class MysqlBackup extends ModCommand
     {
         $aParams = [];
 
-        $bAllDatabases = $this->option('allDatabases');
+        $bAllDatabases = $this->booleanOption('allDatabases', 'Backup all databases?');
 
         if ($bAllDatabases) {
             $aParams[] = '--all-databases';
@@ -49,20 +49,22 @@ class MysqlBackup extends ModCommand
 
         $sAskedDbName = '';
         if (!$bAllDatabases) {
-            $sAskedDbName = $this->option('database');
+            $sAskedDbName = $this->stringOption('database', 'Database Name?');
         }
 
-        $sUploadDriver = $this->choiceOption('storage', ['local', 'spaces']);
+        $sUploadDriver = $this->choiceOption('storage', 'Upload to local or digitalocean spaces?', ['local', 'spaces']);
 
-        $bCronjob = $this->option('cronjob');
+        $bCronjob = $this->booleanOption('cronjob', 'Set up a cronjob that runs daily?');
 
         $sFileName = ($bAllDatabases ? 'alldatabases' : $sAskedDbName) . '_' . date('d-m-Y_H-i-s') . '.sql';
 
-        shell_exec('mysqldump ' . getMysqlCredentials() . ' ' . implode(' ', $aParams) . ($bAllDatabases ? '' : ' ' . $sAskedDbName) . ' > ' . base_path($sFileName));
+        //shell_exec('mysqldump ' . getMysqlCredentials() . ' ' . implode(' ', $aParams) . ($bAllDatabases ? '' : ' ' . $sAskedDbName) . ' > ' . base_path($sFileName));
 
-        Storage::disk($sUploadDriver)->put(buildBackupPath('mysql', $sFileName), file_get_contents(base_path($sFileName)));
+        //Storage::disk($sUploadDriver)->put(buildBackupPath('mysql', $sFileName), file_get_contents(base_path($sFileName)));
 
-        unlink(base_path($sFileName));
+        //unlink(base_path($sFileName));
+
+        dd($sAskedDbName);
 
         if ($bCronjob) {
             Task::create([

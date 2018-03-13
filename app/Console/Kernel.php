@@ -36,13 +36,18 @@ class Kernel extends ConsoleKernel
         foreach ($tasks as $task) {
             $aParameters = [];
             foreach ($task->parameter as $param => $value) {
+                if ($value == false) {
+                    continue;
+                }
                 if ($value == true) {
-                    $aParameters[] = "--$param";
+                    $aParameters[] = "$param";
                     continue;
                 }
 
-                $aParameters[] = "--$param=$value";
+                $aParameters[] = "$param=$value";
             }
+            $aParameters[] = '-n';
+
             call_user_func_array([$schedule->command($task->command . ' ' . implode(' ', $aParameters)), $task->frequency], $task->frequency_parameter);
         }
     }

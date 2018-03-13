@@ -35,21 +35,21 @@ class ModCommand extends Command
         return $this->option($sOption) ?? $this->ask($sFallbackString);
     }
 
-    /* public function choiceOption($sOption, $sFallbackString, $aAllowedValues)
+    public function choiceOption($sOption, $sFallbackString, $aAllowedValues)
     {
-        $sValue = $this->option($sOption) ?? $this->choice($sFallbackString, $aAllowedValues);
+        $sValue = $this->option($sOption) ?? $this->choice($sFallbackString, $aAllowedValues, 0);
         if (!in_array($sValue, $aAllowedValues)) {
             $this->abort("$sValue is not a valid choice for $sOption");
         }
         return $sValue;
-    } */
+    }
 
-    public function choiceOption($sOption, $aAllowedValues)
+    /* public function choiceOption($sOption, $aAllowedValues)
     {
         $sValue = $this->option($sOption);
         if (!in_array($sValue, $aAllowedValues)) {
             $this->abort("$sValue is not a valid choice for $sOption");
         }
         return $sValue;
-    }
+    } */
 }
