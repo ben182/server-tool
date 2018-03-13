@@ -50,8 +50,14 @@ class MysqlBackup extends Command
             $sAskedDbName = $this->ask('Database Name?');
         }
 
+        $sUploadDriver = $this->choice('Upload to local or digitalocean spaces?', ['local', 'spaces']);
+
         $sFileName = ($bAllDatabases ? 'alldatabases' : $sAskedDbName) . '_' . date('d-m-Y_H-i-s') . '.sql';
 
         echo shell_exec('mysqldump ' . getMysqlCredentials() . ' ' . implode(' ', $aParams) . ($bAllDatabases ? '' : ' ' . $sAskedDbName) . ' > ' . base_path($sFileName));
+
+        Storage::disk($sUploadDriver)->put('backups/mysql/' . $sFileName, file_get_contents(base_path($sFileName)));
+
+        unlink(base_path($sFileName));
     }
 }
