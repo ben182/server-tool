@@ -2,17 +2,17 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
+use App\Console\ModCommand;
 use Illuminate\Support\Facades\Storage;
 
-class MysqlBackup extends Command
+class MysqlBackup extends ModCommand
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'mysql:backup';
+    protected $signature = 'mysql:backup {--database=} {--storage=} {--allDatabases} {--cronjob}';
 
     /**
      * The console command description.
@@ -40,7 +40,7 @@ class MysqlBackup extends Command
     {
         $aParams = [];
 
-        $bAllDatabases = $this->confirm('Backup all databases?');
+        $bAllDatabases = $this->booleanOption('allDatabases', 'Backup all databases?');
 
         if ($bAllDatabases) {
             $aParams[] = '--all-databases';
@@ -48,17 +48,23 @@ class MysqlBackup extends Command
 
         $sAskedDbName = '';
         if (!$bAllDatabases) {
-            $sAskedDbName = $this->ask('Database Name?');
+            $sAskedDbName = $this->stringOption('database', 'Database Name?');
         }
 
-        $sUploadDriver = $this->choice('Upload to local or digitalocean spaces?', ['local', 'spaces']);
+        $sUploadDriver = $this->choiceOption('storage', 'Upload to local or digitalocean spaces?', ['local', 'spaces']);
+
+        $bCronjob = $this->booleanOption('cronjob', 'Set up a cronjob that runs daily?');
 
         $sFileName = ($bAllDatabases ? 'alldatabases' : $sAskedDbName) . '_' . date('d-m-Y_H-i-s') . '.sql';
 
-        echo shell_exec('mysqldump ' . getMysqlCredentials() . ' ' . implode(' ', $aParams) . ($bAllDatabases ? '' : ' ' . $sAskedDbName) . ' > ' . base_path($sFileName));
+        echo('mysqldump ' . getMysqlCredentials() . ' ' . implode(' ', $aParams) . ($bAllDatabases ? '' : ' ' . $sAskedDbName) . ' > ' . base_path($sFileName));
+        return;
 
-        Storage::disk($sUploadDriver)->put('backups/mysql/' . $sFileName, file_get_contents(base_path($sFileName)));
+        Storage::disk($sUploadDriver)->put(buildBackupPath('mysql', $sFileName), file_get_contents(base_path($sFileName)));
 
         unlink(base_path($sFileName));
+
+        if ($bCronjob) {
+        }
     }
 }

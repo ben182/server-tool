@@ -105,3 +105,12 @@ function editEnvKey($sPath, $sKey, $sValue)
         file_get_contents($sPath)
     ));
 }
+
+function getServerHostname()
+{
+    return str_replace(PHP_EOL, '', shell_exec('hostname'));
+}
+function buildBackupPath($sType, $sFilename)
+{
+    return 'backups/' . getServerHostname() . "/$sType/$sFilename";
+}

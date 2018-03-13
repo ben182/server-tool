@@ -24,4 +24,23 @@ class ModCommand extends Command
 
         return implode("\n", ModCommand::$aReturn) . "\n";
     }
+
+    public function booleanOption($sOption, $sFallbackConfirm, $iDefault = 0)
+    {
+        return $this->option($sOption) === true ? true : $this->confirm($sFallbackConfirm, $iDefault);
+    }
+
+    public function stringOption($sOption, $sFallbackString)
+    {
+        return $this->option($sOption) ?? $this->ask($sFallbackString);
+    }
+
+    public function choiceOption($sOption, $sFallbackString, $aAllowedValues)
+    {
+        $sValue = $this->option($sOption) ?? $this->choice($sFallbackString, $aAllowedValues);
+        if (!in_array($sValue, $aAllowedValues)) {
+            $this->abort("$sValue is not a valid choice for $sOption");
+        }
+        return $sValue;
+    }
 }
