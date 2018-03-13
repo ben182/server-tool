@@ -72,8 +72,8 @@ class MysqlBackup extends ModCommand
                     '--database' => $sAskedDbName,
                     '--storage' => $sUploadDriver,
                 ],
-                'frequency' => 'everyMinute'
-            ]); // TODO schedule & create database for server tools in init command
+                'frequency' => 'daily'
+            ]);
         }
     }
 }
