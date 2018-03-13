@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Console\ModCommand;
 use App\Task;
+use Illuminate\Support\Facades\Storage;
 
 class MysqlBackup extends ModCommand
 {
