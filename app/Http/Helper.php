@@ -42,14 +42,19 @@ function random_string_random_length()
     return str_random(random_int(15, 30));
 }
 
-function buildMysqlCommand($sCommand)
+function getMysqlCredentials()
 {
     $aMysql = getConfig()['mysql'];
 
     $sMysqlUser = $aMysql['username'];
     $sMysqlPassword = $aMysql['password'];
 
-    return shell_exec("mysql -u $sMysqlUser -p\"$sMysqlPassword\" -e \"$sCommand\"");
+    return "-u $sMysqlUser -p\"$sMysqlPassword\"";
+}
+
+function buildMysqlCommand($sCommand)
+{
+    return shell_exec('mysql ' . getMysqlCredentials() . " -e \"$sCommand\"");
 }
 
 function createMysqlDatabase($sDatabase)
