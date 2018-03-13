@@ -25,6 +25,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        if (env('DB_DATABASE') === 'homestead') {
+            return;
+        }
+
         $tasks = Task::all();
 
         // Go through each task to dynamically set them up.
