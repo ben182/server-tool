@@ -74,7 +74,7 @@ class MysqlBackup extends ModCommand
                     '--cronjob' => false,
                 ],
                 'frequency' => 'daily'
-            ]); // TODO schedule & create database in install script for server tools
+            ]); // TODO schedule & create database for server tools in init command
         }
     }
 }
