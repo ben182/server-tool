@@ -34,7 +34,16 @@ class Kernel extends ConsoleKernel
 
         // Go through each task to dynamically set them up.
         foreach ($tasks as $task) {
-            call_user_func_array([$schedule->command($task->command, $task->parameter), $task->frequency], $task->frequency_parameter);
+            $aParameters = [];
+            foreach ($task->parameter as $param => $value) {
+                if ($value == true) {
+                    $aParameters[] = "--$param";
+                    continue;
+                }
+
+                $aParameters[] = "--$param=$value";
+            }
+            call_user_func_array([$schedule->command($task->command . ' ' . implode(' ', $aParameters)), $task->frequency], $task->frequency_parameter);
         }
     }
 

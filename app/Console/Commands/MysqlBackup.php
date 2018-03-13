@@ -41,7 +41,7 @@ class MysqlBackup extends ModCommand
     {
         $aParams = [];
 
-        $bAllDatabases = $this->booleanOption('allDatabases', 'Backup all databases?');
+        $bAllDatabases = $this->option('allDatabases');
 
         if ($bAllDatabases) {
             $aParams[] = '--all-databases';
@@ -49,12 +49,12 @@ class MysqlBackup extends ModCommand
 
         $sAskedDbName = '';
         if (!$bAllDatabases) {
-            $sAskedDbName = $this->stringOption('database', 'Database Name?');
+            $sAskedDbName = $this->option('database');
         }
 
-        $sUploadDriver = $this->choiceOption('storage', 'Upload to local or digitalocean spaces?', ['local', 'spaces']);
+        $sUploadDriver = $this->choiceOption('storage', ['local', 'spaces']);
 
-        $bCronjob = $this->booleanOption('cronjob', 'Set up a cronjob that runs daily?');
+        $bCronjob = $this->option('cronjob');
 
         $sFileName = ($bAllDatabases ? 'alldatabases' : $sAskedDbName) . '_' . date('d-m-Y_H-i-s') . '.sql';
 
@@ -68,10 +68,9 @@ class MysqlBackup extends ModCommand
             Task::create([
                 'command' => 'mysql:backup',
                 'parameter' => [
-                    '--all-databases' => $bAllDatabases,
+                    '--allDatabases' => $bAllDatabases,
                     '--database' => $sAskedDbName,
                     '--storage' => $sUploadDriver,
-                    '--cronjob' => false,
                 ],
                 'frequency' => 'everyMinute'
             ]); // TODO schedule & create database for server tools in init command
