@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Console\ModCommand;
-use Illuminate\Support\Facades\Storage;
+use App\Task;
 
 class MysqlBackup extends ModCommand
 {
@@ -65,6 +65,16 @@ class MysqlBackup extends ModCommand
         unlink(base_path($sFileName));
 
         if ($bCronjob) {
+            Task::create([
+                'command' => 'mysql:backup',
+                'parameter' => [
+                    '--all-databases' => $bAllDatabases,
+                    '--database' => $sAskedDbName,
+                    '--storage' => $sUploadDriver,
+                    '--cronjob' => false,
+                ],
+                'frequency' => 'daily'
+            ]); // TODO schedule & create database in install script for server tools
         }
     }
 }

@@ -81,6 +81,7 @@ cp ${TEMPLATES_PATH}git/post-merge-this ${ABSOLUTE_PATH}.git/hooks/post-merge
 chmod +x ${ABSOLUTE_PATH}.git/hooks/post-merge
 chown -R www-data:www-data /etc/server-tool
 chmod -R 755 /etc/server-tool
+crontab -l | { cat; echo "* * * * * server-tools schedule:run >> /dev/null 2>&1"; } | crontab -
 
 echo "ServerName localhost" >> /etc/apache2/apache2.conf
 echo "ServerTokens Prod" >> /etc/apache2/apache2.conf
