@@ -43,7 +43,5 @@ class InitCommand extends Command
         editEnvKey(base_path('.env'), 'DB_DATABASE', $sDatabase);
         editEnvKey(base_path('.env'), 'DB_USERNAME', $aUser['user']);
         editEnvKey(base_path('.env'), 'DB_PASSWORD', $aUser['password']);
-
-        $this->call('migrate');
     }
 }
