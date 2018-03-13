@@ -36,10 +36,10 @@ class Kernel extends ConsoleKernel
         foreach ($tasks as $task) {
             $aParameters = [];
             foreach ($task->parameter as $param => $value) {
-                if ($value == false) {
+                if ($value === false) {
                     continue;
                 }
-                if ($value == true) {
+                if ($value === true) {
                     $aParameters[] = "$param";
                     continue;
                 }
