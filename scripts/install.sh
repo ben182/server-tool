@@ -158,6 +158,10 @@ chmod 600 /etc/redis/redis.conf
 systemctl start redis
 systemctl enable redis
 
+# REDIS BACKUP
+apt install ruby ruby-dev make gcc -y
+gem install redis-dump
+
 # APACHE PERMISSIONS
 apache_permissions
 service apache2 reload

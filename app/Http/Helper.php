@@ -52,6 +52,11 @@ function getMysqlCredentials()
     return "-u $sMysqlUser -p\"$sMysqlPassword\"";
 }
 
+function getRedisPassword()
+{
+    return getConfig()['redis']['password'];
+}
+
 function buildMysqlCommand($sCommand)
 {
     return shell_exec('mysql ' . getMysqlCredentials() . " -e \"$sCommand\"");
