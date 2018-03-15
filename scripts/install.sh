@@ -133,7 +133,7 @@ export NVM_DIR="$HOME/.nvm"
 # REDIS
 REDIS_PASS=$(passwordgen);
 
-apt-get install build-essential tcl
+apt-get install build-essential tcl -y
 cd /tmp
 curl -O http://download.redis.io/redis-stable.tar.gz
 tar xzvf redis-stable.tar.gz
