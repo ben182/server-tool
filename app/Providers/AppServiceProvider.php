@@ -21,6 +21,17 @@ class AppServiceProvider extends ServiceProvider
             $this->error($sMessage);
             exit();
         });
+        Command::macro('fixApachePermissions', function () {
+            echo shell_exec('chown -R www-data:www-data /var/www 2>&1');
+            echo shell_exec('chmod -R 755 /var/www 2>&1');
+            echo shell_exec('chmod g+s /var/www 2>&1');
+            echo shell_exec('chmod -R 700 /var/www/.ssh 2>&1');
+            return $this;
+        });
+        Command::macro('restartApache', function () {
+            echo shell_exec('service apache2 reload 2>&1');
+            return $this;
+        });
     }
 
     /**

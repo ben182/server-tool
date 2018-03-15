@@ -132,8 +132,7 @@ class AddVhostCommand extends ModCommand
 
         $this->task('Clean up & Finishing', function () {
             try {
-                apache_permissions();
-                echo shell_exec('service apache2 reload 2>&1');
+                $this->fixApachePermissions()->restartApache();
             } catch (\Exception $e) {
                 echo $e;
                 return false;

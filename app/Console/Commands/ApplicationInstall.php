@@ -182,7 +182,7 @@ class ApplicationInstall extends ModCommand
 
         $this->task('Clean up & Finishing', function () {
             try {
-                apache_permissions();
+                $this->fixApachePermissions();
             } catch (\Exception $e) {
                 echo $e;
                 return false;

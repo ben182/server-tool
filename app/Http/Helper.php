@@ -18,14 +18,6 @@ function replace_string_in_file($filename, $string_to_replace, $replace_with)
     file_put_contents($filename, $content);
 }
 
-function apache_permissions()
-{
-    echo shell_exec('chown -R www-data:www-data /var/www 2>&1');
-    echo shell_exec('chmod -R 755 /var/www 2>&1');
-    echo shell_exec('chmod g+s /var/www 2>&1');
-    echo shell_exec('chmod -R 700 /var/www/.ssh 2>&1');
-}
-
 function getStringBetween($str, $from, $to)
 {
     $sub = substr($str, strpos($str, $from) + strlen($from), strlen($str));
@@ -114,11 +106,7 @@ function editEnvKey($sPath, $sKey, $sValue)
     ));
 }
 
-function getServerHostname()
-{
-    return str_replace(PHP_EOL, '', shell_exec('hostname'));
-}
 function buildBackupPath($sType, $sFilename)
 {
-    return 'backups/' . getServerHostname() . "/$sType/$sFilename";
+    return 'backups/' . gethostname() . "/$sType/$sFilename";
 }
