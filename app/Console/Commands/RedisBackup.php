@@ -41,6 +41,10 @@ class MysqlBackup extends ModCommand
     {
         $sUploadDriver = $this->choiceOption('storage', 'Upload to local or digitalocean spaces?', ['local', 'spaces']);
 
+        if ($sUploadDriver === 'spaces' && !isSpacesSet()) {
+            $this->abort('Spaces is not set up correctly');
+        }
+
         $bCronjob = $this->booleanOption('cronjob', 'Set up a cronjob that runs daily?');
 
         $sFileName = date('d-m-Y_H-i-s') . '.json';

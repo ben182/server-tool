@@ -56,7 +56,10 @@ function getRedisPassword()
 {
     return getConfig()['redis']['password'];
 }
-
+function isSpacesSet()
+{
+    return env('DO_SPACES_KEY') != false;
+}
 function buildMysqlCommand($sCommand)
 {
     return shell_exec('mysql ' . getMysqlCredentials() . " -e \"$sCommand\"");
