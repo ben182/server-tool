@@ -13,5 +13,8 @@
     },
     "github": {
         "ssh": "GITHUB_SSH"
+    },
+    "redis": {
+        "password": "REDIS_PASSWORD"
     }
 }
