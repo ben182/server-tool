@@ -6,7 +6,7 @@ use App\Console\ModCommand;
 use App\Task;
 use Illuminate\Support\Facades\Storage;
 
-class MysqlBackup extends ModCommand
+class RedisBackup extends ModCommand
 {
     /**
      * The name and signature of the console command.

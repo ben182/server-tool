@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Console\ModCommand;
-use App\Http\Controllers\RouteController;
+use App\Repository;
 use Illuminate\Console\Command;
 
 class GitAutoDeployListCommand extends ModCommand
@@ -39,17 +39,15 @@ class GitAutoDeployListCommand extends ModCommand
      */
     public function handle()
     {
-        $aRoutes = RouteController::getAll();
+        $cRepositories = Repository::all();
 
-        foreach ($aRoutes as $sKey => $aRoute) {
-            $this->line($sKey . ':');
+        foreach ($cRepositories as $oRepository) {
+            $this->line($oRepository->id . ':');
 
             $this->line(' - Url: ' . route('api.gad.deploy', [
-                'id' => $aRoute['id']
+                'repository' => $oRepository->slug()
             ]));
-            foreach ($aRoute as $sKey => $sItem) {
-                $this->line(' - ' . $sKey . ': ' . $sItem);
-            }
+            $this->line(' - Secret: ' . $oRepository->secret);
         }
     }
 }

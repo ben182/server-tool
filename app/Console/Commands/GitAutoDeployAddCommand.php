@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Console\ModCommand;
-use App\Http\Controllers\RouteController;
+use App\Repository;
 use Illuminate\Console\Command;
 
 class GitAutoDeployAddCommand extends ModCommand
@@ -47,18 +47,16 @@ class GitAutoDeployAddCommand extends ModCommand
             $this->abort("/var/www/$sDir does not exist");
         }
 
-        $aRoute = RouteController::add([
+        $oRepository = Repository::create([
             'dir' => $sDir,
             'branch' => $sBranch,
             'reset' => $iReset,
         ]);
 
         $this->addToReturn('Add this route to a new github repo webhook');
-        $this->addToReturn(route('api.gad.deploy', [
-            'id' => $aRoute['id']
-        ]));
+        $this->addToReturn(action('RepositoryController@index', $oRepository));
         $this->addToReturn('Put this as a secret');
-        $this->addToReturn($aRoute['secret']);
+        $this->addToReturn($oRepository->secret);
 
         echo $this->getReturn();
     }
