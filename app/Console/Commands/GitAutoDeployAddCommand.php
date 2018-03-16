@@ -40,12 +40,13 @@ class GitAutoDeployAddCommand extends ModCommand
     public function handle()
     {
         $sDir = $this->stringOption('dir', 'Path (from /var/www/)?');
-        $sBranch = $this->stringOption('branch', 'Branch?');
-        $iReset = (int) $this->booleanOption('hardreset', 'Hard Reset?', 1);
 
         if (!file_exists("/var/www/$sDir")) {
             $this->abort("/var/www/$sDir does not exist");
         }
+
+        $sBranch = $this->stringOption('branch', 'Branch?');
+        $iReset = (int) $this->booleanOption('hardreset', 'Hard Reset?', 1);
 
         $oRepository = Repository::create([
             'dir' => $sDir,
