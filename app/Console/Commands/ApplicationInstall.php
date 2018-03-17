@@ -151,6 +151,12 @@ class ApplicationInstall extends ModCommand
                 $this->addToReturn('User: ' . $aUserData['user']);
                 $this->addToReturn('Password: ' . $aUserData['password']);
             }
+
+            $bSchedule = $this->confirm('Enable running schedule through cronjob?');
+
+            if ($bSchedule) {
+                echo shell_exec("crontab -l | { cat; echo \"* * * * * /var/www/$sDomain/$sGitName/artisan schedule:run >> /dev/null 2>&1\"; } | crontab -");
+            }
         } else {
             $ComposerInstall = $this->confirm('Composer install in cloned git folder?');
 
