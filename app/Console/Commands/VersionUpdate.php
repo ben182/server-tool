@@ -43,6 +43,6 @@ class VersionUpdate extends Command
 
     protected function nodejs()
     {
-        echo shell_exec('. ~/.nvm/nvm.sh && nvm install node && nvm use node');
+        echo shell_exec('. ~/.nvm/nvm.sh && nvm install node');
     }
 }
