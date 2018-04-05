@@ -1,7 +1,7 @@
 A fully featured Digitalocean installer and management tool optimized for Laravel
 
 ## Install
-wget -O - https://raw.githubusercontent.com/ben182/server-tool/master/scripts/get.sh | bash
+`wget -O - https://raw.githubusercontent.com/ben182/server-tool/master/scripts/get.sh | bash`
 
 This script is supposed to be run on a fresh ubuntu maschine. It will install:
 * Apache

@@ -6,6 +6,8 @@ export DEBIAN_FRONTEND="noninteractive"
 
 # VARS
 export DROPLET_ID=$(curl -s http://169.254.169.254/metadata/v1/id)
+echo "DROPLET_ID=\"${DROPLET_ID}\"" >> /etc/environment
+
 DATABASE_TEMP_PASS=root
 NEW_DB_PASS=$(passwordgen);
 PHPMYADMIN_HTACCESS_USER=$(passwordgen);
@@ -176,4 +178,4 @@ sudo chmod +x /etc/update-motd.d/99-server-tools
 apache_permissions
 service apache2 reload
 
-server-tools snapshot:setup 2>&1
+echo 'Important! Please log out of this ssh session and start a new one!'
