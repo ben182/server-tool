@@ -5,6 +5,7 @@ source /etc/server-tool/scripts/helper.sh
 export DEBIAN_FRONTEND="noninteractive"
 
 # VARS
+export DROPLET_ID=$(curl -s http://169.254.169.254/metadata/v1/id)
 DATABASE_TEMP_PASS=root
 NEW_DB_PASS=$(passwordgen);
 PHPMYADMIN_HTACCESS_USER=$(passwordgen);
@@ -140,7 +141,7 @@ curl -O http://download.redis.io/redis-stable.tar.gz
 tar xzvf redis-stable.tar.gz
 cd redis-stable
 make
-make test
+#make test
 make install
 mkdir /etc/redis
 cp /tmp/redis-stable/redis.conf /etc/redis
@@ -170,9 +171,6 @@ sudo service vnstat start
 # WELCOME MESSAGE
 cp ${TEMPLATES_PATH}update-motd.d/99-server-tools /etc/update-motd.d/99-server-tools
 sudo chmod +x /etc/update-motd.d/99-server-tools
-
-# DROPLET ID
-export DROPLET_ID=$(curl -s http://169.254.169.254/metadata/v1/id)
 
 # APACHE PERMISSIONS
 apache_permissions
