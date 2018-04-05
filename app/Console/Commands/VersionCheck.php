@@ -51,7 +51,7 @@ class VersionCheck extends Command
         $iLocalNodejsVersion = intval(preg_replace('/\D/', '', str_replace('.', '', $sLocalNodejsVersion)));
 
         if ($iRemoteNodejsVersion > $iLocalNodejsVersion) {
-            return true;
+            return $this->info($iRemoteNodejsVersion);
         }
 
         return false;
