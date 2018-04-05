@@ -171,6 +171,11 @@ sudo service vnstat start
 cp ${TEMPLATES_PATH}update-motd.d/99-server-tools /etc/update-motd.d/99-server-tools
 sudo chmod +x /etc/update-motd.d/99-server-tools
 
+# DROPLET ID
+export DROPLET_ID=$(curl -s http://169.254.169.254/metadata/v1/id)
+
 # APACHE PERMISSIONS
 apache_permissions
 service apache2 reload
+
+server-tools snapshot:setup

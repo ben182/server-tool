@@ -117,7 +117,7 @@ class ApplicationInstall extends ModCommand
         $this->addToReturn("I cloned the repository to /var/www/$sDomain/$sGitName");
         $this->addToReturn('Repository Url is ' . $oDomain->getFullUrl() . $sSubDir);
 
-        // TODO Laravel specific config and git post hook
+        // LARAVEL
         $bLaravel = $this->confirm('Laravel specific config?');
 
         if ($bLaravel) {
@@ -167,7 +167,7 @@ class ApplicationInstall extends ModCommand
 
         $bNpmInstall = $this->confirm('NPM install in cloned git folder?');
         if ($bNpmInstall) {
-            shell_exec("cd /var/www/$sDomain/$sGitName && sudo npm install");
+            shell_exec("cd /var/www/$sDomain/$sGitName && npm install");
         }
 
         $bGitPostPullHook = $this->confirm('Git post pull hook?');
