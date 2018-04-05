@@ -38,7 +38,7 @@ sudo sed -i "s|ROOT_PASSWORD_HERE|$NEW_DB_PASS|" $CONFIG_PATH
 apt-get install python-software-properties -y
 add-apt-repository ppa:ondrej/php -y
 apt-get update -y
-apt install -y php7.1 php7.1-xml php7.1-mbstring php7.1-mysql php7.1-json php7.1-curl php7.1-cli php7.1-common php7.1-mcrypt php7.1-gd libapache2-mod-php7.1 php7.1-zip php7.1-intl
+apt install -y php7.1 php7.1-xml php7.1-mbstring php7.1-mysql php7.1-json php7.1-curl php7.1-cli php7.1-common php7.1-mcrypt php7.1-gd libapache2-mod-php7.1 php7.1-zip php7.1-intl php7.1-bcmath php7.1-gmp
 
 # COMPOSER
 curl -sS https://getcomposer.org/installer | php
@@ -124,11 +124,11 @@ cp /var/www/.ssh/id_rsa.pub /root/.ssh/id_rsa.pub
 # NODE
 curl -o- -sS https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
 
-nvm install node
-nvm use node
-
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+nvm install node
+nvm use node
 
 # REDIS
 REDIS_PASS=$(passwordgen);
@@ -161,6 +161,10 @@ systemctl enable redis
 # REDIS BACKUP
 apt install ruby ruby-dev make gcc -y
 gem install redis-dump
+
+#vnStat
+sudo apt-get install vnstat -y
+sudo service vnstat start
 
 # APACHE PERMISSIONS
 apache_permissions
