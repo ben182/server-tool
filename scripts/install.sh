@@ -129,6 +129,7 @@ export NVM_DIR="$HOME/.nvm"
 
 nvm install node
 nvm use node
+n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,share} /usr/local
 
 # REDIS
 REDIS_PASS=$(passwordgen);
