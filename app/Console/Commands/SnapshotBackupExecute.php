@@ -38,7 +38,7 @@ class SnapshotBackupExecute extends Command
     public function handle()
     {
         $iKeep = $this->argument('keep');
-        die();
+
         $iDropletId = getenv('DROPLET_ID');
         if (!$iDropletId) {
             return false;
@@ -49,6 +49,6 @@ class SnapshotBackupExecute extends Command
             return false;
         }
 
-        shell_exec("/usr/local/bin/do_snapshot --only $iDropletId -k $iKeep -c -q --digital-ocean-access-token $sToken");
+        echo shell_exec("/usr/local/bin/do_snapshot --only $iDropletId -k $iKeep -c -q --digital-ocean-access-token $sToken");
     }
 }
