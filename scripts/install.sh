@@ -162,9 +162,13 @@ systemctl enable redis
 apt install ruby ruby-dev make gcc -y
 gem install redis-dump
 
-#vnStat
+# VNSTAT
 sudo apt-get install vnstat -y
 sudo service vnstat start
+
+# WELCOME MESSAGE
+cp ${TEMPLATES_PATH}update-motd.d/99-server-tools /etc/update-motd.d/99-server-tools
+sudo chmod +x /etc/update-motd.d/99-server-tools
 
 # APACHE PERMISSIONS
 apache_permissions

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+echo
+server-tools version:check nodejs
+echo
