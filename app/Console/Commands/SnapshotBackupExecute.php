@@ -49,6 +49,6 @@ class SnapshotBackupExecute extends Command
             return false;
         }
 
-        echo shell_exec("/usr/local/bin/do_snapshot --only $iDropletId -k $iKeep -c -q --digital-ocean-access-token $sToken");
+        echo shell_exec("/usr/local/bin/do_snapshot --only $iDropletId -k $iKeep -c -q --digital-ocean-access-token $sToken 2>&1");
     }
 }
