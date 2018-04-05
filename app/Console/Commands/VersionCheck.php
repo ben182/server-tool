@@ -44,8 +44,16 @@ class VersionCheck extends Command
     protected function nodejs()
     {
         $sRemoteNodejsVersion = shell_exec('curl -s semver.io/node/stable');
-        $sLocalNodejsVersion = shell_exec('nvm current');
-        echo $sRemoteNodejsVersion;
-        echo $sLocalNodejsVersion;
+        $sLocalNodejsVersion = shell_exec('. ~/.nvm/nvm.sh && nvm current');
+
+        // sanitize
+        $iRemoteNodejsVersion = intval(preg_replace('/\D/', '', str_replace('.', '', $sRemoteNodejsVersion)));
+        $iLocalNodejsVersion = intval(preg_replace('/\D/', '', str_replace('.', '', $sLocalNodejsVersion)));
+
+        if ($iRemoteNodejsVersion > $iLocalNodejsVersion) {
+            return true;
+        }
+
+        return false;
     }
 }
