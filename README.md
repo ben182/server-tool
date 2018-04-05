@@ -21,3 +21,14 @@ Furthermore it will configure the complete server to be as secure as it can get:
 * Secure Apache Configuration
 * Redis Password
 
+In the everyday usage the server-tools can also manage your server:
+* Automatic Backups
+    * MySQL
+    * Redis
+    * Complete Server Backups through Snapshots
+* Backups can be stored on DigitalOcean Spaces
+* Git Auto Deploy
+* Version Check for Node.js etc.
+* Adding vHosts
+* Adding SSL
+* Application Installs (Set up vHost, clone Git repo, laravel specific configuration, create mysql database, npm install, create git post hook)

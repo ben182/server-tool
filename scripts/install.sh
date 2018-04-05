@@ -176,4 +176,4 @@ sudo chmod +x /etc/update-motd.d/99-server-tools
 apache_permissions
 service apache2 reload
 
-server-tools snapshot:setup
+server-tools snapshot:setup 2>&1
