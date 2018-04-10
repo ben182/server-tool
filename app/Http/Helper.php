@@ -93,7 +93,9 @@ function editEnvKey($sPath, $sKey, $sValue)
         return false;
     }
 
-    preg_match("/(?<=$sKey=).*/", file_get_contents(base_path('.env')), $match);
+    $sFile = file_get_contents($sPath);
+
+    preg_match("/(?<=$sKey=).*/", $sFile, $match);
 
     if (!isset($match[0])) {
         return false;
@@ -102,8 +104,10 @@ function editEnvKey($sPath, $sKey, $sValue)
     file_put_contents($sPath, str_replace(
         "$sKey=" . $match[0],
         "$sKey=" . $sValue,
-        file_get_contents($sPath)
+        $sFile
     ));
+
+    return true;
 }
 
 function buildBackupPath($sType, $sFilename)
