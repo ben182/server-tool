@@ -21,6 +21,7 @@ sudo apt-get upgrade -y
 # APACHE
 sudo apt-get install apache2 -y
 sudo ufw allow in "Apache Full"
+sudo ufw enable
 
 cp ${ABSOLUTE_PATH}config.example.json ${ABSOLUTE_PATH}config.json
 
