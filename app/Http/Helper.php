@@ -114,3 +114,22 @@ function buildBackupPath($sType, $sFilename)
 {
     return 'backups/' . gethostname() . "/$sType/$sFilename";
 }
+
+/**
+ * Checks if a specific port is already blocked
+ *
+ * @param int $iPort
+ * @return boolean
+ */
+function checkIfPortIsUsed($iPort)
+{
+    exec('netstat -tulnp', $results);
+
+    foreach ($results as $result) {
+        if (str_contains($result, ':' . $iPort) && str_contains($result, 'LISTEN')) {
+            return true;
+        }
+    }
+
+    return false;
+}
