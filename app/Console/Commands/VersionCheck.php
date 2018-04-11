@@ -59,7 +59,7 @@ class VersionCheck extends Command
             return $this->line("A new version of Node.js is available ($sRemoteNodejsVersion). Type 'server-tools version:update nodejs' to update to the newest version.");
         }
 
-        $this->line('You use the latest version (' . $iLocalNodejsVersion . ')');
+        $this->line('You use the latest version (' . $sLocalNodejsVersion . ')');
         return false;
     }
 }
