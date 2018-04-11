@@ -21,6 +21,8 @@ sudo apt-get upgrade -y
 # APACHE
 sudo apt-get install apache2 -y
 sudo a2enmod proxy_http
+
+sudo ufw allow ssh
 sudo ufw allow in "Apache Full"
 sudo ufw enable
 
