@@ -19,4 +19,9 @@ class Repository extends Model
     {
         $this->attributes['secret'] = random_string_random_length();
     }
+
+    public function getFullDir()
+    {
+        return '/var/www/' . $this->dir;
+    }
 }

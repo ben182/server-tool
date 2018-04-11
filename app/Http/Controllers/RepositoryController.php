@@ -18,7 +18,7 @@ class RepositoryController extends Controller
             return response('Wrong Secret', 500);
         }
 
-        $sCommand = 'cd ' . $oRepository->dir;
+        $sCommand = 'cd ' . $oRepository->full_dir;
         if ($oRepository->reset) {
             $sCommand .= ' && git reset --hard HEAD 2>&1';
         }
