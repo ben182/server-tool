@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class ApachePermissions extends Command
+class ApachePermissionsCommand extends Command
 {
     /**
      * The name and signature of the console command.
