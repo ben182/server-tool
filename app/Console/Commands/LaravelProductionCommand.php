@@ -38,6 +38,6 @@ class LaravelProductionCommand extends ModCommand
      */
     public function handle()
     {
-        echo shell_exec('bash ' . scripts_path() . 'laravel.production.sh');
+        echo shell_exec('nohup bash ' . scripts_path() . 'laravel.production.sh >> /dev/null 2>&1 &');
     }
 }
