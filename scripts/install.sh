@@ -91,6 +91,7 @@ chmod -R 755 /etc/server-tool
 crontab -l | { cat; echo "* * * * * server-tools schedule:run >> /dev/null 2>&1"; } | crontab -
 server-tools init
 server-tools migrate
+server-tools config:cache
 
 echo "ServerName localhost" >> /etc/apache2/apache2.conf
 echo "ServerTokens Prod" >> /etc/apache2/apache2.conf
