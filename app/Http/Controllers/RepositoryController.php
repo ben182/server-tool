@@ -8,6 +8,10 @@ class RepositoryController extends Controller
 {
     public function index(Repository $oRepository)
     {
+        if (!isset($_SERVER['HTTP_X_HUB_SIGNATURE'])) {
+            abort(404);
+        }
+
         $postBody = file_get_contents('php://input');
 
         if ('sha1=' . hash_hmac('sha1', $postBody, $oRepository->secret) !== $_SERVER['HTTP_X_HUB_SIGNATURE']) {
@@ -21,6 +25,7 @@ class RepositoryController extends Controller
 
         $sCommand .= ' && git pull origin ' . $oRepository->branch . ' 2>&1';
 
+        echo $sCommand;
         echo shell_exec($sCommand);
     }
 }
