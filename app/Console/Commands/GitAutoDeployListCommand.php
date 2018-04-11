@@ -48,6 +48,8 @@ class GitAutoDeployListCommand extends ModCommand
                 'repository' => $oRepository->slug()
             ]));
             $this->line(' - Secret: ' . $oRepository->secret);
+            $this->line(' - Dir: ' . $oRepository->full_dir);
+            $this->line('');
         }
     }
 }
