@@ -43,6 +43,7 @@ class VersionCheck extends Command
 
     protected function nodejs()
     {
+        $this->line('Checking for new Node.js version...');
         $sRemoteNodejsVersion = shell_exec('curl -s semver.io/node/stable');
         $sLocalNodejsVersion = shell_exec('node -v');
 
@@ -55,9 +56,10 @@ class VersionCheck extends Command
         $iLocalNodejsVersion = intval(preg_replace('/\D/', '', str_replace('.', '', $sLocalNodejsVersion)));
 
         if ($iRemoteNodejsVersion > $iLocalNodejsVersion) {
-            return $this->info("A new version of Node.js is available ($sRemoteNodejsVersion). Type 'server-tools version:update nodejs' to update to the newest version.");
+            return $this->line("A new version of Node.js is available ($sRemoteNodejsVersion). Type 'server-tools version:update nodejs' to update to the newest version.");
         }
 
+        $this->line('You use the latest version (' . $iLocalNodejsVersion . ')');
         return false;
     }
 }
