@@ -41,6 +41,52 @@ class VersionCheck extends Command
         call_user_func([$this, $sApp]);
     }
 
+    /**
+     * Sanitizes a given version. v2.1.0 => 210
+     *
+     * @param string $sVersion
+     * @return integer
+     */
+    protected function sanitizeVersion($sVersion) {
+        return intval(preg_replace('/\D/', '', str_replace('.', '', $sVersion)));
+    }
+
+    /**
+     * Gets the latest version of a Github repo
+     *
+     * @param string $sOwner
+     * @param string $sRepo
+     * @return mixed The version. False in case of failure
+     */
+    public function githubGetLatestVersion($sOwner, $sRepo) {
+        $aReturn = json_decode(file_get_contents("https://api.github.com/repos/$sOwner/$sRepo/releases/latest"), true);
+        if (!isset($aReturn['tag_name'])) {
+            return false;
+        }
+        return $aReturn['tag_name'];
+    }
+
+    protected function composer() {
+        $this->line('Checking for new Composer version...');
+        $sRemoteVersion = $this->githubGetLatestVersion('composer', 'composer');
+        $sLocalVersion = preg_replace('/\D/', '', shell_exec('composer -V'));
+
+        if (str_contains($sLocalVersion, 'command not found')) {
+            return false;
+        }
+
+        // sanitize
+        $iRemoteVersion = $this->sanitizeVersion($sRemoteVersion);
+        $iLocalVersion = $this->sanitizeVersion($sLocalVersion);
+
+        if ($iRemoteVersion > $iLocalVersion) {
+            return $this->line("A new version of Composer is available ($sRemoteVersion). Type 'server-tools version:update composer' to update to the newest version.");
+        }
+
+        $this->line('You use the latest version (' . $sLocalVersion . ')');
+        return false;
+    }
+
     protected function nodejs()
     {
         $this->line('Checking for new Node.js version...');
