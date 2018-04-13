@@ -47,6 +47,10 @@ class VersionCheck extends Command
         $sRemoteNodejsVersion = shell_exec('curl -s semver.io/node/stable');
         $sLocalNodejsVersion = shell_exec('node -v');
 
+        // remove line breaks
+        $sRemoteNodejsVersion = str_replace(array("\r", "\n"), '', $sRemoteNodejsVersion);
+        $sLocalNodejsVersion = str_replace(array("\r", "\n"), '', $sLocalNodejsVersion);
+
         if (str_contains($sLocalNodejsVersion, 'command not found')) {
             return false;
         }
