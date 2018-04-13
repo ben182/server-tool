@@ -179,6 +179,9 @@ sudo service vnstat start
 cp ${TEMPLATES_PATH}update-motd.d/99-server-tools /etc/update-motd.d/99-server-tools
 sudo chmod +x /etc/update-motd.d/99-server-tools
 
+# TIMEZONE
+ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
+
 # APACHE PERMISSIONS
 apache_permissions
 service apache2 reload
