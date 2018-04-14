@@ -98,7 +98,8 @@ class VersionCheck extends Command
     protected function composer() {
         $this->line('Checking for new Composer version...');
         $sRemoteVersion = $this->githubGetLatestVersion('composer', 'composer');
-        $sLocalVersion = $this->extractVersion(shell_exec('composer -V'));
+
+        $sLocalVersion = $this->extractVersion(shell_exec('composer -V 2>&1'));
 
         if (str_contains($sLocalVersion, 'command not found')) {
             return false;
