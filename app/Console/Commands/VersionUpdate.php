@@ -49,4 +49,10 @@ class VersionUpdate extends Command
     protected function composer() {
         echo shell_exec('composer self-update');
     }
+
+    protected function nvm() {
+
+        $sDir = getenv('NVM_DIR');
+        echo shell_exec('cd ' . $sDir . ' && git fetch origin && git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)` && \. "' . $sDir . '/nvm.sh"');
+    }
 }
