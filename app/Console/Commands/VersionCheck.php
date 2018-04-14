@@ -142,4 +142,26 @@ class VersionCheck extends Command
         $this->line('You use the latest version (' . $sLocalNodejsVersion . ')');
         return false;
     }
+
+    protected function nvm() {
+        $this->line('Checking for new nvm version...');
+        $sRemoteVersion = $this->githubGetLatestVersion('creationix', 'nvm');
+
+        $sLocalVersion = $this->extractVersion(shell_exec('cd ~/.nvm && git describe'));
+
+        if (str_contains($sLocalVersion, 'command not found')) {
+            return false;
+        }
+
+        // sanitize
+        $iRemoteVersion = $this->sanitizeVersion($sRemoteVersion);
+        $iLocalVersion = $this->sanitizeVersion($sLocalVersion);
+
+        if ($iRemoteVersion > $iLocalVersion) {
+            return $this->line("A new version of nvm is available ($sRemoteVersion). Type 'server-tools version:update nvm' to update to the newest version.");
+        }
+
+        $this->line('You use the latest version (' . $sLocalVersion . ')');
+        return false;
+    }
 }
