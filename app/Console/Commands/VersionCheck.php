@@ -52,6 +52,20 @@ class VersionCheck extends Command
     }
 
     /**
+     * Extracts the version from a string
+     *
+     * @param string $sPayload
+     * @return mixed
+     */
+    protected function extractVersion($sPayload) {
+        preg_match('/\d+(\.\d+)+/', $sPayload, $match);
+        if (empty($match)) {
+            return false;
+        }
+        return $match[0];
+    }
+
+    /**
      * Gets the latest version of a Github repo
      *
      * @param string $sOwner
@@ -60,9 +74,21 @@ class VersionCheck extends Command
      */
     public function githubGetLatestVersion($sOwner, $sRepo) {
 
-        $context  = stream_context_create(array('http' => array('user_agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36')));
+        $url = "https://api.github.com/repos/$sOwner/$sRepo/releases/latest";
+        $cInit = curl_init();
+        curl_setopt($cInit, CURLOPT_URL, $url);
+        curl_setopt($cInit, CURLOPT_RETURNTRANSFER, 1); // 1 = TRUE
+        curl_setopt($cInit, CURLOPT_USERAGENT, 'Test');
+        //curl_setopt($cInit, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+        //curl_setopt($cInit, CURLOPT_USERPWD, $user . ':' . $pwd);
 
-        $aReturn = json_decode(file_get_contents("https://api.github.com/repos/$sOwner/$sRepo/releases/latest"), true, $context);
+        $output = curl_exec($cInit);
+
+        $info = curl_getinfo($cInit, CURLINFO_HTTP_CODE);
+        $aReturn = json_decode($output, true);
+
+        curl_close($cInit);
+
         if (!isset($aReturn['tag_name'])) {
             return false;
         }
@@ -72,7 +98,7 @@ class VersionCheck extends Command
     protected function composer() {
         $this->line('Checking for new Composer version...');
         $sRemoteVersion = $this->githubGetLatestVersion('composer', 'composer');
-        $sLocalVersion = preg_replace('/\D/', '', shell_exec('composer -V'));
+        $sLocalVersion = $this->extractVersion(shell_exec('composer -V'));
 
         if (str_contains($sLocalVersion, 'command not found')) {
             return false;
