@@ -59,7 +59,10 @@ class VersionCheck extends Command
      * @return mixed The version. False in case of failure
      */
     public function githubGetLatestVersion($sOwner, $sRepo) {
-        $aReturn = json_decode(file_get_contents("https://api.github.com/repos/$sOwner/$sRepo/releases/latest"), true);
+
+        $context  = stream_context_create(array('http' => array('user_agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36')));
+
+        $aReturn = json_decode(file_get_contents("https://api.github.com/repos/$sOwner/$sRepo/releases/latest"), true, $context);
         if (!isset($aReturn['tag_name'])) {
             return false;
         }

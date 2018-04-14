@@ -45,4 +45,8 @@ class VersionUpdate extends Command
     {
         echo shell_exec('. ~/.nvm/nvm.sh && nvm install node');
     }
+
+    protected function composer() {
+        echo shell_exec('composer self-update');
+    }
 }
