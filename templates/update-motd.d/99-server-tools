@@ -2,3 +2,4 @@
 
 server-tools version:check nodejs
 server-tools version:check composer
+server-tools version:check nvm
