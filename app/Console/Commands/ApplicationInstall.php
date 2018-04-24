@@ -121,7 +121,7 @@ class ApplicationInstall extends ModCommand
         $bLaravel = $this->confirm('Laravel specific config?');
 
         if ($bLaravel) {
-            shell_exec("composer install -d=/var/www/$sDomain/$sGitName");
+            shell_exec("composer install -d /var/www/$sDomain/$sGitName");
 
             copy("/var/www/$sDomain/$sGitName/.env.example", "/var/www/$sDomain/$sGitName/.env");
             editEnvKey("/var/www/$sDomain/$sGitName/.env", 'APP_URL', $oDomain->getFullUrl() . $sSubDir);
