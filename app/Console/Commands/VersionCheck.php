@@ -102,7 +102,7 @@ class VersionCheck extends Command
         $this->line('Checking for new Composer version...');
         $sRemoteVersion = $this->githubGetLatestVersion('composer', 'composer');
 
-        $sLocalVersion = shell_exec('composer -V 2>&1');
+        $sLocalVersion = shell_exec('sudo composer -V 2>&1');
 
         if (str_contains($sLocalVersion, 'command not found')) {
             return false;
@@ -123,7 +123,7 @@ class VersionCheck extends Command
     {
         $this->line('Checking for new Node.js version...');
         $sRemoteNodejsVersion = shell_exec('curl -s semver.io/node/stable');
-        $sLocalNodejsVersion = shell_exec('node -v');
+        $sLocalNodejsVersion = shell_exec('sudo node -v');
 
         if (str_contains($sLocalNodejsVersion, 'command not found')) {
             return false;
