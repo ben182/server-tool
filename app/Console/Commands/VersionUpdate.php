@@ -44,7 +44,7 @@ class VersionUpdate extends Command
     protected function nodejs()
     {
         echo shell_exec('. ~/.nvm/nvm.sh && nvm install node');
-        shell_exec('n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,share} /usr/local');
+        shell_exec('n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,share} /usr/local'); // update for all users
     }
 
     protected function composer()
