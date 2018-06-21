@@ -47,7 +47,8 @@ class VersionCheck extends Command
      * @param string $sVersion
      * @return integer
      */
-    protected function sanitizeVersion($sVersion) {
+    protected function sanitizeVersion($sVersion)
+    {
         return intval(preg_replace('/\D/', '', str_replace('.', '', $sVersion)));
     }
 
@@ -57,7 +58,8 @@ class VersionCheck extends Command
      * @param string $sPayload
      * @return mixed
      */
-    protected function extractVersion($sPayload) {
+    protected function extractVersion($sPayload)
+    {
         preg_match('/\d+(\.\d+)+/', $sPayload, $match);
         if (empty($match)) {
             return false;
@@ -72,8 +74,8 @@ class VersionCheck extends Command
      * @param string $sRepo
      * @return mixed The version. False in case of failure
      */
-    public function githubGetLatestVersion($sOwner, $sRepo) {
-
+    public function githubGetLatestVersion($sOwner, $sRepo)
+    {
         $url = "https://api.github.com/repos/$sOwner/$sRepo/releases/latest";
         $cInit = curl_init();
         curl_setopt($cInit, CURLOPT_URL, $url);
@@ -92,25 +94,25 @@ class VersionCheck extends Command
         if (!isset($aReturn['tag_name'])) {
             return false;
         }
-        return $aReturn['tag_name'];
+        return $this->extractVersion($aReturn['tag_name']);
     }
 
-    protected function composer() {
+    protected function composer()
+    {
         $this->line('Checking for new Composer version...');
         $sRemoteVersion = $this->githubGetLatestVersion('composer', 'composer');
 
-        $sLocalVersion = $this->extractVersion(shell_exec('composer -V 2>&1'));
+        $sLocalVersion = shell_exec('sudo composer -V 2>&1');
 
         if (str_contains($sLocalVersion, 'command not found')) {
             return false;
         }
 
         // sanitize
-        $iRemoteVersion = $this->sanitizeVersion($sRemoteVersion);
-        $iLocalVersion = $this->sanitizeVersion($sLocalVersion);
+        $sLocalVersion = $this->extractVersion($sLocalVersion);
 
-        if ($iRemoteVersion > $iLocalVersion) {
-            return $this->line("A new version of Composer is available ($sRemoteVersion). Type 'server-tools version:update composer' to update to the newest version.");
+        if (version_compare($sLocalVersion, $sRemoteVersion) === -1) {
+            return $this->line("A new version of Composer is available ($sLocalVersion => $sRemoteVersion). Type 'server-tools version:update composer' to update to the newest version.");
         }
 
         $this->line('You use the latest version (' . $sLocalVersion . ')');
@@ -121,44 +123,40 @@ class VersionCheck extends Command
     {
         $this->line('Checking for new Node.js version...');
         $sRemoteNodejsVersion = shell_exec('curl -s semver.io/node/stable');
-        $sLocalNodejsVersion = shell_exec('node -v');
-
-        // remove line breaks
-        $sRemoteNodejsVersion = str_replace(array("\r", "\n"), '', $sRemoteNodejsVersion);
-        $sLocalNodejsVersion = str_replace(array("\r", "\n"), '', $sLocalNodejsVersion);
+        $sLocalNodejsVersion = shell_exec('sudo node -v');
 
         if (str_contains($sLocalNodejsVersion, 'command not found')) {
             return false;
         }
 
         // sanitize
-        $iRemoteNodejsVersion = intval(preg_replace('/\D/', '', str_replace('.', '', $sRemoteNodejsVersion)));
-        $iLocalNodejsVersion = intval(preg_replace('/\D/', '', str_replace('.', '', $sLocalNodejsVersion)));
+        $sRemoteNodejsVersion = $this->extractVersion($sRemoteNodejsVersion);
+        $sLocalNodejsVersion = $this->extractVersion($sLocalNodejsVersion);
 
-        if ($iRemoteNodejsVersion > $iLocalNodejsVersion) {
-            return $this->line("A new version of Node.js is available ($sRemoteNodejsVersion). Type 'server-tools version:update nodejs' to update to the newest version.");
+        if (version_compare($sLocalNodejsVersion, $sRemoteNodejsVersion) === -1) {
+            return $this->line("A new version of Node.js is available ($sLocalNodejsVersion => $sRemoteNodejsVersion). Type 'server-tools version:update nodejs' to update to the newest version.");
         }
 
         $this->line('You use the latest version (' . $sLocalNodejsVersion . ')');
         return false;
     }
 
-    protected function nvm() {
+    protected function nvm()
+    {
         $this->line('Checking for new nvm version...');
         $sRemoteVersion = $this->githubGetLatestVersion('creationix', 'nvm');
 
-        $sLocalVersion = $this->extractVersion(shell_exec('cd ~/.nvm && git describe'));
+        $sLocalVersion = shell_exec('cd ~/.nvm && git describe');
 
         if (str_contains($sLocalVersion, 'command not found')) {
             return false;
         }
 
         // sanitize
-        $iRemoteVersion = $this->sanitizeVersion($sRemoteVersion);
-        $iLocalVersion = $this->sanitizeVersion($sLocalVersion);
+        $sLocalVersion = $this->extractVersion($sLocalVersion);
 
-        if ($iRemoteVersion > $iLocalVersion) {
-            return $this->line("A new version of nvm is available ($sRemoteVersion). Type 'server-tools version:update nvm' to update to the newest version.");
+        if (version_compare($sLocalVersion, $sRemoteVersion) === -1) {
+            return $this->line("A new version of nvm is available ($sLocalVersion => $sRemoteVersion). Type 'server-tools version:update nvm' to update to the newest version.");
         }
 
         $this->line('You use the latest version (' . $sLocalVersion . ')');

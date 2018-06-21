@@ -44,14 +44,16 @@ class VersionUpdate extends Command
     protected function nodejs()
     {
         echo shell_exec('. ~/.nvm/nvm.sh && nvm install node');
+        shell_exec('n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,share} /usr/local'); // update for all users
     }
 
-    protected function composer() {
+    protected function composer()
+    {
         echo shell_exec('composer self-update');
     }
 
-    protected function nvm() {
-
+    protected function nvm()
+    {
         $sDir = getenv('NVM_DIR');
         echo shell_exec('cd ' . $sDir . ' && git fetch origin && git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)` && \. "' . $sDir . '/nvm.sh"');
     }
