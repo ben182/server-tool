@@ -82,7 +82,7 @@ cp ${TEMPLATES_PATH}ip/. /var/www/ip/html -r
 cp ${ABSOLUTE_PATH}.env.example ${ABSOLUTE_PATH}.env
 sudo sed -i "s|localhost|${PUBLIC_IP}/server-tools|" ${ABSOLUTE_PATH}.env
 ln -s ${ABSOLUTE_PATH}public /var/www/ip/html/server-tools
-composer install -d=$ABSOLUTE_PATH
+cd $ABSOLUTE_PATH && composer install
 php ${ABSOLUTE_PATH}artisan key:generate
 ln -s ${ABSOLUTE_PATH}artisan /usr/bin/server-tools
 chmod +x /usr/bin/server-tools
