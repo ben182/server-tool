@@ -50,6 +50,6 @@ class SwitchPhpVersion extends Command
             return $this->abort('Diese Version wird nicht unterstützt');
         }
 
-        shell_exec('bash ' . scripts_path() . 'php/switch-to-php-' . $version . '.sh');
+        echo shell_exec('bash ' . scripts_path() . 'php/switch-to-php-' . $version . '.sh');
     }
 }
