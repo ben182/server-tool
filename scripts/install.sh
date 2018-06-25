@@ -34,7 +34,7 @@ echo "System Update..."
 systemUpdate &> /dev/null
 
 # APACHE
-apache() {
+apacheInstall() {
     sudo apt-get install apache2 -y
     sudo a2enmod proxy_http
 
@@ -53,10 +53,10 @@ apache() {
     sudo sed -i "s|Timeout 300|Timeout 60|" /etc/apache2/apache2.conf
 }
 echo "Installing and configuring Apache Server..."
-apache &> /dev/null
+apacheInstall &> /dev/null
 
 # MYSQL
-mysql() {
+mysqlInstall() {
     sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password $DATABASE_TEMP_PASS"
     sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $DATABASE_TEMP_PASS"
     sudo apt-get -y install mysql-server
@@ -70,7 +70,7 @@ mysql() {
     sudo sed -i "s|ROOT_PASSWORD_HERE|$NEW_DB_PASS|" $CONFIG_PATH
 }
 echo "Installing and configuring MySQL Server..."
-mysql &> /dev/null
+mysqlInstall
 
 # PHP
 #apt-get install python-software-properties -y
@@ -78,7 +78,7 @@ mysql &> /dev/null
 #apt-get update -y
 #apt install -y php7.1 php7.1-xml php7.1-mbstring php7.1-mysql php7.1-json php7.1-curl php7.1-cli php7.1-common #php7.1-mcrypt php7.1-gd libapache2-mod-php7.1 php7.1-zip php7.1-intl php7.1-bcmath php7.1-gmp
 
-php () {
+phpInstall () {
     bash /etc/server-tool/scripts/php/setup.sh &> /dev/null
     bash /etc/server-tool/scripts/php/switch-to-php-7.1.sh &> /dev/null
     phpenmod mcrypt
@@ -86,19 +86,19 @@ php () {
     service apache2 reload
 }
 echo "Installing and configuring PHP..."
-php &> /dev/null
+phpInstall &> /dev/null
 
 # COMPOSER
-composer () {
+composerInstall () {
     curl -sS https://getcomposer.org/installer | php
     mv composer.phar /usr/bin/composer
 }
 echo "Installing Composer..."
-composer &> /dev/null
+composerInstall &> /dev/null
 
 
 # PHPMYADMIN
-phpmyadmin () {
+phpmyadminInstall () {
     debconf-set-selections <<< 'phpmyadmin phpmyadmin/dbconfig-install boolean true'
     debconf-set-selections <<< 'phpmyadmin phpmyadmin/app-password-confirm password $NEW_DB_PASS'
     debconf-set-selections <<< 'phpmyadmin phpmyadmin/mysql/admin-pass password $NEW_DB_PASS'
@@ -124,7 +124,7 @@ phpmyadmin () {
     sudo sed -i "s|PHPMYADMIN_HTACCESS_PASSWORD|$PHPMYADMIN_HTACCESS_PASS|" $CONFIG_PATH
 }
 echo "Installing phpMyAdmin..."
-phpmyadmin &> /dev/null
+phpmyadminInstall &> /dev/null
 
 servertoolInstall() {
     a2ensite ip.conf
@@ -152,14 +152,14 @@ echo "Installing Server Tool..."
 servertoolInstall &> /dev/null
 
 # CERTBOT
-certbot () {
+certbotInstall () {
     add-apt-repository -y ppa:certbot/certbot
     apt-get -y update
     apt-get install -y python-certbot-apache
     crontab -l | { cat; echo "0 */12 * * * certbot renew --post-hook \"systemctl reload apache2\""; } | crontab -
 }
 echo "Installing Certbot..."
-certbot &> /dev/null
+certbotInstall &> /dev/null
 
 
 
@@ -181,7 +181,7 @@ echo "Installing SSH Key..."
 sshKey &> /dev/null
 
 # NODE
-node () {
+nodeInstall () {
     curl -o- -sS https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
 
     export NVM_DIR="$HOME/.nvm"
@@ -192,10 +192,10 @@ node () {
     n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,share} /usr/local
 }
 echo "Installing Node JS..."
-node &> /dev/null
+nodeInstall &> /dev/null
 
 # REDIS
-redis () {
+redisInstall () {
     apt-get install build-essential tcl -y
     cd /tmp
     curl -O http://download.redis.io/redis-stable.tar.gz
@@ -226,15 +226,15 @@ redis () {
     gem install redis-dump
 }
 echo "Installing Redis..."
-redis &> /dev/null
+redisInstall &> /dev/null
 
 # VNSTAT
-vnstat () {
+vnstatInstall () {
     sudo apt-get install vnstat -y
     sudo service vnstat start
 }
 echo "Installing vnStat..."
-vnstat &> /dev/null
+vnstatInstall &> /dev/null
 
 finish () {
     # WELCOME MESSAGE
