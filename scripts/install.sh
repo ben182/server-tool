@@ -70,7 +70,7 @@ mysqlInstall() {
     sudo sed -i "s|ROOT_PASSWORD_HERE|$NEW_DB_PASS|" $CONFIG_PATH
 }
 echo "Installing and configuring MySQL Server..."
-mysqlInstall
+mysqlInstall &> /dev/null
 
 # PHP
 #apt-get install python-software-properties -y
