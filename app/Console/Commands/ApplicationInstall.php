@@ -69,7 +69,7 @@ class ApplicationInstall extends ModCommand
 
         $this->task('Cloning Repository', function () use ($sDomain, $sGitBranch, $sGit) {
             try {
-                shell_exec("cd /var/www/$sDomain && git clone -b $sGitBranch $sGit");
+                quietCommand("cd /var/www/$sDomain && git clone -b $sGitBranch $sGit");
             } catch (\Exception $e) {
                 echo $e;
                 return false;
@@ -82,15 +82,15 @@ class ApplicationInstall extends ModCommand
             case 'Root':
 
                 if (file_exists("/var/www/$sDomain/html")) {
-                    shell_exec("mv /var/www/$sDomain/html /var/www/$sDomain/html2");
+                    quietCommand("mv /var/www/$sDomain/html /var/www/$sDomain/html2");
                 }
 
                 if ($sDirectoryOrSymlink == 'directory') {
-                    shell_exec("ln -s /var/www/$sDomain/$sGitName /var/www/$sDomain/html");
+                    quietCommand("ln -s /var/www/$sDomain/$sGitName /var/www/$sDomain/html");
                 }
 
                 if ($sDirectoryOrSymlink == 'symlink') {
-                    shell_exec("ln -s /var/www/$sDomain/$sGitName/$sSymlinkRootDir /var/www/$sDomain/html");
+                    quietCommand("ln -s /var/www/$sDomain/$sGitName/$sSymlinkRootDir /var/www/$sDomain/html");
                 }
                 break;
             case 'Sub':
@@ -98,11 +98,11 @@ class ApplicationInstall extends ModCommand
                 $oDomain->createHtmlFolder();
 
                 if ($sDirectoryOrSymlink == 'directory') {
-                    shell_exec("ln -s /var/www/$sDomain/$sGitName /var/www/$sDomain/html/$sSubDir");
+                    quietCommand("ln -s /var/www/$sDomain/$sGitName /var/www/$sDomain/html/$sSubDir");
                 }
 
                 if ($sDirectoryOrSymlink == 'symlink') {
-                    shell_exec("ln -s /var/www/$sDomain/$sGitName/$sSymlinkRootDir /var/www/$sDomain/html/$sSubDir");
+                    quietCommand("ln -s /var/www/$sDomain/$sGitName/$sSymlinkRootDir /var/www/$sDomain/html/$sSubDir");
                 }
                 break;
             default:
@@ -121,12 +121,12 @@ class ApplicationInstall extends ModCommand
         $bLaravel = $this->confirm('Laravel specific config?');
 
         if ($bLaravel) {
-            shell_exec("composer install -d /var/www/$sDomain/$sGitName");
+            quietCommand("composer install -d /var/www/$sDomain/$sGitName");
 
             copy("/var/www/$sDomain/$sGitName/.env.example", "/var/www/$sDomain/$sGitName/.env");
             editEnvKey("/var/www/$sDomain/$sGitName/.env", 'APP_URL', $oDomain->getFullUrl() . $sSubDir);
 
-            echo shell_exec("cd /var/www/$sDomain/$sGitName && sudo php artisan key:generate");
+            quietCommand("cd /var/www/$sDomain/$sGitName && sudo php artisan key:generate");
 
             $bDatabase = $this->confirm('Create Database?');
             if ($bDatabase) {
@@ -139,10 +139,10 @@ class ApplicationInstall extends ModCommand
 
                 $sMigrateOrSeed = $this->choice('Migrate Or Seed?', ['Migrate', 'Migrate & Seed', 'Nothing']);
                 if ($sMigrateOrSeed != 'Nothing') {
-                    echo shell_exec("cd /var/www/$sDomain/$sGitName && sudo php artisan migrate");
+                    quietCommand("cd /var/www/$sDomain/$sGitName && sudo php artisan migrate");
 
                     if ($sMigrateOrSeed == 'Migrate & Seed') {
-                        echo shell_exec("cd /var/www/$sDomain/$sGitName && sudo php artisan db:seed");
+                        quietCommand("cd /var/www/$sDomain/$sGitName && sudo php artisan db:seed");
                     }
                 }
 
@@ -155,25 +155,25 @@ class ApplicationInstall extends ModCommand
             $bSchedule = $this->confirm('Enable running schedule through cronjob?');
 
             if ($bSchedule) {
-                echo shell_exec("crontab -l | { cat; echo \"* * * * * /var/www/$sDomain/$sGitName/artisan schedule:run >> /dev/null 2>&1\"; } | crontab -");
+                quietCommand("crontab -l | { cat; echo \"* * * * * /var/www/$sDomain/$sGitName/artisan schedule:run >> /dev/null 2>&1\"; } | crontab -");
             }
         } else {
             $ComposerInstall = $this->confirm('Composer install in cloned git folder?');
 
             if ($ComposerInstall) {
-                shell_exec("composer install -d=/var/www/$sDomain/$sGitName");
+                quietCommand("composer install -d=/var/www/$sDomain/$sGitName");
             }
         }
 
         $bNpmInstall = $this->confirm('NPM install in cloned git folder?');
         if ($bNpmInstall) {
-            shell_exec("cd /var/www/$sDomain/$sGitName && npm install");
+            quietCommand("cd /var/www/$sDomain/$sGitName && npm install");
         }
 
         $bGitPostPullHook = $this->confirm('Git post pull hook?');
         if ($bGitPostPullHook) {
             copy(templates_path() . 'git/post-merge', "/var/www/$sDomain/$sGitName/.git/hooks/post-merge");
-            shell_exec("chmod +x /var/www/$sDomain/$sGitName/.git/hooks/post-merge");
+            quietCommand("chmod +x /var/www/$sDomain/$sGitName/.git/hooks/post-merge");
         }
 
         $bGitAutoDeploy = $this->confirm('Git auto deploy?');
@@ -188,7 +188,7 @@ class ApplicationInstall extends ModCommand
 
         $this->task('Clean up & Finishing', function () {
             try {
-                $this->fixApachePermissions();
+                $this->fixApachePermissions()->restartApache();
             } catch (\Exception $e) {
                 echo $e;
                 return false;

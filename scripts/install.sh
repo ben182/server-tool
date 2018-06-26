@@ -146,7 +146,10 @@ servertoolInstall() {
     crontab -l | { cat; echo "* * * * * server-tools schedule:run >> /dev/null 2>&1"; } | crontab -
     server-tools init
     server-tools migrate
+
+    server-tools view:cache
     server-tools config:cache
+    server-tools route:cache
 }
 
 echo "Installing Server Tool..."
@@ -252,4 +255,6 @@ finish () {
 echo "Finish..."
 finish &> /dev/null
 
+echo 'Installation successfully completed'
+echo 'All sensitive data is written to $CONFIG_PATH'
 echo 'Important! Please log out of this ssh session and start a new one!'

@@ -133,3 +133,7 @@ function checkIfPortIsUsed($iPort)
 
     return false;
 }
+
+function quietCommand($sCommand) {
+    shell_exec($sCommand . ' 2>&1');
+}

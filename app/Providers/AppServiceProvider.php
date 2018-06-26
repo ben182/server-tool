@@ -28,14 +28,14 @@ class AppServiceProvider extends ServiceProvider
             exit();
         });
         Command::macro('fixApachePermissions', function () {
-            echo shell_exec('chown -R www-data:www-data /var/www 2>&1');
-            echo shell_exec('chmod -R 755 /var/www 2>&1');
-            echo shell_exec('chmod g+s /var/www 2>&1');
-            echo shell_exec('chmod -R 700 /var/www/.ssh 2>&1');
+            quietCommand('chown -R www-data:www-data /var/www');
+            quietCommand('chmod -R 755 /var/www');
+            quietCommand('chmod g+s /var/www');
+            quietCommand('chmod -R 700 /var/www/.ssh');
             return $this;
         });
         Command::macro('restartApache', function () {
-            echo shell_exec('service apache2 reload 2>&1');
+            quietCommand('service apache2 reload');
             return $this;
         });
     }

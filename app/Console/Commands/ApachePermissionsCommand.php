@@ -37,6 +37,6 @@ class ApachePermissionsCommand extends Command
      */
     public function handle()
     {
-        $this->fixApachePermissions();
+        $this->fixApachePermissions()->restartApache();
     }
 }
