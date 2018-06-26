@@ -7,7 +7,7 @@ This script is supposed to be run on a fresh ubuntu maschine. It will install:
 * Apache
 * MySQL
 * phpMyAdmin
-* PHP 7.1
+* PHP 5.6, 7.0, 7.1, 7.2
 * Composer
 * Certbot
 * A Github SSH Key
@@ -32,3 +32,4 @@ In the everyday usage the server-tools can also manage your server:
 * Adding vHosts
 * Adding SSL
 * Application Installs (Set up vHost, clone Git repo, laravel specific configuration, create mysql database, npm install, create git post hook)
+* PHP Switch

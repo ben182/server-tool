@@ -51,8 +51,8 @@ class DeleteVhostCommand extends ModCommand
 
         $this->task('Deleting vHost', function () use ($sDomain) {
             try {
-                shell_exec("a2dissite $sDomain.conf -q 2>&1");
-                shell_exec("a2dissite $sDomain-le-ssl.conf -q 2>&1");
+                quietCommand("a2dissite $sDomain.conf -q");
+                quietCommand("a2dissite $sDomain-le-ssl.conf -q");
 
                 unlink("/etc/apache2/sites-available/$sDomain.conf");
                 unlink("/etc/apache2/sites-available/$sDomain-le-ssl.conf");
@@ -67,7 +67,7 @@ class DeleteVhostCommand extends ModCommand
         if ($bDeleteDir) {
             $this->task('Deleting html folder', function () use ($sDomain) {
                 try {
-                    shell_exec("rm -r /var/www/$sDomain 2>&1");
+                    quietCommand("rm -r /var/www/$sDomain");
                 } catch (\Exception $e) {
                     echo $e;
                     return false;

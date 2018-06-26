@@ -14,6 +14,9 @@ source /etc/server-tool/scripts/helper.sh
 
 # VARS
 echo "Initialization..."
+
+STARTTIME=`date +%s`
+
 export DROPLET_ID=$(curl -s http://169.254.169.254/metadata/v1/id)
 echo "DROPLET_ID=\"${DROPLET_ID}\"" >> /etc/environment
 
@@ -255,6 +258,8 @@ finish () {
 echo "Finish..."
 finish &> /dev/null
 
-echo 'Installation successfully completed'
-echo 'All sensitive data is written to $CONFIG_PATH'
+RUNTIME=$((($(date + %s) - $STARTTIME) / 60))
+
+echo "Installation successfully completed in $RUNTIME minutes"
+echo "All sensitive data is written to $CONFIG_PATH"
 echo 'Important! Please log out of this ssh session and start a new one!'
