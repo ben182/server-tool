@@ -43,5 +43,8 @@ class InitCommand extends Command
         editEnvKey(base_path('.env'), 'DB_DATABASE', $sDatabase);
         editEnvKey(base_path('.env'), 'DB_USERNAME', $aUser['user']);
         editEnvKey(base_path('.env'), 'DB_PASSWORD', $aUser['password']);
+
+        editEnvKey(base_path('.env'), 'APP_ENV', 'production');
+        editEnvKey(base_path('.env'), 'APP_DEBUG', 'false');
     }
 }
