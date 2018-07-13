@@ -147,6 +147,8 @@ servertoolInstall() {
     chown -R root:root $CONFIG_PATH
     chmod -R 755 /etc/server-tool
     crontab -l | { cat; echo "* * * * * server-tools schedule:run >> /dev/null 2>&1"; } | crontab -
+    crontab -l | { cat; echo "0 0 * * * composer self-update >> /dev/null 2>&1"; } | crontab -
+    crontab -l | { cat; echo "0 0 * * 0 apt-get autoremove && apt-get autoclean -y >> /dev/null 2>&1"; } | crontab -
     server-tools init
     server-tools migrate
 
