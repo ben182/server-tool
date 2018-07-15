@@ -38,6 +38,20 @@ class LaravelProductionCommand extends ModCommand
      */
     public function handle()
     {
-        shell_exec('nohup bash ' . scripts_path() . 'laravel.production.sh > /dev/null 2>&1 &');
+        shell_exec('php artisan down');
+        shell_exec('php artisan view:clear');
+
+        shell_exec('php artisan view:cache');
+        shell_exec('php artisan config:cache');
+        shell_exec('php artisan route:cache');
+
+        if (file_exists(getcwd() . '/yarn.lock')) {
+            shell_exec('yarn prod');
+        }else{
+            shell_exec('npm run prod');
+        }
+
+        shell_exec('php artisan up');
+        //shell_exec('nohup bash ' . scripts_path() . 'laravel.production.sh > /dev/null 2>&1 &');
     }
 }
