@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Console\ModCommand;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class LaravelProductionCommand extends ModCommand
 {
@@ -38,20 +39,20 @@ class LaravelProductionCommand extends ModCommand
      */
     public function handle()
     {
-        shell_exec('php artisan down');
-        shell_exec('php artisan view:clear');
+        Log::info(shell_exec('php artisan down'));
+        Log::info(shell_exec('php artisan view:clear'));
 
-        shell_exec('php artisan view:cache');
-        shell_exec('php artisan config:cache');
-        shell_exec('php artisan route:cache');
+        Log::info(shell_exec('php artisan view:cache'));
+        Log::info(shell_exec('php artisan config:cache'));
+        Log::info(shell_exec('php artisan route:cache'));
 
         if (file_exists(getcwd() . '/yarn.lock')) {
-            shell_exec('yarn prod');
+            Log::info(shell_exec('yarn prod'));
         }else{
-            shell_exec('npm run prod');
+            Log::info(shell_exec('npm run prod'));
         }
 
-        shell_exec('php artisan up');
+        Log::info(shell_exec('php artisan up'));
         //shell_exec('nohup bash ' . scripts_path() . 'laravel.production.sh > /dev/null 2>&1 &');
     }
 }
