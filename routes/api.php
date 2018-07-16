@@ -12,4 +12,4 @@
 |
 */
 
-Route::match(['get', 'post'], '/gad/{repository}', 'RepositoryController@index')->name('api.gad.deploy');
+Route::match(['post'], '/gad/{repository}', 'RepositoryController@index')->name('api.gad.deploy');

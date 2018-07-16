@@ -11,21 +11,15 @@ class SwitchPhpVersion extends Command
      *
      * @var string
      */
-    protected $signature = 'php:switch {version}';
+    protected $signature = 'php:switch
+                            {version : The version to switch to}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
-
-    protected $allowedVersions = [
-        '5.6',
-        '7.0',
-        '7.1',
-        '7.2',
-    ];
+    protected $description = 'Switches the PHP Version on your Apache Server and the CLI';
 
     /**
      * Create a new command instance.
@@ -46,10 +40,20 @@ class SwitchPhpVersion extends Command
     {
         $version = $this->argument('version');
 
-        if (!in_array($version, $this->allowedVersions)) {
-            return $this->abort('Diese Version wird nicht unterstützt');
+        if (!in_array($version, $this->getAvailablePhpVersions())) {
+            return $this->abort('This version is not installed on your system.');
         }
 
-        echo shell_exec('bash ' . scripts_path() . 'php/switch-to-php-' . $version . '.sh');
+        quietCommand('bash ' . scripts_path() . 'php/switch-to-php-' . $version . '.sh');
+    }
+
+    private function getAvailablePhpVersions() {
+        $aAvailableFiles = glob("/etc/apache2/mods-available/php*.load");
+
+        $aVersions = [];
+        for ($i=0; $i < $aAvailableFiles; $i++) {
+            $aVersions[] = getStringBetween($aAvailableFiles[$i], '/php', '.load');
+        }
+        return $aVersions;
     }
 }

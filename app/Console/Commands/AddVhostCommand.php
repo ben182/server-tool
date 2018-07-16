@@ -70,7 +70,7 @@ class AddVhostCommand extends ModCommand
                 replace_string_in_file("/etc/apache2/sites-available/$sDomain.conf", 'SERVER_NAME', $sDomain);
                 replace_string_in_file("/etc/apache2/sites-available/$sDomain.conf", 'NAME', $sDomain);
 
-                shell_exec("a2ensite $sDomain.conf -q 2>&1");
+                quietCommand("a2ensite $sDomain.conf -q");
 
                 if (!file_exists("/var/www/$sDomain/html")) {
                     mkdir("/var/www/$sDomain/html", 755, true);
@@ -89,7 +89,7 @@ class AddVhostCommand extends ModCommand
 
             $this->task('Setting up SSL', function () use ($sDomain, $sEmail, $bWwwAlias) {
                 try {
-                    echo shell_exec("certbot --non-interactive --agree-tos --email $sEmail --apache -d $sDomain" . ($bWwwAlias ? " -d www.$sDomain" : '') . ' --quiet' . ($this->bDev ? ' --staging' : '') . ' 2>&1');
+                    quietCommand("certbot --non-interactive --agree-tos --email $sEmail --apache -d $sDomain" . ($bWwwAlias ? " -d www.$sDomain" : '') . ' --quiet' . ($this->bDev ? ' --staging' : ''));
                 } catch (\Exception $e) {
                     echo $e;
                     return false;
@@ -100,7 +100,12 @@ class AddVhostCommand extends ModCommand
             });
         }
 
-        $sHtaccess = $this->choice('htaccess?', ['Non SSL to SSL and www to non www', 'www to non www', 'Nothing']);
+        $sHtaccess = $this->choice('htaccess?', [
+            'Non SSL to SSL and www to non www',
+            'Non SSL to SSL',
+            'www to non www',
+            'Nothing',
+        ]);
 
         $this->task('Configuring htaccess', function () use ($sDomain, $sHtaccess) {
             try {
@@ -116,6 +121,12 @@ class AddVhostCommand extends ModCommand
                     case 'www to non www':
 
                         replace_string_in_file("/etc/apache2/sites-available/$sDomain.conf", '</VirtualHost>', 'Include ' . templates_path() . 'apache/www_to_nonwww.htaccess' . PHP_EOL . '</VirtualHost>');
+
+                        break;
+
+                    case 'Non SSL to SSL':
+
+                        replace_string_in_file("/etc/apache2/sites-available/$sDomain.conf", '</VirtualHost>', 'Include ' . templates_path() . 'apache/nonSSL_to_SSL.htaccess' . PHP_EOL . '</VirtualHost>');
 
                         break;
 
