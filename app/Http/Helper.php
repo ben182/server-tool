@@ -52,9 +52,9 @@ function isSpacesSet()
 {
     return env('DO_SPACES_KEY') != false;
 }
-function buildMysqlCommand($sCommand)
+function buildMysqlCommand($sCommand, $bOutIn = false)
 {
-    return shell_exec('mysql ' . getMysqlCredentials() . " -e \"$sCommand\"");
+    return shell_exec('mysql ' . getMysqlCredentials() . " -e \"$sCommand\"" . $bOutIn ? ' 2>&1' : '');
 }
 
 function createMysqlDatabase($sDatabase)
@@ -134,6 +134,7 @@ function checkIfPortIsUsed($iPort)
     return false;
 }
 
-function quietCommand($sCommand) {
+function quietCommand($sCommand)
+{
     shell_exec($sCommand . ' 2>&1');
 }

@@ -41,6 +41,7 @@ class InstallationTestCommand extends Command
         $this->testThatDropletIdIsSetCorrectly();
         $this->testThatConfigJsonIsGenerated();
         $this->testThatApacheWorks();
+        $this->testThatMySqlWorks();
     }
 
     private function testThatDropletIdIsSetCorrectly()
@@ -59,6 +60,10 @@ class InstallationTestCommand extends Command
 
     private function testThatApacheWorks()
     {
+        $this->task('Testing Apache Status', function () {
+            return $this->isServiceActive('apache2');
+        });
+
         $this->task('Testing Apache Conf Syntax', function () {
             return $this->assert('contains', shell_exec('apachectl configtest 2>&1'), 'Syntax OK');
         });
@@ -71,6 +76,31 @@ class InstallationTestCommand extends Command
         });
     }
 
+    private function testThatMySqlWorks()
+    {
+        $this->task('Testing MySQL Status', function () {
+            return $this->isServiceActive('mysql');
+        });
+
+        $this->task('Testing MySQL Queries', function () {
+            $aAssert[] = $this->assert('contains', buildMysqlCommand('SHOW DATABASES', true), 'Database');
+            $aAssert[] = $this->assert('contains', buildMysqlCommand('SHOW DATABASES', true), 'information_schema');
+            $aAssert[] = $this->assert('contains', buildMysqlCommand('SHOW DATABASES', true), 'servertools');
+            return array_product($aAssert) === 1;
+        });
+
+        $this->task('Testing MySQL Security', function () {
+            $aAssert[] = $this->assert('notContains', buildMysqlCommand("SELECT * FROM mysql.user WHERE User=''", true), 'Host');
+            $aAssert[] = $this->assert('notContains', buildMysqlCommand("SELECT * FROM mysql.user WHERE User=''", true), 'User');
+            $aAssert[] = $this->assert('notContains', buildMysqlCommand("SELECT * FROM mysql.user WHERE User=''", true), 'localhost');
+            return array_product($aAssert) === 1;
+        });
+
+        $this->task('Testing MySQL config.json', function () {
+            return $this->assert('notContains', file_get_contents(base_path('config.json')), 'ROOT_PASSWORD_HERE');
+        });
+    }
+
     private function assert($sMethod, ...$aFunctionArguments)
     {
         try {
@@ -79,5 +109,10 @@ class InstallationTestCommand extends Command
         } catch (\InvalidArgumentException $e) {
             return false;
         }
+    }
+
+    private function isServiceActive($sServiceName)
+    {
+        return $this->assert('contains', shell_exec('systemctl is-enabled ' . $sServiceName), 'enabled');
     }
 }
