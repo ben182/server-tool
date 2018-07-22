@@ -41,6 +41,7 @@ systemUpdate &> /dev/null
 apacheInstall() {
     sudo apt-get install apache2 -y
     sudo a2enmod proxy_http
+    sudo a2enmod rewrite
 
     sudo ufw allow ssh
     sudo ufw allow in "Apache Full"
@@ -113,8 +114,6 @@ phpmyadminInstall () {
 
     cp ${TEMPLATES_PATH}apache/phpmyadmin.conf /etc/apache2/conf-available/phpmyadmin.conf
     cp ${TEMPLATES_PATH}apache/dir.conf /etc/apache2/mods-enabled/dir.conf
-
-    a2enmod rewrite
 
     cp ${TEMPLATES_PATH}apache/ip.conf /etc/apache2/sites-available/ip.conf
     sudo sed -i "s|IP_HERE|$PUBLIC_IP|" /etc/apache2/sites-available/ip.conf

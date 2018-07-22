@@ -42,6 +42,7 @@ class InstallationTestCommand extends Command
         $this->testThatConfigJsonIsGenerated();
         $this->testThatApacheWorks();
         $this->testThatMySqlWorks();
+        $this->testThatPhpWorks();
     }
 
     private function testThatDropletIdIsSetCorrectly()
@@ -74,6 +75,12 @@ class InstallationTestCommand extends Command
             $aAssert[] = $this->assert('contains', file_get_contents('/etc/apache2/apache2.conf'), 'Timeout 60');
             return array_product($aAssert) === 1;
         });
+
+        $this->task('Testing ufw', function () {
+            $aAssert[] = $this->assert('contains', shell_exec('ufw status 2>&1'), '22/tcp');
+            $aAssert[] = $this->assert('contains', shell_exec('ufw status 2>&1'), 'Apache Full');
+            return array_product($aAssert) === 1;
+        });
     }
 
     private function testThatMySqlWorks()
@@ -101,18 +108,34 @@ class InstallationTestCommand extends Command
         });
     }
 
+    private function testThatPhpWorks()
+    {
+        $this->task('Testing PHP Status', function () {
+            return $this->assert('contains', shell_exec('php -v'), 'The PHP Group');
+        });
+
+        $this->task('Testing PHP Module', function () {
+            return $this->assert('contains', shell_exec('apache2ctl -M | grep php 2>&1'), 'php');
+        });
+
+        $this->task('Testing Composer', function () {
+            return $this->assert('contains', shell_exec('composer -V 2>&1'), 'Composer version');
+        });
+    }
+
     private function assert($sMethod, ...$aFunctionArguments)
     {
         try {
             Assert::$sMethod(...$aFunctionArguments);
             return true;
         } catch (\InvalidArgumentException $e) {
+            echo $e;
             return false;
         }
     }
 
     private function isServiceActive($sServiceName)
     {
-        return $this->assert('contains', shell_exec('systemctl is-enabled ' . $sServiceName), 'enabled');
+        return $this->assert('contains', shell_exec('systemctl is-enabled ' . $sServiceName), 'enabled', 'The service ' . $sServiceName . 'is not running. Fix it by typing "service ' . $sServiceName . ' start"');
     }
 }
