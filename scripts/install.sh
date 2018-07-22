@@ -44,7 +44,7 @@ apacheInstall() {
 
     sudo ufw allow ssh
     sudo ufw allow in "Apache Full"
-    sudo ufw enable
+    sudo ufw --force enable
 
     echo "ServerName localhost" >> /etc/apache2/apache2.conf
     echo "ServerTokens Prod" >> /etc/apache2/apache2.conf
