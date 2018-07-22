@@ -54,7 +54,7 @@ function isSpacesSet()
 }
 function buildMysqlCommand($sCommand, $bOutIn = false)
 {
-    return shell_exec('mysql ' . getMysqlCredentials() . " -e \"$sCommand\"" . $bOutIn ? ' 2>&1' : '');
+    return shell_exec('mysql ' . getMysqlCredentials() . " -e \"$sCommand\"" . ($bOutIn ? ' 2>&1' : ''));
 }
 
 function createMysqlDatabase($sDatabase)
