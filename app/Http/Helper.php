@@ -120,8 +120,8 @@ function editConfigKey($sKey, $sValue)
     $sLastKey = $aKeys[count($aKeys) - 1];
 
     file_put_contents(base_path('config.json'), str_replace(
-        '"' . $sLastKey . '":"' . $sOldValue . '"',
-        '"' . $sLastKey . '":"' . $sValue . '"',
+        '"' . $sLastKey . '": "' . $sOldValue . '"',
+        '"' . $sLastKey . '": "' . $sValue . '"',
         $sFile
     ));
 
