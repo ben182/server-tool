@@ -17,8 +17,7 @@ echo "Initialization..."
 
 start=`date +%s`
 
-export DROPLET_ID=$(curl -s http://169.254.169.254/metadata/v1/id)
-echo "DROPLET_ID=\"${DROPLET_ID}\"" >> /etc/environment
+bash ${SCRIPTS_PATH}partials/setDropletId.sh
 
 DATABASE_TEMP_PASS=root
 NEW_DB_PASS=$(passwordgen);
