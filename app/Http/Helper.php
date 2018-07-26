@@ -110,6 +110,21 @@ function editEnvKey($sPath, $sKey, $sValue)
     return true;
 }
 
+function editConfigKey($sKey, $sValue)
+{
+    $sOldValue = array_get(getConfig(), $sKey);
+
+    $sFile = file_get_contents(base_path('config.json'));
+
+    file_put_contents(base_path('config.json'), str_replace(
+        '"$sKey":"' . $sOldValue . '"',
+        '"$sKey":"' . $sValue . '"',
+        $sFile
+    ));
+
+    return true;
+}
+
 function buildBackupPath($sType, $sFilename)
 {
     return 'backups/' . gethostname() . "/$sType/$sFilename";
