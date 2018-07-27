@@ -101,10 +101,12 @@ servertoolInstall() {
     server-tools init
     server-tools migrate --force
 
-    server-tools view:cache --force
-    server-tools config:cache --force
-    server-tools route:cache --force
+    server-tools view:cache
+    server-tools config:cache
+    server-tools route:cache
 }
 
 echo "Installing Server Tool..."
 servertoolInstall
+
+server-tools installation:run
