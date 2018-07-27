@@ -20,6 +20,8 @@ class InstallationRunCommand extends Command
      */
     protected $description = 'Command description';
 
+    private $aToInstall = [];
+
     /**
      * Create a new command instance.
      *
@@ -45,13 +47,9 @@ class InstallationRunCommand extends Command
         $this->openMenu('Redis', 'redis');
         $this->openMenu('vnStat', 'vnstat');
 
-        foreach (getInstallationConfig() as $key => $value) {
-            if ($value !== 'true') {
-                continue;
-            }
+        foreach ($this->aToInstall as $key) {
             echo shell_exec('bash ' . scripts_path() . 'partials/' . $key . '.sh');
         }
-        echo shell_exec('bash ' . scripts_path() . 'partials/finish.sh');
     }
 
     private function openMenu($sTitle, $sKey)
@@ -64,5 +62,6 @@ class InstallationRunCommand extends Command
             'no',
         ])->disableDefaultItems()->open();
         editInstalllationKey($sKey, json_encode($option === 0));
+        $this->aToInstall[] = $sKey;
     }
 }

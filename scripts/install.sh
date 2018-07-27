@@ -110,3 +110,4 @@ echo "Installing Server Tool..."
 servertoolInstall
 
 server-tools installation:run
+bash ${SCRIPTS_PATH}partials/finish.sh
