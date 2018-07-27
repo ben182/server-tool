@@ -43,7 +43,7 @@ apacheInstall() {
     sudo sed -i "s|Timeout 300|Timeout 60|" /etc/apache2/apache2.conf
 }
 echo "Installing and configuring Apache Server..."
-apacheInstall &> /dev/null
+apacheInstall
 
 phpInstall () {
     bash /etc/server-tool/scripts/php/setup.sh &> /dev/null
@@ -53,7 +53,7 @@ phpInstall () {
     service apache2 reload
 }
 echo "Installing and configuring PHP..."
-phpInstall &> /dev/null
+phpInstall
 
 # COMPOSER
 composerInstall () {
@@ -61,7 +61,7 @@ composerInstall () {
     mv composer.phar /usr/bin/composer
 }
 echo "Installing Composer..."
-composerInstall &> /dev/null
+composerInstall
 
 # MYSQL
 mysqlInstall() {
@@ -78,10 +78,9 @@ mysqlInstall() {
     sudo sed -i "s|ROOT_PASSWORD_HERE|$NEW_DB_PASS|" $CONFIG_PATH
 }
 echo "Installing and configuring MySQL Server..."
-mysqlInstall &> /dev/null
+mysqlInstall
 
 servertoolInstall() {
-    a2ensite ip.conf
     mkdir -p /var/www/ip/html
     cp ${TEMPLATES_PATH}ip/. /var/www/ip/html -r
     cp ${ABSOLUTE_PATH}.env.example ${ABSOLUTE_PATH}.env
@@ -108,4 +107,4 @@ servertoolInstall() {
 }
 
 echo "Installing Server Tool..."
-servertoolInstall &> /dev/null
+servertoolInstall
