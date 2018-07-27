@@ -83,7 +83,7 @@ class AddVhostCommand extends ModCommand
             return true;
         });
 
-        $bSsl = $this->confirm('SSL?', 1);
+        $bSsl = $this->confirm('SSL?', 1); // TODO depends on certbot installation
         if ($bSsl) {
             $sEmail = $this->ask('Email?');
 

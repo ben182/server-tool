@@ -29,6 +29,11 @@ function getConfig()
     return json_decode(file_get_contents(base_path('config.json')), true);
 }
 
+function getInstallationConfig()
+{
+    return json_decode(file_get_contents(base_path('installation.json')), true);
+}
+
 function random_string_random_length()
 {
     return str_random(random_int(15, 30));
@@ -120,6 +125,24 @@ function editConfigKey($sKey, $sValue)
     $sLastKey = $aKeys[count($aKeys) - 1];
 
     file_put_contents(base_path('config.json'), str_replace(
+        '"' . $sLastKey . '": "' . $sOldValue . '"',
+        '"' . $sLastKey . '": "' . $sValue . '"',
+        $sFile
+    ));
+
+    return true;
+}
+
+function editInstalllationKey($sKey, $sValue)
+{
+    $sOldValue = array_get(getInstallationConfig(), $sKey);
+
+    $sFile = file_get_contents(base_path('installation.json'));
+
+    $aKeys = explode('.', $sKey);
+    $sLastKey = $aKeys[count($aKeys) - 1];
+
+    file_put_contents(base_path('installation.json'), str_replace(
         '"' . $sLastKey . '": "' . $sOldValue . '"',
         '"' . $sLastKey . '": "' . $sValue . '"',
         $sFile

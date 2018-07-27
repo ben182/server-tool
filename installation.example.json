@@ -1,0 +1,9 @@
+{
+    "phpmyadmin": "false",
+    "certbot": "false",
+    "sshKey": "false",
+    "node": "false",
+    "yarn": "false",
+    "redis": "false",
+    "vnstat": "false"
+}
