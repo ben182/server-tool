@@ -37,53 +37,32 @@ class InstallationRunCommand extends Command
      */
     public function handle()
     {
-        $option = $this->menu('Install phpMyAdmin', [
-            'yes',
-            'no',
-        ])->open();
-        editInstalllationKey('phpmyadmin', json_encode($option === 0));
-
-        $option = $this->menu('Install certbot', [
-            'yes',
-            'no',
-        ])->open();
-        editInstalllationKey('certbot', json_encode($option === 0));
-
-        $option = $this->menu('Generate SSH key', [
-            'yes',
-            'no',
-        ])->open();
-        editInstalllationKey('sshKey', json_encode($option === 0));
-
-        $option = $this->menu('Install Node.js (version-manager)', [
-            'yes',
-            'no',
-        ])->open();
-        editInstalllationKey('node', json_encode($option === 0));
-
-        $option = $this->menu('Install yarn', [ // depends on node.js
-            'yes',
-            'no',
-        ])->open();
-        editInstalllationKey('yarn', json_encode($option === 0));
-
-        $option = $this->menu('Install Redis', [
-            'yes',
-            'no',
-        ])->open();
-        editInstalllationKey('redis', json_encode($option === 0));
-
-        $option = $this->menu('Install vnStat', [
-            'yes',
-            'no',
-        ])->open();
-        editInstalllationKey('vnstat', json_encode($option === 0));
+        $this->openMenu('phpMyAdmin', 'phpmyadmin');
+        $this->openMenu('certbot', 'certbot');
+        $this->openMenu('SSH key', 'sshKey');
+        $this->openMenu('Node.js (version-manager)', 'node');
+        $this->openMenu('yarn', 'yarn');
+        $this->openMenu('Redis', 'redis');
+        $this->openMenu('vnStat', 'vnstat');
 
         foreach (getInstallationConfig() as $key => $value) {
             if ($value !== 'true') {
                 continue;
             }
-            echo shell_exec('bash ' . scripts_path() . 'partials/' . $key);
+            echo shell_exec('bash ' . scripts_path() . 'partials/' . $key . '.sh');
         }
+        echo shell_exec('bash ' . scripts_path() . 'partials/finish.sh');
+    }
+
+    private function openMenu($sTitle, $sKey)
+    {
+        if (getInstallationConfig()[$sKey] === 'true') {
+            return;
+        }
+        $option = $this->menu('Install ' . $sTitle, [
+            'yes',
+            'no',
+        ])->disableDefaultItems()->open();
+        editInstalllationKey($sKey, json_encode($option === 0));
     }
 }
