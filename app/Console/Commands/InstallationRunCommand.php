@@ -41,43 +41,43 @@ class InstallationRunCommand extends Command
             'yes',
             'no',
         ])->open();
-        editInstalllationKey('phpmyadmin', json_encode($option === 'yes'));
+        editInstalllationKey('phpmyadmin', json_encode($option === 0));
 
         $option = $this->menu('Install certbot', [
             'yes',
             'no',
         ])->open();
-        editInstalllationKey('certbot', json_encode($option === 'yes'));
+        editInstalllationKey('certbot', json_encode($option === 0));
 
         $option = $this->menu('Generate SSH key', [
             'yes',
             'no',
         ])->open();
-        editInstalllationKey('sshKey', json_encode($option === 'yes'));
+        editInstalllationKey('sshKey', json_encode($option === 0));
 
         $option = $this->menu('Install Node.js (version-manager)', [
             'yes',
             'no',
         ])->open();
-        editInstalllationKey('node', json_encode($option === 'yes'));
+        editInstalllationKey('node', json_encode($option === 0));
 
         $option = $this->menu('Install yarn', [ // depends on node.js
             'yes',
             'no',
         ])->open();
-        editInstalllationKey('yarn', json_encode($option === 'yes'));
+        editInstalllationKey('yarn', json_encode($option === 0));
 
         $option = $this->menu('Install Redis', [
             'yes',
             'no',
         ])->open();
-        editInstalllationKey('redis', json_encode($option === 'yes'));
+        editInstalllationKey('redis', json_encode($option === 0));
 
         $option = $this->menu('Install vnStat', [
             'yes',
             'no',
         ])->open();
-        editInstalllationKey('vnstat', json_encode($option === 'yes'));
+        editInstalllationKey('vnstat', json_encode($option === 0));
 
         foreach (getInstallationConfig() as $key => $value) {
             if ($value !== 'true') {
