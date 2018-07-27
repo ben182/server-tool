@@ -99,11 +99,11 @@ servertoolInstall() {
     crontab -l | { cat; echo "0 0 * * * composer self-update >> /dev/null 2>&1"; } | crontab -
     crontab -l | { cat; echo "0 0 * * 0 apt-get autoremove && apt-get autoclean -y >> /dev/null 2>&1"; } | crontab -
     server-tools init
-    server-tools migrate
+    server-tools migrate --force
 
-    server-tools view:cache
-    server-tools config:cache
-    server-tools route:cache
+    server-tools view:cache --force
+    server-tools config:cache --force
+    server-tools route:cache --force
 }
 
 echo "Installing Server Tool..."
