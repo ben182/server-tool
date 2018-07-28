@@ -8,6 +8,14 @@ class ModCommand extends Command
 {
     public static $aReturn;
 
+    public $shell;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->shell = resolve('Shell');
+    }
+
     public static function addToReturn($sMessage)
     {
         ModCommand::$aReturn[] = $sMessage;

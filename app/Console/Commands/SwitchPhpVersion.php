@@ -2,9 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Console\ModCommand;
 use Illuminate\Console\Command;
 
-class SwitchPhpVersion extends Command
+class SwitchPhpVersion extends ModCommand
 {
     /**
      * The name and signature of the console command.
@@ -44,7 +45,7 @@ class SwitchPhpVersion extends Command
             return $this->abort('This version is not installed on your system.');
         }
 
-        quietCommand('bash ' . scripts_path() . 'php/switch-to-php-' . $version . '.sh');
+        $this->shell->execScript('php/switch-to-php-' . $version);
     }
 
     private function getAvailablePhpVersions()

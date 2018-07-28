@@ -2,9 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Console\ModCommand;
 use Illuminate\Console\Command;
 
-class InstallationRunCommand extends Command
+class InstallationRunCommand extends ModCommand
 {
     /**
      * The name and signature of the console command.
@@ -47,8 +48,8 @@ class InstallationRunCommand extends Command
         $this->openMenu('Redis', 'redis');
         $this->openMenu('vnStat', 'vnstat');
 
-        foreach ($this->aToInstall as $key) {
-            echo shell_exec('bash ' . scripts_path() . 'partials/' . $key . '.sh');
+        foreach ($this->aToInstall as $sFiles) {
+            $this->shell->execScript('partials/' . $sFiles);
         }
     }
 
@@ -62,7 +63,7 @@ class InstallationRunCommand extends Command
             'no',
         ])->disableDefaultItems()->open();
 
-        editInstalllationKey($sKey, json_encode($option === 0));
+        editInstallationKey($sKey, json_encode($option === 0));
 
         if ($option === 0) {
             $this->aToInstall[] = $sKey;

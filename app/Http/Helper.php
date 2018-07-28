@@ -133,7 +133,7 @@ function editConfigKey($sKey, $sValue)
     return true;
 }
 
-function editInstalllationKey($sKey, $sValue)
+function editInstallationKey($sKey, $sValue)
 {
     $sOldValue = array_get(getInstallationConfig(), $sKey);
 
