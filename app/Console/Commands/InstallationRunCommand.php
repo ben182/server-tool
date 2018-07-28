@@ -57,11 +57,15 @@ class InstallationRunCommand extends Command
         if (getInstallationConfig()[$sKey] === 'true') {
             return;
         }
-        $option = $this->menu('Install ' . $sTitle, [
+        $option = $this->menu('Install ' . $sTitle . '?', [
             'yes',
             'no',
         ])->disableDefaultItems()->open();
+
         editInstalllationKey($sKey, json_encode($option === 0));
-        $this->aToInstall[] = $sKey;
+
+        if ($option === 0) {
+            $this->aToInstall[] = $sKey;
+        }
     }
 }
