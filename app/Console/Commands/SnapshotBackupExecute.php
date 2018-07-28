@@ -41,12 +41,12 @@ class SnapshotBackupExecute extends Command
         $iKeep = $this->argument('keep');
 
         $iDropletId = getenv('DROPLET_ID');
-        if (!$iDropletId) {
+        if (! $iDropletId) {
             return false;
         }
 
         $sToken = decrypt(getenv('DOAT'));
-        if (!$sToken) {
+        if (! $sToken) {
             return false;
         }
 

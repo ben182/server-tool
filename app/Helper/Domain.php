@@ -18,7 +18,7 @@ class Domain
 
     public function doesNotExist()
     {
-        return !file_exists("/etc/apache2/sites-enabled/$this->sName.conf");
+        return ! file_exists("/etc/apache2/sites-enabled/$this->sName.conf");
     }
 
     public function isSSL()
@@ -28,12 +28,12 @@ class Domain
 
     public function isNotSSL()
     {
-        return !file_exists("/etc/apache2/sites-enabled/$this->sName-le-ssl.conf");
+        return ! file_exists("/etc/apache2/sites-enabled/$this->sName-le-ssl.conf");
     }
 
     public function createHtmlFolder()
     {
-        if (!file_exists("/var/www/$this->sName/html")) {
+        if (! file_exists("/var/www/$this->sName/html")) {
             mkdir("/var/www/$this->sName/html", 755, true);
         }
     }

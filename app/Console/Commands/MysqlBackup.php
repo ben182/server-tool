@@ -48,13 +48,13 @@ class MysqlBackup extends ModCommand
         }
 
         $sAskedDbName = '';
-        if (!$bAllDatabases) {
+        if (! $bAllDatabases) {
             $sAskedDbName = $this->stringOption('database', 'Database Name?');
         }
 
         $sUploadDriver = $this->choiceOption('storage', 'Upload to local or digitalocean spaces?', ['local', 'spaces']);
 
-        if ($sUploadDriver === 'spaces' && !isSpacesSet()) {
+        if ($sUploadDriver === 'spaces' && ! isSpacesSet()) {
             $this->abort('Spaces is not set up correctly');
         }
 
@@ -70,11 +70,11 @@ class MysqlBackup extends ModCommand
 
         if ($bCronjob) {
             Task::create([
-                'command' => 'mysql:backup',
+                'command'   => 'mysql:backup',
                 'parameter' => [
                     '--allDatabases' => $bAllDatabases,
-                    '--database' => $sAskedDbName,
-                    '--storage' => $sUploadDriver,
+                    '--database'     => $sAskedDbName,
+                    '--storage'      => $sUploadDriver,
                 ],
                 'frequency' => 'daily'
             ]);

@@ -47,6 +47,5 @@ class RefreshEnvironment extends Command
             shell_exec("service mysql restart");
             editConfigKey('mysql.password', $NEW_DB_PASS);
         });
-
     }
 }

@@ -41,7 +41,7 @@ class GitAutoDeployAddCommand extends ModCommand
     {
         $sDir = $this->stringOption('dir', 'Path (from /var/www/)?');
 
-        if (!file_exists("/var/www/$sDir")) {
+        if (! file_exists("/var/www/$sDir")) {
             $this->abort("/var/www/$sDir does not exist");
         }
 
@@ -49,9 +49,9 @@ class GitAutoDeployAddCommand extends ModCommand
         $iReset = (int) $this->booleanOption('hardreset', 'Hard Reset?', 1);
 
         $oRepository = Repository::create([
-            'dir' => $sDir,
+            'dir'    => $sDir,
             'branch' => $sBranch,
-            'reset' => $iReset,
+            'reset'  => $iReset,
         ]);
 
         $this->addToReturn('Add this route to a new github repo webhook');

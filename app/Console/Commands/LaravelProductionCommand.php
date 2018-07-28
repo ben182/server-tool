@@ -48,7 +48,7 @@ class LaravelProductionCommand extends ModCommand
 
         if (file_exists(getcwd() . '/yarn.lock')) {
             Log::info(shell_exec('yarn prod'));
-        }else{
+        } else {
             Log::info(shell_exec('npm run prod'));
         }
 

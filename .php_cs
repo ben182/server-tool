@@ -10,6 +10,10 @@ $rules = [
     'no_short_echo_tag' => true,
     'no_unused_imports' => true,
     'not_operator_with_successor_space' => true,
+    'binary_operator_spaces' => ['align_double_arrow' => true],
+    'linebreak_after_opening_tag' => true,
+    'ordered_imports' => true,
+    'phpdoc_order' => true,
 ];
 $excludes = [
     // add exclude project directory

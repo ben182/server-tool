@@ -8,7 +8,7 @@ class RepositoryController extends Controller
 {
     public function index(Repository $oRepository)
     {
-        if (!isset($_SERVER['HTTP_X_HUB_SIGNATURE'])) {
+        if (! isset($_SERVER['HTTP_X_HUB_SIGNATURE'])) {
             abort(404);
         }
 

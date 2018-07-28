@@ -63,7 +63,7 @@ class AddVhostCommand extends ModCommand
 
         $this->task('Configuring vHost', function () use ($sDomain, $bWwwAlias) {
             try {
-                if (!$bWwwAlias) {
+                if (! $bWwwAlias) {
                     replace_string_in_file("/etc/apache2/sites-available/$sDomain.conf", 'ServerAlias www.SERVER_NAME', '');
                 }
 
@@ -72,7 +72,7 @@ class AddVhostCommand extends ModCommand
 
                 quietCommand("a2ensite $sDomain.conf -q");
 
-                if (!file_exists("/var/www/$sDomain/html")) {
+                if (! file_exists("/var/www/$sDomain/html")) {
                     mkdir("/var/www/$sDomain/html", 755, true);
                 }
             } catch (\Exception $e) {

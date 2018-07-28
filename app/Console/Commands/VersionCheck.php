@@ -91,7 +91,7 @@ class VersionCheck extends Command
 
         curl_close($cInit);
 
-        if (!isset($aReturn['tag_name'])) {
+        if (! isset($aReturn['tag_name'])) {
             return false;
         }
         return $this->extractVersion($aReturn['tag_name']);

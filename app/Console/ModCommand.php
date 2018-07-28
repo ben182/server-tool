@@ -38,7 +38,7 @@ class ModCommand extends Command
     public function choiceOption($sOption, $sFallbackString, $aAllowedValues)
     {
         $sValue = $this->option($sOption) ?? $this->choice($sFallbackString, $aAllowedValues, 0);
-        if (!in_array($sValue, $aAllowedValues)) {
+        if (! in_array($sValue, $aAllowedValues)) {
             $this->abort("$sValue is not a valid choice for $sOption");
         }
         return $sValue;

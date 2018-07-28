@@ -41,7 +41,7 @@ class RedisBackup extends ModCommand
     {
         $sUploadDriver = $this->choiceOption('storage', 'Upload to local or digitalocean spaces?', ['local', 'spaces']);
 
-        if ($sUploadDriver === 'spaces' && !isSpacesSet()) {
+        if ($sUploadDriver === 'spaces' && ! isSpacesSet()) {
             $this->abort('Spaces is not set up correctly');
         }
 
@@ -57,7 +57,7 @@ class RedisBackup extends ModCommand
 
         if ($bCronjob) {
             Task::create([
-                'command' => 'redis:backup',
+                'command'   => 'redis:backup',
                 'parameter' => [
                     '--storage' => $sUploadDriver,
                 ],

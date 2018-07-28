@@ -40,18 +40,19 @@ class SwitchPhpVersion extends Command
     {
         $version = $this->argument('version');
 
-        if (!in_array($version, $this->getAvailablePhpVersions())) {
+        if (! in_array($version, $this->getAvailablePhpVersions())) {
             return $this->abort('This version is not installed on your system.');
         }
 
         quietCommand('bash ' . scripts_path() . 'php/switch-to-php-' . $version . '.sh');
     }
 
-    private function getAvailablePhpVersions() {
+    private function getAvailablePhpVersions()
+    {
         $aAvailableFiles = glob("/etc/apache2/mods-available/php*.load");
 
         $aVersions = [];
-        for ($i=0; $i < $aAvailableFiles; $i++) {
+        for ($i = 0; $i < $aAvailableFiles; $i++) {
             $aVersions[] = getStringBetween($aAvailableFiles[$i], '/php', '.load');
         }
         return $aVersions;

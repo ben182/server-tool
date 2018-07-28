@@ -179,8 +179,8 @@ class ApplicationInstall extends ModCommand
         if ($bGitAutoDeploy) {
             $this->addToReturn('[GIT AUTO DEPLOY]');
             $this->call('gad:add', [
-                '--dir' => "$sDomain/$sGitName",
-                '--branch' => $sGitBranch,
+                '--dir'      => "$sDomain/$sGitName",
+                '--branch'   => $sGitBranch,
                 '--nooutput' => true,
             ]);
         }

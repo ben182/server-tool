@@ -73,16 +73,16 @@ function createMysqlDatabase($sDatabase)
 
 function createMysqlUserAndGiveAccessToDatabase($sDatabase, $sUser = null, $sPassword = null)
 {
-    if (!$sUser) {
+    if (! $sUser) {
         $sUser = random_string_random_length();
     }
-    if (!$sPassword) {
+    if (! $sPassword) {
         $sPassword = random_string_random_length();
     }
     buildMysqlCommand("CREATE USER '$sUser'@'localhost';") . buildMysqlCommand("GRANT ALL PRIVILEGES ON $sDatabase.* To '$sUser'@'localhost' IDENTIFIED BY '$sPassword';") . buildMysqlCommand('FLUSH PRIVILEGES;');
 
     return [
-        'user' => $sUser,
+        'user'     => $sUser,
         'password' => $sPassword,
     ];
 }
@@ -94,7 +94,7 @@ function deleteMysqlUser($sUser)
 
 function editEnvKey($sPath, $sKey, $sValue)
 {
-    if (!file_exists($sPath)) {
+    if (! file_exists($sPath)) {
         return false;
     }
 
@@ -102,7 +102,7 @@ function editEnvKey($sPath, $sKey, $sValue)
 
     preg_match("/(?<=$sKey=).*/", $sFile, $match);
 
-    if (!isset($match[0])) {
+    if (! isset($match[0])) {
         return false;
     }
 
