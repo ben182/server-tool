@@ -11,7 +11,8 @@ class SnapshotBackupExecute extends Command
      *
      * @var string
      */
-    protected $signature = 'snapshot:backup {keep}';
+    protected $signature = 'snapshot:backup
+                            {keep : The amount of backups to keep}';
 
     /**
      * The console command description.
