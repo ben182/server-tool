@@ -184,3 +184,16 @@ function quietCommand($sCommand)
 {
     shell_exec($sCommand . ' 2>&1');
 }
+
+function fixApachePermissions()
+{
+    quietCommand('chown -R www-data:www-data /var/www');
+    quietCommand('chmod -R 755 /var/www');
+    quietCommand('chmod g+s /var/www');
+    quietCommand('chmod -R 700 /var/www/.ssh');
+}
+
+function restartApache()
+{
+    quietCommand('service apache2 reload');
+}
