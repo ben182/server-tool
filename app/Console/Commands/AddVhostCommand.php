@@ -33,17 +33,8 @@ class AddVhostCommand extends ModCommand
         parent::__construct();
     }
 
-    /**
-     * Execute the console command.
-     *
-     * @return mixed
-     */
-    public function handle()
+    private function createApacheConfiguration()
     {
-        if ($this->argument('dev')) {
-            $this->bDev = true;
-        }
-
         $sDomain = $this->ask('Domain?');
 
         $this->task('Creating vHost', function () use ($sDomain) {
@@ -58,7 +49,10 @@ class AddVhostCommand extends ModCommand
 
             return true;
         });
+    }
 
+    private function configureApacheConfiguration()
+    {
         $bWwwAlias = $this->confirm('www Alias?', 1);
 
         $this->task('Configuring vHost', function () use ($sDomain, $bWwwAlias) {
@@ -82,6 +76,13 @@ class AddVhostCommand extends ModCommand
 
             return true;
         });
+    }
+
+    private function createSslCertificate()
+    {
+        if (! getInstallationConfigKey('certbot')) {
+            return;
+        }
 
         $bSsl = $this->confirm('SSL?', 1); // TODO depends on certbot installation
         if ($bSsl) {
@@ -99,13 +100,20 @@ class AddVhostCommand extends ModCommand
                 return true;
             });
         }
+    }
 
+    private function configureRedirects()
+    {
         $sHtaccess = $this->choice('htaccess?', [
             'Non SSL to SSL and www to non www',
             'Non SSL to SSL',
             'www to non www',
             'Nothing',
         ]);
+
+        if ($sHtaccess === 'Nothing') {
+            return;
+        }
 
         $this->task('Configuring htaccess', function () use ($sDomain, $sHtaccess) {
             try {
@@ -140,7 +148,10 @@ class AddVhostCommand extends ModCommand
 
             return true;
         });
+    }
 
+    private function finish()
+    {
         $this->task('Clean up & Finishing', function () {
             try {
                 $this->fixApachePermissions()->restartApache();
@@ -151,5 +162,23 @@ class AddVhostCommand extends ModCommand
 
             return true;
         });
+    }
+
+    /**
+     * Execute the console command.
+     *
+     * @return mixed
+     */
+    public function handle()
+    {
+        if ($this->argument('dev')) {
+            $this->bDev = true;
+        }
+
+        $this->createApacheConfiguration();
+        $this->configureApacheConfiguration();
+        $this->createSslCertificate();
+        $this->configureRedirects();
+        $this->finish();
     }
 }

@@ -34,6 +34,11 @@ function getInstallationConfig()
     return json_decode(file_get_contents(base_path('installation.json')), true);
 }
 
+function getInstallationConfigKey($sKey)
+{
+    return optional(json_decode(file_get_contents(base_path('installation.json'))))->$sKey === 'true';
+}
+
 function random_string_random_length()
 {
     return str_random(random_int(15, 30));
