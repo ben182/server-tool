@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands\Tasks\Partials;
 
-class Finish
+use App\Console\Commands\Tasks\SubBaseTask;
+
+class Finish extends SubBaseTask
 {
     public $sName = 'Clean up & Finishing';
 

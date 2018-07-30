@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands\Tasks\AddVhost;
 
-class CreateSslCertificate
+use App\Console\Commands\Tasks\SubBaseTask;
+
+class CreateSslCertificate extends SubBaseTask
 {
     public $sName = 'Setting up SSL';
 

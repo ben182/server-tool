@@ -18,14 +18,14 @@ abstract class BaseTask
         $validator = Validator::make($aOptions, $this->validate());
 
         if ($validator->fails()) {
-            throw new \Exception('validation-error', $validator->errors());
+            throw new \Exception($validator->errors());
         }
     }
 
     public function work()
     {
         foreach ($this->aTasks as $cTask) {
-            $oTask = new $cTask;
+            $oTask = new $cTask($this->oOptions);
 
             if (! $oTask->requirements()) {
                 continue;
