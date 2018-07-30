@@ -40,6 +40,16 @@ class AddVhostCommand extends ModCommand
      */
     public function handle()
     {
+        $bDev = $this->argument('dev');
+        $sDomain = $this->ask('Domain?');
+        $bWww = $this->confirm('www Alias?', true);
+        $sHtaccess = $this->choice('htaccess?', [
+            'Non SSL to SSL and www to non www',
+            'Non SSL to SSL',
+            'www to non www',
+            'Nothing',
+        ]);
+
         $bSsl = $this->confirm('SSL?', true);
 
         $sEmail = '';
@@ -48,15 +58,10 @@ class AddVhostCommand extends ModCommand
         }
 
         (new AddVhost([
-            'dev'         => $this->argument('dev'),
-            'domain'      => $this->ask('Domain?'),
-            'www'         => $this->confirm('www Alias?', true),
-            'htaccess'    => $this->choice('htaccess?', [
-                'Non SSL to SSL and www to non www',
-                'Non SSL to SSL',
-                'www to non www',
-                'Nothing',
-            ]),
+            'dev'         => $bDev,
+            'domain'      => $sDomain,
+            'www'         => $bWww,
+            'htaccess'    => $sHtaccess,
             'ssl'         => $bSsl,
             'ssl_email'   => $sEmail,
         ]))->work();

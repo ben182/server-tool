@@ -16,7 +16,7 @@ class CreateSslCertificate extends SubBaseTask
     public function handle()
     {
         try {
-            quietCommand("certbot --non-interactive --agree-tos --email {$this->oOptions->ssl_email} --apache -d {$this->oOptions->domain}" . ($this->oOptions->www ? " -d www.{$this->oOptions->domain}" : '') . ' --quiet' . ($this->oOptions->dev ? ' --staging' : ''));
+            quietCommand("certbot --non-interactive --agree-tos --email {$this->oOptions->ssl_email} --apache -d {$this->oOptions->domain}" . ($this->oOptions->www ? " -d www.{$this->oOptions->domain}" : '') . ' --quiet' . ($this->oOptions->dev ? ' --staging' : '')); // TODO shell
         } catch (\Exception $e) {
             echo $e;
             return false;
