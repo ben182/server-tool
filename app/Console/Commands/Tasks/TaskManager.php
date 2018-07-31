@@ -23,7 +23,7 @@ abstract class Taskmanager
         $validator = Validator::make($aOptions, $this->validate());
 
         if ($validator->fails()) {
-            throw new \Exception($validator->errors());
+            throw new \Exception($validator->errors()); // TODO pretty
         }
     }
 

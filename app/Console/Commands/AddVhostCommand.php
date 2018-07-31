@@ -43,15 +43,9 @@ class AddVhostCommand extends ModCommand
     {
         parent::handle();
 
-        $bDev = $this->argument('dev');
+        $bDev = $this->argument('dev') ?? false;
         $sDomain = $this->ask('Domain?');
         $bWww = $this->confirm('www Alias?', true);
-        $sHtaccess = $this->choice('htaccess?', [
-            'Non SSL to SSL and www to non www',
-            'Non SSL to SSL',
-            'www to non www',
-            'Nothing',
-        ]);
 
         $bSsl = $this->confirm('SSL?', true);
 
@@ -59,6 +53,21 @@ class AddVhostCommand extends ModCommand
         if ($bSsl) {
             $sEmail = $this->ask('SSL Email?');
         }
+
+        $aRedirectChoices = [
+            'Nothing',
+        ];
+
+        if ($bWww) {
+            $aRedirectChoices[] = 'www to non www';
+        }
+        if ($bSsl) {
+            $aRedirectChoices[] = 'Non SSL to SSL and www to non www';
+            $aRedirectChoices[] = 'Non SSL to SSL';
+        }
+        $sHtaccess = $this->choice('Redirect?', $aRedirectChoices);
+
+
 
         (new AddVhostTaskManager([
             'dev'         => $bDev,
