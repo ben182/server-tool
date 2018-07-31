@@ -10,7 +10,12 @@ class TestTask extends Task
 {
     public $sName = 'Test';
 
-    public function requirements()
+    public function systemRequirements()
+    {
+        return true;
+    }
+
+    public function localRequirements()
     {
         return true;
     }

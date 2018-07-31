@@ -10,7 +10,12 @@ class CreateApacheConfigurationTask extends Task
 {
     public $sName = 'Creating vHost';
 
-    public function requirements()
+    public function systemRequirements()
+    {
+        return true;
+    }
+
+    public function localRequirements()
     {
         return true;
     }

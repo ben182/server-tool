@@ -7,7 +7,8 @@ abstract class Task
     public $oOptions;
     public $shell;
 
-    abstract public function requirements();
+    abstract public function systemRequirements();
+    abstract public function localRequirements();
 
     public function __construct($aOptions)
     {

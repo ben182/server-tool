@@ -30,7 +30,19 @@ abstract class Taskmanager
         foreach ($this->aTasks as $cTask) {
             $oTask = new $cTask($this->oOptions);
 
-            if (! $oTask->requirements()) {
+            $mSystemRequirements = $oTask->systemRequirements();
+
+            if (gettype($mSystemRequirements) === 'boolean' && $mSystemRequirements === false) {
+                echo $oTask->systemRequirementsErrorMessage ?? '';
+                continue;
+            }
+            if (gettype($mSystemRequirements) === 'string') {
+                if (!getInstallationConfigKey($mSystemRequirements)) {
+                    echo $oTask->systemRequirementsErrorMessage ?? $oTask->sName . ' failed because ' . $mSystemRequirements . 'is not installed on your system.';
+                    continue;
+                }
+            }
+            if (! $oTask->localRequirements()) {
                 continue;
             }
 

@@ -8,7 +8,12 @@ class ApacheFinishTask extends Task
 {
     public $sName = 'Clean up & Finishing';
 
-    public function requirements()
+    public function systemRequirements()
+    {
+        return true;
+    }
+
+    public function localRequirements()
     {
         return true;
     }

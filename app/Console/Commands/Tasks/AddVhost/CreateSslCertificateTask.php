@@ -9,10 +9,16 @@ use App\Console\Commands\Tasks\Task;
 class CreateSslCertificateTask extends Task
 {
     public $sName = 'Setting up SSL';
+    public $systemRequirementsError = '';
 
-    public function requirements()
+    public function systemRequirements()
     {
-        return getInstallationConfigKey('certbot') && $this->oOptions->ssl;
+        return getInstallationConfigKey('certbot');
+    }
+
+    public function localRequirements()
+    {
+        return  $this->oOptions->ssl;
     }
 
     public function handle()

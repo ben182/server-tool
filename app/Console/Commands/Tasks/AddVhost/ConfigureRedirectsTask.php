@@ -9,7 +9,12 @@ class ConfigureRedirectsTask extends Task
 {
     public $sName = 'Configuring htaccess';
 
-    public function requirements()
+    public function systemRequirements()
+    {
+        return true;
+    }
+
+    public function localRequirements()
     {
         return $this->oOptions->htaccess;
     }
