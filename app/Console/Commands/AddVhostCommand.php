@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Console\Commands\Tasks\AddVhost;
 use App\Console\ModCommand;
 use Illuminate\Console\Command;
+use App\Console\Commands\Tasks\AddVhostTaskManager;
 
 class AddVhostCommand extends ModCommand
 {
@@ -57,7 +58,7 @@ class AddVhostCommand extends ModCommand
             $sEmail = $this->ask('SSL Email?');
         }
 
-        (new AddVhost([
+        (new AddVhostTaskManager([
             'dev'         => $bDev,
             'domain'      => $sDomain,
             'www'         => $bWww,

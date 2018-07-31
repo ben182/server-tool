@@ -9,7 +9,7 @@ use App\Console\Commands\Tasks\AddVhost\CreateSslCertificate;
 use App\Console\Commands\Tasks\Partials\Finish;
 use Illuminate\Validation\Rule;
 
-class AddVhost extends BaseTask
+class AddVhostTaskManager extends Taskmanager
 {
     public $aTasks = [
         CreateApacheConfiguration::class,

@@ -3,8 +3,9 @@
 namespace App\Console\Commands\Tasks\AddVhost;
 
 use App\Console\Commands\Tasks\SubBaseTask;
+use App\Console\Commands\Tasks\BaseTask;
 
-class CreateApacheConfiguration extends SubBaseTask
+class CreateApacheConfiguration extends BaseTask
 {
     public $sName = 'Creating vHost';
 
