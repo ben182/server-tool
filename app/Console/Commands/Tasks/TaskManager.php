@@ -8,12 +8,15 @@ abstract class Taskmanager
 {
     public $oOptions;
     public $aTasks;
+    public $shell;
 
     abstract public function validate();
 
-    public function __construct($aOptions)
+    public function __construct($aOptions = [])
     {
         $this->oOptions = (object) $aOptions;
+
+        $this->shell = resolve('ShellTask');
 
         $validator = Validator::make($aOptions, $this->validate());
 
@@ -32,7 +35,24 @@ abstract class Taskmanager
             }
 
             echo $oTask->sName . '...';
-            echo($oTask->handle() ? 'done' : 'fail') . "\n";
+
+            try {
+                $oTask->handle();
+            } catch(\Exception $e) {
+                $this->shell->saveError($e);
+            }
+
+            echo($this->shell->hasErrors() ? 'fail' : 'done') . "\n";
+
+            if ($this->shell->hasErrors()) {
+                echo "I found {$this->shell->countErrors()} " . str_plural('error', $this->shell->countErrors()) . "\n";
+                echo $this->shell->getErrors();
+                $this->shell->flushErrors();
+            }
+
+            // TODO also output when errors occur?
+            echo $this->shell->getOutput();
+            $this->shell->flushOutput();
         }
     }
 }

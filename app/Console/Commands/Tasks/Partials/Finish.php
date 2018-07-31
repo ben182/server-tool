@@ -2,10 +2,9 @@
 
 namespace App\Console\Commands\Tasks\Partials;
 
-use App\Console\Commands\Tasks\SubBaseTask;
-use App\Console\Commands\Tasks\BaseTask;
+use App\Console\Commands\Tasks\Task;
 
-class Finish extends BaseTask
+class Finish extends Task
 {
     public $sName = 'Clean up & Finishing';
 
@@ -16,14 +15,7 @@ class Finish extends BaseTask
 
     public function handle()
     {
-        try {
-            fixApachePermissions();
-            restartApache();
-        } catch (\Exception $e) {
-            echo $e;
-            return false;
-        }
-
-        return true;
+        fixApachePermissions();
+        restartApache();
     }
 }

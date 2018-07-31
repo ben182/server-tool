@@ -9,6 +9,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use App\Console\Commands\Tasks\ShellTask;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -41,6 +42,10 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->singleton('Shell', function ($app) {
             return new Shell();
+        });
+
+        $this->app->singleton('ShellTask', function ($app) {
+            return new ShellTask();
         });
     }
 

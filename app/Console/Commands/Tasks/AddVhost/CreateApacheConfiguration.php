@@ -4,8 +4,9 @@ namespace App\Console\Commands\Tasks\AddVhost;
 
 use App\Console\Commands\Tasks\SubBaseTask;
 use App\Console\Commands\Tasks\BaseTask;
+use App\Console\Commands\Tasks\Task;
 
-class CreateApacheConfiguration extends BaseTask
+class CreateApacheConfiguration extends Task
 {
     public $sName = 'Creating vHost';
 
@@ -16,15 +17,8 @@ class CreateApacheConfiguration extends BaseTask
 
     public function handle()
     {
-        try {
-            copy(templates_path() . 'apache/vhost.conf', "/etc/apache2/sites-available/{$this->oOptions->domain}.conf");
+        copy(templates_path() . 'apache/vhost.conf', "/etc/apache2/sites-available/{$this->oOptions->domain}.conf");
 
-            replace_string_in_file("/etc/apache2/sites-available/{$this->oOptions->domain}.conf", 'DOCUMENT_ROOT', $this->oOptions->domain);
-        } catch (\Exception $e) {
-            echo $e;
-            return false;
-        }
-
-        return true;
+        replace_string_in_file("/etc/apache2/sites-available/{$this->oOptions->domain}.conf", 'DOCUMENT_ROOT', $this->oOptions->domain);
     }
 }
