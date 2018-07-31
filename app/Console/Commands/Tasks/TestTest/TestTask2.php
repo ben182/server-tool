@@ -6,9 +6,9 @@ use App\Console\Commands\Tasks\SubBaseTask;
 use App\Console\Commands\Tasks\BaseTask;
 use App\Console\Commands\Tasks\Task;
 
-class TestTask extends Task
+class TestTask2 extends Task
 {
-    public $sName = 'Test';
+    public $sName = 'Test2';
 
     public function systemRequirements()
     {
@@ -23,8 +23,8 @@ class TestTask extends Task
     public function handle()
     {
         $this->shell->exec('dir');
-        $this->addConclusion('I created this');
-        $this->shell->echo('das Funktioniert wirklich gut!');
+        $this->addConclusion('I created this2');
+        $this->shell->echo('das Funktioniert wirklich gut!2');
         //throw new \Exception("Error Processing Request");
     }
 }

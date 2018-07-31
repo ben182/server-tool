@@ -7,6 +7,12 @@ abstract class Task
     public $oOptions;
     public $shell;
 
+    public $aConclusions = [];
+
+    public function addConclusion($sItem) {
+        $this->aConclusions[] = $sItem;
+    }
+
     abstract public function systemRequirements();
     abstract public function localRequirements();
 

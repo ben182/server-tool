@@ -10,6 +10,8 @@ abstract class Taskmanager
     public $aTasks;
     public $shell;
 
+    public $aConclusions;
+
     abstract public function validate();
 
     public function __construct($aOptions = [])
@@ -23,6 +25,15 @@ abstract class Taskmanager
         if ($validator->fails()) {
             throw new \Exception($validator->errors());
         }
+    }
+
+    public function addConclusion($aItems) {
+        $this->aConclusions[] = $aItems;
+        $this->aConclusions = array_flatten($this->aConclusions);
+    }
+
+    public function printConclusions() {
+        echo implode("\n", $this->aConclusions) . "\n";
     }
 
     public function work()
@@ -60,11 +71,16 @@ abstract class Taskmanager
                 echo "I found {$this->shell->countErrors()} " . str_plural('error', $this->shell->countErrors()) . "\n";
                 echo $this->shell->getErrors();
                 $this->shell->flushErrors();
+                continue;
             }
+
+            $this->addConclusion($oTask->aConclusions);
 
             // TODO also output when errors occur?
             echo $this->shell->getOutput();
             $this->shell->flushOutput();
         }
+
+        $this->printConclusions();
     }
 }

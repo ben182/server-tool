@@ -36,7 +36,7 @@ class ShellTask
     }
 
     public function getOutput() {
-        return implode("\n", $this->aOutputs);
+        return implode("\n", $this->aOutputs) . "\n";
     }
 
     public function flushOutput() {

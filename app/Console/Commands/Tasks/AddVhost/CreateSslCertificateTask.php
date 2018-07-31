@@ -23,7 +23,7 @@ class CreateSslCertificateTask extends Task
 
     public function handle()
     {
-        $this->shell->exec("certbot --non-interactive --agree-tos --email {$this->oOptions->ssl_email} --apache -d {$this->oOptions->domain}" . ($this->oOptions->www ? " -d www.{$this->oOptions->domain}" : '') . ' --quiet' . ($this->oOptions->dev ? ' --staging' : ''));
+        $this->shell->exec("certbot --non-interactive --agree-tos --email {$this->oOptions->ssl_email} --apache -d {$this->oOptions->domain}" . ($this->oOptions->www ? " -d www.{$this->oOptions->domain}" : '') . ($this->oOptions->dev ? ' --staging' : ''));
 
         $this->shell->echo("Check your SSL installation on https://www.ssllabs.com/ssltest/analyze.html?d={$this->oOptions->domain}");
     }
