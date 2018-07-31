@@ -37,7 +37,7 @@ class InitCommand extends Command
      */
     public function handle()
     {
-        $sDatabase = createMysqlDatabase('server-tools');
+        $sDatabase = createMysqlDatabase('stool');
         $aUser = createMysqlUserAndGiveAccessToDatabase($sDatabase);
 
         editEnvKey(base_path('.env'), 'DB_DATABASE', $sDatabase);

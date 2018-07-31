@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /etc/server-tool/scripts/helper.sh
+source /etc/stool/scripts/helper.sh
 
 PHPMYADMIN_HTACCESS_USER=$(passwordgen);
 PHPMYADMIN_HTACCESS_PASS=$(passwordgen);

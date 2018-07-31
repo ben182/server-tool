@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /etc/server-tool/scripts/helper.sh
+source /etc/stool/scripts/helper.sh
 
 REDIS_PASS=$(passwordgen);
 

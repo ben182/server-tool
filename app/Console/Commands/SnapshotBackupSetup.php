@@ -49,7 +49,7 @@ class SnapshotBackupSetup extends Command
         });
 
         $this->task('Setting up Cronjob', function () use ($iKeep) {
-            echo shell_exec('crontab -l | { cat; echo "0 0 * * * server-tools snapshot:backup ' . $iKeep . ' >> /dev/null 2>&1"; } | crontab -');
+            echo shell_exec('crontab -l | { cat; echo "0 0 * * * stool snapshot:backup ' . $iKeep . ' >> /dev/null 2>&1"; } | crontab -');
             return true;
         });
     }

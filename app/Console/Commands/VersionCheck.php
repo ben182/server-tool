@@ -112,7 +112,7 @@ class VersionCheck extends Command
         $sLocalVersion = $this->extractVersion($sLocalVersion);
 
         if (version_compare($sLocalVersion, $sRemoteVersion) === -1) {
-            return $this->line("A new version of Composer is available ($sLocalVersion => $sRemoteVersion). Type 'server-tools version:update composer' to update to the newest version.");
+            return $this->line("A new version of Composer is available ($sLocalVersion => $sRemoteVersion). Type 'stool version:update composer' to update to the newest version.");
         }
 
         $this->line('You use the latest version (' . $sLocalVersion . ')');
@@ -134,7 +134,7 @@ class VersionCheck extends Command
         $sLocalNodejsVersion = $this->extractVersion($sLocalNodejsVersion);
 
         if (version_compare($sLocalNodejsVersion, $sRemoteNodejsVersion) === -1) {
-            return $this->line("A new version of Node.js is available ($sLocalNodejsVersion => $sRemoteNodejsVersion). Type 'server-tools version:update nodejs' to update to the newest version.");
+            return $this->line("A new version of Node.js is available ($sLocalNodejsVersion => $sRemoteNodejsVersion). Type 'stool version:update nodejs' to update to the newest version.");
         }
 
         $this->line('You use the latest version (' . $sLocalNodejsVersion . ')');
@@ -156,7 +156,7 @@ class VersionCheck extends Command
         $sLocalVersion = $this->extractVersion($sLocalVersion);
 
         if (version_compare($sLocalVersion, $sRemoteVersion) === -1) {
-            return $this->line("A new version of nvm is available ($sLocalVersion => $sRemoteVersion). Type 'server-tools version:update nvm' to update to the newest version.");
+            return $this->line("A new version of nvm is available ($sLocalVersion => $sRemoteVersion). Type 'stool version:update nvm' to update to the newest version.");
         }
 
         $this->line('You use the latest version (' . $sLocalVersion . ')');

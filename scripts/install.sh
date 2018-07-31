@@ -2,15 +2,15 @@
 
 # http://patorjk.com/software/taag/#p=display&v=0&f=Slant&t=Server%20Tool%20v1.0
 cat << "EOF"
-   _____                              ______            __        ___ ___
-  / ___/___  ______   _____  _____   /_  __/___  ____  / /  _   _<  /<  /
-  \__ \/ _ \/ ___/ | / / _ \/ ___/    / / / __ \/ __ \/ /  | | / / / / /
- ___/ /  __/ /   | |/ /  __/ /       / / / /_/ / /_/ / /   | |/ / / / /
-/____/\___/_/    |___/\___/_/       /_/  \____/\____/_/    |___/_(_)_/
+         __              __        ___ ___
+   _____/ /_____  ____  / /  _   _<  /<  /
+  / ___/ __/ __ \/ __ \/ /  | | / / / / /
+ (__  ) /_/ /_/ / /_/ / /   | |/ / / / /
+/____/\__/\____/\____/_/    |___/_(_)_/
 
 EOF
 
-source /etc/server-tool/scripts/helper.sh
+source /etc/stool/scripts/helper.sh
 
 # VARS
 echo "Initialization..."
@@ -46,8 +46,8 @@ echo "Installing and configuring Apache Server..."
 apacheInstall
 
 phpInstall () {
-    bash /etc/server-tool/scripts/php/setup.sh &> /dev/null
-    bash /etc/server-tool/scripts/php/switch-to-php-7.1.sh &> /dev/null
+    bash /etc/stool/scripts/php/setup.sh &> /dev/null
+    bash /etc/stool/scripts/php/switch-to-php-7.1.sh &> /dev/null
     phpenmod mcrypt
     phpenmod mbstring
     service apache2 reload
@@ -84,30 +84,30 @@ servertoolInstall() {
     mkdir -p /var/www/ip/html
     cp ${TEMPLATES_PATH}ip/. /var/www/ip/html -r
     cp ${ABSOLUTE_PATH}.env.example ${ABSOLUTE_PATH}.env
-    sudo sed -i "s|localhost|${PUBLIC_IP}/server-tools|" ${ABSOLUTE_PATH}.env
-    ln -s ${ABSOLUTE_PATH}public /var/www/ip/html/server-tools
+    sudo sed -i "s|localhost|${PUBLIC_IP}/stool|" ${ABSOLUTE_PATH}.env
+    ln -s ${ABSOLUTE_PATH}public /var/www/ip/html/stool
     cd $ABSOLUTE_PATH && composer install
     php ${ABSOLUTE_PATH}artisan key:generate
-    ln -s ${ABSOLUTE_PATH}artisan /usr/bin/server-tools
-    chmod +x /usr/bin/server-tools
+    ln -s ${ABSOLUTE_PATH}artisan /usr/bin/stool
+    chmod +x /usr/bin/stool
     cp ${TEMPLATES_PATH}git/post-merge-this ${ABSOLUTE_PATH}.git/hooks/post-merge
     chmod +x ${ABSOLUTE_PATH}.git/hooks/post-merge
-    chown -R www-data:www-data /etc/server-tool
+    chown -R www-data:www-data /etc/stool
     chown -R root:root $CONFIG_PATH
-    chmod -R 755 /etc/server-tool
-    crontab -l | { cat; echo "* * * * * server-tools schedule:run >> /dev/null 2>&1"; } | crontab -
+    chmod -R 755 /etc/stool
+    crontab -l | { cat; echo "* * * * * stool schedule:run >> /dev/null 2>&1"; } | crontab -
     crontab -l | { cat; echo "0 0 * * * composer self-update >> /dev/null 2>&1"; } | crontab -
     crontab -l | { cat; echo "0 0 * * 0 apt-get autoremove && apt-get autoclean -y >> /dev/null 2>&1"; } | crontab -
-    server-tools init
-    server-tools migrate --force
+    stool init
+    stool migrate --force
 
-    server-tools view:cache
-    server-tools config:cache
-    server-tools route:cache
+    stool view:cache
+    stool config:cache
+    stool route:cache
 }
 
 echo "Installing Server Tool..."
 servertoolInstall
 
-server-tools installation:run
+stool installation:run
 bash ${SCRIPTS_PATH}partials/finish.sh
