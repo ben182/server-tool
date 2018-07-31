@@ -5,7 +5,7 @@ namespace App\Console\Commands\Tasks\AddVhost;
 use App\Console\Commands\Tasks\BaseTask;
 use App\Console\Commands\Tasks\Task;
 
-class ConfigureRedirects extends Task
+class ConfigureRedirectsTask extends Task
 {
     public $sName = 'Configuring htaccess';
 

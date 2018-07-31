@@ -4,7 +4,7 @@ namespace App\Console\Commands\Tasks\Partials;
 
 use App\Console\Commands\Tasks\Task;
 
-class Finish extends Task
+class ApacheFinishTask extends Task
 {
     public $sName = 'Clean up & Finishing';
 

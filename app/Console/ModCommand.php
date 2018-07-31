@@ -14,6 +14,21 @@ class ModCommand extends Command
     {
         parent::__construct();
         $this->shell = resolve('Shell');
+
+        // add the debug option to the default options
+        $this->getDefinition()->addOption(new \Symfony\Component\Console\Input\InputOption(
+            'debug',
+            'd',
+            null,
+            'Display all shell outputs'
+        ));
+    }
+
+    public function handle() {
+        $shell = resolve('ShellTask');
+        if ($this->option('debug') === true) {
+            $shell->outputEveryCommand();
+        }
     }
 
     public static function addToReturn($sMessage)

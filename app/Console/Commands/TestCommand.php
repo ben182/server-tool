@@ -4,8 +4,9 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Console\Commands\Tasks\TestTestTaskManager;
+use App\Console\ModCommand;
 
-class TestCommand extends Command
+class TestCommand extends ModCommand
 {
     /**
      * The name and signature of the console command.
@@ -31,6 +32,8 @@ class TestCommand extends Command
         parent::__construct();
     }
 
+
+
     /**
      * Execute the console command.
      *
@@ -38,6 +41,7 @@ class TestCommand extends Command
      */
     public function handle()
     {
+        parent::handle();
         (new TestTestTaskManager())->work();
     }
 }

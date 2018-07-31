@@ -2,21 +2,21 @@
 
 namespace App\Console\Commands\Tasks;
 
-use App\Console\Commands\Tasks\AddVhost\ConfigureApacheConfiguration;
-use App\Console\Commands\Tasks\AddVhost\ConfigureRedirects;
-use App\Console\Commands\Tasks\AddVhost\CreateApacheConfiguration;
-use App\Console\Commands\Tasks\AddVhost\CreateSslCertificate;
-use App\Console\Commands\Tasks\Partials\Finish;
+use App\Console\Commands\Tasks\AddVhost\ConfigureApacheConfigurationTask;
+use App\Console\Commands\Tasks\AddVhost\ConfigureRedirectsTask;
+use App\Console\Commands\Tasks\AddVhost\CreateApacheConfigurationTask;
+use App\Console\Commands\Tasks\AddVhost\CreateSslCertificateTask;
+use App\Console\Commands\Tasks\Partials\ApacheFinishTask;
 use Illuminate\Validation\Rule;
 
 class AddVhostTaskManager extends Taskmanager
 {
     public $aTasks = [
-        CreateApacheConfiguration::class,
-        ConfigureApacheConfiguration::class,
-        CreateSslCertificate::class,
-        ConfigureRedirects::class,
-        Finish::class,
+        CreateApacheConfigurationTask::class,
+        ConfigureApacheConfigurationTask::class,
+        CreateSslCertificateTask::class,
+        ConfigureRedirectsTask::class,
+        ApacheFinishTask::class,
     ];
 
     public function validate()

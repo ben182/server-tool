@@ -41,6 +41,8 @@ class AddVhostCommand extends ModCommand
      */
     public function handle()
     {
+        parent::handle();
+
         $bDev = $this->argument('dev');
         $sDomain = $this->ask('Domain?');
         $bWww = $this->confirm('www Alias?', true);

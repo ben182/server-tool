@@ -4,7 +4,7 @@ namespace App\Console\Commands\Tasks\AddVhost;
 
 use App\Console\Commands\Tasks\Task;
 
-class ConfigureApacheConfiguration extends Task
+class ConfigureApacheConfigurationTask extends Task
 {
     public $sName = 'Configuring vHost';
 

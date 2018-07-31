@@ -17,7 +17,7 @@ class TestTask extends Task
 
     public function handle()
     {
-        //$this->shell->exec('dir');
+        $this->shell->exec('dir');
         //$this->shell->echo('das Funktioniert wirklich gut!');
         //throw new \Exception("Error Processing Request");
     }

@@ -7,10 +7,21 @@ class ShellTask
     private $lastExecOutput;
     private $aOutputs = [];
     private $aErrors = [];
+    private $bDebug = false;
 
     public function exec($sCommand)
     {
         $this->lastExecOutput = shell_exec($sCommand . ' 2>&1');
+
+        if ($this->bDebug) {
+            $this->saveOutput();
+        }
+
+        return $this;
+    }
+
+    public function outputEveryCommand(bool $bData = true) {
+        $this->bDebug = $bData;
         return $this;
     }
 

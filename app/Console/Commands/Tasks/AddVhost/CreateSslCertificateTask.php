@@ -6,7 +6,7 @@ use App\Console\Commands\Tasks\SubBaseTask;
 use App\Console\Commands\Tasks\BaseTask;
 use App\Console\Commands\Tasks\Task;
 
-class CreateSslCertificate extends Task
+class CreateSslCertificateTask extends Task
 {
     public $sName = 'Setting up SSL';
 

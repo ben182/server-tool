@@ -18,8 +18,6 @@ class TestTestTaskManager extends Taskmanager
 
     public function validate()
     {
-        return [
-
-        ];
+        return [];
     }
 }
