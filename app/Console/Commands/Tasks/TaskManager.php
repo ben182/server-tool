@@ -49,7 +49,7 @@ abstract class Taskmanager
             }
             if (gettype($mSystemRequirements) === 'string') {
                 if (!getInstallationConfigKey($mSystemRequirements)) {
-                    echo $oTask->systemRequirementsErrorMessage ?? $oTask->sName . ' failed because ' . $mSystemRequirements . 'is not installed on your system.';
+                    echo ($oTask->systemRequirementsErrorMessage ?? $oTask->sName) . ' failed because ' . $mSystemRequirements . 'is not installed on your system.';
                     continue;
                 }
             }

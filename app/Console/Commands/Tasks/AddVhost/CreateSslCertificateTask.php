@@ -27,6 +27,6 @@ class CreateSslCertificateTask extends Task
 
         $this->shell->echo("Check your SSL installation on https://www.ssllabs.com/ssltest/analyze.html?d={$this->oOptions->domain}");
 
-        $this->addConclusion('Provisioned SSL certificate for https://' . $this->oOptions->domain . ($this->oOptions->www ? " and www.{$this->oOptions->domain}" : ''));
+        $this->addConclusion('Provisioned SSL certificate for https://' . $this->oOptions->domain . ($this->oOptions->www ? " and https://www.{$this->oOptions->domain}" : ''));
     }
 }
