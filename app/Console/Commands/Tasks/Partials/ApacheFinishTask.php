@@ -22,5 +22,7 @@ class ApacheFinishTask extends Task
     {
         fixApachePermissions();
         restartApache();
+
+        $this->addConclusion('Reseted Apache Permissions and restarted Apache Server');
     }
 }

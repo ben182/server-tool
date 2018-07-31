@@ -29,8 +29,13 @@ class ConfigureApacheConfigurationTask extends Task
 
         $this->shell->exec("a2ensite {$this->oOptions->domain}.conf -q");
 
-        if (! file_exists("/var/www/{$this->oOptions->domain}/html")) {
-            mkdir("/var/www/{$this->oOptions->domain}/html", 755, true);
+        $sFolder = "/var/www/{$this->oOptions->domain}/html";
+
+        if (! file_exists($sFolder)) {
+            mkdir($sFolder, 755, true);
         }
+
+        $this->addConclusion('Configured www alias');
+        $this->addConclusion('Created html folder in ' . $sFolder);
     }
 }

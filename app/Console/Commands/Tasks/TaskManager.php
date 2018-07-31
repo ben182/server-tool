@@ -33,7 +33,7 @@ abstract class Taskmanager
     }
 
     public function printConclusions() {
-        echo implode("\n", $this->aConclusions) . "\n";
+        echo implode("\n", $this->aConclusions) . "\n" (!empty($this->aConclusions) ? "\n" : '');
     }
 
     public function work()

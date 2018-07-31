@@ -25,5 +25,7 @@ class CreateApacheConfigurationTask extends Task
         copy(templates_path() . 'apache/vhost.conf', "/etc/apache2/sites-available/{$this->oOptions->domain}.conf");
 
         replace_string_in_file("/etc/apache2/sites-available/{$this->oOptions->domain}.conf", 'DOCUMENT_ROOT', $this->oOptions->domain);
+
+        $this->addConclusion('Created vHost for domain: ' . $this->oOptions->domain);
     }
 }
