@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands\Tasks\AddVhost;
 
-use App\Console\Commands\Tasks\BaseTask;
 use App\Console\Commands\Tasks\Task;
 
 class ConfigureRedirectsTask extends Task
@@ -34,7 +33,7 @@ class ConfigureRedirectsTask extends Task
                     'https://' . $this->oOptions->domain,
                 ];
                 $aFrom[] = [
-                    'www' . $this->oOptions->domain,
+                    'www.' . $this->oOptions->domain,
                     $this->oOptions->domain,
                 ];
 
@@ -45,7 +44,7 @@ class ConfigureRedirectsTask extends Task
                 replace_string_in_file("/etc/apache2/sites-available/{$this->oOptions->domain}.conf", '</VirtualHost>', 'Include ' . templates_path() . 'apache/www_to_nonwww.htaccess' . PHP_EOL . '</VirtualHost>');
 
                 $aFrom[] = [
-                    'www' . $this->oOptions->domain,
+                    'www.' . $this->oOptions->domain,
                     $this->oOptions->domain,
                 ];
 
@@ -71,6 +70,6 @@ class ConfigureRedirectsTask extends Task
             $aStringFrom[] = 'from ' . $aEachFrom[0] . ' to ' . $aEachFrom[1];
         }
 
-        $this->addConclusion('Configured ' . (empty($aFrom) ? 'no ' : '') . 'Redirect' . (empty($aFrom) ? '' : implode(' and ', $aStringFrom)));
+        $this->addConclusion('Configured ' . (empty($aFrom) ? 'no ' : '') . 'Redirect ' . (empty($aFrom) ? '' : implode(' and ', $aStringFrom)));
     }
 }

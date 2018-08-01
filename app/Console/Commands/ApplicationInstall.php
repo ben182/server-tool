@@ -2,10 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Console\ModCommand;
-use App\Helper\Domain;
-use Illuminate\Console\Command;
 use App\Console\Commands\Tasks\ApplicationInstallTaskManager;
+use App\Console\ModCommand;
+use Illuminate\Console\Command;
 
 class ApplicationInstall extends ModCommand
 {
@@ -58,12 +57,14 @@ class ApplicationInstall extends ModCommand
 
         // LARAVEL
         $bLaravel = $this->confirm('Laravel specific config?');
+        $bDatabase = false;
+        $sMigrateOrSeed = '';
+        $bSchedule = false;
+        $ComposerInstall = false;
 
         if ($bLaravel) {
-
             $bDatabase = $this->confirm('Create Database?');
             if ($bDatabase) {
-
                 $sMigrateOrSeed = $this->choice('Migrate Or Seed?', ['Migrate', 'Migrate & Seed', 'Nothing']);
             }
 
@@ -78,27 +79,29 @@ class ApplicationInstall extends ModCommand
 
         $bGitAutoDeploy = $this->confirm('Git auto deploy?');
 
+        $bGitAutoDeployHardReset = false;
+
         if ($bGitAutoDeploy) {
             $bGitAutoDeployHardReset = $this->confirm('Hard Reset?');
         }
 
         (new ApplicationInstallTaskManager([
-            'domain' => $sDomain,
-            'rootOrSub' => $sRootOrSub,
-            'subDir' => $sSubDir,
+            'domain'             => $sDomain,
+            'rootOrSub'          => $sRootOrSub,
+            'subDir'             => $sSubDir,
             'directoryOrSymlink' => $sDirectoryOrSymlink,
-            'symlinkSourceDir' => $sSymlinkRootDir,
-            'git' => $sGit,
-            'branch' => $sGitBranch,
-            'composerInstall' => $ComposerInstall,
-            'laravel' => $bLaravel,
-            'laravel_database' => $bDatabase,
-            'laravel_migrate' => $sMigrateOrSeed,
-            'laravel_cronjob' => $bSchedule,
-            'npmInstall' => $bNpmInstall,
-            'gitPostPullHook' => $bGitPostPullHook,
-            'gad' => $bGitAutoDeploy,
-            'gad_hartReset' => $bGitAutoDeployHardReset,
+            'symlinkSourceDir'   => $sSymlinkRootDir,
+            'git'                => $sGit,
+            'branch'             => $sGitBranch,
+            'composerInstall'    => $ComposerInstall,
+            'laravel'            => $bLaravel,
+            'laravel_database'   => $bDatabase,
+            'laravel_migrate'    => $sMigrateOrSeed,
+            'laravel_cronjob'    => $bSchedule,
+            'npmInstall'         => $bNpmInstall,
+            'gitPostPullHook'    => $bGitPostPullHook,
+            'gad'                => $bGitAutoDeploy,
+            'gad_hartReset'      => $bGitAutoDeployHardReset,
         ]))->work();
     }
 }
