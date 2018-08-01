@@ -6,6 +6,7 @@ abstract class Task
 {
     public $oOptions;
     public $shell;
+    public $bindings;
 
     public $aConclusions = [];
 
@@ -16,10 +17,15 @@ abstract class Task
     abstract public function systemRequirements();
     abstract public function localRequirements();
 
-    public function __construct($aOptions)
+    public function __construct($aOptions, array $aVariableBinding)
     {
         $this->oOptions = $aOptions;
 
         $this->shell = resolve('ShellTask');
+
+        $this->bindings = new \stdclass();
+        foreach ($aVariableBinding as $key => $value) {
+            $this->bindings->$key = $value;
+        }
     }
 }

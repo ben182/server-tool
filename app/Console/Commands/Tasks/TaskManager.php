@@ -33,13 +33,17 @@ abstract class Taskmanager
     }
 
     public function printConclusions() {
-        echo implode("\n", $this->aConclusions) . "\n" (!empty($this->aConclusions) ? "\n" : '');
+        echo implode("\n", $this->aConclusions) . "\n" . (!empty($this->aConclusions ? "\n" : '')); // TODO static to print other conclusions also
+    }
+
+    public function addVariableBinding() : array {
+        return [];
     }
 
     public function work()
     {
         foreach ($this->aTasks as $cTask) {
-            $oTask = new $cTask($this->oOptions);
+            $oTask = new $cTask($this->oOptions, $this->addVariableBinding());
 
             $mSystemRequirements = $oTask->systemRequirements();
 

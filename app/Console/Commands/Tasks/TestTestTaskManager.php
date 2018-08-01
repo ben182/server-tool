@@ -10,6 +10,7 @@ use App\Console\Commands\Tasks\Partials\Finish;
 use Illuminate\Validation\Rule;
 use App\Console\Commands\Tasks\TestTest\TestTask;
 use App\Console\Commands\Tasks\TestTest\TestTask2;
+use App\Helper\Domain;
 
 class TestTestTaskManager extends Taskmanager
 {
@@ -17,6 +18,12 @@ class TestTestTaskManager extends Taskmanager
         TestTask::class,
         TestTask2::class,
     ];
+
+    public function addVariableBinding() : array {
+        return [
+            'domain' => new Domain('test'),
+        ];
+    }
 
     public function validate()
     {

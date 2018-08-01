@@ -1,13 +1,13 @@
 <?php
 
-function scripts_path()
+function scripts_path($sPath = '')
 {
-    return str_replace('\\', '/', base_path('scripts')) . '/';
+    return str_replace('\\', '/', base_path('scripts')) . '/' . $sPath;
 }
 
-function templates_path()
+function templates_path($sPath = '')
 {
-    return str_replace('\\', '/', base_path('templates')) . '/';
+    return str_replace('\\', '/', base_path('templates')) . '/' . $sPath;
 }
 
 function replace_string_in_file($filename, $string_to_replace, $replace_with)
