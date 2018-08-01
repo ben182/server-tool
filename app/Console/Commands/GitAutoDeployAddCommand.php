@@ -2,10 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Console\ModCommand;
-use App\Repository;
-use Illuminate\Console\Command;
 use App\Console\Commands\Tasks\GitAutoDeployTaskManager;
+use App\Console\ModCommand;
+use Illuminate\Console\Command;
 
 class GitAutoDeployAddCommand extends ModCommand
 {
@@ -45,9 +44,9 @@ class GitAutoDeployAddCommand extends ModCommand
         $bReset = $this->booleanOption('hardreset', 'Hard Reset?', true);
 
         (new GitAutoDeployTaskManager([
-            'dir' => "/var/www/$sDir",
+            'dir'    => "/var/www/$sDir",
             'branch' => $sBranch,
-            'hardreset' => $bReset
+            'reset'  => $bReset
         ]))->work();
     }
 }
