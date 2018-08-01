@@ -72,10 +72,10 @@ class ApplicationInstallTaskManager extends Taskmanager
             'branch' => 'required',
             'composerInstall' => 'required_if:laravel,false|boolean',
             'laravel' => 'required|boolean',
-            'laravel_createDatabase' => 'required_if:laravel,true|boolean',
             'laravel_database' => 'required_if:laravel,true|boolean',
             'laravel_migrate' => [
                 'required_if:laravel,true',
+                'required_if:laravel_database,true',
                 Rule::in([
                     'Migrate',
                     'Migrate & Seed',

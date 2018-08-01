@@ -10,7 +10,8 @@ abstract class Taskmanager
     public $aTasks;
     public $shell;
 
-    public $aConclusions;
+    public static $rootTaskManager;
+    public static $aConclusions;
 
     abstract public function validate();
 
@@ -25,15 +26,23 @@ abstract class Taskmanager
         if ($validator->fails()) {
             throw new \Exception($validator->errors()); // TODO pretty
         }
+
+        if (!self::$rootTaskManager) {
+            self::$rootTaskManager = $this->generateHash();
+        }
     }
 
-    public function addConclusion($aItems) {
-        $this->aConclusions[] = $aItems;
-        $this->aConclusions = array_flatten($this->aConclusions);
+    public function generateHash() {
+        return get_class($this);
     }
 
-    public function printConclusions() {
-        echo implode("\n", $this->aConclusions) . "\n" . (!empty($this->aConclusions ? "\n" : '')); // TODO static to print other conclusions also
+    public static function addConclusion($aItems) {
+        self::$aConclusions[] = $aItems;
+        self::$aConclusions = array_flatten(self::$aConclusions);
+    }
+
+    public static function printConclusions() {
+        echo implode("\n", self::$aConclusions) . "\n" . (!empty(self::$aConclusions ? "\n" : ''));
     }
 
     public function addVariableBinding() : array {
@@ -85,6 +94,9 @@ abstract class Taskmanager
             $this->shell->flushOutput();
         }
 
+        if (self::$rootTaskManager !== $this->generateHash()) {
+            return;
+        }
         $this->printConclusions();
     }
 }

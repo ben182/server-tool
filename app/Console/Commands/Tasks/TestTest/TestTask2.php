@@ -22,9 +22,6 @@ class TestTask2 extends Task
 
     public function handle()
     {
-        $this->shell->exec('dir');
         $this->addConclusion('I created this2');
-        $this->shell->echo('das Funktioniert wirklich gut!2');
-        //throw new \Exception("Error Processing Request");
     }
 }

@@ -15,7 +15,7 @@ class LaravelDatabase extends Task
 
     public function localRequirements()
     {
-        return $this->oOptions->laravel && $this->oOptions->laravel_createDatabase;
+        return $this->oOptions->laravel && $this->oOptions->laravel_database;
     }
 
     public function handle()

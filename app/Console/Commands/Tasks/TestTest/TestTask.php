@@ -5,6 +5,7 @@ namespace App\Console\Commands\Tasks\TestTest;
 use App\Console\Commands\Tasks\SubBaseTask;
 use App\Console\Commands\Tasks\BaseTask;
 use App\Console\Commands\Tasks\Task;
+use App\Console\Commands\Tasks\TestTestTaskManager;
 
 class TestTask extends Task
 {
@@ -22,9 +23,6 @@ class TestTask extends Task
 
     public function handle()
     {
-        $this->shell->exec('dir');
         $this->addConclusion((int) $this->bindings->domain->doesExist());
-        $this->shell->echo('das Funktioniert wirklich gut!');
-        //throw new \Exception("Error Processing Request");
     }
 }
