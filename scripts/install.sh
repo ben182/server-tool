@@ -83,6 +83,7 @@ mysqlInstall
 servertoolInstall() {
     mkdir -p /var/www/ip/html
     cp ${TEMPLATES_PATH}ip/. /var/www/ip/html -r
+
     cp ${ABSOLUTE_PATH}.env.example ${ABSOLUTE_PATH}.env
     sudo sed -i "s|localhost|${PUBLIC_IP}/stool|" ${ABSOLUTE_PATH}.env
     ln -s ${ABSOLUTE_PATH}public /var/www/ip/html/stool
