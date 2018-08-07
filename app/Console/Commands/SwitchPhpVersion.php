@@ -53,7 +53,7 @@ class SwitchPhpVersion extends ModCommand
         $aAvailableFiles = glob("/etc/apache2/mods-available/php*.load");
 
         $aVersions = [];
-        for ($i = 0; $i < $aAvailableFiles; $i++) {
+        for ($i = 0; $i < count($aAvailableFiles); $i++) {
             $aVersions[] = getStringBetween($aAvailableFiles[$i], '/php', '.load');
         }
         return $aVersions;
