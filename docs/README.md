@@ -1,9 +1,10 @@
 ---
 home: true
-sidebar: auto
 ---
 
 A fully featured Digitalocean installer and management tool optimized for Laravel
+
+[Home](/commands/addvhost.md)
 
 This tool is supposed to be run on a fresh ubuntu maschine. It will install:
 * Apache

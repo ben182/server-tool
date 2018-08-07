@@ -9,10 +9,12 @@ module.exports = {
     // Defaults to "GitHub"/"GitLab"/"Bitbucket" depending on `themeConfig.repo`
     repoLabel: 'Contribute!',
 
+    docsDir: 'docs',
+
     // defaults to false, set to true to enable
     editLinks: true,
     // custom text for edit link. Defaults to "Edit this page"
-    editLinkText: 'Help us improve this page!',
+    editLinkText: 'Help me improve this page!',
 
     nav: [
       { text: 'Home', link: '/' },
@@ -20,10 +22,15 @@ module.exports = {
       { text: 'External', link: 'https://google.com' },
     ],
 
-    /* sidebar: [
-      '/',
-      '/AddVhost',
-      //['/page-b', 'Explicit link text']
-    ] */
+    sidebar: [
+      '/installation',
+      {
+        title: 'Commands',
+        collapsable: false,
+        children: [
+          '/commands/addvhost'
+        ]
+      },
+    ]
   }
 }

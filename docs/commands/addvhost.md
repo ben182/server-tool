@@ -1,4 +1,4 @@
-## AddVhost
+# Add vHost
 
 The vhost:add Command should be the starting point when you want to deploy your application. It will bind a domain to your server by creating a vHost.
 
