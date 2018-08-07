@@ -2,10 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Console\Commands\Tasks\AddVhost;
+use App\Console\Commands\Tasks\AddVhostTaskManager;
 use App\Console\ModCommand;
 use Illuminate\Console\Command;
-use App\Console\Commands\Tasks\AddVhostTaskManager;
 
 class AddVhostCommand extends ModCommand
 {
@@ -66,8 +65,6 @@ class AddVhostCommand extends ModCommand
             $aRedirectChoices[] = 'Non SSL to SSL';
         }
         $sHtaccess = $this->choice('Redirect?', $aRedirectChoices);
-
-
 
         (new AddVhostTaskManager([
             'dev'         => $bDev,
