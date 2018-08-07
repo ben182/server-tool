@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands\Tasks\ApplicationInstall;
 
-use App\Console\Commands\Tasks\Task;
 use App\Console\Commands\Tasks\GitAutoDeployTaskManager;
+use App\Console\Commands\Tasks\Task;
 
 class Gad extends Task
 {
@@ -22,9 +22,9 @@ class Gad extends Task
     public function handle()
     {
         (new GitAutoDeployTaskManager([
-            'dir' => $this->bindings->installationDir,
+            'dir'    => $this->bindings->installationDir,
             'branch' => $this->oOptions->branch,
-            'hardreset' => $this->oOptions->gad_hartReset,
+            'reset'  => $this->oOptions->gad_hartReset,
         ]))->work();
     }
 }

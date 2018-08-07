@@ -27,26 +27,34 @@ abstract class Taskmanager
             throw new \Exception($validator->errors()); // TODO pretty
         }
 
-        if (!self::$rootTaskManager) {
-            self::$rootTaskManager = $this->generateHash();
+        if (! self::$rootTaskManager) {
+            self::$rootTaskManager = get_class($this);
         }
     }
 
-    public function generateHash() {
-        return get_class($this);
-    }
-
-    public static function addConclusion($aItems) {
+    public static function addConclusion($aItems)
+    {
         self::$aConclusions[] = $aItems;
         self::$aConclusions = array_flatten(self::$aConclusions);
     }
 
-    public static function printConclusions() {
-        echo implode("\n", self::$aConclusions) . "\n" . (!empty(self::$aConclusions ? "\n" : ''));
+    public static function printConclusions()
+    {
+        echo implode("\n", self::$aConclusions) . "\n" . (! empty(self::$aConclusions ? "\n" : ''));
     }
 
-    public function addVariableBinding() : array {
+    public function addVariableBinding() : array
+    {
         return [];
+    }
+
+    public function isRootManager()
+    {
+        return self::$rootTaskManager === get_class($this);
+    }
+    public function isNotRootManager()
+    {
+        return ! $this->isRootManager();
     }
 
     public function work()
@@ -61,8 +69,8 @@ abstract class Taskmanager
                 continue;
             }
             if (gettype($mSystemRequirements) === 'string') {
-                if (!getInstallationConfigKey($mSystemRequirements)) {
-                    echo ($oTask->systemRequirementsErrorMessage ?? $oTask->sName) . ' failed because ' . $mSystemRequirements . 'is not installed on your system.';
+                if (! getInstallationConfigKey($mSystemRequirements)) {
+                    echo($oTask->systemRequirementsErrorMessage ?? $oTask->sName) . ' failed because ' . $mSystemRequirements . ' is not installed on your system.';
                     continue;
                 }
             }
@@ -70,15 +78,19 @@ abstract class Taskmanager
                 continue;
             }
 
-            echo $oTask->sName . '...';
+            if ($this->isRootManager()) {
+                echo $oTask->sName . '...';
+            }
 
             try {
                 $oTask->handle();
-            } catch(\Exception $e) {
+            } catch (\Exception $e) {
                 $this->shell->saveError($e);
             }
 
-            echo($this->shell->hasErrors() ? 'fail' : 'done') . "\n";
+            if ($this->isRootManager()) {
+                echo($this->shell->hasErrors() ? 'fail' : 'done') . "\n";
+            }
 
             if ($this->shell->hasErrors()) {
                 echo "I found {$this->shell->countErrors()} " . str_plural('error', $this->shell->countErrors()) . "\n";
@@ -94,7 +106,7 @@ abstract class Taskmanager
             $this->shell->flushOutput();
         }
 
-        if (self::$rootTaskManager !== $this->generateHash()) {
+        if ($this->isNotRootManager()) {
             return;
         }
         $this->printConclusions();

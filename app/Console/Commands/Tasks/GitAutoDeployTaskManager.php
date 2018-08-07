@@ -2,9 +2,8 @@
 
 namespace App\Console\Commands\Tasks;
 
-use App\Rules\FileExists;
 use App\Console\Commands\Tasks\Partials\CreateRepositoryTask;
-
+use App\Rules\FileExists;
 
 class GitAutoDeployTaskManager extends Taskmanager
 {
@@ -20,7 +19,7 @@ class GitAutoDeployTaskManager extends Taskmanager
                 new FileExists
             ],
             'branch' => 'required',
-            'hardreset' => 'required|boolean',
+            'reset'  => 'required|boolean',
         ];
     }
 }
