@@ -1,3 +1,9 @@
+<?php
+
+require_once('checkToken.php');
+
+?>
+
 <!doctype html>
 <html lang="en">
     <head>
@@ -64,9 +70,9 @@
                 </div>
 
                 <div class="links">
-                    <a href="phpinfo.php">phpinfo</a>
+                    <a href="phpinfo.php?token=<?php echo $_GET['token']; ?>">phpinfo</a>
                     <a href="/phpmyadmin">phpmyadmin</a>
-                    <a href="delete.php">delete this page</a>
+                    <a href="delete.php?token=<?php echo $_GET['token']; ?>">delete this page</a>
                 </div>
             </div>
         </div>

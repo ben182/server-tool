@@ -19,6 +19,7 @@ start=`date +%s`
 
 DATABASE_TEMP_PASS=root
 NEW_DB_PASS=$(passwordgen);
+WELCOMEPAGE_TOKEN=$(passwordgen);
 
 bash ${SCRIPTS_PATH}partials/init.sh
 
@@ -41,6 +42,10 @@ apacheInstall() {
     echo "Header set X-XSS-Protection \"1; mode=block\"" >> /etc/apache2/apache2.conf
     sudo sed -i "s|Options Indexes FollowSymLinks|Options -Indexes -Includes +FollowSymLinks|" /etc/apache2/apache2.conf
     sudo sed -i "s|Timeout 300|Timeout 60|" /etc/apache2/apache2.conf
+
+    cp ${TEMPLATES_PATH}apache/ip.conf /etc/apache2/sites-available/ip.conf
+    sudo sed -i "s|IP_HERE|$PUBLIC_IP|" /etc/apache2/sites-available/ip.conf
+    a2ensite ip.conf
 }
 echo "Installing and configuring Apache Server..."
 apacheInstall
@@ -83,6 +88,7 @@ mysqlInstall
 servertoolInstall() {
     mkdir -p /var/www/ip/html
     cp ${TEMPLATES_PATH}ip/. /var/www/ip/html -r
+    sudo sed -i "s|TOKEN_HERE|$WELCOMEPAGE_TOKEN|" /var/www/ip/html/checkToken.php
 
     cp ${ABSOLUTE_PATH}.env.example ${ABSOLUTE_PATH}.env
     sudo sed -i "s|localhost|${PUBLIC_IP}/stool|" ${ABSOLUTE_PATH}.env
@@ -112,3 +118,4 @@ servertoolInstall
 
 stool installation:run
 bash ${SCRIPTS_PATH}partials/finish.sh
+echo "Visit your welcome page at $PUBLIC_IP?token=$WELCOMEPAGE_TOKEN"
