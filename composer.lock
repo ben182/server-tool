@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "214721c4da3efaa8b7de0cf7bcda6593",
+    "content-hash": "90a61c00ab4615212c786c27cd16e529",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -548,6 +548,143 @@
                 "trusted proxy"
             ],
             "time": "2018-02-07T20:20:57+00:00"
+        },
+        {
+            "name": "graham-campbell/digitalocean",
+            "version": "v5.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/GrahamCampbell/Laravel-DigitalOcean.git",
+                "reference": "70bc248ab072f963cb4e46c45618f6e9083fadf6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/GrahamCampbell/Laravel-DigitalOcean/zipball/70bc248ab072f963cb4e46c45618f6e9083fadf6",
+                "reference": "70bc248ab072f963cb4e46c45618f6e9083fadf6",
+                "shasum": ""
+            },
+            "require": {
+                "graham-campbell/manager": "^4.0",
+                "illuminate/contracts": "5.5.*|5.6.*",
+                "illuminate/support": "5.5.*|5.6.*",
+                "php": "^7.1.3",
+                "toin0u/digitalocean-v2": "^2.0"
+            },
+            "require-dev": {
+                "graham-campbell/analyzer": "^2.0",
+                "graham-campbell/testbench": "^5.0",
+                "guzzle/guzzle": "^3.7",
+                "guzzlehttp/guzzle": "^5.0|^6.0",
+                "kriswallsmith/buzz": "^0.10",
+                "mockery/mockery": "^1.0",
+                "phpunit/phpunit": "^6.5|^7.0"
+            },
+            "suggest": {
+                "guzzle/guzzle": "Enables the guzzle connector.",
+                "guzzlehttp/guzzle": "Enables the guzzlehttp connector.",
+                "kriswallsmith/buzz": "Enables the buzz connector."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "GrahamCampbell\\DigitalOcean\\DigitalOceanServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GrahamCampbell\\DigitalOcean\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Graham Campbell",
+                    "email": "graham@alt-three.com"
+                }
+            ],
+            "description": "DigitalOcean Is A DigitalOcean Bridge For Laravel 5",
+            "keywords": [
+                "Bridge",
+                "DigitalOceanV2",
+                "Graham Campbell",
+                "GrahamCampbell",
+                "Laravel DigitalOcean",
+                "Laravel-DigitalOcean",
+                "digitalocean",
+                "digitalocean bridge",
+                "digitalocean-v2",
+                "framework",
+                "laravel"
+            ],
+            "time": "2018-03-01T22:01:05+00:00"
+        },
+        {
+            "name": "graham-campbell/manager",
+            "version": "v4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/GrahamCampbell/Laravel-Manager.git",
+                "reference": "95b654ac39eae15299c6c7400249c204c8ae7bf0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/GrahamCampbell/Laravel-Manager/zipball/95b654ac39eae15299c6c7400249c204c8ae7bf0",
+                "reference": "95b654ac39eae15299c6c7400249c204c8ae7bf0",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "5.5.*|5.6.*",
+                "illuminate/support": "5.5.*|5.6.*",
+                "php": "^7.1.3"
+            },
+            "require-dev": {
+                "graham-campbell/analyzer": "^2.0",
+                "graham-campbell/testbench-core": "^3.0",
+                "mockery/mockery": "^1.0",
+                "phpunit/phpunit": "^6.5|^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GrahamCampbell\\Manager\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Graham Campbell",
+                    "email": "graham@alt-three.com"
+                }
+            ],
+            "description": "Manager Provides Some Manager Functionality For Laravel 5",
+            "keywords": [
+                "Graham Campbell",
+                "GrahamCampbell",
+                "Laravel Manager",
+                "Laravel-Manager",
+                "connector",
+                "framework",
+                "interface",
+                "laravel",
+                "manager"
+            ],
+            "time": "2018-02-11T14:57:19+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -2987,6 +3124,75 @@
             "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
             "homepage": "https://github.com/tijsverkoyen/CssToInlineStyles",
             "time": "2017-11-27T11:13:29+00:00"
+        },
+        {
+            "name": "toin0u/digitalocean-v2",
+            "version": "2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/toin0u/DigitalOceanV2.git",
+                "reference": "c894bb11d09fff273a10291b0c0f3ef81297a578"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/toin0u/DigitalOceanV2/zipball/c894bb11d09fff273a10291b0c0f3ef81297a578",
+                "reference": "c894bb11d09fff273a10291b0c0f3ef81297a578",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "~1.11",
+                "guzzle/guzzle": "~3.7",
+                "guzzlehttp/guzzle": "~5.0|~6.0",
+                "kriswallsmith/buzz": "~0.10",
+                "phpspec/phpspec": "~2.4"
+            },
+            "suggest": {
+                "guzzle/guzzle": "To use GuzzleAdapter, require guzzle/guzzle:~3.7.",
+                "guzzlehttp/guzzle": "To use GuzzleHttpAdapter, require guzzlehttp/guzzle:~5.0|~6.0.",
+                "kriswallsmith/buzz": "To use BuzzAdapter, require kriswallsmith/buzz:~0.10."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DigitalOceanV2\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Antoine Corcy",
+                    "email": "contact@sbin.dk",
+                    "homepage": "http://sbin.dk",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Yassir Hannnoun",
+                    "email": "yassir.hannoun@gmail.com",
+                    "homepage": "https://yassirh.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "DigitalOcean API v2 PHP 5.4+ library",
+            "homepage": "https://github.com/toin0u/DigitalOceanV2",
+            "keywords": [
+                "Cloud Hosting",
+                "SSD",
+                "api",
+                "digitalocean",
+                "vps"
+            ],
+            "time": "2017-04-18T15:02:19+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
