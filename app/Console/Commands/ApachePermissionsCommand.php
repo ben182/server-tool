@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Console\Commands\Tasks\ApachePermissionsTaskManager;
+use App\Console\ModCommand;
 
-class ApachePermissionsCommand extends Command
+class ApachePermissionsCommand extends ModCommand
 {
     /**
      * The name and signature of the console command.

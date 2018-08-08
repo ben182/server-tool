@@ -52,7 +52,7 @@ class ApplicationInstall extends ModCommand
         if ($sDirectoryOrSymlink === 'symlink') {
             $sSymlinkRootDir = $this->ask('Which source directory?');
         }
-        $sGit = $this->ask('Which Github repository?');
+        $sGit = $this->ask('Which Git repository?');
         $sGitBranch = $this->ask('Which Branch?');
 
         // LARAVEL

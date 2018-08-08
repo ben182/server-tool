@@ -22,7 +22,8 @@ module.exports = {
         title: 'Commands',
         collapsable: false,
         children: [
-          '/commands/addvhost'
+          '/commands/addvhost',
+          '/commands/apachepermissions',
         ]
       },
     ]

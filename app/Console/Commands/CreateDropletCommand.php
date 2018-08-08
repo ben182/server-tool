@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use GrahamCampbell\DigitalOcean\DigitalOceanManager;
+use Illuminate\Console\Command;
 
 class CreateDropletCommand extends Command
 {
@@ -45,6 +45,8 @@ class CreateDropletCommand extends Command
 
         sleep(60);
         $sIp = $this->digitalocean->droplet()->getById($oDroplet->id)->networks[0]->ipAddress;
+
+        $this->line('IP: ' . $sIp);
 
         $sBranch = implode('/', array_slice(explode('/', file_get_contents('.git/HEAD')), 2));
         echo str_replace('develop', $sBranch, file_get_contents(scripts_path('get_develop.sh')));
