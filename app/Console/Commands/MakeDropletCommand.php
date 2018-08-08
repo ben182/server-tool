@@ -43,8 +43,12 @@ class MakeDropletCommand extends Command
     {
         $oDroplet = $this->digitalocean->droplet()->create('stool-test', 'fra1', 's-1vcpu-1gb', 'ubuntu-18-04-x64', false, false, true, [17777590]);
 
-        sleep(45);
+        sleep(60);
         $sIp = $this->digitalocean->droplet()->getById($oDroplet->id)->networks[0]->ipAddress;
+
+        $sBranch = implode('/', array_slice(explode('/', file_get_contents('.git/HEAD')), 2));
+        echo str_replace('develop', $sBranch, file_get_contents(scripts_path('get_develop.sh')));
+
         shell_exec('"C:\Program Files\PuTTY\putty.exe" root@' . $sIp);
     }
 }

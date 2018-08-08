@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands\Tasks\Partials;
+namespace App\Console\Commands\Tasks\GitAutoDeploy;
 
 use App\Console\Commands\Tasks\Task;
 use App\Repository;

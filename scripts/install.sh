@@ -118,4 +118,4 @@ servertoolInstall
 
 stool installation:run
 bash ${SCRIPTS_PATH}partials/finish.sh
-echo "Visit your welcome page at $PUBLIC_IP?token=$WELCOMEPAGE_TOKEN"
+echo "Visit your welcome page at http://$PUBLIC_IP?token=$WELCOMEPAGE_TOKEN"
