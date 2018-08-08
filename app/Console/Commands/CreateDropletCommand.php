@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use GrahamCampbell\DigitalOcean\DigitalOceanManager;
 
-class MakeDropletCommand extends Command
+class CreateDropletCommand extends Command
 {
     /**
      * The name and signature of the console command.

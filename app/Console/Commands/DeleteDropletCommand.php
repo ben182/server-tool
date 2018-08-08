@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use GrahamCampbell\DigitalOcean\DigitalOceanManager;
+use Illuminate\Console\Command;
 
 class DeleteDropletCommand extends Command
 {
@@ -42,21 +42,22 @@ class DeleteDropletCommand extends Command
     public function handle()
     {
         $cDroplets = collect($this->digitalocean->droplet()->getAll());
-        $iDroplet = null;
-        $cDroplets->each(function ($item, $key) use (&$iDroplet) {
-
+        $cDropletIds = collect();
+        $cDroplets->each(function ($item) use (&$cDropletIds) {
             if ($item->name === 'stool-test') {
-                $iDroplet = $item->id;
+                $cDropletIds->push($item->id);
                 return;
             }
         });
 
-        if (!$iDroplet) {
+        if ($cDropletIds->count() === 0) {
             echo 'Droplet could not be found';
             return;
         }
 
-        $this->digitalocean->droplet()->delete($iDroplet);
-        echo 'Droplet deleted';
+        $cDropletIds->each(function($item) {
+            $this->digitalocean->droplet()->delete($item);
+            echo 'Droplet deleted';
+        });
     }
 }

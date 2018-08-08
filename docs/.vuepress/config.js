@@ -1,6 +1,6 @@
 module.exports = {
   title: 'stool',
-  description: 'A fully featured Digitalocean installer and management tool optimized for Laravel',
+  description: 'A fully featured LAMP+ installer and management tool optimized for DigitalOcean & Laravel',
 
   themeConfig: {
     // Assumes GitHub. Can also be a full GitLab url.
@@ -15,12 +15,6 @@ module.exports = {
     editLinks: true,
     // custom text for edit link. Defaults to "Edit this page"
     editLinkText: 'Help me improve this page!',
-
-    nav: [
-      { text: 'Home', link: '/' },
-      { text: 'Guide', link: '/guide/' },
-      { text: 'External', link: 'https://google.com' },
-    ],
 
     sidebar: [
       '/installation',
