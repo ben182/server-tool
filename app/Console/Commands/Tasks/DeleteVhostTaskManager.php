@@ -5,6 +5,7 @@ namespace App\Console\Commands\Tasks;
 use App\Console\Commands\Tasks\DeleteVhost\DeleteApacheVhostTask;
 use App\Console\Commands\Tasks\DeleteVhost\DeleteDomainFolderTask;
 use App\Console\Commands\Tasks\Partials\ApacheFinishTask;
+use App\Helper\Domain;
 use App\Rules\DomainExists;
 
 class DeleteVhostTaskManager extends Taskmanager
