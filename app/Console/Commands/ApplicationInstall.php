@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use App\Console\Commands\Tasks\ApplicationInstallTaskManager;
 use App\Console\ModCommand;
-use Illuminate\Console\Command;
 
 class ApplicationInstall extends ModCommand
 {
@@ -39,6 +38,8 @@ class ApplicationInstall extends ModCommand
      */
     public function handle()
     {
+        parent::handle();
+
         $sDomain = $this->ask('Domain?');
 
         $sSubDir = '';

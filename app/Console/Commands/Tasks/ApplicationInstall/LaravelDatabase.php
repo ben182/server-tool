@@ -20,7 +20,7 @@ class LaravelDatabase extends Task
 
     public function handle()
     {
-        $sDatabaseName = createMysqlDatabase($this->bindings->installationDir);
+        $sDatabaseName = createMysqlDatabase($this->bindings->installationDir); // TODO: is database name already taken?
         $aUserData = createMysqlUserAndGiveAccessToDatabase($sDatabaseName);
 
         editEnvKey("{$this->bindings->installationDir}/.env", 'DB_DATABASE', $sDatabaseName);

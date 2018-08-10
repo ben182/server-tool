@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Console\Commands\Tasks\DeleteVhostTaskManager;
 use App\Console\ModCommand;
-use App\Helper\Domain;
 use Illuminate\Console\Command;
 
 class DeleteVhostCommand extends ModCommand
@@ -41,51 +41,11 @@ class DeleteVhostCommand extends ModCommand
     {
         $sDomain = $this->ask('Domain?');
 
-        $oDomain = new Domain($sDomain);
+        $bDeleteDir = $this->confirm("Delete /var/www/$sDomain?", 0);
 
-        if ($oDomain->doesNotExist()) {
-            $this->abort('The domain directory does not exist');
-        }
-
-        $bDeleteDir = $this->confirm('Delete folder in /var/www?', 0);
-
-        $this->task('Deleting vHost', function () use ($sDomain) {
-            try {
-                quietCommand("a2dissite $sDomain.conf -q");
-                quietCommand("a2dissite $sDomain-le-ssl.conf -q");
-
-                unlink("/etc/apache2/sites-available/$sDomain.conf");
-                unlink("/etc/apache2/sites-available/$sDomain-le-ssl.conf");
-            } catch (\Exception $e) {
-                echo $e;
-                return false;
-            }
-
-            return true;
-        });
-
-        if ($bDeleteDir) {
-            $this->task('Deleting html folder', function () use ($sDomain) {
-                try {
-                    quietCommand("rm -r /var/www/$sDomain");
-                } catch (\Exception $e) {
-                    echo $e;
-                    return false;
-                }
-
-                return true;
-            });
-        }
-
-        $this->task('Clean up & Finishing', function () {
-            try {
-                $this->fixApachePermissions()->restartApache();
-            } catch (\Exception $e) {
-                echo $e;
-                return false;
-            }
-
-            return true;
-        });
+        (new DeleteVhostTaskManager([
+            'domain'             => $sDomain,
+            'deleteDomainFolder' => $bDeleteDir,
+        ]))->work();
     }
 }

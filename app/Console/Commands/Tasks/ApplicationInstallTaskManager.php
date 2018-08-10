@@ -9,7 +9,6 @@ use App\Console\Commands\Tasks\ApplicationInstall\GitPostPullHook;
 use App\Console\Commands\Tasks\ApplicationInstall\LaravelCronjob;
 use App\Console\Commands\Tasks\ApplicationInstall\LaravelDatabase;
 use App\Console\Commands\Tasks\ApplicationInstall\LaravelInit;
-use App\Console\Commands\Tasks\ApplicationInstall\LaravelMigrate;
 use App\Console\Commands\Tasks\ApplicationInstall\LinkApplication;
 use App\Console\Commands\Tasks\ApplicationInstall\NpmInstall;
 use App\Console\Commands\Tasks\Partials\ApacheFinishTask;
@@ -25,7 +24,6 @@ class ApplicationInstallTaskManager extends Taskmanager
         ComposerInstall::class,
         LaravelInit::class,
         LaravelDatabase::class,
-        LaravelMigrate::class,
         LaravelCronjob::class,
         NpmInstall::class,
         GitPostPullHook::class,

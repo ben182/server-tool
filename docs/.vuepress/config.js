@@ -23,7 +23,9 @@ module.exports = {
         collapsable: false,
         children: [
           '/commands/addvhost',
+          '/commands/deletevhost',
           '/commands/apachepermissions',
+          '/commands/applicationinstall',
         ]
       },
     ]
