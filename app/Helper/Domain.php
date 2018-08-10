@@ -38,11 +38,13 @@ class Domain
         }
     }
 
-    public function getHtmlFolder() {
+    public function getHtmlFolder()
+    {
         return "/var/www/$this->sName/html";
     }
 
-    public function getBaseFolder(){
+    public function getBaseFolder()
+    {
         return "/var/www/$this->sName";
     }
 

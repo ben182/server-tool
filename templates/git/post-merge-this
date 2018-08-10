@@ -10,5 +10,5 @@ check_run() {
 # In this example it's used to run `npm install` if package.json changed
 check_run package.json "npm install"
 check_run composer.json "composer install"
-chown -R www-data:www-data /etc/stool
+chown -R root:root /etc/stool
 chmod -R 755 /etc/stool

@@ -21,10 +21,12 @@ class DeleteApacheVhostTask extends Task
     public function handle()
     {
         $this->shell->exec("a2dissite {$this->oOptions->domain}.conf -q");
-        $this->shell->exec("a2dissite {$this->oOptions->domain}-le-ssl.conf -q");
-
         unlink("/etc/apache2/sites-available/{$this->oOptions->domain}.conf");
-        unlink("/etc/apache2/sites-available/{$this->oOptions->domain}-le-ssl.conf");
+
+        if ($this->bindings->domain->isSSL()) {
+            $this->shell->exec("a2dissite {$this->oOptions->domain}-le-ssl.conf -q");
+            unlink("/etc/apache2/sites-available/{$this->oOptions->domain}-le-ssl.conf");
+        }
 
         $this->addConclusion('Disabled and removed Apache vHost');
     }

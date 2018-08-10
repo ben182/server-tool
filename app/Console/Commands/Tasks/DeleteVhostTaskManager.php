@@ -15,6 +15,13 @@ class DeleteVhostTaskManager extends Taskmanager
         ApacheFinishTask::class,
     ];
 
+    public function addVariableBinding() : array
+    {
+        return [
+            'domain' => new Domain($this->oOptions->domain),
+        ];
+    }
+
     public function validate()
     {
         return [

@@ -99,8 +99,7 @@ servertoolInstall() {
     chmod +x /usr/bin/stool
     cp ${TEMPLATES_PATH}git/post-merge-this ${ABSOLUTE_PATH}.git/hooks/post-merge
     chmod +x ${ABSOLUTE_PATH}.git/hooks/post-merge
-    chown -R www-data:www-data /etc/stool
-    chown -R root:root $CONFIG_PATH
+    chown -R root:root /etc/stool
     chmod -R 755 /etc/stool
     crontab -l | { cat; echo "* * * * * stool schedule:run >> /dev/null 2>&1"; } | crontab -
     crontab -l | { cat; echo "0 0 * * * composer self-update >> /dev/null 2>&1"; } | crontab -
