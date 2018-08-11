@@ -4,6 +4,7 @@ namespace App\Console\Commands\Tasks\MysqlBackup;
 
 use App\Console\Commands\Tasks\Task;
 use App\Helper\BackupService;
+use App\Task as TaskModel;
 
 class MysqlBackupTask extends Task
 {
@@ -28,7 +29,7 @@ class MysqlBackupTask extends Task
         BackupService::backup($this->oOptions->storage, 'mysql', $sFileName);
 
         if ($this->oOptions->cronjob) {
-            Task::create([
+            TaskModel::create([
                 'command'   => 'mysql:backup',
                 'parameter' => [
                     '--allDatabases' => $this->oOptions->allDatabases,
