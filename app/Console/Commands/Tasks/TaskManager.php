@@ -7,11 +7,11 @@ use Illuminate\Support\Facades\Validator;
 abstract class Taskmanager
 {
     public $oOptions;
-    public $aTasks;
+    public $aTasks = [];
     public $shell;
 
     public static $rootTaskManager;
-    public static $aConclusions;
+    public static $aConclusions = [];
 
     abstract public function validate();
 
