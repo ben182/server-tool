@@ -2,8 +2,6 @@
 
 namespace App\Console\Commands\Tasks\TestTest;
 
-use App\Console\Commands\Tasks\SubBaseTask;
-use App\Console\Commands\Tasks\BaseTask;
 use App\Console\Commands\Tasks\Task;
 
 class TestTask2 extends Task
@@ -23,5 +21,6 @@ class TestTask2 extends Task
     public function handle()
     {
         $this->addConclusion('I created this2');
+        $this->shell->echo($this->bindings->bla);
     }
 }

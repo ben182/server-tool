@@ -7,11 +7,18 @@ abstract class Task
     public $oOptions;
     public $shell;
     public $bindings;
+    public $customBindings = [];
 
     public $aConclusions = [];
 
-    public function addConclusion($sItem) {
+    public function addConclusion($sItem)
+    {
         $this->aConclusions[] = $sItem;
+    }
+
+    public function addCustomBinding($sKey, $sItem)
+    {
+        $this->customBindings[$sKey] = $sItem;
     }
 
     abstract public function systemRequirements();
@@ -27,5 +34,7 @@ abstract class Task
         foreach ($aVariableBinding as $key => $value) {
             $this->bindings->$key = $value;
         }
+
+        dump($aVariableBinding);
     }
 }

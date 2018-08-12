@@ -60,7 +60,7 @@ function getRedisPassword()
 }
 function isSpacesSet()
 {
-    return env('DO_SPACES_KEY') !== false;
+    return env('DO_SPACES_KEY') != false;
 }
 function buildMysqlCommand($sCommand, $bOutIn = false)
 {

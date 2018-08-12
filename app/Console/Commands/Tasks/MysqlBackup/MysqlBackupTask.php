@@ -3,7 +3,7 @@
 namespace App\Console\Commands\Tasks\MysqlBackup;
 
 use App\Console\Commands\Tasks\Task;
-use App\Helper\BackupService;
+use App\Services\BackupService;
 use App\Task as TaskModel;
 
 class MysqlBackupTask extends Task

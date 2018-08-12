@@ -13,6 +13,8 @@ abstract class Taskmanager
     public static $rootTaskManager;
     public static $aConclusions = [];
 
+    public $aCustomBindings = [];
+
     abstract public function validate();
 
     public function __construct($aOptions = [])
@@ -48,6 +50,11 @@ abstract class Taskmanager
         return [];
     }
 
+    public function addBinding($aBindings)
+    {
+        $this->aCustomBindings = array_merge($this->aCustomBindings, $aBindings);
+    }
+
     public function isRootManager()
     {
         return self::$rootTaskManager === get_class($this);
@@ -60,7 +67,7 @@ abstract class Taskmanager
     public function work()
     {
         foreach ($this->aTasks as $cTask) {
-            $oTask = new $cTask($this->oOptions, $this->addVariableBinding());
+            $oTask = new $cTask($this->oOptions, array_merge($this->addVariableBinding(), $this->aCustomBindings));
 
             $mSystemRequirements = $oTask->systemRequirements();
 
@@ -98,6 +105,8 @@ abstract class Taskmanager
                 $this->shell->flushErrors();
                 continue;
             }
+
+            $this->addBinding($oTask->customBindings);
 
             $this->addConclusion($oTask->aConclusions);
 
