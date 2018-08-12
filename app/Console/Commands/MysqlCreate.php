@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Console\Commands\Tasks\MysqlCreateTaskManager;
 use App\Console\ModCommand;
 use Illuminate\Console\Command;
 
@@ -39,17 +40,11 @@ class MysqlCreate extends ModCommand
     public function handle()
     {
         $sAskedDbName = $this->ask('Database Name?');
-        $sDatabase = createMysqlDatabase($sAskedDbName);
-        $this->addToReturn('Created new database: ' . $sDatabase);
-
         $bNewUserAndAccess = $this->confirm('Create new user & give him access to new database?');
-        if ($bNewUserAndAccess) {
-            $aUser = createMysqlUserAndGiveAccessToDatabase($sDatabase);
-            $this->addToReturn('Created new user');
-            $this->addToReturn('Username: ' . $aUser['user']);
-            $this->addToReturn('Password: ' . $aUser['password']);
-        }
 
-        echo $this->getReturn();
+        (new MysqlCreateTaskManager([
+            'database'         => $sAskedDbName,
+            'newUserAndAccess' => $bNewUserAndAccess,
+        ]))->work();
     }
 }
