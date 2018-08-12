@@ -15,7 +15,7 @@ class SnapshotBackupTask extends Task
 
     public function localRequirements()
     {
-        return getenv('DROPLET_ID') != false && decrypt(getenv('DOAT')) != false;
+        return getenv('DROPLET_ID') != false && getenv('DOAT') != false;
     }
 
     public function handle()

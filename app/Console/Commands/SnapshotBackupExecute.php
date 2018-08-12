@@ -3,9 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Console\Commands\Tasks\SnapshotBackupTaskManager;
-use Illuminate\Console\Command;
+use App\Console\ModCommand;
 
-class SnapshotBackupExecute extends Command
+class SnapshotBackupExecute extends ModCommand
 {
     /**
      * The name and signature of the console command.
@@ -39,6 +39,8 @@ class SnapshotBackupExecute extends Command
      */
     public function handle()
     {
+        parent::handle();
+
         $iKeep = $this->argument('keep');
 
         (new SnapshotBackupTaskManager([
