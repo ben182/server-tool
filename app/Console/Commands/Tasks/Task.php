@@ -34,7 +34,5 @@ abstract class Task
         foreach ($aVariableBinding as $key => $value) {
             $this->bindings->$key = $value;
         }
-
-        dump($aVariableBinding);
     }
 }

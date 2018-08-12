@@ -38,6 +38,8 @@ class MysqlBackup extends ModCommand
      */
     public function handle()
     {
+        parent::handle();
+
         $bAllDatabases = $this->booleanOption('allDatabases', 'Backup all databases?');
 
         $sAskedDbName = '';

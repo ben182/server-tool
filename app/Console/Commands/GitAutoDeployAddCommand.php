@@ -39,6 +39,8 @@ class GitAutoDeployAddCommand extends ModCommand
      */
     public function handle()
     {
+        parent::handle();
+
         $sDir = $this->stringOption('dir', 'Path (from /var/www/)?');
         $sBranch = $this->stringOption('branch', 'Branch?');
         $bReset = $this->booleanOption('hardreset', 'Hard Reset?', true);

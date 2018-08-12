@@ -39,6 +39,8 @@ class MysqlCreate extends ModCommand
      */
     public function handle()
     {
+        parent::handle();
+
         $sAskedDbName = $this->ask('Database Name?');
         $bNewUserAndAccess = $this->confirm('Create new user & give him access to new database?');
 
