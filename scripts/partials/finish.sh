@@ -13,6 +13,9 @@ finish () {
     # RUBY
     apt install ruby ruby-dev make gcc -y
 
+    # GIT CONFIG
+    git config --global core.filemode false
+
     # APACHE PERMISSIONS
     apache_permissions
     service apache2 reload
