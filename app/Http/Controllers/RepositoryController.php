@@ -18,12 +18,7 @@ class RepositoryController extends Controller
             return response('Wrong Secret', 500);
         }
 
-        $sCommand = 'cd ' . $oRepository->full_dir;
-        if ($oRepository->reset) {
-            $sCommand .= ' && git reset --hard HEAD 2>&1';
-        }
-
-        $sCommand .= ' && git pull origin ' . $oRepository->branch . ' 2>&1';
+        $sCommand = 'bash ' . $oRepository->full_dir . '/deploy_stool.sh';
 
         echo $sCommand;
         echo shell_exec($sCommand);

@@ -18,8 +18,6 @@ class GitAutoDeployTaskManager extends Taskmanager
                 'required',
                 new FileExists
             ],
-            'branch' => 'required',
-            'reset'  => 'required|boolean',
         ];
     }
 }

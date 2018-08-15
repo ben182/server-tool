@@ -47,8 +47,6 @@ class GitAutoDeployAddCommand extends ModCommand
 
         (new GitAutoDeployTaskManager([
             'dir'    => "/var/www/$sDir",
-            'branch' => $sBranch,
-            'reset'  => $bReset
         ]))->work();
     }
 }

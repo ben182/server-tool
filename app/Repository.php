@@ -9,11 +9,7 @@ class Repository extends Model
 {
     use HasHashSlug;
 
-    protected $fillable = ['dir', 'branch', 'reset', 'secret'];
-
-    protected $casts = [
-        'reset' => 'boolean',
-    ];
+    protected $fillable = ['dir', 'secret'];
 
     public function _setSecret()
     {
