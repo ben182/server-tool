@@ -10,6 +10,9 @@ finish () {
     # TIMEZONE
     ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 
+    # RUBY
+    apt install ruby ruby-dev make gcc -y
+
     # APACHE PERMISSIONS
     apache_permissions
     service apache2 reload

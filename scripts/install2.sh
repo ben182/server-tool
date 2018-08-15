@@ -239,7 +239,6 @@ redisInstall () {
     systemctl enable redis
 
     # REDIS BACKUP
-    apt install ruby ruby-dev make gcc -y
     gem install redis-dump
 }
 echo "Installing Redis..."

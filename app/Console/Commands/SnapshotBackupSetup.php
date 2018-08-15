@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Console\Commands\Tasks\SnapshotBackupSetupTaskManager;
+use App\Console\ModCommand;
 
-class SnapshotBackupSetup extends Command
+class SnapshotBackupSetup extends ModCommand
 {
     /**
      * The name and signature of the console command.
@@ -38,6 +38,8 @@ class SnapshotBackupSetup extends Command
      */
     public function handle()
     {
+        parent::handle();
+
         $sToken = $this->secret('What is your DigitalOcean API Token?');
         $iKeep = (int) $this->ask('How much snapshots to keep?');
 
