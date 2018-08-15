@@ -22,5 +22,6 @@ class TestTask2 extends Task
     {
         $this->addConclusion('I created this2');
         $this->shell->echo($this->bindings->bla);
+        $this->shell->environment()->save('test', $this->bindings->bla);
     }
 }

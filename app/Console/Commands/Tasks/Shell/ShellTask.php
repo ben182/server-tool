@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands\Tasks;
+namespace App\Console\Commands\Tasks\Shell;
 
 class ShellTask
 {
@@ -70,5 +70,13 @@ class ShellTask
     public function flushErrors() {
         $this->aErrors = [];
         return $this;
+    }
+
+    public function cronjob() {
+        return new Cronjob;
+    }
+
+    public function environment() {
+        return new Environment;
     }
 }

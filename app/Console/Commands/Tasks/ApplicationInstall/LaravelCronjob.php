@@ -20,8 +20,6 @@ class LaravelCronjob extends Task
 
     public function handle()
     {
-
-        $this->shell->exec("crontab -l | { cat; echo \"* * * * * {$this->bindings->installationDir}/artisan schedule:run >> /dev/null 2>&1\"; } | crontab -");
-
+        $this->shell->cronjob()->create('* * * * *', "{$this->bindings->installationDir}/artisan schedule:run");
     }
 }

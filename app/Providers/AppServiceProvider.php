@@ -9,7 +9,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
-use App\Console\Commands\Tasks\ShellTask;
+use App\Console\Commands\Tasks\Shell\ShellTask;
 
 class AppServiceProvider extends ServiceProvider
 {
