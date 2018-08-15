@@ -15,7 +15,7 @@ class MysqlCreateTaskManager extends Taskmanager
     public function validate()
     {
         return [
-            'database'         => 'required',
+            'database'         => 'required', // TODO: does database exists already?
             'newUserAndAccess' => 'required|boolean',
         ];
     }

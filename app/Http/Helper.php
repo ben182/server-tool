@@ -69,7 +69,7 @@ function buildMysqlCommand($sCommand, $bOutIn = false)
 
 function createMysqlDatabase($sDatabase)
 {
-    $sDatabase = str_slug($sDatabase, null, 'de');
+    $sDatabase = str_slug($sDatabase, null);
 
     buildMysqlCommand("CREATE DATABASE $sDatabase;");
 

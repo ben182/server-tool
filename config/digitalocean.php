@@ -42,7 +42,7 @@ return [
 
         'main' => [
             'driver'  => 'guzzlehttp',
-            'token'   => env('DO_API_TOKEN'),
+            'token'   => env('DO_API_KEY'),
         ],
 
         'other' => [

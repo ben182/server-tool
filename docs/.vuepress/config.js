@@ -26,6 +26,9 @@ module.exports = {
           '/commands/deletevhost',
           '/commands/apachepermissions',
           '/commands/applicationinstall',
+          '/commands/mysqlbackup',
+          '/commands/mysqlcreate',
+          '/commands/redisbackup',
         ]
       },
     ]

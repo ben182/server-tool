@@ -7,15 +7,16 @@ use App\Console\Commands\Tasks\Task;
 class SnapshotBackupTask extends Task
 {
     public $sName = 'Backing up Droplet';
+    public $systemRequirementsErrorMessage = 'Your droplet id or your digitalocean access token is not set';
 
     public function systemRequirements()
     {
-        return true;
+        return getenv('DROPLET_ID') != false && getenv('DOAT') != false;
     }
 
     public function localRequirements()
     {
-        return getenv('DROPLET_ID') != false && getenv('DOAT') != false;
+        return true;
     }
 
     public function handle()

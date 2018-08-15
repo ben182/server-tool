@@ -47,15 +47,14 @@ class MysqlBackup extends ModCommand
             $sAskedDbName = $this->stringOption('database', 'Database Name?');
         }
 
-        $aStorages = [
-            'local',
-        ];
-
         if (isSpacesSet()) {
-            $aStorages[] = 'spaces';
+            $sStorage = $this->choiceOption('storage', 'Upload to local or digitalocean spaces?', [
+                'local',
+                'spaces',
+            ]);
+        }else{
+            $sStorage = 'local';
         }
-
-        $sStorage = $this->choiceOption('storage', 'Upload to local or digitalocean spaces?', $aStorages);
 
         $bCronjob = $this->booleanOption('cronjob', 'Set up a cronjob that runs daily?');
 
