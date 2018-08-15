@@ -11,5 +11,5 @@ check_run() {
 check_run package.json "npm install"
 check_run composer.json "composer install"
 chown -R root:root /etc/stool
-chown -R www-data:www-data /etc/stool/storage/logs
+chown -R www-data:www-data /etc/stool/storage
 chmod -R 755 /etc/stool

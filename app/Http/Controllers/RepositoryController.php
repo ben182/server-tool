@@ -18,7 +18,7 @@ class RepositoryController extends Controller
             return response('Wrong Secret', 500);
         }
 
-        $sCommand = 'bash ' . $oRepository->dir . '/deploy_stool.sh';
+        $sCommand = 'bash ' . $oRepository->dir . '/deploy_stool.sh 2>&1';
 
         echo $sCommand;
         echo shell_exec($sCommand);

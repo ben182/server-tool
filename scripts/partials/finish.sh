@@ -11,6 +11,7 @@ finish () {
     ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 
     # GIT CONFIG
+    git config --global --unset-all core.filemode
     git config --global core.filemode false
 
     # APACHE PERMISSIONS
