@@ -115,6 +115,9 @@ servertoolInstall() {
 echo "Installing Server Tool..."
 servertoolInstall
 
+# RUBY
+apt install ruby ruby-dev make gcc -y
+
 stool installation:run
 bash ${SCRIPTS_PATH}partials/finish.sh
 echo "Visit your welcome page at http://$PUBLIC_IP?token=$WELCOMEPAGE_TOKEN"

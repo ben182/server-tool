@@ -4,6 +4,7 @@ namespace App\Console\Commands\Tasks\RedisBackup;
 
 use App\Console\Commands\Tasks\Task;
 use App\Services\BackupService;
+use App\Task as TaskModel;
 
 class RedisBackupTask extends Task
 {
@@ -28,7 +29,7 @@ class RedisBackupTask extends Task
         BackupService::backup($this->oOptions->storage, 'redis', $sFileName);
 
         if ($this->oOptions->cronjob) {
-            Task::create([
+            TaskModel::create([
                 'command'   => 'redis:backup',
                 'parameter' => [
                     '--storage' => $this->oOptions->storage,

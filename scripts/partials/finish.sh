@@ -10,9 +10,6 @@ finish () {
     # TIMEZONE
     ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 
-    # RUBY
-    apt install ruby ruby-dev make gcc -y
-
     # GIT CONFIG
     git config --global core.filemode false
 
