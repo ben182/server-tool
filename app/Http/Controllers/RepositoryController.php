@@ -18,10 +18,9 @@ class RepositoryController extends Controller
             return response('Wrong Secret', 500);
         }
 
-        putenv("COMPOSER_HOME=/home/www-data/.composer");
+        putenv("COMPOSER_HOME=/var/www/.composer");
         $sCommand = 'cd ' . $oRepository->dir . ' && bash deploy_stool.sh 2>&1';
 
-        echo $sCommand;
         echo shell_exec($sCommand);
     }
 }
