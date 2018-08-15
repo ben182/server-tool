@@ -9,6 +9,6 @@ class Cronjob {
     }
 
     public function create($Interval, $sCommand) {
-        $this->scope->exec('crontab -l | { cat; echo "' . $Interval . ' ' . $sCommand .  ' >> /dev/null 2>&1"; } | crontab -');
+        $this->shell->exec('crontab -l | { cat; echo "' . $Interval . ' ' . $sCommand .  ' >> /dev/null 2>&1"; } | crontab -');
     }
 }
