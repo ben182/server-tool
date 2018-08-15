@@ -23,8 +23,6 @@ class Gad extends Task
     {
         (new GitAutoDeployTaskManager([
             'dir'    => $this->bindings->installationDir,
-            'branch' => $this->oOptions->branch,
-            'reset'  => $this->oOptions->gad_hartReset,
         ]))->work();
     }
 }

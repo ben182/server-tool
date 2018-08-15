@@ -13,7 +13,7 @@ class GitAutoDeployAddCommand extends ModCommand
      *
      * @var string
      */
-    protected $signature = 'gad:add {--dir=} {--branch=} {--hardreset} {--nooutput}';
+    protected $signature = 'gad:add {--dir=}';
 
     /**
      * The console command description.
@@ -42,8 +42,6 @@ class GitAutoDeployAddCommand extends ModCommand
         parent::handle();
 
         $sDir = $this->stringOption('dir', 'Path (from /var/www/)?');
-        $sBranch = $this->stringOption('branch', 'Branch?');
-        $bReset = $this->booleanOption('hardreset', 'Hard Reset?', true);
 
         (new GitAutoDeployTaskManager([
             'dir'    => "/var/www/$sDir",
