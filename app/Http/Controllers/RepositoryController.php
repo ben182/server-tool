@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repository;
+use App\Jobs\Deploy;
 
 class RepositoryController extends Controller
 {
@@ -19,8 +20,7 @@ class RepositoryController extends Controller
         }
 
         putenv("COMPOSER_HOME=/var/www/.composer");
-        $sCommand = 'cd ' . $oRepository->dir . ' && bash deploy_stool.sh 2>&1';
 
-        echo shell_exec($sCommand);
+        Deploy::dispatch($oRepository);
     }
 }
