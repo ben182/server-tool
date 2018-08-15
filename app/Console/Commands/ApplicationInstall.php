@@ -45,7 +45,7 @@ class ApplicationInstall extends ModCommand
         $sSubDir = '';
         $sRootOrSub = $this->choice('Root or Subdirectory?', ['Root', 'Sub']);
         if ($sRootOrSub === 'Sub') {
-            $sSubDir = $this->ask('Which one (relative to ' . $oDomain->getFullUrl() . '/?');
+            $sSubDir = $this->ask('Which one (relative to ' . $sDomain . '/?');
         }
 
         $sSymlinkRootDir = '';

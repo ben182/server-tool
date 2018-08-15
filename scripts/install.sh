@@ -111,6 +111,8 @@ servertoolInstall() {
     stool view:cache
     stool config:cache
     stool route:cache
+
+    git config core.filemode false
 }
 
 echo "Installing Server Tool..."

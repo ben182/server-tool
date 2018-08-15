@@ -13,3 +13,4 @@ check_run composer.json "composer install"
 chown -R root:root /etc/stool
 chown -R www-data:www-data /etc/stool/storage
 chmod -R 755 /etc/stool
+stool config:cache

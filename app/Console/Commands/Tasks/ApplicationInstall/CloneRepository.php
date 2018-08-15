@@ -20,7 +20,8 @@ class CloneRepository extends Task
 
     public function handle()
     {
-        $this->shell->exec("cd {$this->bindings->domain->getBaseFolder()} && git clone -b {$this->oOptions->branch} {$this->oOptions->git} && git config core.filemode false");
+        $this->shell->exec("cd {$this->bindings->domain->getBaseFolder()} && git clone -b {$this->oOptions->branch} {$this->oOptions->git}");
+        $this->shell->exec("cd {$this->bindings->installationDir} && git config core.filemode false");
 
         $this->addConclusion("I cloned the repository to {$this->bindings->installationDir}");
     }
