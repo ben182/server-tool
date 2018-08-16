@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Console\Commands\Tasks\CreateDeamonTaskManager;
 use App\Console\ModCommand;
+use App\Setting;
 
 class InstallationFinishCommand extends ModCommand
 {
@@ -44,5 +45,12 @@ class InstallationFinishCommand extends ModCommand
             'name' => 'stool-deploy',
             'command' => 'stool queue:work',
         ]))->work();
+
+        $sEmail = $this->ask('Administrator email?');
+
+        Setting::create([
+            'key' => 'admin_email',
+            'value' => $sEmail,
+        ]);
     }
 }

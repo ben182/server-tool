@@ -9,6 +9,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use App\Repository;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\DeployFailed;
+use App\Setting;
 
 class Deploy implements ShouldQueue
 {
@@ -36,7 +39,12 @@ class Deploy implements ShouldQueue
         $sCommand = 'cd ' . $this->repository->dir . ' && bash deploy_stool.sh 2>&1';
 
         $Output = shell_exec($sCommand);
+
+        $iExit = (int) shell_exec('echo $?');
+
+        if ($iExit != 0) {
+            Mail::to(Setting::where('key', 'admin_email')->value('value'))->send(new DeployFailed($this->repository, $Output, $iExit));
+        }
         echo $Output;
-        Log::info(shell_exec($Output));
     }
 }

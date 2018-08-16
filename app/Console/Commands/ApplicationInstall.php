@@ -80,12 +80,6 @@ class ApplicationInstall extends ModCommand
 
         $bGitAutoDeploy = $this->confirm('Git auto deploy?');
 
-        $bGitAutoDeployHardReset = false;
-
-        if ($bGitAutoDeploy) {
-            $bGitAutoDeployHardReset = $this->confirm('Hard Reset?');
-        }
-
         (new ApplicationInstallTaskManager([
             'domain'             => $sDomain,
             'rootOrSub'          => $sRootOrSub,
@@ -102,7 +96,6 @@ class ApplicationInstall extends ModCommand
             'npmInstall'         => $bNpmInstall,
             'gitPostPullHook'    => $bGitPostPullHook,
             'gad'                => $bGitAutoDeploy,
-            'gad_hartReset'      => $bGitAutoDeployHardReset,
         ]))->work();
     }
 }

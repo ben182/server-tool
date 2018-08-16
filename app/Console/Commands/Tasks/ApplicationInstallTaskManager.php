@@ -86,7 +86,6 @@ class ApplicationInstallTaskManager extends Taskmanager
             'npmInstall'      => 'required|boolean',
             'gitPostPullHook' => 'required|boolean',
             'gad'             => 'required|boolean',
-            'gad_hartReset'   => 'required_if:gad,true|boolean',
         ];
     }
 }
