@@ -14,3 +14,4 @@ chown -R root:root /etc/stool
 chown -R www-data:www-data /etc/stool/storage
 chmod -R 755 /etc/stool
 stool config:cache
+supervisorctl restart stool-deploy

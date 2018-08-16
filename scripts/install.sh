@@ -126,5 +126,6 @@ apt-get install supervisor -y
 service supervisor restart
 
 stool installation:run
+stool installation:finish
 bash ${SCRIPTS_PATH}partials/finish.sh
 echo "Visit your welcome page at http://$PUBLIC_IP?token=$WELCOMEPAGE_TOKEN"

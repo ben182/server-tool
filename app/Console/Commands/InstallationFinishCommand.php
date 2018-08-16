@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Console\Commands\Tasks\CreateDeamonTaskManager;
+use App\Console\ModCommand;
 
-class InstallationFinishCommand extends Command
+class InstallationFinishCommand extends ModCommand
 {
     /**
      * The name and signature of the console command.
@@ -38,8 +38,10 @@ class InstallationFinishCommand extends Command
      */
     public function handle()
     {
+        parent::handle();
+
         (new CreateDeamonTaskManager([
-            'name' => 'stool deploy',
+            'name' => 'stool-deploy',
             'command' => 'stool queue:work',
         ]))->work();
     }
