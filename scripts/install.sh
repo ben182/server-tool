@@ -121,6 +121,10 @@ servertoolInstall
 # RUBY
 apt install ruby ruby-dev make gcc -y
 
+# SUPERVISOR
+apt-get install supervisor -y
+service supervisor restart
+
 stool installation:run
 bash ${SCRIPTS_PATH}partials/finish.sh
 echo "Visit your welcome page at http://$PUBLIC_IP?token=$WELCOMEPAGE_TOKEN"
