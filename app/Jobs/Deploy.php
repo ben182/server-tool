@@ -38,13 +38,12 @@ class Deploy implements ShouldQueue
     {
         $sCommand = 'cd ' . $this->repository->dir . ' && bash deploy_stool.sh 2>&1';
 
-        $Output = shell_exec($sCommand);
-
-        $iExit = (int) shell_exec('echo $?');
+        exec($sCommand, $aOutput, $iExit);
 
         if ($iExit != 0) {
-            Mail::to(Setting::where('key', 'admin_email')->value('value'))->send(new DeployFailed($this->repository, $Output, $iExit));
+            Mail::to(Setting::where('key', 'admin_email')->value('value'))->send(new DeployFailed($this->repository, implode("\n", $aOutput), $iExit));
         }
-        echo $Output;
+        
+        echo implode("\n", $aOutput);
     }
 }
