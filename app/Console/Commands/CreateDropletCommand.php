@@ -41,7 +41,7 @@ class CreateDropletCommand extends Command
      */
     public function handle()
     {
-        $oDroplet = $this->digitalocean->droplet()->create('stool-test', 'fra1', 's-1vcpu-1gb', 'ubuntu-18-04-x64', false, false, true, [17777590]);
+        $oDroplet = $this->digitalocean->droplet()->create('stool-test', 'fra1', 's-2vcpu-2gb', 'ubuntu-18-04-x64', false, false, true, [17777590]);
 
         sleep(60);
         $sIp = $this->digitalocean->droplet()->getById($oDroplet->id)->networks[0]->ipAddress;

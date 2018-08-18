@@ -62,6 +62,6 @@ class Mysql {
     }
 
     public function doesDatabaseExist($sDatabase) {
-        return str_contains($this->execCommand("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME =  '$sDatabase';"), $sDatabase);
+        return str_contains($this->execCommand("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME =  '$sDatabase';")->getLastOutput(), $sDatabase);
     }
 }

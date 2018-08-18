@@ -20,6 +20,10 @@ class ShellTask
         return $this;
     }
 
+    public function getLastOutput() {
+        return $this->lastExecOutput;
+    }
+
     public function outputEveryCommand(bool $bData = true) {
         $this->bDebug = $bData;
         return $this;
