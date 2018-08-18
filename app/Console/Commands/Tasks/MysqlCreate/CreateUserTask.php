@@ -20,9 +20,9 @@ class CreateUserTask extends Task
 
     public function handle()
     {
-        $aUser = createMysqlUserAndGiveAccessToDatabase($this->bindings->databaseSlug);
+        $oUser = $this->shell->mysql()->createUser()->giveAccessToDatabase($this->bindings->databaseSlug);
         $this->addConclusion('Created new user');
-        $this->addConclusion('Username: ' . $aUser['user']);
-        $this->addConclusion('Password: ' . $aUser['password']);
+        $this->addConclusion('Username: ' . $oUser->getName());
+        $this->addConclusion('Password: ' . $oUser->getPassword());
     }
 }

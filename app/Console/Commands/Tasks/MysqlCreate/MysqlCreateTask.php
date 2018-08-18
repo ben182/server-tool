@@ -20,7 +20,7 @@ class MysqlCreateTask extends Task
 
     public function handle()
     {
-        $sDatabase = createMysqlDatabase($this->oOptions->database);
+        $sDatabase = $this->shell->mysql()->createDatabase($this->oOptions->database);
 
         $this->addCustomBinding('databaseSlug', $sDatabase);
 

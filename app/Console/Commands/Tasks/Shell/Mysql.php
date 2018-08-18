@@ -8,7 +8,7 @@ class Mysql {
         $this->shell = resolve('ShellTask');
     }
 
-    public function createsDatabase($sDatabaseName, $bCheckIfExist = true) {
+    public function createDatabase($sDatabaseName, $bCheckIfExist = true) {
 
         $sSluggedDatabaseName = str_slug($sDatabaseName, null);
 
@@ -21,6 +21,23 @@ class Mysql {
         }
 
         $this->execCommand("CREATE DATABASE $sSluggedDatabaseName;");
+
+        return $this;
+    }
+    
+    public function createUser($sName = null, $sPassword = null) {
+
+        if (! $sName) {
+            $sName = str_random(10); // TODO: is already taken?
+        }
+
+        if (! $sPassword) {
+            $sPassword = random_string_random_length(); // TODO: is already taken?
+        }
+
+        $this->execCommand("CREATE USER '$sName'@'localhost' IDENTIFIED BY '$sPassword';");
+
+        return new MysqlUser($sName, $sPassword, $this);
     }
 
     protected function execCommand($sCommand) {
