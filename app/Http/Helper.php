@@ -197,3 +197,7 @@ function restartApache()
 {
     quietCommand('service apache2 reload');
 }
+
+function isSubdomain($sDomain) {
+    return count(explode('.', $sDomain)) >= 3;
+}

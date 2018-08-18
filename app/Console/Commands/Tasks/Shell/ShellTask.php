@@ -79,4 +79,8 @@ class ShellTask
     public function environment() {
         return new Environment;
     }
+
+    public function mysql() {
+        return new Mysql;
+    }
 }

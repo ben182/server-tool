@@ -4,6 +4,7 @@ namespace App\Console\Commands\Tasks;
 
 use App\Console\Commands\Tasks\MysqlCreate\CreateUserTask;
 use App\Console\Commands\Tasks\MysqlCreate\MysqlCreateTask;
+use App\Rules\MysqlDatabaseExistNot;
 
 class MysqlCreateTaskManager extends Taskmanager
 {
@@ -15,7 +16,10 @@ class MysqlCreateTaskManager extends Taskmanager
     public function validate()
     {
         return [
-            'database'         => 'required', // TODO: does database exists already?
+            'database'         => [
+                'required',
+                new MysqlDatabaseExistNot,
+            ],
             'newUserAndAccess' => 'required|boolean',
         ];
     }

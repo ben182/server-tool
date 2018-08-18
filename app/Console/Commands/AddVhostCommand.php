@@ -44,7 +44,13 @@ class AddVhostCommand extends ModCommand
 
         $bDev = $this->argument('dev') ?? false;
         $sDomain = $this->ask('Domain?');
-        $bWww = $this->confirm('www Alias?', true); // TODO: if subdomain don't ask
+
+        if (isSubdomain($sDomain)) {
+            $bWww = false;
+        }else{
+            $bWww = $this->confirm('www Alias?', true);
+        }
+        
 
         $bSsl = $this->confirm('SSL?', true);
 
