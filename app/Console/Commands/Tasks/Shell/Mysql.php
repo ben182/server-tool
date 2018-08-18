@@ -22,7 +22,7 @@ class Mysql {
 
         $this->execCommand("CREATE DATABASE $sSluggedDatabaseName;");
 
-        return $this;
+        return $sSluggedDatabaseName;
     }
     
     public function createUser($sName = null, $sPassword = null) {
