@@ -32,7 +32,7 @@ class Mysql {
         }
 
         if (! $sPassword) {
-            $sPassword = random_string_random_length(); // TODO: is already taken?
+            $sPassword = random_string_random_length();
         }
 
         $this->execCommand("CREATE USER '$sName'@'localhost' IDENTIFIED BY '$sPassword';");
