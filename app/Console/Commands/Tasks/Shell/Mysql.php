@@ -40,7 +40,7 @@ class Mysql {
         return new MysqlUser($sName, $sPassword, $this);
     }
 
-    protected function execCommand($sCommand) {
+    public function execCommand($sCommand) {
         return $this->shell->exec('mysql ' . getMysqlCredentials() . " -e \"$sCommand\"");
     }
 

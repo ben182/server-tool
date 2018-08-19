@@ -16,11 +16,13 @@ class MysqlUser {
 
     public function giveAccessToDatabase($sDatabase) {
         $this->mysql->execCommand("GRANT ALL PRIVILEGES ON $sDatabase.* To '{$this->name}'@'localhost'");
+        $this->mysql->execCommand("FLUSH PRIVILEGES");
         return $this;
     }
 
     public function giveAccessToAllDatabases() {
         $this->mysql->execCommand("GRANT ALL PRIVILEGES ON * . * TO '{$this->name}'@'localhost'");
+        $this->mysql->execCommand("FLUSH PRIVILEGES");
         return $this;
     }
 

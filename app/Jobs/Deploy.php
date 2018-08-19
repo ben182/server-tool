@@ -41,7 +41,7 @@ class Deploy implements ShouldQueue
         exec($sCommand, $aOutput, $iExit);
 
         if ($iExit != 0) {
-            Mail::to(Setting::where('key', 'admin_email')->value('value'))->send(new DeployFailed($this->repository, implode("\n", $aOutput), $iExit));
+            throw new \Exception('Failed'); // TODO: set -e for deploy
         }
         
         echo implode("\n", $aOutput);
