@@ -38,8 +38,8 @@ class CreateDeamonCommand extends ModCommand
      */
     public function handle()
     {
-        $sName = $this->stringOption('name', '');
-        $sCommand = $this->stringOption('command', '');
+        $sName = $this->stringOption('name', 'Name?');
+        $sCommand = $this->stringOption('command', 'Command?');
 
         (new CreateDeamonTaskManager([
             'name' => $sName,
