@@ -64,10 +64,10 @@ class AddVhostCommand extends ModCommand
         ];
 
         if ($bWww) {
-            $aRedirectChoices[] = 'www to non www';
+            $aRedirectChoices[] = 'www to non www'; // only if not a subdomain
         }
         if ($bSsl) {
-            $aRedirectChoices[] = 'Non SSL to SSL and www to non www';
+            $aRedirectChoices[] = 'Non SSL to SSL and www to non www'; // only if not a subdomain
             $aRedirectChoices[] = 'Non SSL to SSL';
         }
         $sHtaccess = $this->choice('Redirect?', $aRedirectChoices);

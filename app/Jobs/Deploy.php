@@ -19,7 +19,6 @@ class Deploy implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $repository;
-    protected $api;
 
     /**
      * Create a new job instance.
@@ -29,7 +28,6 @@ class Deploy implements ShouldQueue
     public function __construct(Repository $repository)
     {
         $this->repository = $repository;
-        $this->api = new ApiRequestService();
     }
 
     /**
@@ -62,8 +60,8 @@ class Deploy implements ShouldQueue
     public function failed(Exception $exception)
     {
         $aData = unserialize($exception->getMessage());
-        
-        $this->api->request('sendEmail', [
+
+        (new ApiRequestService())->request('sendEmail', [
             'type' => 'DeployFailed',
             'email' => Setting::whereKey('admin_email')->value('value'),
             'repository' => $this->repository->dir,
