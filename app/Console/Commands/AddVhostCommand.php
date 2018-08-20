@@ -45,9 +45,14 @@ class AddVhostCommand extends ModCommand
         $bDev = $this->argument('dev') ?? false;
         $sDomain = $this->ask('Domain?');
 
+        $bRedirect = $this->confirm('Redirect?', false);
+        if ($bRedirect) {
+            $bRedirectTo = $this->ask('To?');
+        }
+
         if (isSubdomain($sDomain)) {
             $bWww = false;
-        }else{
+        } else {
             $bWww = $this->confirm('www Alias?', true);
         }
         
@@ -64,10 +69,13 @@ class AddVhostCommand extends ModCommand
         ];
 
         if ($bWww) {
-            $aRedirectChoices[] = 'www to non www'; // only if not a subdomain
+            $aRedirectChoices[] = 'www to non www';
+
+            if ($bSsl) {
+                $aRedirectChoices[] = 'Non SSL to SSL and www to non www';
+            }
         }
         if ($bSsl) {
-            $aRedirectChoices[] = 'Non SSL to SSL and www to non www'; // only if not a subdomain
             $aRedirectChoices[] = 'Non SSL to SSL';
         }
         $sHtaccess = $this->choice('Redirect?', $aRedirectChoices);
@@ -79,6 +87,8 @@ class AddVhostCommand extends ModCommand
             'htaccess'    => $sHtaccess,
             'ssl'         => $bSsl,
             'ssl_email'   => $sEmail,
+            'redirect'    => $bRedirect,
+            'redirect_to' => $bRedirectTo,
         ]))->work();
     }
 }

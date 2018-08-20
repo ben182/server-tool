@@ -47,7 +47,7 @@ class Deploy implements ShouldQueue
                 'email' => Setting::where('key', 'admin_email')->value('value'),
                 'repository' => $this->repository->dir,
                 'exit' => $iExit,
-                'output' => implode("\n", $aOutput),
+                'output' => implode("<br>", $aOutput),
             ]);
         }
         

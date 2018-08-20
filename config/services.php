@@ -36,7 +36,7 @@ return [
     ],
 
     'api' => [
-        'url' => 'https://api.server-tool.de',
+        'url' => 'https://api.server-tool.eu',
         'version' => 'v1',
     ]
 

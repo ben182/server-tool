@@ -3,6 +3,7 @@
 namespace App\Console\Commands\Tasks\AddVhost;
 
 use App\Console\Commands\Tasks\Task;
+use App\Setting;
 
 class ConfigureApacheConfigurationTask extends Task
 {
@@ -20,12 +21,20 @@ class ConfigureApacheConfigurationTask extends Task
 
     public function handle()
     {
+        replace_string_in_file("/etc/apache2/sites-available/{$this->oOptions->domain}.conf", 'DOCUMENT_ROOT', $this->oOptions->domain);
+
         if (! $this->oOptions->www) {
             replace_string_in_file("/etc/apache2/sites-available/{$this->oOptions->domain}.conf", 'ServerAlias www.SERVER_NAME', '');
         }
 
         replace_string_in_file("/etc/apache2/sites-available/{$this->oOptions->domain}.conf", 'SERVER_NAME', $this->oOptions->domain);
         replace_string_in_file("/etc/apache2/sites-available/{$this->oOptions->domain}.conf", 'NAME', $this->oOptions->domain);
+
+        replace_string_in_file("/etc/apache2/sites-available/{$this->oOptions->domain}.conf", 'webmaster@localhost', Setting::where('key', 'admin_email')->value('value'));
+
+        if ($this->oOptions->redirect) {
+            replace_string_in_file("/etc/apache2/sites-available/{$this->oOptions->domain}.conf", '<Directory />', "\nRedirectMatch permanent ^/(.*)$ {$this->oOptions->redirect_to}\n<Directory />");
+        }
 
         $this->shell->exec("a2ensite {$this->oOptions->domain}.conf -q");
 

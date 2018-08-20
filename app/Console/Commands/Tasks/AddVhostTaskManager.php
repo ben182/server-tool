@@ -26,7 +26,7 @@ class AddVhostTaskManager extends Taskmanager
             'domain'   => 'required',
             'www'      => 'required|boolean',
             'ssl'      => 'boolean',
-            'ssl_email'=> 'nullable|email',
+            'ssl_email'=> 'required_if:ssl,true|email',
             'htaccess' => [
                 'required',
                 Rule::in([
@@ -36,6 +36,8 @@ class AddVhostTaskManager extends Taskmanager
                     'Nothing',
                 ]),
             ],
+            'redirect'    => 'required|boolean',
+            'redirect_to' => 'required_if:redirect,true',
         ];
     }
 }
