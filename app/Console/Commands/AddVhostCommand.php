@@ -64,21 +64,24 @@ class AddVhostCommand extends ModCommand
             $sEmail = $this->ask('SSL Email?');
         }
 
-        $aRedirectChoices = [
-            'Nothing',
-        ];
-
-        if ($bWww) {
-            $aRedirectChoices[] = 'www to non www';
-
-            if ($bSsl) {
-                $aRedirectChoices[] = 'Non SSL to SSL and www to non www';
+        $sHtaccess = '';
+        if (!$bRedirect) {
+            $aRedirectChoices = [
+                'Nothing',
+            ];
+    
+            if ($bWww) {
+                $aRedirectChoices[] = 'www to non www';
+    
+                if ($bSsl) {
+                    $aRedirectChoices[] = 'Non SSL to SSL and www to non www';
+                }
             }
+            if ($bSsl) {
+                $aRedirectChoices[] = 'Non SSL to SSL';
+            }
+            $sHtaccess = $this->choice('Redirect?', $aRedirectChoices);
         }
-        if ($bSsl) {
-            $aRedirectChoices[] = 'Non SSL to SSL';
-        }
-        $sHtaccess = $this->choice('Redirect?', $aRedirectChoices);
 
         (new AddVhostTaskManager([
             'dev'         => $bDev,
