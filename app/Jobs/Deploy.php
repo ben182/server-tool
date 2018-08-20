@@ -12,12 +12,14 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\DeployFailed;
 use App\Setting;
+use App\Services\ApiRequestService;
 
 class Deploy implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $repository;
+    protected $api;
 
     /**
      * Create a new job instance.
@@ -27,6 +29,7 @@ class Deploy implements ShouldQueue
     public function __construct(Repository $repository)
     {
         $this->repository = $repository;
+        $this->api = new ApiRequestService();
     }
 
     /**
@@ -41,9 +44,31 @@ class Deploy implements ShouldQueue
         exec($sCommand, $aOutput, $iExit);
 
         if ($iExit != 0) {
-            throw new \Exception('Failed'); // TODO: set -e for deploy
+            throw new \Exception(serialize([
+                'exit' => $iExit,
+                'output' => $aOutput,
+            ])); // TODO: set -e for deploy
         }
         
         echo implode("\n", $aOutput);
+    }
+    
+    /**
+     * The job failed to process.
+     *
+     * @param  Exception  $exception
+     * @return void
+     */
+    public function failed(Exception $exception)
+    {
+        $aData = unserialize($exception->getMessage());
+        
+        $this->api->request('sendEmail', [
+            'type' => 'DeployFailed',
+            'email' => Setting::whereKey('admin_email')->value('value'),
+            'repository' => $this->repository->dir,
+            'exit' => $aData['exit'],
+            'output' => $aData['output'],
+        ]);
     }
 }

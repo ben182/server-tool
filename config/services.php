@@ -35,4 +35,9 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'api' => [
+        'url' => 'http://api.server-tool.de',
+        'version' => 'v1',
+    ]
+
 ];
