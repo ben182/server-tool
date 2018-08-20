@@ -42,31 +42,15 @@ class Deploy implements ShouldQueue
         exec($sCommand, $aOutput, $iExit);
 
         if ($iExit != 0) {
-            throw new \Exception(serialize([
+            (new ApiRequestService())->request('sendEmail', [
+                'type' => 'DeployFailed',
+                'email' => Setting::whereKey('admin_email')->value('value'),
+                'repository' => $this->repository->dir,
                 'exit' => $iExit,
-                'output' => $aOutput,
-            ])); // TODO: set -e for deploy
+                'output' => implode("\n", $aOutput),
+            ]);
         }
         
         echo implode("\n", $aOutput);
-    }
-    
-    /**
-     * The job failed to process.
-     *
-     * @param  Exception  $exception
-     * @return void
-     */
-    public function failed(Exception $exception)
-    {
-        $aData = unserialize($exception->getMessage());
-
-        (new ApiRequestService())->request('sendEmail', [
-            'type' => 'DeployFailed',
-            'email' => Setting::whereKey('admin_email')->value('value'),
-            'repository' => $this->repository->dir,
-            'exit' => $aData['exit'],
-            'output' => $aData['output'],
-        ]);
     }
 }
