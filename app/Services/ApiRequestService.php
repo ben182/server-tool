@@ -7,7 +7,7 @@ class ApiRequestService
     public $client;
 
     public function __construct() {
-        $this->client = new GuzzleHttp\Client([
+        $this->client = new \GuzzleHttp\Client([
             'base_uri' => config('services.api.url'),
             'headers' => [
                 'Accept' => 'application/vnd.stool.' . config('services.api.version') . '+json',
