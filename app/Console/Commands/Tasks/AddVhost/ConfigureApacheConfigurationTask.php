@@ -21,6 +21,10 @@ class ConfigureApacheConfigurationTask extends Task
 
     public function handle()
     {
+        if ($this->oOptions->redirect) {
+            replace_string_in_file("/etc/apache2/sites-available/{$this->oOptions->domain}.conf", 'DocumentRoot /var/www/DOCUMENT_ROOT/html', "RedirectMatch permanent ^/(.*)$ {$this->oOptions->redirect_to}");
+        }
+        
         replace_string_in_file("/etc/apache2/sites-available/{$this->oOptions->domain}.conf", 'DOCUMENT_ROOT', $this->oOptions->domain);
 
         if (! $this->oOptions->www) {
@@ -31,10 +35,6 @@ class ConfigureApacheConfigurationTask extends Task
         replace_string_in_file("/etc/apache2/sites-available/{$this->oOptions->domain}.conf", 'NAME', $this->oOptions->domain);
 
         replace_string_in_file("/etc/apache2/sites-available/{$this->oOptions->domain}.conf", 'webmaster@localhost', Setting::where('key', 'admin_email')->value('value'));
-
-        if ($this->oOptions->redirect) {
-            replace_string_in_file("/etc/apache2/sites-available/{$this->oOptions->domain}.conf", '<Directory />', "\nRedirectMatch permanent ^/(.*)$ {$this->oOptions->redirect_to}\n<Directory />");
-        }
 
         $this->shell->exec("a2ensite {$this->oOptions->domain}.conf -q");
 
