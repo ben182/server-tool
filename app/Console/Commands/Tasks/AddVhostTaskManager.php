@@ -25,10 +25,10 @@ class AddVhostTaskManager extends Taskmanager
             'dev'      => 'required|boolean',
             'domain'   => 'required',
             'www'      => 'required|boolean',
-            'ssl'      => 'boolean',
+            'ssl'      => 'required|boolean',
             'ssl_email'=> 'required_if:ssl,true|email',
             'htaccess' => [
-                'required',
+                'required_if:redirect,false',
                 Rule::in([
                     'Non SSL to SSL and www to non www',
                     'Non SSL to SSL',

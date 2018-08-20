@@ -15,7 +15,7 @@ class ConfigureRedirectsTask extends Task
 
     public function localRequirements()
     {
-        return $this->oOptions->htaccess && !$this->oOptions->redirect;
+        return $this->oOptions->htaccess && $this->oOptions->htaccess == 'Nothing' && !$this->oOptions->redirect;
     }
 
     public function handle()
