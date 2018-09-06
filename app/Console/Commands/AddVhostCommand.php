@@ -46,6 +46,7 @@ class AddVhostCommand extends ModCommand
         $sDomain = $this->ask('Domain?');
 
         $bRedirect = $this->confirm('Redirect?', false);
+        $bRedirectTo = '';
         if ($bRedirect) {
             $bRedirectTo = $this->ask('To?');
         }
