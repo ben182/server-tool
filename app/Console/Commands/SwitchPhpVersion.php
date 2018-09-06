@@ -50,11 +50,11 @@ class SwitchPhpVersion extends ModCommand
 
     private function getAvailablePhpVersions()
     {
-        $aAvailableFiles = glob("/etc/apache2/mods-available/php*.load");
+        $aAvailableFiles = glob("/etc/apache2/conf-available/php*.conf");
 
         $aVersions = [];
         for ($i = 0; $i < count($aAvailableFiles); $i++) {
-            $aVersions[] = getStringBetween($aAvailableFiles[$i], '/php', '.load');
+            $aVersions[] = getStringBetween($aAvailableFiles[$i], '/php', '.conf');
         }
         return $aVersions;
     }
