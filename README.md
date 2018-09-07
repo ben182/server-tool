@@ -1,9 +1,9 @@
-![alt text](logo.jpg "Logo Title Text 1")
+![alt text](logo_min.png "Logo")
 
-A fully featured Digitalocean installer and management tool optimized for Laravel
+A fully featured LAMP+ installer and management tool optimized for DigitalOcean & Laravel
 
 ## Install
-`wget -O - https://raw.githubusercontent.com/ben182/server-tool/master/scripts/get.sh | bash`
+`bash <(curl -s https://raw.githubusercontent.com/ben182/server-tool/master/scripts/get.sh)`
 
 This script is supposed to be run on a fresh ubuntu maschine. It will install:
 * Apache
