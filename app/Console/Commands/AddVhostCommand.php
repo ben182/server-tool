@@ -76,7 +76,7 @@ class AddVhostCommand extends ModCommand
             if ($bSsl) {
                 $aRedirectChoices[] = 'Non SSL to SSL';
             }
-            $sHtaccess = $this->choice('Redirect?', $aRedirectChoices);
+            $sHtaccess = $this->choice('Htaccess?', $aRedirectChoices);
         }
 
         (new AddVhostTaskManager([
