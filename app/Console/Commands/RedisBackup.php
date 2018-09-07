@@ -2,9 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Console\Commands\Tasks\RedisBackupTaskManager;
 use App\Console\ModCommand;
-use App\Task;
-use Illuminate\Support\Facades\Storage;
 
 class RedisBackup extends ModCommand
 {
@@ -39,30 +38,22 @@ class RedisBackup extends ModCommand
      */
     public function handle()
     {
-        $sUploadDriver = $this->choiceOption('storage', 'Upload to local or digitalocean spaces?', ['local', 'spaces']);
+        parent::handle();
 
-        if ($sUploadDriver === 'spaces' && !isSpacesSet()) {
-            $this->abort('Spaces is not set up correctly');
+        if (isSpacesSet()) {
+            $sStorage = $this->choiceOption('storage', 'Upload to local or digitalocean spaces?', [
+                'local',
+                'spaces',
+            ]);
+        } else {
+            $sStorage = 'local';
         }
 
         $bCronjob = $this->booleanOption('cronjob', 'Set up a cronjob that runs daily?');
 
-        $sFileName = date('d-m-Y_H-i-s') . '.json';
-
-        shell_exec('redis-dump -a \'' . getRedisPassword() . '\' > ' . base_path($sFileName));
-
-        Storage::disk($sUploadDriver)->put(buildBackupPath('redis', $sFileName), file_get_contents(base_path($sFileName)));
-
-        unlink(base_path($sFileName));
-
-        if ($bCronjob) {
-            Task::create([
-                'command' => 'redis:backup',
-                'parameter' => [
-                    '--storage' => $sUploadDriver,
-                ],
-                'frequency' => 'daily'
-            ]);
-        }
+        (new RedisBackupTaskManager([
+            'storage' => $sStorage,
+            'cronjob' => $bCronjob,
+        ]))->work();
     }
 }

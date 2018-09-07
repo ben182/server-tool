@@ -14,14 +14,14 @@ class Task extends Model
      * @var array
      */
     protected $casts = [
-        'parameter' => 'array',
+        'parameter'           => 'array',
         'frequency_parameter' => 'array',
     ];
 
     /**
      * Cast an attribute to a native PHP type.
      *
-     * @param  string  $key
+     * @param string  $key
      * @param  mixed  $value
      * @return mixed
      */

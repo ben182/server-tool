@@ -92,7 +92,7 @@ class InstallationTestCommand extends Command
         $this->task('Testing MySQL Queries', function () {
             $aAssert[] = $this->assert('contains', buildMysqlCommand('SHOW DATABASES', true), 'Database');
             $aAssert[] = $this->assert('contains', buildMysqlCommand('SHOW DATABASES', true), 'information_schema');
-            $aAssert[] = $this->assert('contains', buildMysqlCommand('SHOW DATABASES', true), 'servertools');
+            $aAssert[] = $this->assert('contains', buildMysqlCommand('SHOW DATABASES', true), 'stool');
             return array_product($aAssert) === 1;
         });
 

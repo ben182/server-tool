@@ -1,13 +1,13 @@
 <?php
 
-function scripts_path()
+function scripts_path($sPath = '')
 {
-    return str_replace('\\', '/', base_path('scripts')) . '/';
+    return str_replace('\\', '/', base_path('scripts')) . '/' . $sPath;
 }
 
-function templates_path()
+function templates_path($sPath = '')
 {
-    return str_replace('\\', '/', base_path('templates')) . '/';
+    return str_replace('\\', '/', base_path('templates')) . '/' . $sPath;
 }
 
 function replace_string_in_file($filename, $string_to_replace, $replace_with)
@@ -27,6 +27,16 @@ function getStringBetween($str, $from, $to)
 function getConfig()
 {
     return json_decode(file_get_contents(base_path('config.json')), true);
+}
+
+function getInstallationConfig()
+{
+    return json_decode(file_get_contents(base_path('installation.json')), true);
+}
+
+function getInstallationConfigKey($sKey)
+{
+    return optional(json_decode(file_get_contents(base_path('installation.json'))))->$sKey === 'true';
 }
 
 function random_string_random_length()
@@ -59,7 +69,7 @@ function buildMysqlCommand($sCommand, $bOutIn = false)
 
 function createMysqlDatabase($sDatabase)
 {
-    $sDatabase = str_slug($sDatabase, null, 'de');
+    $sDatabase = str_slug($sDatabase, null);
 
     buildMysqlCommand("CREATE DATABASE $sDatabase;");
 
@@ -68,16 +78,16 @@ function createMysqlDatabase($sDatabase)
 
 function createMysqlUserAndGiveAccessToDatabase($sDatabase, $sUser = null, $sPassword = null)
 {
-    if (!$sUser) {
+    if (! $sUser) {
         $sUser = random_string_random_length();
     }
-    if (!$sPassword) {
+    if (! $sPassword) {
         $sPassword = random_string_random_length();
     }
     buildMysqlCommand("CREATE USER '$sUser'@'localhost';") . buildMysqlCommand("GRANT ALL PRIVILEGES ON $sDatabase.* To '$sUser'@'localhost' IDENTIFIED BY '$sPassword';") . buildMysqlCommand('FLUSH PRIVILEGES;');
 
     return [
-        'user' => $sUser,
+        'user'     => $sUser,
         'password' => $sPassword,
     ];
 }
@@ -89,7 +99,7 @@ function deleteMysqlUser($sUser)
 
 function editEnvKey($sPath, $sKey, $sValue)
 {
-    if (!file_exists($sPath)) {
+    if (! file_exists($sPath)) {
         return false;
     }
 
@@ -97,7 +107,7 @@ function editEnvKey($sPath, $sKey, $sValue)
 
     preg_match("/(?<=$sKey=).*/", $sFile, $match);
 
-    if (!isset($match[0])) {
+    if (! isset($match[0])) {
         return false;
     }
 
@@ -120,6 +130,24 @@ function editConfigKey($sKey, $sValue)
     $sLastKey = $aKeys[count($aKeys) - 1];
 
     file_put_contents(base_path('config.json'), str_replace(
+        '"' . $sLastKey . '": "' . $sOldValue . '"',
+        '"' . $sLastKey . '": "' . $sValue . '"',
+        $sFile
+    ));
+
+    return true;
+}
+
+function editInstallationKey($sKey, $sValue)
+{
+    $sOldValue = array_get(getInstallationConfig(), $sKey);
+
+    $sFile = file_get_contents(base_path('installation.json'));
+
+    $aKeys = explode('.', $sKey);
+    $sLastKey = $aKeys[count($aKeys) - 1];
+
+    file_put_contents(base_path('installation.json'), str_replace(
         '"' . $sLastKey . '": "' . $sOldValue . '"',
         '"' . $sLastKey . '": "' . $sValue . '"',
         $sFile
@@ -155,4 +183,22 @@ function checkIfPortIsUsed($iPort)
 function quietCommand($sCommand)
 {
     shell_exec($sCommand . ' 2>&1');
+}
+
+function fixApachePermissions()
+{
+    quietCommand('chown -R www-data:www-data /var/www');
+    quietCommand('chmod -R 755 /var/www');
+    quietCommand('chmod g+s /var/www');
+    quietCommand('chmod -R 700 /var/www/.ssh');
+}
+
+function restartApache()
+{
+    quietCommand('service apache2 reload');
+}
+
+function isSubdomain($sDomain)
+{
+    return count(explode('.', $sDomain)) >= 3;
 }

@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Console\Commands\Tasks\Shell\ShellTask;
+use App\Helper\Shell;
 use App\Observers\RepositoryObserver;
 use App\Repository;
 use Illuminate\Console\Command;
@@ -37,6 +39,13 @@ class AppServiceProvider extends ServiceProvider
         Command::macro('restartApache', function () {
             quietCommand('service apache2 reload');
             return $this;
+        });
+        $this->app->singleton('Shell', function ($app) {
+            return new Shell();
+        });
+
+        $this->app->singleton('ShellTask', function ($app) {
+            return new ShellTask();
         });
     }
 

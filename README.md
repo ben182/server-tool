@@ -1,3 +1,5 @@
+![alt text](logo.jpg "Logo Title Text 1")
+
 A fully featured Digitalocean installer and management tool optimized for Laravel
 
 ## Install
