@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Console\Commands\Tasks\GitAutoDeployTaskManager;
 use App\Console\ModCommand;
-use App\Repository;
 use Illuminate\Console\Command;
 
 class GitAutoDeployAddCommand extends ModCommand
@@ -13,7 +13,7 @@ class GitAutoDeployAddCommand extends ModCommand
      *
      * @var string
      */
-    protected $signature = 'gad:add {--dir=} {--branch=} {--hardreset} {--nooutput}';
+    protected $signature = 'gad:add {--dir=}';
 
     /**
      * The console command description.
@@ -39,26 +39,12 @@ class GitAutoDeployAddCommand extends ModCommand
      */
     public function handle()
     {
+        parent::handle();
+
         $sDir = $this->stringOption('dir', 'Path (from /var/www/)?');
 
-        if (!file_exists("/var/www/$sDir")) {
-            $this->abort("/var/www/$sDir does not exist");
-        }
-
-        $sBranch = $this->stringOption('branch', 'Branch?');
-        $iReset = (int) $this->booleanOption('hardreset', 'Hard Reset?', 1);
-
-        $oRepository = Repository::create([
-            'dir' => $sDir,
-            'branch' => $sBranch,
-            'reset' => $iReset,
-        ]);
-
-        $this->addToReturn('Add this route to a new github repo webhook');
-        $this->addToReturn(action('RepositoryController@index', $oRepository));
-        $this->addToReturn('Put this as a secret');
-        $this->addToReturn($oRepository->secret);
-
-        echo $this->getReturn();
+        (new GitAutoDeployTaskManager([
+            'dir'    => "/var/www/$sDir",
+        ]))->work();
     }
 }

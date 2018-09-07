@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        if (env('DB_DATABASE') === 'homestead' || !Schema::hasTable('tasks')) {
+        if (env('DB_DATABASE') === 'homestead' || ! Schema::hasTable('tasks')) {
             return;
         }
 

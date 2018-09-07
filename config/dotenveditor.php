@@ -15,7 +15,7 @@ return [
     | Change the paths, so they fit your needs
     |
     */
-    'pathToEnv' => base_path() . '/.env',
+    'pathToEnv'  => base_path() . '/.env',
     'backupPath' => base_path() . '/resources/backups/dotenv-editor/', // Make sure, you have a "/" at the end
 
     /*
@@ -37,6 +37,6 @@ return [
     'route' => '/enveditor',
 
     // middleware and middlewaregroups. Add your own middleware if you want.
-    'middleware' => ['web'],
+    'middleware'       => ['web'],
     'middlewareGroups' => []
 ];

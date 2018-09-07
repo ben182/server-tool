@@ -11,7 +11,8 @@ apache_permissions() {
     chmod -R 700 /var/www/.ssh
 }
 
-ABSOLUTE_PATH=/etc/server-tool/
+ABSOLUTE_PATH=/etc/stool/
 CONFIG_PATH=${ABSOLUTE_PATH}config.json
 SCRIPTS_PATH=${ABSOLUTE_PATH}scripts/
 TEMPLATES_PATH=${ABSOLUTE_PATH}templates/
+PUBLIC_IP=$(curl -sS ipinfo.io/ip)

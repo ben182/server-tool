@@ -2,9 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Console\Commands\Tasks\MysqlBackupTaskManager;
 use App\Console\ModCommand;
-use App\Task;
-use Illuminate\Support\Facades\Storage;
 
 class MysqlBackup extends ModCommand
 {
@@ -39,45 +38,31 @@ class MysqlBackup extends ModCommand
      */
     public function handle()
     {
-        $aParams = [];
+        parent::handle();
 
         $bAllDatabases = $this->booleanOption('allDatabases', 'Backup all databases?');
 
-        if ($bAllDatabases) {
-            $aParams[] = '--all-databases';
-        }
-
         $sAskedDbName = '';
-        if (!$bAllDatabases) {
+        if (! $bAllDatabases) {
             $sAskedDbName = $this->stringOption('database', 'Database Name?');
         }
 
-        $sUploadDriver = $this->choiceOption('storage', 'Upload to local or digitalocean spaces?', ['local', 'spaces']);
-
-        if ($sUploadDriver === 'spaces' && !isSpacesSet()) {
-            $this->abort('Spaces is not set up correctly');
+        if (isSpacesSet()) {
+            $sStorage = $this->choiceOption('storage', 'Upload to local or digitalocean spaces?', [
+                'local',
+                'spaces',
+            ]);
+        } else {
+            $sStorage = 'local';
         }
 
         $bCronjob = $this->booleanOption('cronjob', 'Set up a cronjob that runs daily?');
 
-        $sFileName = ($bAllDatabases ? 'alldatabases' : $sAskedDbName) . '_' . date('d-m-Y_H-i-s') . '.sql';
-
-        shell_exec('mysqldump ' . getMysqlCredentials() . ' ' . implode(' ', $aParams) . ($bAllDatabases ? '' : ' ' . $sAskedDbName) . ' > ' . base_path($sFileName));
-
-        Storage::disk($sUploadDriver)->put(buildBackupPath('mysql', $sFileName), file_get_contents(base_path($sFileName)));
-
-        unlink(base_path($sFileName));
-
-        if ($bCronjob) {
-            Task::create([
-                'command' => 'mysql:backup',
-                'parameter' => [
-                    '--allDatabases' => $bAllDatabases,
-                    '--database' => $sAskedDbName,
-                    '--storage' => $sUploadDriver,
-                ],
-                'frequency' => 'daily'
-            ]);
-        }
+        (new MysqlBackupTaskManager([
+            'allDatabases' => $bAllDatabases,
+            'database'     => $sAskedDbName,
+            'storage'      => $sStorage,
+            'cronjob'      => $bCronjob,
+        ]))->work();
     }
 }

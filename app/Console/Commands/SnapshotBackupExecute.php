@@ -2,16 +2,18 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
+use App\Console\Commands\Tasks\SnapshotBackupTaskManager;
+use App\Console\ModCommand;
 
-class SnapshotBackupExecute extends Command
+class SnapshotBackupExecute extends ModCommand
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'snapshot:backup {keep}';
+    protected $signature = 'snapshot:backup
+                            {keep : The amount of backups to keep}';
 
     /**
      * The console command description.
@@ -37,18 +39,12 @@ class SnapshotBackupExecute extends Command
      */
     public function handle()
     {
+        parent::handle();
+
         $iKeep = $this->argument('keep');
 
-        $iDropletId = getenv('DROPLET_ID');
-        if (!$iDropletId) {
-            return false;
-        }
-
-        $sToken = decrypt(getenv('DOAT'));
-        if (!$sToken) {
-            return false;
-        }
-
-        echo shell_exec("/usr/local/bin/do_snapshot --only $iDropletId -k $iKeep -c -q --digital-ocean-access-token $sToken 2>&1");
+        (new SnapshotBackupTaskManager([
+            'keep' => $iKeep,
+        ]))->work();
     }
 }

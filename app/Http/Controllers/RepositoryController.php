@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\Deploy;
 use App\Repository;
 
 class RepositoryController extends Controller
 {
     public function index(Repository $oRepository)
     {
-        if (!isset($_SERVER['HTTP_X_HUB_SIGNATURE'])) {
+        if (! isset($_SERVER['HTTP_X_HUB_SIGNATURE'])) {
             abort(404);
         }
 
@@ -18,14 +19,8 @@ class RepositoryController extends Controller
             return response('Wrong Secret', 500);
         }
 
-        $sCommand = 'cd ' . $oRepository->full_dir;
-        if ($oRepository->reset) {
-            $sCommand .= ' && git reset --hard HEAD 2>&1';
-        }
+        putenv("COMPOSER_HOME=/var/www/.composer");
 
-        $sCommand .= ' && git pull origin ' . $oRepository->branch . ' 2>&1';
-
-        echo $sCommand;
-        echo shell_exec($sCommand);
+        Deploy::dispatch($oRepository);
     }
 }

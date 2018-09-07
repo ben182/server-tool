@@ -18,7 +18,7 @@ class Domain
 
     public function doesNotExist()
     {
-        return !file_exists("/etc/apache2/sites-enabled/$this->sName.conf");
+        return ! file_exists("/etc/apache2/sites-enabled/$this->sName.conf");
     }
 
     public function isSSL()
@@ -28,14 +28,24 @@ class Domain
 
     public function isNotSSL()
     {
-        return !file_exists("/etc/apache2/sites-enabled/$this->sName-le-ssl.conf");
+        return ! file_exists("/etc/apache2/sites-enabled/$this->sName-le-ssl.conf");
     }
 
     public function createHtmlFolder()
     {
-        if (!file_exists("/var/www/$this->sName/html")) {
+        if (! file_exists("/var/www/$this->sName/html")) {
             mkdir("/var/www/$this->sName/html", 755, true);
         }
+    }
+
+    public function getHtmlFolder()
+    {
+        return "/var/www/$this->sName/html";
+    }
+
+    public function getBaseFolder()
+    {
+        return "/var/www/$this->sName";
     }
 
     public function getProtocol()
@@ -43,8 +53,8 @@ class Domain
         return $this->isSSL() ? 'https://' : 'http://';
     }
 
-    public function getFullUrl()
+    public function getFullUrl($sSubDir = null)
     {
-        return $this->getProtocol() . $this->sName;
+        return $this->getProtocol() . $this->sName . ($sSubDir ? '/' . $sSubDir : '');
     }
 }
