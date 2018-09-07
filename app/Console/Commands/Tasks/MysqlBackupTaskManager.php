@@ -3,8 +3,8 @@
 namespace App\Console\Commands\Tasks;
 
 use App\Console\Commands\Tasks\MysqlBackup\MysqlBackupTask;
-use Illuminate\Validation\Rule;
 use App\Rules\MysqlDatabaseExist;
+use Illuminate\Validation\Rule;
 
 class MysqlBackupTaskManager extends Taskmanager
 {

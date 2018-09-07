@@ -2,8 +2,8 @@
 
 namespace App\Rules;
 
-use Illuminate\Contracts\Validation\Rule;
 use App\Helper\Domain;
+use Illuminate\Contracts\Validation\Rule;
 
 class DomainExists implements Rule
 {

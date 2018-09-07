@@ -52,7 +52,7 @@ class MysqlBackup extends ModCommand
                 'local',
                 'spaces',
             ]);
-        }else{
+        } else {
             $sStorage = 'local';
         }
 

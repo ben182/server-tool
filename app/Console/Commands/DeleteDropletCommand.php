@@ -55,9 +55,9 @@ class DeleteDropletCommand extends Command
             return;
         }
 
-        $cDropletIds->each(function($item) {
+        $cDropletIds->each(function ($item) {
             $this->digitalocean->droplet()->delete($item);
-            echo 'Droplet deleted';
+            echo 'Droplet deleted' . PHP_EOL;
         });
     }
 }

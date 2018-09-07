@@ -2,8 +2,6 @@
 
 namespace App\Console\Commands\Tasks\AddVhost;
 
-use App\Console\Commands\Tasks\SubBaseTask;
-use App\Console\Commands\Tasks\BaseTask;
 use App\Console\Commands\Tasks\Task;
 
 class CreateSslCertificateTask extends Task

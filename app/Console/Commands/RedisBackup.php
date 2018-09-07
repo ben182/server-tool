@@ -45,7 +45,7 @@ class RedisBackup extends ModCommand
                 'local',
                 'spaces',
             ]);
-        }else{
+        } else {
             $sStorage = 'local';
         }
 

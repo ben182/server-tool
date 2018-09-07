@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Console\Commands\Tasks\TestTestTaskManager;
 use App\Console\ModCommand;
+use Illuminate\Console\Command;
 
 class TestCommand extends ModCommand
 {

@@ -15,7 +15,7 @@ class ComposerInstall extends Task
 
     public function localRequirements()
     {
-        return !$this->oOptions->laravel && $this->oOptions->composerInstall;
+        return ! $this->oOptions->laravel && $this->oOptions->composerInstall;
     }
 
     public function handle()

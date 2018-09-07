@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Console\ModCommand;
 use App\Console\Commands\Tasks\CreateDeamonTaskManager;
+use App\Console\ModCommand;
 
 class CreateDeamonCommand extends ModCommand
 {
@@ -42,7 +42,7 @@ class CreateDeamonCommand extends ModCommand
         $sCommand = $this->stringOption('command', 'Command?');
 
         (new CreateDeamonTaskManager([
-            'name' => $sName,
+            'name'    => $sName,
             'command' => $sCommand,
         ]))->work();
     }

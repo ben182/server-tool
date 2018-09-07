@@ -42,14 +42,14 @@ class InstallationFinishCommand extends ModCommand
         parent::handle();
 
         (new CreateDeamonTaskManager([
-            'name' => 'stool-deploy',
+            'name'    => 'stool-deploy',
             'command' => 'stool queue:work --tries=1',
         ]))->work();
 
         $sEmail = $this->ask('Administrator email?');
 
         Setting::create([
-            'key' => 'admin_email',
+            'key'   => 'admin_email',
             'value' => $sEmail,
         ]);
     }

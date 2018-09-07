@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands\Tasks;
 
-use App\Rules\FileExists;
 use App\Console\Commands\Tasks\GitAutoDeploy\CreateRepositoryTask;
+use App\Rules\FileExists;
 
 class GitAutoDeployTaskManager extends Taskmanager
 {

@@ -66,7 +66,7 @@ class AddVhostCommand extends ModCommand
         }
 
         $sHtaccess = '';
-        if (!$bRedirect) {
+        if (! $bRedirect) {
             $aRedirectChoices = [
                 'Nothing',
             ];

@@ -24,7 +24,8 @@ class ModCommand extends Command
         ));
     }
 
-    public function handle() {
+    public function handle()
+    {
         $shell = resolve('ShellTask');
         if ($this->option('debug') === true) {
             $shell->outputEveryCommand();

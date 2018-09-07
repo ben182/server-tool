@@ -13,7 +13,7 @@ class CreateDeamonTaskManager extends Taskmanager
     public function validate()
     {
         return [
-            'name' => 'required',
+            'name'    => 'required',
             'command' => 'required',
         ];
     }

@@ -45,7 +45,7 @@ class SnapshotBackupSetup extends ModCommand
 
         (new SnapshotBackupSetupTaskManager([
             'doToken' => $sToken,
-            'keep' => $iKeep,
+            'keep'    => $iKeep,
         ]))->work();
     }
 }

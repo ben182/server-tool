@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands\Tasks;
 
-use App\Console\Commands\Tasks\SnapshotBackupSetup\SaveDoTokenTask;
-use App\Console\Commands\Tasks\SnapshotBackupSetup\InstallDependenciesTask;
 use App\Console\Commands\Tasks\SnapshotBackupSetup\InstallCronjobTask;
+use App\Console\Commands\Tasks\SnapshotBackupSetup\InstallDependenciesTask;
+use App\Console\Commands\Tasks\SnapshotBackupSetup\SaveDoTokenTask;
 
 class SnapshotBackupSetupTaskManager extends Taskmanager
 {
@@ -18,7 +18,7 @@ class SnapshotBackupSetupTaskManager extends Taskmanager
     {
         return [
             'doToken' => 'required',
-            'keep' => 'required|integer',
+            'keep'    => 'required|integer',
         ];
     }
 }

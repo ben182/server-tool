@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Repository;
 use App\Jobs\Deploy;
+use App\Repository;
 
 class RepositoryController extends Controller
 {

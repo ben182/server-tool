@@ -2,14 +2,16 @@
 
 namespace App\Console\Commands\Tasks\Shell;
 
-class Mysql {
+class Mysql
+{
     protected $shell;
-    public function __construct() {
+    public function __construct()
+    {
         $this->shell = resolve('ShellTask');
     }
 
-    public function createDatabase($sDatabaseName, $bCheckIfExist = true) {
-
+    public function createDatabase($sDatabaseName, $bCheckIfExist = true)
+    {
         $sSluggedDatabaseName = str_slug($sDatabaseName, null);
 
         if ($this->doesDatabaseExist($sSluggedDatabaseName) && $bCheckIfExist) {
@@ -25,8 +27,8 @@ class Mysql {
         return $sSluggedDatabaseName;
     }
     
-    public function createUser($sName = null, $sPassword = null) {
-
+    public function createUser($sName = null, $sPassword = null)
+    {
         if (! $sName) {
             $sName = str_random(10); // TODO: is already taken?
         }
@@ -40,7 +42,8 @@ class Mysql {
         return new MysqlUser($sName, $sPassword, $this);
     }
 
-    public function execCommand($sCommand) {
+    public function execCommand($sCommand)
+    {
         return $this->shell->exec('mysql ' . getMysqlCredentials() . " -e \"$sCommand\"");
     }
 
@@ -51,7 +54,8 @@ class Mysql {
      *
      * @return string
      */
-    public function incrementName($sName) {
+    public function incrementName($sName)
+    {
         $iLastChar = (int) substr($sName, -1);
         if ($iLastChar === 0) {
             return $sName . "2";
@@ -61,7 +65,8 @@ class Mysql {
         return $sWithoutLastChar . (++$iLastChar);
     }
 
-    public function doesDatabaseExist($sDatabase) {
+    public function doesDatabaseExist($sDatabase)
+    {
         return str_contains($this->execCommand("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME =  '$sDatabase';")->getLastOutput(), $sDatabase);
     }
 }

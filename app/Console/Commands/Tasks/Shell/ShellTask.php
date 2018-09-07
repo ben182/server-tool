@@ -20,30 +20,36 @@ class ShellTask
         return $this;
     }
 
-    public function getLastOutput() {
+    public function getLastOutput()
+    {
         return $this->lastExecOutput;
     }
 
-    public function outputEveryCommand(bool $bData = true) {
+    public function outputEveryCommand(bool $bData = true)
+    {
         $this->bDebug = $bData;
         return $this;
     }
 
-    public function echo($sData) {
+    public function echo($sData)
+    {
         $this->aOutputs[] = $sData;
         return $this;
     }
 
-    public function saveOutput() {
+    public function saveOutput()
+    {
         $this->aOutputs[] = $this->lastExecOutput;
         return $this;
     }
 
-    public function getOutput() {
+    public function getOutput()
+    {
         return implode("\n", $this->aOutputs) . "\n";
     }
 
-    public function flushOutput() {
+    public function flushOutput()
+    {
         $this->aOutputs = [];
         return $this;
     }
@@ -54,37 +60,45 @@ class ShellTask
         return $this;
     }
 
-    public function saveError($sError) {
+    public function saveError($sError)
+    {
         $this->aErrors[] = $sError;
         return $this;
     }
 
-    public function getErrors() {
+    public function getErrors()
+    {
         return implode("\n", $this->aErrors);
     }
 
-    public function hasErrors() {
+    public function hasErrors()
+    {
         return $this->countErrors() > 0;
     }
 
-    public function countErrors() {
+    public function countErrors()
+    {
         return count($this->aErrors);
     }
 
-    public function flushErrors() {
+    public function flushErrors()
+    {
         $this->aErrors = [];
         return $this;
     }
 
-    public function cronjob() {
+    public function cronjob()
+    {
         return new Cronjob;
     }
 
-    public function environment() {
+    public function environment()
+    {
         return new Environment;
     }
 
-    public function mysql() {
+    public function mysql()
+    {
         return new Mysql;
     }
 }
