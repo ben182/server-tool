@@ -103,7 +103,7 @@ abstract class Taskmanager
                 echo "I found {$this->shell->countErrors()} " . str_plural('error', $this->shell->countErrors()) . "\n";
                 echo $this->shell->getErrors();
                 $this->shell->flushErrors();
-                continue;
+                break;
             }
 
             $this->addBinding($oTask->customBindings);

@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# http://patorjk.com/software/taag/#p=display&v=0&f=Slant&t=stool%20v1.2
+# http://patorjk.com/software/taag/#p=display&v=0&f=Slant&t=stool%20v1.2.2
 cat << "EOF"
          __              __        ___ ___    ___
-   _____/ /_____  ____  / /  _   _<  /|__ \  <  /
-  / ___/ __/ __ \/ __ \/ /  | | / / / __/ /  / /
- (__  ) /_/ /_/ / /_/ / /   | |/ / / / __/_ / /
-/____/\__/\____/\____/_/    |___/_(_)____(_)_/
+   _____/ /_____  ____  / /  _   _<  /|__ \  |__ \
+  / ___/ __/ __ \/ __ \/ /  | | / / / __/ /  __/ /
+ (__  ) /_/ /_/ / /_/ / /   | |/ / / / __/_ / __/
+/____/\__/\____/\____/_/    |___/_(_)____(_)____/
 
 EOF
 
@@ -48,6 +48,7 @@ apacheInstall() {
     sudo sed -i "s|IP_HERE|$PUBLIC_IP|" /etc/apache2/sites-available/ip.conf
     a2ensite ip.conf
 
+    sudo a2enmod expires
     sudo a2enmod http2
 }
 echo "Installing and configuring Apache Server..."

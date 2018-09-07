@@ -39,6 +39,8 @@ class DeleteVhostCommand extends ModCommand
      */
     public function handle()
     {
+        parent::handle();
+
         $sDomain = $this->ask('Domain?');
 
         $bDeleteDir = $this->confirm("Delete /var/www/$sDomain?", 0);

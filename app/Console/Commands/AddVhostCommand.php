@@ -56,24 +56,19 @@ class AddVhostCommand extends ModCommand
         } else {
             $bWww = $this->confirm('www Alias?', true);
         }
-        
+
 
         $bSsl = $this->confirm('SSL?', true);
-
-        $sEmail = '';
-        if ($bSsl) {
-            $sEmail = $this->ask('SSL Email?');
-        }
 
         $sHtaccess = '';
         if (! $bRedirect) {
             $aRedirectChoices = [
                 'Nothing',
             ];
-    
+
             if ($bWww) {
                 $aRedirectChoices[] = 'www to non www';
-    
+
                 if ($bSsl) {
                     $aRedirectChoices[] = 'Non SSL to SSL and www to non www';
                 }
@@ -81,7 +76,7 @@ class AddVhostCommand extends ModCommand
             if ($bSsl) {
                 $aRedirectChoices[] = 'Non SSL to SSL';
             }
-            $sHtaccess = $this->choice('Redirect?', $aRedirectChoices);
+            $sHtaccess = $this->choice('Htaccess?', $aRedirectChoices);
         }
 
         (new AddVhostTaskManager([
@@ -90,7 +85,6 @@ class AddVhostCommand extends ModCommand
             'www'         => $bWww,
             'htaccess'    => $sHtaccess,
             'ssl'         => $bSsl,
-            'ssl_email'   => $sEmail,
             'redirect'    => $bRedirect,
             'redirect_to' => $bRedirectTo,
         ]))->work();
