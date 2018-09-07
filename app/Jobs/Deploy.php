@@ -10,6 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\File;
 
 class Deploy implements ShouldQueue
 {
@@ -34,6 +35,15 @@ class Deploy implements ShouldQueue
      */
     public function handle()
     {
+        $sBackupFilename = 'backup_' . microtime();
+
+        $aPath = explode('/', $this->repository->dir);
+        array_pop($aPath);
+        $aPath[] = $sBackupFilename;
+        $sBackupPath = implode('/', $aPath);
+
+        File::copyDirectory( $this->repository->dir, $sBackupPath);
+
         $sCommand = 'cd ' . $this->repository->dir . ' && bash deploy_stool.sh 2>&1';
 
         exec($sCommand, $aOutput, $iExit);
@@ -46,8 +56,13 @@ class Deploy implements ShouldQueue
                 'exit'       => $iExit,
                 'output'     => implode("<br>", $aOutput),
             ]);
+
+            File::deleteDirectory($this->repository->dir);
+            File::move($sBackupPath, $this->repository->dir);
         }
-        
+
+        File::deleteDirectory($sBackupPath);
+
         echo implode("\n", $aOutput);
     }
 }
