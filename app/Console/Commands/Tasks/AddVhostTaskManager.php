@@ -26,7 +26,6 @@ class AddVhostTaskManager extends Taskmanager
             'domain'   => 'required',
             'www'      => 'required|boolean',
             'ssl'      => 'required|boolean',
-            'ssl_email'=> 'required_if:ssl,true|email',
             'htaccess' => [
                 'required_if:redirect,false',
                 Rule::in([
