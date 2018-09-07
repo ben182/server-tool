@@ -48,6 +48,7 @@ apacheInstall() {
     sudo sed -i "s|IP_HERE|$PUBLIC_IP|" /etc/apache2/sites-available/ip.conf
     a2ensite ip.conf
 
+    sudo a2enmod expires
     sudo a2enmod http2
 }
 echo "Installing and configuring Apache Server..."
