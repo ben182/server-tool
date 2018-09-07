@@ -38,6 +38,8 @@ class CreateDeamonCommand extends ModCommand
      */
     public function handle()
     {
+        parent::handle();
+
         $sName = $this->stringOption('name', 'Name?');
         $sCommand = $this->stringOption('command', 'Command?');
 
