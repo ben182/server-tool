@@ -14,6 +14,9 @@ finish () {
     git config --global --unset-all core.filemode
     git config --global core.filemode false
 
+    # Fix for laravel mix
+    sudo apt-get install libpng-dev -y
+
     # APACHE PERMISSIONS
     apache_permissions
     service apache2 reload
