@@ -13,7 +13,16 @@ class RepositoryController extends Controller
             abort(404);
         }
 
-        $postBody = file_get_contents('php://input');
+        switch ($_SERVER['HTTP_CONTENT_TYPE']) {
+            case 'application/json':
+                $postBody = file_get_contents('php://input');
+                break;
+            case 'application/x-www-form-urlencoded':
+                $postBody = $_POST['payload'];
+                break;
+            default:
+                throw new \Exception("Unsupported content type: $_SERVER[HTTP_CONTENT_TYPE]");
+        }
         $oPostBody = json_decode($postBody);
 
         if ('sha1=' . hash_hmac('sha1', $postBody, $oRepository->secret) !== $_SERVER['HTTP_X_HUB_SIGNATURE']) {
