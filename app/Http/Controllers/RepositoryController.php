@@ -25,7 +25,7 @@ class RepositoryController extends Controller
         }
         $oPostBody = json_decode($postBody);
 
-        if ('sha1=' . hash_hmac('sha1', $postBody, $oRepository->secret) !== $_SERVER['HTTP_X_HUB_SIGNATURE']) {
+        if ('sha1=' . hash_hmac('sha1', file_get_contents('php://input'), $oRepository->secret) !== $_SERVER['HTTP_X_HUB_SIGNATURE']) {
             return response('Wrong Secret', 500);
         }
 
