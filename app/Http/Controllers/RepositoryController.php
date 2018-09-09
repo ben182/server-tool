@@ -13,7 +13,7 @@ class RepositoryController extends Controller
             abort(404);
         }
 
-        switch ($_SERVER['HTTP_CONTENT_TYPE']) {
+        switch ($_SERVER['CONTENT_TYPE']) {
             case 'application/json':
                 $postBody = file_get_contents('php://input');
                 break;
@@ -21,7 +21,7 @@ class RepositoryController extends Controller
                 $postBody = $_POST['payload'];
                 break;
             default:
-                throw new \Exception("Unsupported content type: $_SERVER[HTTP_CONTENT_TYPE]");
+                throw new \Exception("Unsupported content type: {$_SERVER['CONTENT_TYPE']}");
         }
         $oPostBody = json_decode($postBody);
 
