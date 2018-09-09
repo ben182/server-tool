@@ -14,9 +14,18 @@ class RepositoryController extends Controller
         }
 
         $postBody = file_get_contents('php://input');
+        $oPostBody = json_decode($postBody);
 
         if ('sha1=' . hash_hmac('sha1', $postBody, $oRepository->secret) !== $_SERVER['HTTP_X_HUB_SIGNATURE']) {
             return response('Wrong Secret', 500);
+        }
+
+        if (! str_contains($oPostBody->ref, 'refs/heads/')) {
+            return 'Not Head';
+        }
+
+        if (str_replace('refs/heads/', '', $oPostBody->ref) !== $oRepository->branch) {
+            return 'Wrong Branch';
         }
 
         putenv("COMPOSER_HOME=/var/www/.composer");
