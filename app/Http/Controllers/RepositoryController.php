@@ -29,6 +29,8 @@ class RepositoryController extends Controller
             return response('Wrong Secret', 500);
         }
 
+        $oPostBody->ref = $oPostBody->ref ?? 'refs/heads/master';
+
         if (! str_contains($oPostBody->ref, 'refs/heads/')) {
             return 'Not Head';
         }
