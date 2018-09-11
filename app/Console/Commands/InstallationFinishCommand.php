@@ -52,5 +52,12 @@ class InstallationFinishCommand extends ModCommand
             'key'   => 'admin_email',
             'value' => $sEmail,
         ]);
+
+        $bAddSwap = $this->confirm('Add Swap Space?');
+        if ($bAddSwap) {
+            $iSwap = (int) $this->ask('How much (in GB)?');
+
+            echo resolve('ShellTask')->exec('bash ' . scripts_path('partials') . '/swap.sh ' . $iSwap . 'G')->getLastOutput();
+        }
     }
 }
