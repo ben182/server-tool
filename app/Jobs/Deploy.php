@@ -12,6 +12,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\File;
 use App\Services\Archive;
+use Pressutto\LaravelSlack\Facades\Slack;
 
 class Deploy implements ShouldQueue
 {
@@ -36,6 +37,8 @@ class Deploy implements ShouldQueue
      */
     public function handle()
     {
+        Slack::send('Deploy started in ' . $this->repository->dir);
+
         $sBackupFilename = str_slug('backup_' . microtime());
 
         $aPath = explode('/', $this->repository->dir);
@@ -60,10 +63,16 @@ class Deploy implements ShouldQueue
 
             File::deleteDirectory($this->repository->dir);
             Archive::extract($sBackupPath);
+
+            Slack::send('Deploy failed. Output comes shortly.');
+        }else{
+
+            Slack::send('Deploy finished successfully. Output comes shortly.');
         }
 
         File::delete($sBackupPath . '.tar.gz');
 
         echo implode("\n", $aOutput);
+        Slack::send(implode("\n", $aOutput));
     }
 }
