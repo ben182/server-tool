@@ -35,6 +35,12 @@ sudo mkswap $SWAP_PATH                   # Setup swap
 sudo swapon $SWAP_PATH                   # Enable swap
 echo "$SWAP_PATH   none    swap    sw    0   0" | sudo tee /etc/fstab -a # Add to fstab
 
+sudo sysctl vm.swappiness=10
+sudo sysctl vm.vfs_cache_pressure=50
+
+echo "vm.swappiness = 10" >> /etc/sysctl.conf
+echo "vm.vfs_cache_pressure = 50" >> /etc/sysctl.conf
+
 ## Outro
 
 echo
