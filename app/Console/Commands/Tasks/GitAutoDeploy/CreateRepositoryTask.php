@@ -23,6 +23,7 @@ class CreateRepositoryTask extends Task
     {
         $oRepository = Repository::create([
             'dir'    => $this->oOptions->dir,
+            'branch' => $this->oOptions->branch,
         ]);
 
         copy(templates_path('git/deploy_stool.sh'), $this->oOptions->dir . '/deploy_stool.sh');

@@ -43,7 +43,7 @@ class InstallationFinishCommand extends ModCommand
 
         (new CreateDeamonTaskManager([
             'name'    => 'stool-deploy',
-            'command' => 'stool queue:work --tries=1',
+            'command' => 'stool queue:listen --timeout=600 --sleep=15 --tries=1',
         ]))->work();
 
         $sEmail = $this->ask('Administrator email?');
@@ -52,5 +52,12 @@ class InstallationFinishCommand extends ModCommand
             'key'   => 'admin_email',
             'value' => $sEmail,
         ]);
+
+        $bAddSwap = $this->confirm('Add Swap Space?');
+        if ($bAddSwap) {
+            $iSwap = (int) $this->ask('How much (in GB)?');
+
+            resolve('ShellTask')->exec('bash ' . scripts_path('partials') . '/swap.sh ' . $iSwap . 'G');
+        }
     }
 }

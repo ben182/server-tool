@@ -13,7 +13,7 @@ class GitAutoDeployAddCommand extends ModCommand
      *
      * @var string
      */
-    protected $signature = 'gad:add {--dir=}';
+    protected $signature = 'gad:add {--dir=} {--branch=}';
 
     /**
      * The console command description.
@@ -42,9 +42,11 @@ class GitAutoDeployAddCommand extends ModCommand
         parent::handle();
 
         $sDir = $this->stringOption('dir', 'Path (from /var/www/)?');
+        $sBranch = $this->stringOption('branch', 'Branch?');
 
         (new GitAutoDeployTaskManager([
             'dir'    => "/var/www/$sDir",
+            'branch' => $sBranch,
         ]))->work();
     }
 }

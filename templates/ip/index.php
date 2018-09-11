@@ -14,14 +14,14 @@ require_once('checkToken.php');
         <title>stool welcome page</title>
 
         <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,700" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Oxygen:300,700" rel="stylesheet">
 
         <!-- Styles -->
         <style>
             html, body {
                 background-color: #fff;
                 color: #636b6f;
-                font-family: 'Ubuntu', sans-serif;
+                font-family: 'Oxygen', sans-serif;
                 font-weight: 300;
                 height: 100vh;
                 margin: 0;
@@ -51,7 +51,7 @@ require_once('checkToken.php');
             .links > a {
                 color: #636b6f;
                 padding: 0 25px;
-                font-size: 12px;
+                font-size: 14px;
                 font-weight: 700;
                 letter-spacing: .1rem;
                 text-decoration: none;
