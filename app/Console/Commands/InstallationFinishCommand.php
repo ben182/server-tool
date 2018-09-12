@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Console\Commands\Tasks\CreateDeamonTaskManager;
 use App\Console\ModCommand;
 use App\Setting;
+use App\Services\ApiRequestService;
 
 class InstallationFinishCommand extends ModCommand
 {
