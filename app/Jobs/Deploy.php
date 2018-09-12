@@ -65,15 +65,15 @@ class Deploy implements ShouldQueue
             File::deleteDirectory($this->repository->dir);
             Archive::extract($sBackupPath);
 
-            $oSlack->send('Deploy failed. Output comes shortly.');
+            $oSlack->send('Deploy failed');
+            $oSlack->send(implode("\n", $aOutput));
         }else{
 
-            $oSlack->send('Deploy finished successfully. Output comes shortly.');
+            $oSlack->send('Deploy finished successfully');
         }
 
         File::delete($sBackupPath . '.tar.gz');
 
         echo implode("\n", $aOutput);
-        $oSlack->send(implode("\n", $aOutput));
     }
 }
