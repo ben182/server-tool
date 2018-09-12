@@ -41,18 +41,40 @@ class InstallationFinishCommand extends ModCommand
     {
         parent::handle();
 
+        // Deploy Job
         (new CreateDeamonTaskManager([
             'name'    => 'stool-deploy',
             'command' => 'stool queue:listen --timeout=600 --sleep=15 --tries=1',
         ]))->work();
 
+        // Admin Email
         $sEmail = $this->ask('Administrator email?');
-
         Setting::create([
             'key'   => 'admin_email',
             'value' => $sEmail,
         ]);
 
+        // Slack Deploy Notification
+        $bDeployNotification = $this->confirm('Setup Slack Deployment Notification?');
+        if ($bDeployNotification) {
+            $this->line('Visit ' . config('services.stool.base') . '/deploy/login/slack and come back with a token');
+            $sToken = $this->ask('Token?');
+            $sChannel = $this->ask('Channel?');
+
+            if ($sToken && $sChannel) {
+                (new ApiRequestService())->request('verifySlack', [
+                    'public_id' => $sToken,
+                    'channel' => $sChannel,
+                ]); // TODO: validate response
+
+                Setting::create([
+                    'key'   => 'deploy_slack_token',
+                    'value' => $sToken,
+                ]);
+            }
+        }
+
+        // Swap
         $bAddSwap = $this->confirm('Add Swap Space?');
         if ($bAddSwap) {
             $iSwap = (int) $this->ask('How much (in GB)?');

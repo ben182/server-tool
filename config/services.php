@@ -35,9 +35,13 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
-    'api' => [
-        'url'     => 'https://api.server-tool.eu',
-        'version' => 'v1',
-    ]
+    'stool' => [
+        'base' => 'http://server-tool.de',
+        'api' => [
+            'url'     => 'https://1ebe52b1.ngrok.io/',
+            //'url'     => 'https://api.server-tool.eu',
+            'version' => 'v1',
+        ],
+    ],
 
 ];
