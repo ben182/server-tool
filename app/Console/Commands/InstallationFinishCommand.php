@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Console\Commands\Tasks\CreateDeamonTaskManager;
 use App\Console\ModCommand;
 use App\Setting;
+use App\Services\ApiRequestService;
 
 class InstallationFinishCommand extends ModCommand
 {
@@ -41,18 +42,26 @@ class InstallationFinishCommand extends ModCommand
     {
         parent::handle();
 
+        // Deploy Job
         (new CreateDeamonTaskManager([
             'name'    => 'stool-deploy',
             'command' => 'stool queue:listen --timeout=600 --sleep=15 --tries=1',
         ]))->work();
 
+        // Admin Email
         $sEmail = $this->ask('Administrator email?');
-
         Setting::create([
             'key'   => 'admin_email',
             'value' => $sEmail,
         ]);
 
+        // Slack Deploy Notification
+        $bDeployNotification = $this->confirm('Setup Slack Deployment Notification?');
+        if ($bDeployNotification) {
+            $this->call('gad:notification-slack');
+        }
+
+        // Swap
         $bAddSwap = $this->confirm('Add Swap Space?');
         if ($bAddSwap) {
             $iSwap = (int) $this->ask('How much (in GB)?');
