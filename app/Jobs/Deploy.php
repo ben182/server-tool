@@ -41,7 +41,7 @@ class Deploy implements ShouldQueue
         $sIp = str_replace('\n', '', $sIp);
 
         $oSlack = new Slack();
-        $oSlack->send('*A new deploy started in ' . $this->repository->dir . ' on ' . $sIp) . ' :tada:*';
+        $oSlack->send('A new deploy started in ' . $this->repository->dir . ' on ' . $sIp . ' :tada:');
 
         $sBackupFilename = str_slug('backup_' . microtime());
 
