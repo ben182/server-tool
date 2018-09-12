@@ -37,8 +37,11 @@ class Deploy implements ShouldQueue
      */
     public function handle()
     {
+        $sIp = resolve('ShellTask')->exec("curl -sS ipinfo.io/ip")->getLastOutput();
+        $sIp = str_replace('\n', '', $sIp);
+
         $oSlack = new Slack();
-        $oSlack->send('Deploy started in ' . $this->repository->dir);
+        $oSlack->send('*A new deploy started in ' . $this->repository->dir . ' on ' . $sIp) . ' :tada:*';
 
         $sBackupFilename = str_slug('backup_' . microtime());
 
@@ -69,7 +72,7 @@ class Deploy implements ShouldQueue
             $oSlack->send(implode("\n", $aOutput));
         }else{
 
-            $oSlack->send('Deploy finished successfully');
+            $oSlack->send('Deploy finished successfully. Have a beer :beer:');
         }
 
         File::delete($sBackupPath . '.tar.gz');
