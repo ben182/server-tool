@@ -58,21 +58,7 @@ class InstallationFinishCommand extends ModCommand
         // Slack Deploy Notification
         $bDeployNotification = $this->confirm('Setup Slack Deployment Notification?');
         if ($bDeployNotification) {
-            $this->line('Visit ' . config('services.stool.base') . '/deploy/login/slack and come back with a token');
-            $sToken = $this->ask('Token?');
-            $sChannel = $this->ask('Channel?');
-
-            if ($sToken && $sChannel) {
-                (new ApiRequestService())->request('verifySlack', [
-                    'public_id' => $sToken,
-                    'channel' => $sChannel,
-                ]); // TODO: validate response
-
-                Setting::create([
-                    'key'   => 'deploy_slack_token',
-                    'value' => $sToken,
-                ]);
-            }
+            $this->call('gad:notification-slack');
         }
 
         // Swap

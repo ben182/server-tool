@@ -36,10 +36,9 @@ return [
     ],
 
     'stool' => [
-        'base' => 'http://server-tool.de',
+        'base' => 'https://server-tool.eu',
         'api' => [
-            'url'     => 'https://dee6dcd4.ngrok.io',
-            //'url'     => 'https://api.server-tool.eu',
+            'url'     => 'https://api.server-tool.eu',
             'version' => 'v1',
         ],
     ],
