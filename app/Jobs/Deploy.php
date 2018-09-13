@@ -38,7 +38,7 @@ class Deploy implements ShouldQueue
     public function handle()
     {
         $sIp = resolve('ShellTask')->exec("curl -sS ipinfo.io/ip")->getLastOutput();
-        $sIp = str_replace('\n', '', $sIp);
+        $sIp = trim(preg_replace('/\s+/', ' ', $sIp)); // strip new lines
 
         $oSlack = new Slack();
         $oSlack->send('A new deploy started in ' . $this->repository->dir . ' on ' . $sIp . '|' . gethostname() . ' :tada:', 'bold');
