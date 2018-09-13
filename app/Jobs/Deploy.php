@@ -19,15 +19,17 @@ class Deploy implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $repository;
+    protected $payload;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Repository $repository)
+    public function __construct(Repository $repository, $payload)
     {
         $this->repository = $repository;
+        $this->payload = $payload;
     }
 
     /**
@@ -37,11 +39,9 @@ class Deploy implements ShouldQueue
      */
     public function handle()
     {
-        $sIp = resolve('ShellTask')->exec("curl -sS ipinfo.io/ip")->getLastOutput();
-        $sIp = trim(preg_replace('/\s+/', ' ', $sIp)); // strip new lines
-
         $oSlack = new Slack();
-        $oSlack->send('A new deploy started in ' . $this->repository->dir . ' on ' . $sIp . '|' . gethostname() . ' :tada:', 'bold');
+        $oSlack->send('A new deploy started in ' . $this->repository->dir . ' on ' . getIp() . '|' . gethostname() . ' :tada:', 'bold');
+        $oSlack->send('Commit: ' . $this->payload->head_commit->message . ' | ' . $this->payload->head_commit->id);
 
         $sBackupFilename = str_slug('backup_' . microtime());
 
