@@ -40,8 +40,8 @@ class Deploy implements ShouldQueue
     public function handle()
     {
         $oSlack = new Slack();
-        $oSlack->send('A new deploy started in ' . $this->repository->dir . ' on ' . getIp() . '|' . gethostname() . ' :tada:', 'bold');
-        $oSlack->send('Commit: ' . $this->payload->head_commit->message . ' | ' . $this->payload->head_commit->id);
+        $oSlack->send('A new deploy started in ' . $this->repository->dir . ' on ' . getIp() . ' | ' . gethostname() . ' :tada:', 'bold');
+        $oSlack->send('Commit: ' . $this->payload->head_commit->message . ' | ' . $this->payload->head_commit->id . ' pushed by ' . $this->payload->head_commit->committer->name);
 
         $sBackupFilename = str_slug('backup_' . microtime());
 
