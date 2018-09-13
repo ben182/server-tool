@@ -13,7 +13,7 @@ class Slack
     {
         $this->token = Setting::where('key', 'deploy_slack_token')->value('value');
     }
-    public function send($sText)
+    public function send($sText, $sFormat = null)
     {
         if (! $this->token) {
             return false;
@@ -22,6 +22,7 @@ class Slack
         return (new ApiRequestService())->request('sendSlack', [
             'public_id' => $this->token,
             'text' => $sText,
+            'format' => $sFormat,
         ]);
     }
 }

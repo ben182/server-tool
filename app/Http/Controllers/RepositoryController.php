@@ -41,6 +41,6 @@ class RepositoryController extends Controller
 
         putenv("COMPOSER_HOME=/var/www/.composer");
 
-        Deploy::dispatch($oRepository);
+        Deploy::dispatch($oRepository, $oPostBody);
     }
 }

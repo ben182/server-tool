@@ -202,3 +202,7 @@ function isSubdomain($sDomain)
 {
     return count(explode('.', $sDomain)) >= 3;
 }
+
+function getIp() {
+    return str_replace(['http://', '/stool'], '', config('app.url'));
+}

@@ -19,15 +19,17 @@ class Deploy implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $repository;
+    protected $payload;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Repository $repository)
+    public function __construct(Repository $repository, $payload)
     {
         $this->repository = $repository;
+        $this->payload = $payload;
     }
 
     /**
@@ -38,7 +40,8 @@ class Deploy implements ShouldQueue
     public function handle()
     {
         $oSlack = new Slack();
-        $oSlack->send('Deploy started in ' . $this->repository->dir);
+        $oSlack->send('A new deploy started in ' . $this->repository->dir . ' on ' . getIp() . ' | ' . gethostname() . ' :tada:', 'bold');
+        $oSlack->send('Commit: ' . $this->payload->head_commit->message . ' | ' . $this->payload->head_commit->id . ' pushed by ' . $this->payload->head_commit->committer->name);
 
         $sBackupFilename = str_slug('backup_' . microtime());
 
@@ -69,7 +72,7 @@ class Deploy implements ShouldQueue
             $oSlack->send(implode("\n", $aOutput));
         }else{
 
-            $oSlack->send('Deploy finished successfully');
+            $oSlack->send('Deploy finished successfully. Have a beer :beer:');
         }
 
         File::delete($sBackupPath . '.tar.gz');
