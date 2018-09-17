@@ -52,7 +52,7 @@ class Deploy implements ShouldQueue
 
         Archive::make($sBackupPath, $this->repository->dir);
 
-        $sCommand = 'cd ' . $this->repository->dir . ' && bash deploy_stool.sh 2>&1';
+        $sCommand = 'cd ' . $this->repository->dir . ' && bash -e deploy_stool.sh 2>&1';
 
         exec($sCommand, $aOutput, $iExit);
 
