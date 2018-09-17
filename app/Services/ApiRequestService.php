@@ -15,10 +15,12 @@ class ApiRequestService
             ],
         ]);
     }
-    public function request($sRoute, $aParams)
+    public function request($sRoute, $aParams = [])
     {
-        return $this->client->request('POST', $sRoute, [
+        $oResponse = $this->client->request('POST', $sRoute, [
             'form_params' => $aParams,
-        ])->getBody();
+        ]);
+
+        return json_decode($oResponse->getBody());
     }
 }

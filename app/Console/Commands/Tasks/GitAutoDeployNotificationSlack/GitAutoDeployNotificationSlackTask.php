@@ -22,14 +22,9 @@ class GitAutoDeployNotificationSlackTask extends Task
 
     public function handle()
     {
-        (new ApiRequestService())->request('verifySlack', [
-            'public_id' => $this->oOptions->public_id,
-            'channel' => $this->oOptions->channel,
-        ]); // TODO: validate response
-
         Setting::create([
-            'key'   => 'deploy_slack_token',
-            'value' => $this->oOptions->public_id,
+            'key'   => 'slack_channel',
+            'value' => $this->oOptions->channel,
         ]);
     }
 }

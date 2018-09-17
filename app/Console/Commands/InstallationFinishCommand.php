@@ -42,6 +42,13 @@ class InstallationFinishCommand extends ModCommand
     {
         parent::handle();
 
+        // Init
+        $oBody = (new ApiRequestService())->request('init');
+        Setting::create([
+            'key'   => 'server_id',
+            'value' => $oBody->public_id,
+        ]);
+
         // Deploy Job
         (new CreateDeamonTaskManager([
             'name'    => 'stool-deploy',
