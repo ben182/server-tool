@@ -42,9 +42,10 @@ class GitAutoDeployNotificationSlack extends ModCommand
     {
         parent::handle();
 
+        $this->line('Visit');
+        $this->info(self::generateOauthUrl());
+        $this->line('and give permission to send Slack messages!');
 
-
-        $this->info('Visit ' . self::generateOauthUrl() . ' and give permission to send Slack messages!');
         $sChannel = $this->ask('Channel?');
 
         (new GitAutoDeployNotificationSlackTaskManager([

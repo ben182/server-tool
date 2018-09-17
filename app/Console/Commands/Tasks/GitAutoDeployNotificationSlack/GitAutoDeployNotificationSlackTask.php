@@ -24,7 +24,7 @@ class GitAutoDeployNotificationSlackTask extends Task
     public function handle()
     {
         $oBody = (new ApiRequestService())->request('slack/isTokenSet');
-        if ($oBody->result === false) {
+        if ($oBody->ok === false) {
             return $this->shell->saveError('No write Permission! Please visit ' . GitAutoDeployNotificationSlack::generateOauthUrl() . ' and give permission to send Slack messages!');
         }
 
