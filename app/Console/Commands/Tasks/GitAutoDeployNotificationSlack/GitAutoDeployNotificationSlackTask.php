@@ -22,6 +22,7 @@ class GitAutoDeployNotificationSlackTask extends Task
 
     public function handle()
     {
+        // TODO: check if token is set?
         Setting::create([
             'key'   => 'slack_channel',
             'value' => $this->oOptions->channel,

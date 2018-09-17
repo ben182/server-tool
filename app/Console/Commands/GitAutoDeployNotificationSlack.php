@@ -44,7 +44,7 @@ class GitAutoDeployNotificationSlack extends ModCommand
 
         $sServerId = Setting::where('key', 'server_id')->value('value');
 
-        $this->line('Visit ' . config('services.stool.base') . '/deploy/login/slack/' . $sServerId . ' and give permission to send Slack messages');
+        $this->info('Visit ' . config('services.stool.base') . '/deploy/login/slack/' . $sServerId . ' and give permission to send Slack messages!');
         $sChannel = $this->ask('Channel?');
 
         (new GitAutoDeployNotificationSlackTaskManager([
