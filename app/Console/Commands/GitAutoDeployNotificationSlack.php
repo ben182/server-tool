@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Console\ModCommand;
 use App\Console\Commands\Tasks\GitAutoDeployNotificationSlackTaskManager;
+use App\Setting;
 
 class GitAutoDeployNotificationSlack extends ModCommand
 {
