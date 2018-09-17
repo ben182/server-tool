@@ -42,13 +42,18 @@ class GitAutoDeployNotificationSlack extends ModCommand
     {
         parent::handle();
 
-        $sServerId = Setting::where('key', 'server_id')->value('value');
 
-        $this->info('Visit ' . config('services.stool.base') . '/deploy/login/slack/' . $sServerId . ' and give permission to send Slack messages!');
+
+        $this->info('Visit ' . self::generateOauthUrl() . ' and give permission to send Slack messages!');
         $sChannel = $this->ask('Channel?');
 
         (new GitAutoDeployNotificationSlackTaskManager([
             'channel' => $sChannel,
         ]))->work();
+    }
+
+    public static function generateOauthUrl() {
+        $sServerId = Setting::where('key', 'server_id')->value('value');
+        return config('services.stool.base') . '/deploy/login/slack/' . $sServerId;
     }
 }
