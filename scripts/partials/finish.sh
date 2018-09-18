@@ -17,6 +17,9 @@ finish () {
     # Fix for laravel mix
     sudo apt-get install libpng-dev -y
 
+    # unzip
+    sudo apt-get install unzip -y
+
     # APACHE PERMISSIONS
     apache_permissions
     service apache2 reload

@@ -57,7 +57,7 @@ class Deploy implements ShouldQueue
         exec($sCommand, $aOutput, $iExit);
 
         if ($iExit != 0) {
-            (new ApiRequestService())->request('sendEmail', [
+            (new ApiRequestService())->request('email/send', [
                 'type'       => 'DeployFailed',
                 'email'      => Setting::where('key', 'admin_email')->value('value'),
                 'repository' => $this->repository->dir,

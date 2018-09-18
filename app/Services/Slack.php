@@ -7,21 +7,21 @@ use App\Services\ApiRequestService;
 
 class Slack
 {
-    public $token;
+    public $channel;
 
     public function __construct()
     {
-        $this->token = Setting::where('key', 'deploy_slack_token')->value('value');
+        $this->channel = Setting::where('key', 'slack_channel')->value('value');
     }
     public function send($sText, $sFormat = null)
     {
-        if (! $this->token) {
+        if (! $this->channel) {
             return false;
         }
 
-        return (new ApiRequestService())->request('sendSlack', [
-            'public_id' => $this->token,
+        return (new ApiRequestService())->request('slack/send', [
             'text' => $sText,
+            'channel' => $this->channel,
             'format' => $sFormat,
         ]);
     }

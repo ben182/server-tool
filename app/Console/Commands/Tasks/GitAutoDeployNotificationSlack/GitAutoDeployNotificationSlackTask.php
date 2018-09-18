@@ -5,6 +5,7 @@ namespace App\Console\Commands\Tasks\GitAutoDeployNotificationSlack;
 use App\Console\Commands\Tasks\Task;
 use App\Services\ApiRequestService;
 use App\Setting;
+use App\Console\Commands\GitAutoDeployNotificationSlack;
 
 class GitAutoDeployNotificationSlackTask extends Task
 {
@@ -22,14 +23,15 @@ class GitAutoDeployNotificationSlackTask extends Task
 
     public function handle()
     {
-        (new ApiRequestService())->request('verifySlack', [
-            'public_id' => $this->oOptions->public_id,
-            'channel' => $this->oOptions->channel,
-        ]); // TODO: validate response
+        $oBody = (new ApiRequestService())->request('slack/isTokenSet');
+        if ($oBody->ok === false) {
+            return $this->shell->saveError('No write Permission! Please visit ' . GitAutoDeployNotificationSlack::generateOauthUrl() . ' and give permission to send Slack messages!');
+        }
 
-        Setting::create([
-            'key'   => 'deploy_slack_token',
-            'value' => $this->oOptions->public_id,
+        Setting::updateOrCreate([
+            'key'   => 'slack_channel',
+        ], [
+            'value' => $this->oOptions->channel,
         ]);
     }
 }

@@ -14,7 +14,6 @@ class GitAutoDeployNotificationSlackTaskManager extends Taskmanager
     public function validate()
     {
         return [
-            'public_id' => 'required',
             'channel' => 'required',
         ];
     }

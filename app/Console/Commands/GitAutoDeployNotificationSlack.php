@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Console\ModCommand;
 use App\Console\Commands\Tasks\GitAutoDeployNotificationSlackTaskManager;
+use App\Setting;
 
 class GitAutoDeployNotificationSlack extends ModCommand
 {
@@ -41,13 +42,19 @@ class GitAutoDeployNotificationSlack extends ModCommand
     {
         parent::handle();
 
-        $this->line('Visit ' . config('services.stool.base') . '/deploy/login/slack and come back with a token');
-        $sToken = $this->ask('Token?');
+        $this->line('Visit');
+        $this->info(self::generateOauthUrl());
+        $this->line('and give permission to send Slack messages!');
+
         $sChannel = $this->ask('Channel?');
 
         (new GitAutoDeployNotificationSlackTaskManager([
-            'public_id' => $sToken,
             'channel' => $sChannel,
         ]))->work();
+    }
+
+    public static function generateOauthUrl() {
+        $sServerId = Setting::where('key', 'server_id')->value('value');
+        return config('services.stool.base') . '/deploy/login/slack/' . $sServerId;
     }
 }
