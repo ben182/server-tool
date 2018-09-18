@@ -43,7 +43,7 @@ class InstallationFinishCommand extends ModCommand
         parent::handle();
 
         // Init
-        $oBody = (new ApiRequestService())->request('init');
+        $oBody = (new ApiRequestService())->request('server/init');
         Setting::create([
             'key'   => 'server_id',
             'value' => $oBody->public_id,

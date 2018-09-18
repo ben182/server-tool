@@ -19,7 +19,7 @@ class Slack
             return false;
         }
 
-        return (new ApiRequestService())->request('sendSlack', [
+        return (new ApiRequestService())->request('slack/send', [
             'text' => $sText,
             'channel' => $this->channel,
             'format' => $sFormat,
