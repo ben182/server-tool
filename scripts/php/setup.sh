@@ -49,4 +49,4 @@ cat ${SCRIPTS_PATH}php/opcache.conf >> /etc/php/7.2/fpm/php.ini
 echo "* Installing additional PHP extensions..."
 sudo apt-get install -y php-memcache php-memcached  > /dev/null
 
-echo "* Setup complete. You may now use the 'switch-to-php-*.*.sh' scripts."
+echo "* Setup complete"
