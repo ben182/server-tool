@@ -57,8 +57,8 @@ apacheInstall
 phpInstall () {
     bash /etc/stool/scripts/php/setup.sh &> /dev/null
     bash /etc/stool/scripts/php/switch-to-php-7.1.sh &> /dev/null
-    phpenmod mcrypt
-    phpenmod mbstring
+    sudo phpenmod mcrypt
+    sudo phpenmod mbstring
 
     sudo a2dismod mpm_prefork
     sudo a2enmod mpm_event
