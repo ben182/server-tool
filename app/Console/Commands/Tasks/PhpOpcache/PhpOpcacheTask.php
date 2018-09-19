@@ -30,6 +30,8 @@ class PhpOpcacheTask extends Task
         $iInvertedMode = (int) !$this->oOptions->mode;
         replace_string_in_file("/etc/php/$sVersion/fpm/php.ini", "[stool opcache]\nopcache.enable=$iInvertedMode", "[stool opcache]\nopcache.enable=" . $this->oOptions->mode);
 
+        $this->addConclusion(($this->oOptions->mode == 0 ? 'Disabled' : 'Enabled') . " Opcache");
+
         (new RefreshPhpTaskManager())->work();
     }
 }
