@@ -57,6 +57,10 @@ class Deploy implements ShouldQueue
         exec($sCommand, $aOutput, $iExit);
 
         if ($iExit != 0) {
+
+            File::deleteDirectory($this->repository->dir);
+            Archive::extract($sBackupPath);
+
             (new ApiRequestService())->request('email/send', [
                 'type'       => 'DeployFailed',
                 'email'      => Setting::where('key', 'admin_email')->value('value'),
@@ -64,9 +68,6 @@ class Deploy implements ShouldQueue
                 'exit'       => $iExit,
                 'output'     => implode("<br>", $aOutput),
             ]);
-
-            File::deleteDirectory($this->repository->dir);
-            Archive::extract($sBackupPath);
 
             $oSlack->send('Deploy failed');
             $oSlack->send(implode("\n", $aOutput));
@@ -78,5 +79,16 @@ class Deploy implements ShouldQueue
         File::delete($sBackupPath . '.tar.gz');
 
         echo implode("\n", $aOutput);
+    }
+
+    /**
+     * The job failed to process.
+     *
+     * @param  Exception  $exception
+     * @return void
+     */
+    public function failed(Exception $exception)
+    {
+
     }
 }
