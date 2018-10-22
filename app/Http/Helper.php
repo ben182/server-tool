@@ -187,7 +187,7 @@ function quietCommand($sCommand)
 
 function fixApachePermissions()
 {
-    quietCommand('chown -R www-data:www-data /var/www');
+    quietCommand('chown -R stool:stool /var/www');
     quietCommand('chmod -R 755 /var/www');
     quietCommand('chmod g+s /var/www');
     quietCommand('chmod -R 700 /var/www/.ssh');
@@ -195,7 +195,7 @@ function fixApachePermissions()
 
 function restartApache()
 {
-    quietCommand('service apache2 reload');
+    quietCommand('sudo service apache2 reload');
 }
 
 function isSubdomain($sDomain)

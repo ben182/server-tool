@@ -5,7 +5,7 @@ passwordgen() {
 }
 
 apache_permissions() {
-    chown -R www-data:www-data /var/www
+    chown -R stool:stool /var/www
     chmod -R 755 /var/www
     chmod g+s /var/www
     chmod -R 700 /var/www/.ssh

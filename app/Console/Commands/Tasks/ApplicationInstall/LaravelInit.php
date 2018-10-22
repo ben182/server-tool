@@ -25,7 +25,7 @@ class LaravelInit extends Task
         copy("{$this->bindings->installationDir}/.env.example", "{$this->bindings->installationDir}/.env");
         editEnvKey("{$this->bindings->installationDir}/.env", 'APP_URL', $this->bindings->domain->getFullUrl($this->oOptions->subDir));
 
-        $this->shell->exec("cd {$this->bindings->installationDir} && sudo php artisan key:generate");
+        $this->shell->exec("cd {$this->bindings->installationDir} && php artisan key:generate");
 
         $this->addConclusion('Installed Composer Dependencies');
         $this->addConclusion('Copied .env');

@@ -24,7 +24,7 @@ class CreateSslCertificateTask extends Task
     {
         $sAdminEmail = Setting::where('key', 'admin_email')->value('value');
 
-        $this->shell->exec("certbot --non-interactive --agree-tos --email $sAdminEmail --apache -d {$this->oOptions->domain}" . ($this->oOptions->www ? " -d www.{$this->oOptions->domain}" : '') . ($this->oOptions->dev ? ' --staging' : ''));
+        $this->shell->exec("sudo certbot --non-interactive --agree-tos --email $sAdminEmail --apache -d {$this->oOptions->domain}" . ($this->oOptions->www ? " -d www.{$this->oOptions->domain}" : '') . ($this->oOptions->dev ? ' --staging' : ''));
 
         $this->addConclusion('Provisioned SSL certificate for https://' . $this->oOptions->domain . ($this->oOptions->www ? " and https://www.{$this->oOptions->domain}" : ''));
         $this->addConclusion("Check your SSL installation on https://www.ssllabs.com/ssltest/analyze.html?d={$this->oOptions->domain}");

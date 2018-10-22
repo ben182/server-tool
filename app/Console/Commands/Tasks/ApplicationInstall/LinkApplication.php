@@ -29,11 +29,11 @@ class LinkApplication extends Task
                 }
 
                 if ($this->oOptions->directoryOrSymlink == 'directory') {
-                    $this->shell->exec("ln -s {$this->bindings->installationDir} {$this->bindings->domain->getHtmlFolder()}");
+                    $this->shell->exec("sudo ln -s {$this->bindings->installationDir} {$this->bindings->domain->getHtmlFolder()}");
                 }
 
                 if ($this->oOptions->directoryOrSymlink == 'symlink') {
-                    $this->shell->exec("ln -s {$this->bindings->installationDir}/{$this->oOptions->symlinkSourceDir} {$this->bindings->domain->getHtmlFolder()}");
+                    $this->shell->exec("sudo ln -s {$this->bindings->installationDir}/{$this->oOptions->symlinkSourceDir} {$this->bindings->domain->getHtmlFolder()}");
                 }
                 break;
             case 'Sub':
@@ -41,11 +41,11 @@ class LinkApplication extends Task
                 $this->bindings->domain->createHtmlFolder();
 
                 if ($this->oOptions->directoryOrSymlink == 'directory') {
-                    $this->shell->exec("ln -s {$this->bindings->installationDir} {$this->bindings->domain->getHtmlFolder()}/{$this->oOptions->subDir}");
+                    $this->shell->exec("sudo ln -s {$this->bindings->installationDir} {$this->bindings->domain->getHtmlFolder()}/{$this->oOptions->subDir}");
                 }
 
                 if ($this->oOptions->directoryOrSymlink == 'symlink') {
-                    $this->shell->exec("ln -s {$this->bindings->installationDir}/{$this->oOptions->symlinkSourceDir} {$this->bindings->domain->getHtmlFolder()}/{$this->oOptions->subDir}");
+                    $this->shell->exec("sudo ln -s {$this->bindings->installationDir}/{$this->oOptions->symlinkSourceDir} {$this->bindings->domain->getHtmlFolder()}/{$this->oOptions->subDir}");
                 }
                 break;
             default:
