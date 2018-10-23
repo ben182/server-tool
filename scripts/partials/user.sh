@@ -8,6 +8,10 @@ userManagement () {
     sudo adduser --disabled-password --gecos "" stool
 
     echo "AllowUsers stool root" >> /etc/ssh/sshd_config
+
+    # SSH PORT
+    echo "Port 12920" >> /etc/ssh/sshd_config
+
     sudo systemctl restart ssh
 
     sudo -Hu stool ssh-keygen -f "/home/stool/.ssh/id_rsa" -t rsa -b 4096 -N ''
