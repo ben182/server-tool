@@ -10,6 +10,8 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use App\Services\ApiRequestService;
+use App\Services\Slack;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -47,6 +49,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton('ShellTask', function ($app) {
             return new ShellTask();
         });
+        $this->app->singleton(ApiRequestService::class);
+        $this->app->singleton(Slack::class);
     }
 
     /**

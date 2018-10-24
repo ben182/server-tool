@@ -37,9 +37,8 @@ class Deploy implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle(Slack $oSlack)
     {
-        $oSlack = new Slack();
         $oSlack->send('A new deploy started in ' . $this->repository->dir . ' on ' . getIp() . ' | ' . gethostname() . ' :tada:', 'bold');
         $oSlack->send('Commit: ' . $this->payload->head_commit->message . ' | ' . $this->payload->head_commit->id . ' pushed by ' . $this->payload->head_commit->committer->name);
 
@@ -61,7 +60,7 @@ class Deploy implements ShouldQueue
             File::deleteDirectory($this->repository->dir);
             Archive::extract($sBackupPath);
 
-            (new ApiRequestService())->request('email/send', [
+            app(ApiRequestService::class)->request('email/send', [
                 'type'       => 'DeployFailed',
                 'email'      => Setting::where('key', 'admin_email')->value('value'),
                 'repository' => $this->repository->dir,
