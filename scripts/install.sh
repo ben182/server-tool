@@ -30,7 +30,6 @@ apacheInstall() {
     sudo a2enmod proxy_http
     sudo a2enmod rewrite
 
-    sudo ufw allow ssh
     sudo ufw allow in "Apache Full"
     sudo ufw --force enable
 

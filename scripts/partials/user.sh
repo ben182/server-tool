@@ -11,6 +11,7 @@ userManagement () {
 
     # SSH PORT
     echo "Port 12920" >> /etc/ssh/sshd_config
+    sudo ufw allow 12920
 
     sudo systemctl restart ssh
 
