@@ -9,7 +9,7 @@ userManagement () {
 
     sudo cp ${TEMPLATES_PATH}.bash_aliases /home/stool/.bash_aliases
 
-    echo "AllowUsers stool root" >> /etc/ssh/sshd_config
+    echo "AllowUsers stool root" >> /etc/ssh/sshd_config # TODO only stool
 
     # SSH PORT
     echo "Port 12920" >> /etc/ssh/sshd_config

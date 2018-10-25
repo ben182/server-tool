@@ -60,6 +60,16 @@ class ShellTask
         return $this;
     }
 
+    public function copy($sFrom, $sTo) {
+        $this->exec("sudo cp $sFrom $sTo");
+        return $this;
+    }
+
+    public function replaceStringInFile($sNeedle, $sReplace, $sFile) {
+        $this->exec("sudo sed -i 's/$sNeedle/$sReplace/g' $sFile");
+        return $this;
+    }
+
     public function saveError($sError)
     {
         $this->aErrors[] = $sError;

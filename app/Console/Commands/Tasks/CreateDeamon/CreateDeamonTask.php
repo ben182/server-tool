@@ -25,7 +25,7 @@ class CreateDeamonTask extends Task
         copy(templates_path('supervisor.conf'), $sNewFileName);
         replace_string_in_file($sNewFileName, '#PROGRAM#', str_slug($this->oOptions->name));
         replace_string_in_file($sNewFileName, '#COMMAND#', $this->oOptions->command);
-        $this->shell->exec('supervisorctl reread');
-        $this->shell->exec('supervisorctl update');
+        $this->shell->exec('sudo supervisorctl reread');
+        $this->shell->exec('sudo supervisorctl update');
     }
 }
