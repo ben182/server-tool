@@ -20,7 +20,7 @@ class CreateApacheConfigurationTask extends Task
 
     public function handle()
     {
-        copy(templates_path() . 'apache/vhost.conf', "/etc/apache2/sites-available/{$this->oOptions->domain}.conf");
+        $this->shell->copy(templates_path('apache/vhost.conf'), "/etc/apache2/sites-available/{$this->oOptions->domain}.conf");
 
         $this->addConclusion('Created vHost for domain: ' . $this->oOptions->domain);
     }
