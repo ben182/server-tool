@@ -65,6 +65,16 @@ class ShellTask
         return $this;
     }
 
+    public function removeFile($sFile) {
+        $this->exec("sudo rm $sFile");
+        return $this;
+    }
+
+    public function removeFolder($sFile) {
+        $this->exec("sudo rm -r $sFile");
+        return $this;
+    }
+
     public function replaceStringInFile($sNeedle, $sReplace, $sFile) {
         $this->exec("sudo sed -i 's/$sNeedle/$sReplace/g' $sFile");
         return $this;

@@ -24,7 +24,7 @@ class RedisBackupTask extends Task
     {
         $sFileName = date('d-m-Y_H-i-s') . '.json';
 
-        shell_exec('redis-dump -a \'' . getRedisPassword() . '\' > ' . base_path($sFileName));
+        $this->shell->exec('redis-dump -a \'' . getRedisPassword() . '\' > ' . base_path($sFileName));
 
         BackupService::backup($this->oOptions->storage, 'redis', $sFileName);
 

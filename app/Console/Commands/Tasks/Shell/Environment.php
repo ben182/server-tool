@@ -12,6 +12,7 @@ class Environment
 
     public function save($sKey, $sValue)
     {
-        $this->shell->exec('echo "' . $sKey . '=\"' . $sValue . '\"" >> /etc/environment');
+        // $this->shell->exec('echo "' . $sKey . '=\"' . $sValue . '\"" >> /etc/environment');
+        $this->shell->exec('sudo sh -c "echo "' . $sKey . '=\'' . $sValue . '\' >> /etc/environment"');
     }
 }

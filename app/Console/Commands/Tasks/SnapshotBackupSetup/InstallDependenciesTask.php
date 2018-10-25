@@ -20,6 +20,6 @@ class InstallDependenciesTask extends Task
 
     public function handle()
     {
-        $this->shell->exec('gem install do_snapshot');
+        $this->shell->exec('sudo gem install do_snapshot');
     }
 }
