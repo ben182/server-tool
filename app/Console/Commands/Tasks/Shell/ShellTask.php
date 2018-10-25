@@ -76,7 +76,7 @@ class ShellTask
     }
 
     public function replaceStringInFile($sNeedle, $sReplace, $sFile) {
-        $this->exec("sudo sed -i 's/$sNeedle/$sReplace/g' $sFile");
+        $this->exec('sudo sed -i "s|' . $sNeedle . '|' . $sReplace . '|g" ' . $sFile);
         return $this;
     }
 
