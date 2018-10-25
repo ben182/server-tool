@@ -24,9 +24,9 @@ class ConfigureRedirectsTask extends Task
         switch ($this->oOptions->htaccess) {
             case 'Non SSL to SSL and www to non www':
 
-                $this->shell->replaceStringInFile('</VirtualHost>', 'Include ' . templates_path() . 'apache/redirectSslAndWww.80.conf' . PHP_EOL . '</VirtualHost>', "/etc/apache2/sites-available/{$this->oOptions->domain}.conf");
+                $this->shell->replaceStringInFile('</VirtualHost>', 'Include ' . templates_path() . 'apache/redirectSslAndWww.80.conf\\n</VirtualHost>', "/etc/apache2/sites-available/{$this->oOptions->domain}.conf");
 
-                $this->shell->replaceStringInFile('</VirtualHost>', 'Include ' . templates_path() . 'apache/redirectSslAndWww.443.conf' . PHP_EOL . '</VirtualHost>', "/etc/apache2/sites-available/{$this->oOptions->domain}-le-ssl.conf");
+                $this->shell->replaceStringInFile('</VirtualHost>', 'Include ' . templates_path() . 'apache/redirectSslAndWww.443.conf\\n</VirtualHost>', "/etc/apache2/sites-available/{$this->oOptions->domain}-le-ssl.conf");
 
                 $aFrom[] = [
                     'http://' . $this->oOptions->domain,
@@ -41,7 +41,7 @@ class ConfigureRedirectsTask extends Task
 
             case 'www to non www':
 
-                $this->shell->replaceStringInFile('</VirtualHost>', 'Include ' . templates_path() . 'apache/www_to_nonwww.htaccess' . PHP_EOL . '</VirtualHost>', "/etc/apache2/sites-available/{$this->oOptions->domain}.conf");
+                $this->shell->replaceStringInFile('</VirtualHost>', 'Include ' . templates_path() . 'apache/www_to_nonwww.htaccess\\n</VirtualHost>', "/etc/apache2/sites-available/{$this->oOptions->domain}.conf");
 
                 $aFrom[] = [
                     'www.' . $this->oOptions->domain,
@@ -52,7 +52,7 @@ class ConfigureRedirectsTask extends Task
 
             case 'Non SSL to SSL':
 
-                $this->shell->replaceStringInFile('</VirtualHost>', 'Include ' . templates_path() . 'apache/nonSSL_to_SSL.htaccess' . PHP_EOL . '</VirtualHost>', "/etc/apache2/sites-available/{$this->oOptions->domain}.conf");
+                $this->shell->replaceStringInFile('</VirtualHost>', 'Include ' . templates_path() . 'apache/nonSSL_to_SSL.htaccess\\n</VirtualHost>', "/etc/apache2/sites-available/{$this->oOptions->domain}.conf");
 
                 $aFrom[] = [
                     'http://' . $this->oOptions->domain,
