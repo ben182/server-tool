@@ -80,6 +80,11 @@ class ShellTask
         return $this;
     }
 
+    public function getFile($sFile) {
+        $this->exec('sudo cat ' . $sFile);
+        return $this;
+    }
+
     public function saveError($sError)
     {
         $this->aErrors[] = $sError;

@@ -28,6 +28,10 @@ function getConfig()
 {
     return json_decode(file_get_contents(base_path('config.json')), true);
 }
+function getExampleConfig()
+{
+    return json_decode(file_get_contents(base_path('config.example.json')), true);
+}
 
 function getInstallationConfig()
 {
