@@ -56,7 +56,7 @@ apacheInstall
 
 phpInstall () {
     bash /etc/stool/scripts/php/setup.sh &> /dev/null
-    bash /etc/stool/scripts/php/switch-to-php-7.1.sh &> /dev/null
+    bash /etc/stool/scripts/php/switch-to-php-7.2.sh &> /dev/null
     sudo phpenmod mcrypt
     sudo phpenmod mbstring
 
@@ -66,7 +66,7 @@ phpInstall () {
     sudo a2enmod proxy_fcgi setenvif
 
     service apache2 reload
-    sudo service php7.1-fpm restart
+    sudo service php7.2-fpm restart
 }
 echo "Installing and configuring PHP..."
 phpInstall

@@ -25,6 +25,7 @@ finish () {
     sudo npm install --global --unsafe-perm puppeteer
 
     # AUTOMATIC SECURITY UPDATES
+    sudo apt install -y unattended-upgrades
     sudo cp ${TEMPLATES_PATH}50unattended-upgrades /etc/apt/apt.conf.d/50unattended-upgrades
     sudo cp ${TEMPLATES_PATH}20auto-upgrades /etc/apt/apt.conf.d/20auto-upgrades
 
