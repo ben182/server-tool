@@ -27,7 +27,7 @@ trait CreatesApplication
     }
 
     protected function assertServiceIsRunning($sServiceName) {
-        $this->assertContains($this->shell->exec('systemctl is-enabled ' . $sServiceName)->getLastOutput(), 'enabled', 'The service ' . $sServiceName . ' is not running. Fix it by typing "service ' . $sServiceName . ' start"');
+        $this->assertContains('enabled', $this->shell->exec('systemctl is-enabled ' . $sServiceName)->getLastOutput(), 'The service ' . $sServiceName . ' is not running. Fix it by typing "service ' . $sServiceName . ' start"');
     }
 
     protected function assertThatCommandOutputContains($mNeedle, $sCommand) {
