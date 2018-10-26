@@ -54,7 +54,7 @@ trait CreatesApplication
     }
 
     protected function assertFileContains($mNeedle, $sFile) {
-        $sOutput = $this->shell->getFile($sFile);
+        $sOutput = $this->shell->getFile($sFile)->getLastOutput();
         foreach (array_wrap($mNeedle) as $sNeedle) {
             $this->assertContains($sNeedle, $sOutput, 'The file ' . $sFile . ' output did not contain ' . $sNeedle);
         }
