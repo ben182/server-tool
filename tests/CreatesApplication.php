@@ -59,4 +59,11 @@ trait CreatesApplication
             $this->assertContains($sNeedle, $sOutput, 'The file ' . $sFile . ' output did not contain ' . $sNeedle);
         }
     }
+
+    protected function assertFileContainsNot($mNeedle, $sFile) {
+        $sOutput = $this->shell->getFile($sFile)->getLastOutput();
+        foreach (array_wrap($mNeedle) as $sNeedle) {
+            $this->assertNotContains($sNeedle, $sOutput, 'The file ' . $sFile . ' output did not contain ' . $sNeedle);
+        }
+    }
 }
