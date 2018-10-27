@@ -42,7 +42,6 @@ class InstallationRunCommand extends ModCommand
     {
         $this->openMenu('phpMyAdmin', 'phpmyadmin');
         $this->openMenu('certbot', 'certbot');
-        $this->openMenu('SSH key', 'sshKey');
         $this->openMenu('Node.js (version-manager)', 'node');
         $this->openMenu('yarn', 'yarn');
         $this->openMenu('Redis', 'redis');
