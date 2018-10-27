@@ -14,7 +14,7 @@ class StoolTest extends TestCase
         $aCronjobs = [
             '* * * * * stool schedule:run >> /dev/null 2>&1',
             '0 0 * * * composer self-update >> /dev/null 2>&1',
-            '0 0 * * * 0 0 * * 0 apt-get autoremove && apt-get autoclean -y >> /dev/null 2>&1',
+            '0 0 * * 0 apt-get autoremove && apt-get autoclean -y >> /dev/null 2>&1',
         ];
 
         if (getInstallationConfigKey('certbot')) {
