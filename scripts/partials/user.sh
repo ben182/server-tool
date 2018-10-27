@@ -5,7 +5,7 @@ source /etc/stool/scripts/helper.sh
 # NODE
 userManagement () {
     sudo cp ${TEMPLATES_PATH}sudoers.d/stool /etc/sudoers.d/stool
-    sudo adduser --disabled-password --gecos "" stool
+    sudo adduser --disabled-password --gecos "" -g www-data stool
 
     sudo cp ${TEMPLATES_PATH}.bash_aliases /home/stool/.bash_aliases
 
