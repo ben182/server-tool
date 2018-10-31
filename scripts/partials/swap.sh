@@ -29,6 +29,7 @@ fi
 
 
 ## Run
+sudo swapoff -a
 sudo fallocate -l $SWAP_SIZE $SWAP_PATH  # Allocate size
 sudo chmod 600 $SWAP_PATH                # Set proper permission
 sudo mkswap $SWAP_PATH                   # Setup swap

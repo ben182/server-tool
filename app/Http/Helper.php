@@ -28,6 +28,10 @@ function getConfig()
 {
     return json_decode(file_get_contents(base_path('config.json')), true);
 }
+function getExampleConfig()
+{
+    return json_decode(file_get_contents(base_path('config.example.json')), true);
+}
 
 function getInstallationConfig()
 {
@@ -187,7 +191,7 @@ function quietCommand($sCommand)
 
 function fixApachePermissions()
 {
-    quietCommand('chown -R www-data:www-data /var/www');
+    quietCommand('chown -R stool:www-data /var/www');
     quietCommand('chmod -R 755 /var/www');
     quietCommand('chmod g+s /var/www');
     quietCommand('chmod -R 700 /var/www/.ssh');
@@ -195,7 +199,7 @@ function fixApachePermissions()
 
 function restartApache()
 {
-    quietCommand('service apache2 reload');
+    quietCommand('sudo service apache2 reload');
 }
 
 function isSubdomain($sDomain)

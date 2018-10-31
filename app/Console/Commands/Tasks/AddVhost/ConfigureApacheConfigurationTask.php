@@ -22,21 +22,21 @@ class ConfigureApacheConfigurationTask extends Task
     public function handle()
     {
         if ($this->oOptions->redirect) {
-            replace_string_in_file("/etc/apache2/sites-available/{$this->oOptions->domain}.conf", 'DocumentRoot /var/www/DOCUMENT_ROOT/html', "RedirectMatch permanent ^/(.*)$ {$this->oOptions->redirect_to}");
+            $this->shell->replaceStringInFile('DocumentRoot /var/www/DOCUMENT_ROOT/html', "RedirectMatch permanent ^/(.*)$ {$this->oOptions->redirect_to}", "/etc/apache2/sites-available/{$this->oOptions->domain}.conf");
         }
-        
-        replace_string_in_file("/etc/apache2/sites-available/{$this->oOptions->domain}.conf", 'DOCUMENT_ROOT', $this->oOptions->domain);
+
+        $this->shell->replaceStringInFile('DOCUMENT_ROOT', $this->oOptions->domain, "/etc/apache2/sites-available/{$this->oOptions->domain}.conf");
 
         if (! $this->oOptions->www) {
-            replace_string_in_file("/etc/apache2/sites-available/{$this->oOptions->domain}.conf", 'ServerAlias www.SERVER_NAME', '');
+            $this->shell->replaceStringInFile('ServerAlias www.SERVER_NAME', '', "/etc/apache2/sites-available/{$this->oOptions->domain}.conf");
         }
 
-        replace_string_in_file("/etc/apache2/sites-available/{$this->oOptions->domain}.conf", 'SERVER_NAME', $this->oOptions->domain);
-        replace_string_in_file("/etc/apache2/sites-available/{$this->oOptions->domain}.conf", 'NAME', $this->oOptions->domain);
+        $this->shell->replaceStringInFile('SERVER_NAME', $this->oOptions->domain, "/etc/apache2/sites-available/{$this->oOptions->domain}.conf");
+        $this->shell->replaceStringInFile('NAME', $this->oOptions->domain, "/etc/apache2/sites-available/{$this->oOptions->domain}.conf");
 
-        replace_string_in_file("/etc/apache2/sites-available/{$this->oOptions->domain}.conf", 'webmaster@localhost', Setting::where('key', 'admin_email')->value('value'));
+        $this->shell->replaceStringInFile('webmaster@localhost', Setting::where('key', 'admin_email')->value('value'), "/etc/apache2/sites-available/{$this->oOptions->domain}.conf");
 
-        $this->shell->exec("a2ensite {$this->oOptions->domain}.conf -q");
+        $this->shell->exec("sudo a2ensite {$this->oOptions->domain}.conf -q");
 
         $sFolder = "/var/www/{$this->oOptions->domain}/html";
 

@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# http://patorjk.com/software/taag/#p=display&v=0&f=Slant&t=stool%20v1.2.8
+# http://patorjk.com/software/taag/#p=display&v=0&f=Slant&t=stool%20v1.3.0
 cat << "EOF"
-         __              __        ___ ___    ____
-   _____/ /_____  ____  / /  _   _<  /|__ \  ( __ )
-  / ___/ __/ __ \/ __ \/ /  | | / / / __/ / / __  |
- (__  ) /_/ /_/ / /_/ / /   | |/ / / / __/_/ /_/ /
+         __              __        ___ _____  ____
+   _____/ /_____  ____  / /  _   _<  /|__  / / __ \
+  / ___/ __/ __ \/ __ \/ /  | | / / /  /_ < / / / /
+ (__  ) /_/ /_/ / /_/ / /   | |/ / / ___/ // /_/ /
 /____/\__/\____/\____/_/    |___/_(_)____(_)____/
 
 EOF
@@ -22,6 +22,7 @@ NEW_DB_PASS=$(passwordgen);
 WELCOMEPAGE_TOKEN=$(passwordgen);
 
 bash ${SCRIPTS_PATH}partials/init.sh
+bash ${SCRIPTS_PATH}partials/user.sh
 
 # APACHE
 apacheInstall() {
@@ -29,7 +30,6 @@ apacheInstall() {
     sudo a2enmod proxy_http
     sudo a2enmod rewrite
 
-    sudo ufw allow ssh
     sudo ufw allow in "Apache Full"
     sudo ufw --force enable
 
@@ -56,8 +56,7 @@ apacheInstall
 
 phpInstall () {
     bash /etc/stool/scripts/php/setup.sh &> /dev/null
-    bash /etc/stool/scripts/php/switch-to-php-7.1.sh &> /dev/null
-    sudo phpenmod mcrypt
+    bash /etc/stool/scripts/php/switch-to-php-7.2.sh &> /dev/null
     sudo phpenmod mbstring
 
     sudo a2dismod mpm_prefork
@@ -66,7 +65,7 @@ phpInstall () {
     sudo a2enmod proxy_fcgi setenvif
 
     service apache2 reload
-    sudo service php7.1-fpm restart
+    sudo service php7.2-fpm restart
 }
 echo "Installing and configuring PHP..."
 phpInstall
@@ -110,8 +109,7 @@ servertoolInstall() {
     chmod +x /usr/bin/stool
     cp ${TEMPLATES_PATH}git/post-merge-this ${ABSOLUTE_PATH}.git/hooks/post-merge
     chmod +x ${ABSOLUTE_PATH}.git/hooks/post-merge
-    chown -R root:root /etc/stool
-    chown -R www-data:www-data /etc/stool/storage
+    chown -R stool:stool /etc/stool
     chmod -R 755 /etc/stool
     crontab -l | { cat; echo "* * * * * stool schedule:run >> /dev/null 2>&1"; } | crontab -
     crontab -l | { cat; echo "0 0 * * * composer self-update >> /dev/null 2>&1"; } | crontab -

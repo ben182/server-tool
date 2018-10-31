@@ -10,6 +10,8 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use App\Services\ApiRequestService;
+use App\Services\Slack;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -30,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
             exit();
         });
         Command::macro('fixApachePermissions', function () {
-            quietCommand('chown -R www-data:www-data /var/www');
+            quietCommand('chown -R stool:stool /var/www');
             quietCommand('chmod -R 755 /var/www');
             quietCommand('chmod g+s /var/www');
             quietCommand('chmod -R 700 /var/www/.ssh');
@@ -47,6 +49,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton('ShellTask', function ($app) {
             return new ShellTask();
         });
+        $this->app->singleton(ApiRequestService::class);
+        $this->app->singleton(Slack::class);
     }
 
     /**

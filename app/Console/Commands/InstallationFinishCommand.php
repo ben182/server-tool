@@ -43,7 +43,7 @@ class InstallationFinishCommand extends ModCommand
         parent::handle();
 
         // Init
-        $oBody = (new ApiRequestService())->request('server/init');
+        $oBody = app(ApiRequestService::class)->request('server/init');
         Setting::create([
             'key'   => 'server_id',
             'value' => $oBody->public_id,
@@ -73,7 +73,7 @@ class InstallationFinishCommand extends ModCommand
         if ($bAddSwap) {
             $iSwap = (int) $this->ask('How much (in GB)?');
 
-            resolve('ShellTask')->exec('bash ' . scripts_path('partials') . '/swap.sh ' . $iSwap . 'G');
+            app('ShellTask')->exec('bash ' . scripts_path('partials') . '/swap.sh ' . $iSwap . 'G');
         }
     }
 }

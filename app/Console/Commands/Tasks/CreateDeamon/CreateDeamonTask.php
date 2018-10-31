@@ -22,10 +22,11 @@ class CreateDeamonTask extends Task
     {
         $sNewFileName = '/etc/supervisor/conf.d/' . str_slug($this->oOptions->name) . '.conf';
 
-        copy(templates_path('supervisor.conf'), $sNewFileName);
-        replace_string_in_file($sNewFileName, '#PROGRAM#', str_slug($this->oOptions->name));
-        replace_string_in_file($sNewFileName, '#COMMAND#', $this->oOptions->command);
-        $this->shell->exec('supervisorctl reread');
-        $this->shell->exec('supervisorctl update');
+        $this->shell->copy(templates_path('supervisor.conf'), $sNewFileName);
+        $this->shell->replaceStringInFile('#PROGRAM#', str_slug($this->oOptions->name), $sNewFileName);
+        $this->shell->replaceStringInFile('#COMMAND#', $this->oOptions->command, $sNewFileName);
+
+        $this->shell->exec('sudo supervisorctl reread');
+        $this->shell->exec('sudo supervisorctl update');
     }
 }

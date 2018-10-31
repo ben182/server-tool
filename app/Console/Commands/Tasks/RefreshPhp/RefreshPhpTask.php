@@ -27,7 +27,7 @@ class RefreshPhpTask extends Task
 
         $sVersion = getStringBetween($aPhp[0], '/php', '-fpm.conf');
 
-        $this->shell->exec("/etc/init.d/php$sVersion-fpm restart");
+        $this->shell->exec("sudo /etc/init.d/php$sVersion-fpm restart");
 
         $this->addConclusion("Restarted PHP $sVersion");
     }

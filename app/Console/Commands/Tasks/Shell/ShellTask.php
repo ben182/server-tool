@@ -60,6 +60,31 @@ class ShellTask
         return $this;
     }
 
+    public function copy($sFrom, $sTo) {
+        $this->exec("sudo cp $sFrom $sTo");
+        return $this;
+    }
+
+    public function removeFile($sFile) {
+        $this->exec("sudo rm $sFile");
+        return $this;
+    }
+
+    public function removeFolder($sFile) {
+        $this->exec("sudo rm -r $sFile");
+        return $this;
+    }
+
+    public function replaceStringInFile($sNeedle, $sReplace, $sFile) {
+        $this->exec('sudo sed -i "s|' . $sNeedle . '|' . $sReplace . '|g" ' . $sFile);
+        return $this;
+    }
+
+    public function getFile($sFile) {
+        $this->exec('sudo cat ' . $sFile);
+        return $this;
+    }
+
     public function saveError($sError)
     {
         $this->aErrors[] = $sError;
