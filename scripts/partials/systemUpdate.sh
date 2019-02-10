@@ -6,4 +6,4 @@ systemUpdate () {
     sudo apt-get upgrade -y
 }
 echo "System Update..."
-systemUpdate &> /dev/null
+systemUpdate
