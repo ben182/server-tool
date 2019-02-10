@@ -46,6 +46,14 @@ sudo apt-get install -y php7.2-bz2 php7.2-curl php7.2-gd php7.2-json php7.2-mbst
 
 cat ${SCRIPTS_PATH}php/opcache.conf >> /etc/php/7.2/fpm/php.ini
 
+echo "* Installing PHP 7.3..."
+sudo apt-get install -y php7.3 php7.3-fpm php7.3-common > /dev/null
+
+echo "* Installing PHP 7.3 extensions..."
+sudo apt-get install -y php7.3-bz2 php7.3-curl php7.3-gd php7.3-json php7.3-mbstring php7.3-mysql php7.3-opcache php7.3-readline php7.3-soap php7.3-sqlite3 php7.3-tidy php7.3-xml php7.3-xsl php7.3-zip php7.3-intl php7.3-bcmath php7.3-gmp php-redis > /dev/null
+
+cat ${SCRIPTS_PATH}php/opcache.conf >> /etc/php/7.3/fpm/php.ini
+
 echo "* Installing additional PHP extensions..."
 sudo apt-get install -y php-memcache php-memcached  > /dev/null
 
