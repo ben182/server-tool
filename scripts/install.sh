@@ -55,8 +55,8 @@ echo "Installing and configuring Apache Server..."
 apacheInstall
 
 phpInstall () {
-    bash /etc/stool/scripts/php/setup.sh &> /dev/null
-    bash /etc/stool/scripts/php/switch-to-php-7.2.sh &> /dev/null
+    bash /etc/stool/scripts/php/setup.sh
+    bash /etc/stool/scripts/php/switch-to-php-7.2.sh
     sudo phpenmod mbstring
 
     sudo a2dismod mpm_prefork
