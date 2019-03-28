@@ -32,6 +32,8 @@ finish () {
     # APACHE PERMISSIONS
     apache_permissions
     service apache2 reload
+
+    bash ${SCRIPTS_PATH}partials/systemUpdate.sh
 }
 echo "Finish..."
 finish &> /dev/null

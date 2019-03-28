@@ -1,5 +1,4 @@
 #!/bin/sh
 
 stool version:check nodejs
-stool version:check composer
 stool version:check nvm
