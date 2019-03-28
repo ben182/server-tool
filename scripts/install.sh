@@ -44,6 +44,8 @@ apacheInstall() {
     sudo sed -i "s|Options Indexes FollowSymLinks|Options -Indexes -Includes +FollowSymLinks|" /etc/apache2/apache2.conf
     sudo sed -i "s|Timeout 300|Timeout 60|" /etc/apache2/apache2.conf
 
+    sudo sed -i "s|www-data|stool|" /etc/apache2/envvars
+
     cp ${TEMPLATES_PATH}apache/ip.conf /etc/apache2/sites-available/ip.conf
     sudo sed -i "s|IP_HERE|$PUBLIC_IP|" /etc/apache2/sites-available/ip.conf
     a2ensite ip.conf
@@ -56,7 +58,7 @@ apacheInstall
 
 phpInstall () {
     bash /etc/stool/scripts/php/setup.sh
-    bash /etc/stool/scripts/php/switch-to-php-7.2.sh
+    bash /etc/stool/scripts/php/switch-to-php-7.3.sh
     sudo phpenmod mbstring
 
     sudo a2dismod mpm_prefork
@@ -65,7 +67,7 @@ phpInstall () {
     sudo a2enmod proxy_fcgi setenvif
 
     service apache2 reload
-    sudo service php7.2-fpm restart
+    sudo service php7.3-fpm restart
 }
 echo "Installing and configuring PHP..."
 phpInstall

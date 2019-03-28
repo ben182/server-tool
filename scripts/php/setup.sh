@@ -57,4 +57,10 @@ cat ${SCRIPTS_PATH}php/opcache.conf >> /etc/php/7.3/fpm/php.ini
 echo "* Installing additional PHP extensions..."
 sudo apt-get install -y php-memcache php-memcached
 
+sudo sed -i "s|www-data|stool|" /etc/php/5.6/fpm/pool.d/www.conf
+sudo sed -i "s|www-data|stool|" /etc/php/7.0/fpm/pool.d/www.conf
+sudo sed -i "s|www-data|stool|" /etc/php/7.1/fpm/pool.d/www.conf
+sudo sed -i "s|www-data|stool|" /etc/php/7.2/fpm/pool.d/www.conf
+sudo sed -i "s|www-data|stool|" /etc/php/7.3/fpm/pool.d/www.conf
+
 echo "* Setup complete"
