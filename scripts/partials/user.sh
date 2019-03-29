@@ -23,6 +23,8 @@ userManagement () {
 
     sudo chown -R stool:stool /home/stool/.ssh/
     chmod 600 /home/stool/.ssh/authorized_keys
+
+    mkdir ~/.stool
 }
 echo "User Management..."
 userManagement &> /dev/null
