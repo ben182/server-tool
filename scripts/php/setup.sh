@@ -55,7 +55,7 @@ sudo apt-get install -y php7.3-bz2 php7.3-curl php7.3-gd php7.3-json php7.3-mbst
 cat ${SCRIPTS_PATH}php/opcache.conf >> /etc/php/7.3/fpm/php.ini
 
 echo "* Installing additional PHP extensions..."
-sudo apt-get install -y php-memcache php-memcached
+sudo apt-get install -y php-memcache php-memcached php-imagick
 
 sudo sed -i "s|www-data|stool|" /etc/php/5.6/fpm/pool.d/www.conf
 sudo sed -i "s|www-data|stool|" /etc/php/7.0/fpm/pool.d/www.conf
