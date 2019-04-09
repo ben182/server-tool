@@ -22,7 +22,7 @@ class ConfigureApacheConfigurationTask extends Task
     public function handle()
     {
         if ($this->oOptions->redirect) {
-            $this->shell->replaceStringInFile('DocumentRoot /var/www/DOCUMENT_ROOT/html', "RedirectMatch permanent ^/(.*)$ {$this->oOptions->redirect_to}", "/etc/apache2/sites-available/{$this->oOptions->domain}.conf");
+            $this->shell->replaceStringInFile('DocumentRoot /home/stool/DOCUMENT_ROOT/html', "RedirectMatch permanent ^/(.*)$ {$this->oOptions->redirect_to}", "/etc/apache2/sites-available/{$this->oOptions->domain}.conf");
         }
 
         $this->shell->replaceStringInFile('DOCUMENT_ROOT', $this->oOptions->domain, "/etc/apache2/sites-available/{$this->oOptions->domain}.conf");
@@ -38,7 +38,7 @@ class ConfigureApacheConfigurationTask extends Task
 
         $this->shell->exec("sudo a2ensite {$this->oOptions->domain}.conf -q");
 
-        $sFolder = "/var/www/{$this->oOptions->domain}/html";
+        $sFolder = "/home/stool/{$this->oOptions->domain}/html";
 
         if (! file_exists($sFolder)) {
             mkdir($sFolder, 755, true);

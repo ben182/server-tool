@@ -33,19 +33,19 @@ class Domain
 
     public function createHtmlFolder()
     {
-        if (! file_exists("/var/www/$this->sName/html")) {
-            mkdir("/var/www/$this->sName/html", 755, true);
+        if (! file_exists("/home/stool/$this->sName/html")) {
+            mkdir("/home/stool/$this->sName/html", 755, true);
         }
     }
 
     public function getHtmlFolder()
     {
-        return "/var/www/$this->sName/html";
+        return "/home/stool/$this->sName/html";
     }
 
     public function getBaseFolder()
     {
-        return "/var/www/$this->sName";
+        return "/home/stool/$this->sName";
     }
 
     public function getProtocol()

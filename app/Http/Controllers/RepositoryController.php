@@ -39,7 +39,7 @@ class RepositoryController extends Controller
             return 'Wrong Branch';
         }
 
-        putenv("COMPOSER_HOME=/var/www/.composer");
+        putenv("COMPOSER_HOME=/home/stool/.composer");
 
         Deploy::dispatch($oRepository, $oPostBody);
     }

@@ -43,7 +43,7 @@ class DeleteVhostCommand extends ModCommand
 
         $sDomain = $this->ask('Domain?');
 
-        $bDeleteDir = $this->confirm("Delete /var/www/$sDomain?", 0);
+        $bDeleteDir = $this->confirm("Delete /home/stool/$sDomain?", 0);
 
         (new DeleteVhostTaskManager([
             'domain'             => $sDomain,

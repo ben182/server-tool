@@ -41,11 +41,11 @@ class GitAutoDeployAddCommand extends ModCommand
     {
         parent::handle();
 
-        $sDir = $this->stringOption('dir', 'Path (from /var/www/)?');
+        $sDir = $this->stringOption('dir', 'Path (from /home/stool/)?');
         $sBranch = $this->stringOption('branch', 'Branch?');
 
         (new GitAutoDeployTaskManager([
-            'dir'    => "/var/www/$sDir",
+            'dir'    => "/home/stool/$sDir",
             'branch' => $sBranch,
         ]))->work();
     }

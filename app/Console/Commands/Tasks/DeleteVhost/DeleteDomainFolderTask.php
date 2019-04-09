@@ -20,8 +20,8 @@ class DeleteDomainFolderTask extends Task
 
     public function handle()
     {
-        $this->shell->removeFolder("/var/www/{$this->oOptions->domain}");
+        $this->shell->removeFolder("/home/stool/{$this->oOptions->domain}");
 
-        $this->addConclusion("Deleted /var/www/{$this->oOptions->domain} folder");
+        $this->addConclusion("Deleted /home/stool/{$this->oOptions->domain} folder");
     }
 }

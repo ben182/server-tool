@@ -32,7 +32,7 @@ class WordpressInstallTaskManager extends Taskmanager
 
         return [
             'domain'          => $oDomain,
-            'installationDir' => "/var/www/{$this->oOptions->domain}/{$this->oOptions->name}",
+            'installationDir' => "/home/stool/{$this->oOptions->domain}/{$this->oOptions->name}",
             'htmlDir'         => $oDomain->getHtmlFolder(),
         ];
     }

@@ -32,10 +32,10 @@ class AppServiceProvider extends ServiceProvider
             exit();
         });
         Command::macro('fixApachePermissions', function () {
-            quietCommand('chown -R stool:stool /var/www');
-            quietCommand('chmod -R 755 /var/www');
-            quietCommand('chmod g+s /var/www');
-            quietCommand('chmod -R 700 /var/www/.ssh');
+            // quietCommand('chown -R stool:stool /var/www');
+            // quietCommand('chmod -R 755 /var/www');
+            // quietCommand('chmod g+s /var/www');
+            // quietCommand('chmod -R 700 /var/www/.ssh');
             return $this;
         });
         Command::macro('restartApache', function () {

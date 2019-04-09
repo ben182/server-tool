@@ -5,10 +5,10 @@ passwordgen() {
 }
 
 apache_permissions() {
-    chown -R stool:stool /var/www
-    chmod -R 755 /var/www
-    chmod g+s /var/www
-    chmod -R 700 /var/www/.ssh
+    # chown -R stool:stool /var/www
+    # chmod -R 755 /var/www
+    # chmod g+s /var/www
+    # chmod -R 700 /var/www/.ssh
 }
 
 ABSOLUTE_PATH=/etc/stool/

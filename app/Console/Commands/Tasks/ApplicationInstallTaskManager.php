@@ -40,7 +40,7 @@ class ApplicationInstallTaskManager extends Taskmanager
 
         return [
             'domain'          => $oDomain,
-            'installationDir' => "/var/www/{$this->oOptions->domain}/$sGitName",
+            'installationDir' => "/home/stool/{$this->oOptions->domain}/$sGitName",
             'htmlDir'         => $oDomain->getHtmlFolder(),
         ];
     }
