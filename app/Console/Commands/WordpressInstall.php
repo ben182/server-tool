@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Console\Commands\Tasks\ApplicationInstallTaskManager;
 use App\Console\ModCommand;
+use App\Console\Commands\Tasks\WordpressInstallTaskManager;
 
 class WordpressInstall extends ModCommand
 {
@@ -50,7 +51,7 @@ class WordpressInstall extends ModCommand
             $sSubDir = $this->ask('Which one (relative to ' . $sDomain . '/?');
         }
 
-        (new ApplicationInstallTaskManager([
+        (new WordpressInstallTaskManager([
             'domain' => $sDomain,
             'rootOrSub' => $sRootOrSub,
             'subDir' => $sSubDir,

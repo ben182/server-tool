@@ -18,7 +18,7 @@ use Illuminate\Validation\Rule;
 use App\Console\Commands\Tasks\WordpressInstall\DownloadWordpress;
 use App\Console\Commands\Tasks\WordpressInstall\Database;
 
-class WordpressTaskManager extends Taskmanager
+class WordpressInstallTaskManager extends Taskmanager
 {
     public $aTasks = [
         DownloadWordpress::class,
