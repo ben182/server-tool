@@ -191,10 +191,10 @@ function quietCommand($sCommand)
 
 function fixApachePermissions()
 {
-    // quietCommand('chown -R stool:www-data /var/www');
-    // quietCommand('chmod -R 755 /var/www');
-    // quietCommand('chmod g+s /var/www');
-    // quietCommand('chmod -R 700 /var/www/.ssh');
+    quietCommand('chown -R stool:stool /home/stool');
+    quietCommand('chmod -R 755 /home/stool');
+    quietCommand('chmod g+s /home/stool');
+    // quietCommand('chmod -R 700 /home/stool/.ssh');
 }
 
 function restartApache()
