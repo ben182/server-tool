@@ -25,9 +25,9 @@ class WordpressInit extends Task
 
         $wpconfig = file_get_contents("{$this->bindings->installationDir}/wp-config.php");
         $wpconfig = str_replace('#KEYS#', file_get_contents('https://api.wordpress.org/secret-key/1.1/salt/'), $wpconfig);
-        file_put_contents("{$this->bindings->installationDir}/wp-config.php", $wpconfig);
+        $wpconfig = str_replace('#PREFIX#', Str::random(4) . '_', $wpconfig);
 
-        $this->shell->replaceStringInFile('#PREFIX#', Str::random(4) . '_', "{$this->bindings->installationDir}/wp-config.php");
+        file_put_contents("{$this->bindings->installationDir}/wp-config.php", $wpconfig);
 
         // $this->addConclusion('Installed Composer Dependencies');
         // $this->addConclusion('Copied .env');
