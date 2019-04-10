@@ -43,5 +43,7 @@ class LinkApplication extends Task
         }
 
         $this->addConclusion("Application URL is {$this->bindings->domain->getFullUrl()}" . ($this->oOptions->subDir ? '/' . $this->oOptions->subDir : ''));
+
+        $this->addConclusion("Site is now linked and live");
     }
 }

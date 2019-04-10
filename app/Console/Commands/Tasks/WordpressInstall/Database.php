@@ -29,5 +29,7 @@ class Database extends Task
         $wpconfig = str_replace('password_here', $oUser->getPassword(), $wpconfig);
 
         file_put_contents("{$this->bindings->installationDir}/wp-config.php", $wpconfig);
+
+        $this->addConclusion("Created a new database & user and configured wordpress to use these");
     }
 }

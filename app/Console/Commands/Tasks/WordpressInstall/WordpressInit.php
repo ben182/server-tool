@@ -29,8 +29,6 @@ class WordpressInit extends Task
 
         file_put_contents("{$this->bindings->installationDir}/wp-config.php", $wpconfig);
 
-        // $this->addConclusion('Installed Composer Dependencies');
-        // $this->addConclusion('Copied .env');
-        // $this->addConclusion('Generated .env key');
+        $this->addConclusion("Configured Wordpress");
     }
 }

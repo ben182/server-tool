@@ -25,6 +25,6 @@ class DownloadWordpress extends Task
         $this->shell->exec("cd {$this->bindings->domain->getBaseFolder()} && rm latest.tar.gz");
         $this->shell->exec("cd {$this->bindings->domain->getBaseFolder()} && mv wordpress {$this->bindings->installationDir}");
 
-        $this->addConclusion("I downloaded and extracted wordpress to {$this->bindings->installationDir}");
+        $this->addConclusion("Downloaded and extracted wordpress to {$this->bindings->installationDir}");
     }
 }
