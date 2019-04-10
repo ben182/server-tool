@@ -36,7 +36,7 @@ finish () {
     bash ${SCRIPTS_PATH}partials/systemUpdate.sh
 }
 echo "Finish..."
-finish &> /dev/null
+finish
 
 # echo "Installation successfully completed in $((($(date +%s)-$start)/60)) minutes"
 echo "All sensitive data is written to $CONFIG_PATH"
