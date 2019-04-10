@@ -17,11 +17,14 @@ use App\Rules\DomainExists;
 use Illuminate\Validation\Rule;
 use App\Console\Commands\Tasks\WordpressInstall\DownloadWordpress;
 use App\Console\Commands\Tasks\WordpressInstall\Database;
+use Illuminate\Support\Str;
+use App\Console\Commands\Tasks\WordpressInstall\WordpressInit;
 
 class WordpressInstallTaskManager extends Taskmanager
 {
     public $aTasks = [
         DownloadWordpress::class,
+        WordpressInit::class,
         Database::class,
         LinkApplication::class,
     ];
@@ -30,9 +33,11 @@ class WordpressInstallTaskManager extends Taskmanager
     {
         $oDomain = new Domain($this->oOptions->domain);
 
+        $sNameSlugged = Str::slug($this->oOptions->name);
+
         return [
             'domain'          => $oDomain,
-            'installationDir' => "/home/stool/{$this->oOptions->domain}/{$this->oOptions->name}",
+            'installationDir' => "/home/stool/{$this->oOptions->domain}/{$sNameSlugged}",
             'htmlDir'         => $oDomain->getHtmlFolder(),
         ];
     }

@@ -23,9 +23,8 @@ class Database extends Task
         $sDatabaseName = $this->shell->mysql()->createDatabase($this->bindings->installationDir);
         $oUser = $this->shell->mysql()->createUser()->giveAccessToDatabase($sDatabaseName);
 
-        $this->addConclusion('[DB]');
-        $this->addConclusion('Database: ' . $sDatabaseName);
-        $this->addConclusion('User: ' . $oUser->getName());
-        $this->addConclusion('Password: ' . $oUser->getPassword());
+        $this->shell->replaceStringInFile('database_name_here', $sDatabaseName, "{$this->bindings->installationDir}/wp-config.php");
+        $this->shell->replaceStringInFile('username_here', $oUser->getName(), "{$this->bindings->installationDir}/wp-config.php");
+        $this->shell->replaceStringInFile('password_here', $oUser->getPassword(), "{$this->bindings->installationDir}/wp-config.php");
     }
 }
