@@ -199,7 +199,7 @@ function fixApachePermissions()
 
 function restartApache()
 {
-    quietCommand('sudo service apache2 reload');
+    quietCommand('sudo service apache2 restart');
 }
 
 function isSubdomain($sDomain)
