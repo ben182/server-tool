@@ -23,6 +23,7 @@ userManagement () {
 
     sudo chown -R stool:stool /home/stool/.ssh/
     chmod 600 /home/stool/.ssh/authorized_keys
+    chmod 400 /home/stool/.ssh/id_rsa
 
     mkdir ~/.stool
 }
