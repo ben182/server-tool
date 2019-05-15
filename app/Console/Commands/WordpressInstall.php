@@ -52,6 +52,7 @@ class WordpressInstall extends ModCommand
         }
 
         $bInstallRecommendedPlugins = $this->confirm('Install recommended plugins?', true);
+        $bPioneersConfig = $this->confirm('Apply Pioneers specific config?', true);
 
         (new WordpressInstallTaskManager([
             'domain' => $sDomain,
@@ -59,6 +60,7 @@ class WordpressInstall extends ModCommand
             'subDir' => $sSubDir,
             'name' => $sName,
             'installPlugins' => $bInstallRecommendedPlugins,
+            'pioneersConfig' => $bPioneersConfig,
         ]))->work();
     }
 }

@@ -35,6 +35,9 @@ finish () {
     sudo mv wp-cli.phar /usr/local/bin/wp
     crontab -l | { cat; echo "0 0 * * * wp cli update --yes --quiet >> /dev/null 2>&1"; } | crontab -
 
+    # SENDMAIL
+    sudo apt-get install sendmail -y
+
     # APACHE PERMISSIONS
     apache_permissions
     service apache2 reload
