@@ -25,7 +25,15 @@ class WordpressConf extends Task
         $password = Str::random(random_int(14, 20));
         $this->shell->exec("cd {$this->bindings->installationDir} && wp core install --url={$this->bindings->domain->getFullUrl()} --title={$this->oOptions->name} --admin_user=admin --admin_password='$password' --admin_email=$email");
 
+        $this->shell->exec("cd {$this->bindings->installationDir} && wp language core install de_DE");
+        $this->shell->exec("cd {$this->bindings->installationDir} && wp language core activate de_DE");
+        $this->shell->exec("cd {$this->bindings->installationDir} && wp option update timezone_string \"Europe/Berlin\"");
+        $this->shell->exec("cd {$this->bindings->installationDir} && wp option update date_format \"j. F Y\"");
+        $this->shell->exec("cd {$this->bindings->installationDir} && wp option update time_format \"G:i\"");
+
         $this->shell->exec("cd {$this->bindings->installationDir} && wp option update permalink_structure '/%postname%/'");
+
+        $this->shell->exec("cd {$this->bindings->installationDir} && wp plugin delete --all");
 
         if ($this->oOptions->installPlugins) {
             $this->shell->exec("cd {$this->bindings->installationDir} && wp plugin install all-in-one-seo-pack all-in-one-wp-migration wp-smushit wordfence wps-hide-login --activate");
@@ -35,6 +43,10 @@ class WordpressConf extends Task
 
         if ($this->oOptions->pioneersConfig) {
             $this->shell->exec("cd {$this->bindings->installationDir} && wp option update whl_page mp-admin");
+        }
+
+        if ($this->oOptions->local) {
+            $this->shell->exec("cd {$this->bindings->installationDir} && wp option update blog_public 0");
         }
 
         $this->addConclusion("Configured Wordpress");

@@ -62,6 +62,7 @@ class WordpressInstallTaskManager extends Taskmanager
             'name' => 'required',
             'installPlugins' => 'required|boolean',
             'pioneersConfig' => 'required|boolean',
+            'local' => 'required|boolean',
         ];
     }
 }
