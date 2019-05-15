@@ -49,6 +49,8 @@ class WordpressConf extends Task
 
         if ($this->oOptions->pioneersConfig) {
             $this->shell->exec("cd {$this->bindings->installationDir} && wp option update whl_page mp-admin");
+        }else{
+            $this->shell->exec("cd {$this->bindings->installationDir} && wp plugin deactivate wps-hide-login");
         }
 
         $this->addConclusion("Configured Wordpress");
