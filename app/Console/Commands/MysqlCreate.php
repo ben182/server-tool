@@ -42,7 +42,7 @@ class MysqlCreate extends ModCommand
         parent::handle();
 
         $sAskedDbName = $this->ask('Database Name?');
-        $bNewUserAndAccess = $this->confirm('Create new user & give him access to new database?');
+        $bNewUserAndAccess = $this->confirm('Create new user & give him access to new database?', true);
 
         (new MysqlCreateTaskManager([
             'database'         => $sAskedDbName,
