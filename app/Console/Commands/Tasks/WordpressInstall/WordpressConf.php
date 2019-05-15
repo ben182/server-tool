@@ -4,6 +4,7 @@ namespace App\Console\Commands\Tasks\WordpressInstall;
 
 use App\Console\Commands\Tasks\Task;
 use Illuminate\Support\Str;
+use App\Setting;
 
 class WordpressConf extends Task
 {
@@ -35,6 +36,11 @@ class WordpressConf extends Task
 
         $this->shell->exec("cd {$this->bindings->installationDir} && wp plugin delete --all");
 
+        if ($this->oOptions->local) {
+            $this->shell->exec("cd {$this->bindings->installationDir} && wp option update blog_public 0");
+            $this->shell->exec("cd {$this->bindings->installationDir} && wp plugin install maintenance --activate");
+        }
+
         if ($this->oOptions->installPlugins) {
             $this->shell->exec("cd {$this->bindings->installationDir} && wp plugin install all-in-one-seo-pack all-in-one-wp-migration wp-smushit wordfence wps-hide-login --activate");
 
@@ -43,10 +49,6 @@ class WordpressConf extends Task
 
         if ($this->oOptions->pioneersConfig) {
             $this->shell->exec("cd {$this->bindings->installationDir} && wp option update whl_page mp-admin");
-        }
-
-        if ($this->oOptions->local) {
-            $this->shell->exec("cd {$this->bindings->installationDir} && wp option update blog_public 0");
         }
 
         $this->addConclusion("Configured Wordpress");
