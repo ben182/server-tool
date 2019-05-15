@@ -51,11 +51,14 @@ class WordpressInstall extends ModCommand
             $sSubDir = $this->ask('Which one (relative to ' . $sDomain . '/?');
         }
 
+        $bInstallRecommendedPlugins = $this->confirm('Install recommended plugins?');
+
         (new WordpressInstallTaskManager([
             'domain' => $sDomain,
             'rootOrSub' => $sRootOrSub,
             'subDir' => $sSubDir,
             'name' => $sName,
+            'installPlugins' => $bInstallRecommendedPlugins,
         ]))->work();
     }
 }

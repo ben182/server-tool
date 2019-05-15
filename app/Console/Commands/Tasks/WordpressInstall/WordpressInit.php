@@ -29,6 +29,18 @@ class WordpressInit extends Task
 
         file_put_contents("{$this->bindings->installationDir}/wp-config.php", $wpconfig);
 
+        $this->shell->cronjob()->create('*/15 * * * *', "wget -q -O - {$this->bindings->domain->getFullUrl()}/wp-cron.php?doing_wp_cron >/dev/null 2>&1");
+
+        $this->shell->exec("cd {$this->bindings->installationDir} && wp option update permalink_structure '/%postname%/'");
+
+        if ($this->bindings->installPlugins) {
+            $this->shell->exec("cd {$this->bindings->installationDir} && wp plugin install all-in-one-seo-pack all-in-one-wp-migration wp-smushit wordfence wps-hide-login --activate --quiet");
+
+            $this->shell->exec("cd {$this->bindings->installationDir} && wp plugin install w3-total-cache --quiet");
+
+            $this->shell->exec("cd {$this->bindings->installationDir} && wp option update whl_page mp-admin --quiet");
+        }
+
         $this->addConclusion("Configured Wordpress");
     }
 }

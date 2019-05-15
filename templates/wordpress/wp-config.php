@@ -22,6 +22,7 @@ define( 'DB_CHARSET',  'utf8mb4' );
 /* MySQL database table prefix. */
 $table_prefix = '#PREFIX#';
 
+define('DISABLE_WP_CRON', true);
 
 /* Authentication Unique Keys and Salts. */
 /* https://api.wordpress.org/secret-key/1.1/salt/ */

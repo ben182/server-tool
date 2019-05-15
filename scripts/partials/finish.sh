@@ -29,6 +29,12 @@ finish () {
     sudo cp ${TEMPLATES_PATH}50unattended-upgrades /etc/apt/apt.conf.d/50unattended-upgrades
     sudo cp ${TEMPLATES_PATH}20auto-upgrades /etc/apt/apt.conf.d/20auto-upgrades
 
+    # WORDPRESS CLI
+    curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+    chmod +x wp-cli.phar
+    sudo mv wp-cli.phar /usr/local/bin/wp
+    crontab -l | { cat; echo "0 0 * * * wp cli update --yes --quiet >> /dev/null 2>&1"; } | crontab -
+
     # APACHE PERMISSIONS
     apache_permissions
     service apache2 reload
