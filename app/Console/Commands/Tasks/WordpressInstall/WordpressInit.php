@@ -50,5 +50,7 @@ class WordpressInit extends Task
         }
 
         $this->addConclusion("Configured Wordpress");
+        $this->addConclusion("Email: $email");
+        $this->addConclusion("Password: $password");
     }
 }
