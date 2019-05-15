@@ -19,6 +19,7 @@ use App\Console\Commands\Tasks\WordpressInstall\DownloadWordpress;
 use App\Console\Commands\Tasks\WordpressInstall\Database;
 use Illuminate\Support\Str;
 use App\Console\Commands\Tasks\WordpressInstall\WordpressInit;
+use App\Console\Commands\Tasks\WordpressInstall\WordpressConf;
 
 class WordpressInstallTaskManager extends Taskmanager
 {
@@ -26,6 +27,7 @@ class WordpressInstallTaskManager extends Taskmanager
         DownloadWordpress::class,
         WordpressInit::class,
         Database::class,
+        WordpressConf::class,
         LinkApplication::class,
     ];
 
