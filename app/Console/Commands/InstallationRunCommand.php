@@ -48,6 +48,10 @@ class InstallationRunCommand extends ModCommand
         $this->openMenu('vnStat', 'vnstat');
 
         foreach ($this->aToInstall as $sFiles) {
+            if ($sFiles === 'node') {
+                $this->shell->execScriptAsStool('partials/' . $sFiles);
+                continue;
+            }
             $this->shell->execScript('partials/' . $sFiles);
         }
     }

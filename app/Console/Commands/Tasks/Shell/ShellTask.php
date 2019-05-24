@@ -60,6 +60,12 @@ class ShellTask
         return $this;
     }
 
+    public function execScriptAsStool($sName)
+    {
+        $this->exec('sudo -u stool bash ' . scripts_path() . $sName . '.sh');
+        return $this;
+    }
+
     public function copy($sFrom, $sTo) {
         $this->exec("sudo cp $sFrom $sTo");
         return $this;
