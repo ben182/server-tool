@@ -26,4 +26,9 @@ class Shell
     {
         $this->exec('bash ' . scripts_path() . $sName . '.sh');
     }
+
+    public function execScriptAsStool($sName)
+    {
+        $this->exec('sudo -u stool bash ' . scripts_path() . $sName . '.sh');
+    }
 }
