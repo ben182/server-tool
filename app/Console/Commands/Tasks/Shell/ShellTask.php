@@ -62,7 +62,7 @@ class ShellTask
 
     public function execScriptAsStool($sName)
     {
-        $this->exec('sudo -u stool bash ' . scripts_path() . $sName . '.sh');
+        $this->exec('sudo -H -u stool bash ' . scripts_path() . $sName . '.sh');
         return $this;
     }
 
