@@ -20,7 +20,7 @@ class FloatingIpCreate extends Task
 
     public function handle()
     {
-        $encodedIp = base64_encode($this->oOptions->ip);
+        $encodedIp = sha1($this->oOptions->ip);
 
         $file = '/etc/network/interfaces.d/' . $encodedIp . '.cfg';
 
