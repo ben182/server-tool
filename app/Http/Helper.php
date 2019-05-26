@@ -210,3 +210,7 @@ function isSubdomain($sDomain)
 function getIp() {
     return str_replace(['http://', '/stool'], '', config('app.url'));
 }
+
+function is_sha1($str) {
+    return (bool) preg_match('/^[0-9a-f]{40}$/i', $str);
+}
