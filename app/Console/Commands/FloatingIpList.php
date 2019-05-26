@@ -7,7 +7,7 @@ use App\Console\ModCommand;
 use Illuminate\Console\Command;
 use App\Console\Commands\Tasks\FloatingIpCreateTaskManager;
 
-class FloatingIpCreate extends ModCommand
+class FloatingIpList extends ModCommand
 {
     /**
      * The name and signature of the console command.
