@@ -33,13 +33,13 @@ class AppServiceProvider extends ServiceProvider
     {
         Repository::observe(RepositoryObserver::class);
 
-        $this->app->singleton('env', Env::class);
+        $this->app->singleton('stool-env', Env::class);
 
-        $this->app->singleton('config', Config::class);
+        $this->app->singleton('stool-config', Config::class);
 
-        $this->app->singleton('shell', Shell::class);
-        $this->app->singleton('shell-cronjob', Cronjob::class);
-        $this->app->singleton('shell-environment', Environment::class);
-        $this->app->singleton('shell-mysql', Mysql::class);
+        $this->app->singleton('stool-shell', Shell::class);
+        $this->app->singleton('stool-shell-cronjob', Cronjob::class);
+        $this->app->singleton('stool-shell-environment', Environment::class);
+        $this->app->singleton('stool-shell-mysql', Mysql::class);
     }
 }
