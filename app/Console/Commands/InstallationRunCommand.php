@@ -33,11 +33,10 @@ class InstallationRunCommand extends Command
      *
      * @return void
      */
-    public function __construct(Config $config, Shell $shell)
+    public function __construct(Shell $shell)
     {
         parent::__construct();
 
-        $this->config = $config;
         $this->shell = $shell;
     }
 
@@ -50,47 +49,15 @@ class InstallationRunCommand extends Command
     {
         // Admin Email
         $sEmail = $this->ask('Administrator email?');
-        Setting::createKey('admin_email', $sEmail);
 
         // Swap
         $bAddSwap = $this->confirm('Add Swap Space?');
         if ($bAddSwap) {
             $iSwap = (int) $this->ask('How much (in GB)?');
-
-            $this->shell->bash(scripts_path('partials/swap.sh') . ' ' . $iSwap . 'G');
         }
 
-        $this->openMenu('phpMyAdmin', 'phpmyadmin');
-        $this->openMenu('certbot', 'certbot');
-        $this->openMenu('Node.js (version-manager)', 'node');
-        $this->openMenu('yarn', 'yarn');
-        $this->openMenu('Redis', 'redis');
-        $this->openMenu('vnStat', 'vnstat');
+        Setting::createKey('admin_email', $sEmail);
 
-        foreach ($this->aToInstall as $sFiles) {
-            if ($sFiles === 'node') {
-                $this->shell->execScriptAsStool('partials/' . $sFiles);
-                continue;
-            }
-            $this->shell->execScript('partials/' . $sFiles);
-        }
-    }
-
-    protected function openMenu($sTitle, $sKey)
-    {
-        if ($this->config->isInstalled($sKey)) {
-            return;
-        }
-
-        $option = $this->menu('Install ' . $sTitle . '?', [
-            'yes',
-            'no',
-        ])->disableDefaultItems()->open();
-
-        $this->config->editInstall($sKey, $option === 0);
-
-        if ($option === 0) {
-            $this->aToInstall[] = $sKey;
-        }
+        $this->shell->bash(scripts_path('partials/swap.sh') . ' ' . $iSwap . 'G');
     }
 }

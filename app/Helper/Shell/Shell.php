@@ -138,4 +138,9 @@ class Shell
     {
         return app(Mysql::class);
     }
+
+    public function service()
+    {
+        return app(Service::class);
+    }
 }

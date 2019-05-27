@@ -11,6 +11,7 @@ use App\Helper\Shell\Cronjob;
 use App\Helper\Shell\Environment;
 use App\Helper\Shell\Mysql;
 use App\Helper\Config;
+use App\Helper\Shell\Service;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -41,5 +42,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton('stool-shell-cronjob', Cronjob::class);
         $this->app->singleton('stool-shell-environment', Environment::class);
         $this->app->singleton('stool-shell-mysql', Mysql::class);
+        $this->app->singleton('stool-shell-service', Service::class);
     }
 }

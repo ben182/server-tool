@@ -38,7 +38,7 @@ class WelcomeMessageCommand extends Command
      */
     public function handle()
     {
-        $this->line('This server was provisioned by stool | Developed by Benjamin Bortels');
+        $this->line('This server was provisioned by stool | Created by Benjamin Bortels');
         $this->line('stool v' . Stool::version());
     }
 }

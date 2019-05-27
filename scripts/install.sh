@@ -23,6 +23,9 @@ WELCOMEPAGE_TOKEN=$(passwordgen);
 bash ${SCRIPTS_PATH}partials/init.sh
 bash ${SCRIPTS_PATH}partials/user.sh
 
+# START
+sudo apt-get install unzip -y
+
 # APACHE
 apacheInstall() {
     sudo apt-get install apache2 -y
@@ -152,5 +155,7 @@ echo "Installing vnStat..."
 vnstatInstall &> /dev/null
 
 stool installation:run
+stool installation:modules
+
 bash ${SCRIPTS_PATH}partials/finish.sh
 echo "Visit your welcome page at http://$PUBLIC_IP?token=$WELCOMEPAGE_TOKEN"
