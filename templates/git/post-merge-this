@@ -10,8 +10,8 @@ check_run() {
 
 check_run package.json "npm install"
 check_run composer.json "composer install"
-chown -R stool:stool ${ABSOLUTE_PATH}
-chmod -R 755 ${ABSOLUTE_PATH}
+sudo chown -R stool:stool ${ABSOLUTE_PATH}
+sudo chmod -R 755 ${ABSOLUTE_PATH}
 stool config:cache
 sudo supervisorctl restart stool-deploy
 sudo cp ${TEMPLATES_PATH}.bash_aliases ${ABSOLUTE_PATH}.bash_aliases
