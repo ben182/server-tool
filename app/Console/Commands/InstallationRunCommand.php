@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Helper\Config;
 use App\Helper\Shell\Shell;
+use App\Setting;
 
 class InstallationRunCommand extends Command
 {
@@ -47,6 +48,18 @@ class InstallationRunCommand extends Command
      */
     public function handle()
     {
+        // Admin Email
+        $sEmail = $this->ask('Administrator email?');
+        Setting::createKey('admin_email', $sEmail);
+
+        // Swap
+        $bAddSwap = $this->confirm('Add Swap Space?');
+        if ($bAddSwap) {
+            $iSwap = (int) $this->ask('How much (in GB)?');
+
+            $this->shell->bash(scripts_path('partials/swap.sh') . ' ' . $iSwap . 'G');
+        }
+
         $this->openMenu('phpMyAdmin', 'phpmyadmin');
         $this->openMenu('certbot', 'certbot');
         $this->openMenu('Node.js (version-manager)', 'node');

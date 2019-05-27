@@ -1,4 +1,3 @@
 #!/bin/sh
 
-stool version:check nodejs
-stool version:check nvm
+stool version
