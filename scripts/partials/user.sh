@@ -9,6 +9,7 @@ userManagement () {
     sudo usermod -a -G www-data stool
 
     sudo cp ${TEMPLATES_PATH}.bash_aliases /home/stool/.bash_aliases
+    sudo cat ${TEMPLATES_PATH}.profile >> /home/stool/.profile
 
     echo "AllowUsers stool" >> /etc/ssh/sshd_config
 
