@@ -1,3 +1,3 @@
 #!/bin/sh
 
-stool version
+stool stool:welcome-message
