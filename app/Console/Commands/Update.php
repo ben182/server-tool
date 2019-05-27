@@ -41,6 +41,6 @@ class Update extends ModCommand
     {
         parent::handle();
 
-        shell_exec("cd /etc/stool && sudo git pull");
+        shell_exec("cd /etc/stool && sudo git pull 2>&1");
     }
 }
