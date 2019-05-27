@@ -26,7 +26,7 @@ class WordpressInit extends Task
 
         $wpconfig = file_get_contents("{$this->bindings->installationDir}/wp-config.php");
         $wpconfig = str_replace('#KEYS#', file_get_contents('https://api.wordpress.org/secret-key/1.1/salt/'), $wpconfig);
-        $wpconfig = str_replace('#PREFIX#', Str::random(4) . '_', $wpconfig);
+        $wpconfig = str_replace('#PREFIX#', Str::random(4) . '_', $wpconfig); // TODO: v2 random int between 3 and 4
 
         file_put_contents("{$this->bindings->installationDir}/wp-config.php", $wpconfig);
 
