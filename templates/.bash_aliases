@@ -21,6 +21,9 @@ alias yrwp="yarn run watch-poll"
 alias yrh="yarn run hot"
 alias yrp="yarn run production"
 
+alias ci="composer install $*"
+alias freshs="php artisan migrate:fresh --seed"
+
 function artisan() {
     php artisan "$@"
 }
