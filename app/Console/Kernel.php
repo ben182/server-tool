@@ -2,10 +2,8 @@
 
 namespace App\Console;
 
-use App\Task;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use Illuminate\Support\Facades\Schema;
 
 class Kernel extends ConsoleKernel
 {
@@ -26,30 +24,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        if (env('DB_DATABASE') === 'homestead' || ! Schema::hasTable('tasks')) {
-            return;
-        }
-
-        $tasks = Task::all();
-
-        // Go through each task to dynamically set them up.
-        foreach ($tasks as $task) {
-            $aParameters = [];
-            foreach ($task->parameter as $param => $value) {
-                if ($value === false || $value === '') {
-                    continue;
-                }
-                if ($value === true) {
-                    $aParameters[] = "$param";
-                    continue;
-                }
-
-                $aParameters[] = "$param=$value";
-            }
-            $aParameters[] = '-n';
-
-            call_user_func_array([$schedule->command($task->command . ' ' . implode(' ', $aParameters)), $task->frequency], $task->frequency_parameter);
-        }
+        // $schedule->command('inspire')
+        //          ->hourly();
     }
 
     /**
@@ -59,7 +35,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__ . '/Commands');
+        $this->load(__DIR__.'/Commands');
 
         require base_path('routes/console.php');
     }

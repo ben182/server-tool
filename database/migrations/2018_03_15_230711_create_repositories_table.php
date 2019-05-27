@@ -14,7 +14,7 @@ class CreateRepositoriesTable extends Migration
     public function up()
     {
         Schema::create('repositories', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('dir');
             $table->string('branch');
             $table->string('secret');

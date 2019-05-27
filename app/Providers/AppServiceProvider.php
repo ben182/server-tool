@@ -2,57 +2,18 @@
 
 namespace App\Providers;
 
-use App\Console\Commands\Tasks\Shell\ShellTask;
-use App\Helper\Shell;
+use Illuminate\Support\ServiceProvider;
 use App\Observers\RepositoryObserver;
 use App\Repository;
-use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\ServiceProvider;
-use App\Services\ApiRequestService;
-use App\Services\Slack;
+use App\Helper\Env;
+use App\Helper\Shell\Shell;
+use App\Helper\Shell\Cronjob;
+use App\Helper\Shell\Environment;
+use App\Helper\Shell\Mysql;
+use App\Helper\Config;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        Schema::defaultStringLength(191);
-
-        Repository::observe(RepositoryObserver::class);
-        Route::model('repository', \App\Repository::class);
-
-        Command::macro('abort', function ($sMessage) {
-            $this->error($sMessage);
-            exit();
-        });
-        Command::macro('fixApachePermissions', function () {
-            // quietCommand('chown -R stool:stool /var/www');
-            // quietCommand('chmod -R 755 /var/www');
-            // quietCommand('chmod g+s /var/www');
-            // quietCommand('chmod -R 700 /var/www/.ssh');
-            return $this;
-        });
-        Command::macro('restartApache', function () {
-            quietCommand('service apache2 reload');
-            return $this;
-        });
-        $this->app->singleton('Shell', function ($app) {
-            return new Shell();
-        });
-
-        $this->app->singleton('ShellTask', function ($app) {
-            return new ShellTask();
-        });
-        $this->app->singleton(ApiRequestService::class);
-        $this->app->singleton(Slack::class);
-    }
-
     /**
      * Register any application services.
      *
@@ -61,5 +22,24 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
+    }
+
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        Repository::observe(RepositoryObserver::class);
+
+        $this->app->singleton('env', Env::class);
+
+        $this->app->singleton('config', Config::class);
+
+        $this->app->singleton('shell', Shell::class);
+        $this->app->singleton('shell-cronjob', Cronjob::class);
+        $this->app->singleton('shell-environment', Environment::class);
+        $this->app->singleton('shell-mysql', Mysql::class);
     }
 }

@@ -2,20 +2,19 @@
 
 # http://patorjk.com/software/taag/#p=display&v=0&f=Slant&t=stool%20v1.5.0
 cat << "EOF"
-         __              __        ___  ______ ____
-   _____/ /_____  ____  / /  _   _<  / / ____// __ \
-  / ___/ __/ __ \/ __ \/ /  | | / / / /___ \ / / / /
- (__  ) /_/ /_/ / /_/ / /   | |/ / / ____/ // /_/ /
-/____/\__/\____/\____/_/    |___/_(_)_____(_)____/
+         __              __        ___    ____   ____
+   _____/ /_____  ____  / /  _   _|__ \  / __ \ / __ \
+  / ___/ __/ __ \/ __ \/ /  | | / /_/ / / / / // / / /
+ (__  ) /_/ /_/ / /_/ / /   | |/ / __/_/ /_/ // /_/ /
+/____/\__/\____/\____/_/    |___/____(_)____(_)____/
 
+            Created by Benjamin Bortels
 EOF
 
 source /etc/stool/scripts/helper.sh
 
 # VARS
 echo "Initialization..."
-
-start=`date +%s`
 
 DATABASE_TEMP_PASS=root
 NEW_DB_PASS=$(passwordgen);
@@ -124,8 +123,7 @@ servertoolInstall() {
     chmod -R 755 /etc/stool
     crontab -l | { cat; echo "* * * * * stool schedule:run >> /dev/null 2>&1"; } | crontab -
     crontab -l | { cat; echo "0 0 * * * composer self-update >> /dev/null 2>&1"; } | crontab -
-    crontab -l | { cat; echo "0 0 * * 0 apt-get autoremove && apt-get autoclean -y >> /dev/null 2>&1"; } | crontab -
-    stool init
+    stool installation:init
     stool migrate --force
 
     stool view:cache
@@ -144,6 +142,14 @@ apt install ruby ruby-dev make gcc -y
 # SUPERVISOR
 apt-get install supervisor -y
 service supervisor restart
+
+# VNSTAT
+vnstatInstall () {
+    sudo apt-get install vnstat -y
+    sudo service vnstat start
+}
+echo "Installing vnStat..."
+vnstatInstall &> /dev/null
 
 stool installation:run
 stool installation:finish

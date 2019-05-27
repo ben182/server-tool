@@ -12,7 +12,6 @@ redisInstall () {
     tar xzvf redis-stable.tar.gz
     cd redis-stable
     make
-    #make test
     make install
     mkdir /etc/redis
     cp /tmp/redis-stable/redis.conf /etc/redis

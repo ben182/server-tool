@@ -2,12 +2,11 @@
 
 namespace App\Console\Commands;
 
-use App\Console\Commands\Tasks\CreateDeamonTaskManager;
-use App\Console\ModCommand;
+use Illuminate\Console\Command;
 use App\Setting;
-use App\Services\ApiRequestService;
+use App\Helper\Shell\Shell;
 
-class InstallationFinishCommand extends ModCommand
+class InstallationFinishCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -23,14 +22,18 @@ class InstallationFinishCommand extends ModCommand
      */
     protected $description = 'Command description';
 
+    protected $shell;
+
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Shell $shell)
     {
         parent::__construct();
+
+        $this->shell = $shell;
     }
 
     /**
@@ -40,21 +43,6 @@ class InstallationFinishCommand extends ModCommand
      */
     public function handle()
     {
-        parent::handle();
-
-        // Init
-        $oBody = app(ApiRequestService::class)->request('server/init');
-        Setting::create([
-            'key'   => 'server_id',
-            'value' => $oBody->public_id,
-        ]);
-
-        // Deploy Job
-        (new CreateDeamonTaskManager([
-            'name'    => 'stool-deploy',
-            'command' => 'stool queue:listen --timeout=600 --sleep=15 --tries=1',
-        ]))->work();
-
         // Admin Email
         $sEmail = $this->ask('Administrator email?');
         Setting::create([
@@ -62,18 +50,12 @@ class InstallationFinishCommand extends ModCommand
             'value' => $sEmail,
         ]);
 
-        // Slack Deploy Notification
-        $bDeployNotification = $this->confirm('Setup Slack Deployment Notification?');
-        if ($bDeployNotification) {
-            $this->call('gad:notification-slack');
-        }
-
         // Swap
         $bAddSwap = $this->confirm('Add Swap Space?');
         if ($bAddSwap) {
             $iSwap = (int) $this->ask('How much (in GB)?');
 
-            app('ShellTask')->exec('bash ' . scripts_path('partials') . '/swap.sh ' . $iSwap . 'G');
+            $this->shell->bash(scripts_path('partials/swap.sh') . ' ' . $iSwap . 'G');
         }
     }
 }

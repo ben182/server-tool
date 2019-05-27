@@ -2,10 +2,11 @@
 
 namespace App\Console\Commands;
 
-use App\Console\ModCommand;
 use Illuminate\Console\Command;
+use App\Helper\Config;
+use App\Helper\Shell\Shell;
 
-class InstallationRunCommand extends ModCommand
+class InstallationRunCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -21,16 +22,22 @@ class InstallationRunCommand extends ModCommand
      */
     protected $description = 'Command description';
 
-    private $aToInstall = [];
+    protected $config;
+    protected $shell;
+
+    protected $aToInstall = [];
 
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Config $config, Shell $shell)
     {
         parent::__construct();
+
+        $this->config = $config;
+        $this->shell = $shell;
     }
 
     /**
@@ -56,17 +63,18 @@ class InstallationRunCommand extends ModCommand
         }
     }
 
-    private function openMenu($sTitle, $sKey)
+    protected function openMenu($sTitle, $sKey)
     {
-        if (getInstallationConfig()[$sKey] === 'true') {
+        if ($this->config->isInstalled($sKey)) {
             return;
         }
+
         $option = $this->menu('Install ' . $sTitle . '?', [
             'yes',
             'no',
         ])->disableDefaultItems()->open();
 
-        editInstallationKey($sKey, json_encode($option === 0));
+        $this->config->editInstall($sKey, $option === 0);
 
         if ($option === 0) {
             $this->aToInstall[] = $sKey;

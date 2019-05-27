@@ -39,8 +39,8 @@ finish () {
     sudo apt-get install sendmail -y
 
     # APACHE PERMISSIONS
-    apache_permissions
-    service apache2 reload
+    # apache_permissions
+    # service apache2 reload
 
     bash ${SCRIPTS_PATH}partials/systemUpdate.sh
 }
