@@ -8,7 +8,6 @@ apache_permissions() {
     chown -R stool:stool /home/stool
     chmod -R 755 /home/stool
     chmod g+s /home/stool
-    # chmod -R 700 /var/www/.ssh
 }
 
 ABSOLUTE_PATH=/etc/stool/

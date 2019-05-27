@@ -1,16 +1,19 @@
 #!/usr/bin/env bash
 
+source /etc/stool/scripts/helper.sh
+
 changed_files="$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD)"
 
 check_run() {
 	echo "$changed_files" | grep --quiet "$1" && eval "$2"
 }
 
-# Example usage
-# In this example it's used to run `npm install` if package.json changed
 check_run package.json "npm install"
 check_run composer.json "composer install"
-chown -R stool:stool /etc/stool
-chmod -R 755 /etc/stool
+chown -R stool:stool ${ABSOLUTE_PATH}
+chmod -R 755 ${ABSOLUTE_PATH}
 stool config:cache
 sudo supervisorctl restart stool-deploy
+sudo cp ${TEMPLATES_PATH}.bash_aliases ${ABSOLUTE_PATH}.bash_aliases
+sudo cp ${TEMPLATES_PATH}git/post-merge-this ${ABSOLUTE_PATH}.git/hooks/post-merge
+sudo chmod +x ${ABSOLUTE_PATH}.git/hooks/post-merge

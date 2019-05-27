@@ -119,7 +119,7 @@ servertoolInstall() {
     ln -s ${ABSOLUTE_PATH}artisan /usr/bin/stool
     chmod +x /usr/bin/stool
     cp ${TEMPLATES_PATH}git/post-merge-this ${ABSOLUTE_PATH}.git/hooks/post-merge
-1    chmod +x ${ABSOLUTE_PATH}.git/hooks/post-merge
+    chmod +x ${ABSOLUTE_PATH}.git/hooks/post-merge
     chown -R stool:stool /etc/stool
     chmod -R 755 /etc/stool
     crontab -l | { cat; echo "* * * * * stool schedule:run >> /dev/null 2>&1"; } | crontab -
