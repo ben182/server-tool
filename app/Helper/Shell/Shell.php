@@ -4,17 +4,22 @@ namespace App\Helper\Shell;
 
 class Shell
 {
+    protected $lastOutput;
     protected $quiet = false;
 
     public function exec($sCommand)
     {
-        $output = shell_exec($sCommand . ' 2>&1');
+        $this->lastOutput = shell_exec($sCommand . ' 2>&1');
 
         if (!$this->quiet) {
-            echo $output;
+            echo $this->lastOutput;
         }
 
         return $this;
+    }
+
+    public function getLastOutput() {
+        return $this->lastOutput;
     }
 
     public function setQuiet(bool $bool = true) {
