@@ -14,7 +14,7 @@ finish () {
     git config --global --unset-all core.filemode
     git config --global core.filemode false
 
-    # FIR FOR LARAVEL MIX
+    # FIX FOR LARAVEL MIX
     sudo apt-get install libpng-dev -y
 
     # PUPPETEER REQUIREMENTS

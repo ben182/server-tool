@@ -2,10 +2,10 @@
 
 namespace App\Helper\Shell;
 
+use App\Helper\Config;
 use App\Helper\Password;
 use App\Helper\Increment;
 use Illuminate\Support\Str;
-use App\Helper\Config;
 
 class Mysql
 {
@@ -19,7 +19,7 @@ class Mysql
         $this->shell     = $shell;
         $this->password  = $password;
         $this->increment = $increment;
-        $this->config = $config;
+        $this->config    = $config;
     }
 
     public function createDatabase($sDatabaseName, $bCheckIfExist = true)
@@ -65,15 +65,6 @@ class Mysql
         return $this->shell->exec('mysql ' . $this->credentials() . " -e \"$sCommand\"");
     }
 
-    protected function credentials() {
-        $aMysql = $this->config->getConfig('mysql');
-
-        $sMysqlUser     = $aMysql['username'];
-        $sMysqlPassword = $aMysql['password'];
-
-        return "-u $sMysqlUser -p\"$sMysqlPassword\"";
-    }
-
     public function doesDatabaseExist($sDatabase)
     {
         return Str::contains($this->execCommand("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME =  '$sDatabase';")->getLastOutput(), $sDatabase);
@@ -82,5 +73,15 @@ class Mysql
     public function doesUserExist($user)
     {
         return Str::contains($this->execCommand("SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = '$user')")->getLastOutput(), "1\n");
+    }
+
+    protected function credentials()
+    {
+        $aMysql = $this->config->getConfig('mysql');
+
+        $sMysqlUser     = $aMysql['username'];
+        $sMysqlPassword = $aMysql['password'];
+
+        return "-u $sMysqlUser -p\"$sMysqlPassword\"";
     }
 }

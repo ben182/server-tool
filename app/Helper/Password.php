@@ -17,7 +17,7 @@ class Password
         $generator = new ComputerPasswordGenerator();
 
         $generator
-        ->setRandomGenerator(new Php7RandomGenerator())
+          ->setRandomGenerator(new Php7RandomGenerator())
           ->setUppercase()
           ->setLowercase()
           ->setNumbers()

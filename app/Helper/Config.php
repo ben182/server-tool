@@ -31,7 +31,8 @@ class Config
         )) !== false;
     }
 
-    public function getConfig($sKey = null) {
+    public function getConfig($sKey = null)
+    {
         $config = json_decode(file_get_contents(base_path('config.json')), true);
 
         if ($sKey) {

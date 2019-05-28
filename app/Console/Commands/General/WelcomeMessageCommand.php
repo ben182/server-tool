@@ -1,38 +1,34 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\General;
 
-use App\Helper\Shell\Shell;
+use App\Console\Stool;
 use Illuminate\Console\Command;
 
-class UpdateCommand extends Command
+class WelcomeMessageCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'update';
+    protected $signature = 'stool:welcome-message';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Updates stool';
-
-    protected $shell;
+    protected $description = 'Command description';
 
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct(Shell $shell)
+    public function __construct()
     {
         parent::__construct();
-
-        $this->shell = $shell;
     }
 
     /**
@@ -42,6 +38,7 @@ class UpdateCommand extends Command
      */
     public function handle()
     {
-        $this->shell->exec('cd /etc/stool && sudo git pull');
+        $this->line('This server was provisioned by stool | created by Benjamin Bortels');
+        $this->line('stool v' . Stool::version());
     }
 }

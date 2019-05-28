@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Installation;
 
 use App\Helper\Env;
 use App\Helper\Shell\Shell;

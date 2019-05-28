@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Installation;
 
 use App\Setting;
 use App\Helper\Hardware;
@@ -60,7 +60,7 @@ class InstallationRunCommand extends Command
 
         Setting::createKey('admin_email', $sEmail);
 
-        $this->shell->setQuiet();
+        $this->shell->setQuitForNextCommand();
         $this->shell->bash(scripts_path('partials/swap.sh') . ' ' . $iSwap . 'G');
     }
 }
