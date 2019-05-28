@@ -30,4 +30,14 @@ class Config
             $sFile
         )) !== false;
     }
+
+    public function getConfig($sKey = null) {
+        $config = json_decode(file_get_contents(base_path('config.json')), true);
+
+        if ($sKey) {
+            return $config[$sKey];
+        }
+
+        return $config;
+    }
 }

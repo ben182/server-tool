@@ -2,8 +2,6 @@
 
 namespace App\Helper;
 
-use App\Helper\Shell\Shell;
-use Illuminate\Support\Str;
 use Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator;
 use Hackzilla\PasswordGenerator\RandomGenerator\Php7RandomGenerator;
 
@@ -14,7 +12,8 @@ class Password
      *
      * @return string
      */
-    public function generate() {
+    public function generate()
+    {
         $generator = new ComputerPasswordGenerator();
 
         $generator

@@ -5,14 +5,14 @@ namespace App\Helper\Shell;
 class Shell
 {
     protected $lastOutput;
-    protected $quiet = false;
+    protected $quiet     = false;
     protected $quietTemp = false;
 
     public function exec($sCommand)
     {
         $this->lastOutput = shell_exec($sCommand . ' 2>&1');
 
-        if (! $this->quiet && !$this->quietTemp) {
+        if (! $this->quiet && ! $this->quietTemp) {
             echo $this->lastOutput;
         }
 
@@ -31,10 +31,15 @@ class Shell
     public function setQuiet(bool $bool = true)
     {
         $this->quiet = $bool;
+
+        return $this;
     }
 
-    public function setQuitForNextCommand(bool $bool = true) {
+    public function setQuitForNextCommand(bool $bool = true)
+    {
         $this->quietTemp = $bool;
+
+        return $this;
     }
 
     public function bash($sName)

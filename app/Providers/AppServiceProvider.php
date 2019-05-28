@@ -4,8 +4,11 @@ namespace App\Providers;
 
 use App\Helper\Env;
 use App\Repository;
+use App\Helper\Check;
 use App\Helper\Config;
 use App\Helper\Hardware;
+use App\Helper\Password;
+use App\Helper\Increment;
 use App\Helper\Shell\Mysql;
 use App\Helper\Shell\Shell;
 use App\Helper\Shell\Cronjob;
@@ -13,9 +16,6 @@ use App\Helper\Shell\Service;
 use App\Helper\Shell\Environment;
 use App\Observers\RepositoryObserver;
 use Illuminate\Support\ServiceProvider;
-use App\Helper\Check;
-use App\Helper\Password;
-use App\Helper\Increment;
 
 class AppServiceProvider extends ServiceProvider
 {

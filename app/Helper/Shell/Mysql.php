@@ -2,22 +2,24 @@
 
 namespace App\Helper\Shell;
 
-use Illuminate\Support\Str;
 use App\Helper\Password;
 use App\Helper\Increment;
+use Illuminate\Support\Str;
+use App\Helper\Config;
 
 class Mysql
 {
     protected $shell;
     protected $password;
-
     protected $increment;
+    protected $config;
 
-    public function __construct(Shell $shell, Password $password, Increment $increment)
+    public function __construct(Shell $shell, Password $password, Increment $increment, Config $config)
     {
-        $this->shell = $shell;
-        $this->password = $password;
+        $this->shell     = $shell;
+        $this->password  = $password;
         $this->increment = $increment;
+        $this->config = $config;
     }
 
     public function createDatabase($sDatabaseName, $bCheckIfExist = true)
@@ -59,7 +61,17 @@ class Mysql
     public function execCommand($sCommand)
     {
         $this->shell->setQuitForNextCommand();
-        return $this->shell->exec('mysql ' . getMysqlCredentials() . " -e \"$sCommand\"");
+
+        return $this->shell->exec('mysql ' . $this->credentials() . " -e \"$sCommand\"");
+    }
+
+    protected function credentials() {
+        $aMysql = $this->config->getConfig('mysql');
+
+        $sMysqlUser     = $aMysql['username'];
+        $sMysqlPassword = $aMysql['password'];
+
+        return "-u $sMysqlUser -p\"$sMysqlPassword\"";
     }
 
     public function doesDatabaseExist($sDatabase)

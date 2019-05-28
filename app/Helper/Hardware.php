@@ -3,7 +3,6 @@
 namespace App\Helper;
 
 use App\Helper\Shell\Shell;
-use Illuminate\Support\Str;
 
 class Hardware
 {
@@ -41,12 +40,14 @@ class Hardware
      * @param int $iPort
      * @return boolean
      */
-    public function checkIfPortIsUsed($port) {
+    public function checkIfPortIsUsed($port)
+    {
         $fp = @fsockopen('127.0.0.1', $port, $errno, $errstr, 5);
-        if (!$fp) {
+        if (! $fp) {
             return false;
         } else {
             fclose($fp);
+
             return true;
         }
     }
