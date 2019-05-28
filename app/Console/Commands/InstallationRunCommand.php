@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use App\Helper\Config;
 use App\Helper\Shell\Shell;
 use App\Setting;
+use App\Helper\Hardware;
 
 class InstallationRunCommand extends Command
 {
@@ -53,7 +54,10 @@ class InstallationRunCommand extends Command
         // Swap
         $bAddSwap = $this->confirm('Add Swap Space?', true);
         if ($bAddSwap) {
-            $iSwap = (int) $this->ask('How much (in GB)?');
+
+            $recommendedSize = (int) round(app(Hardware::class)->getTotalRam());
+
+            $iSwap = (int) $this->ask('How much in GB (Recommended is more than ' . $recommendedSize . 'GB ?');
         }
 
         Setting::createKey('admin_email', $sEmail);

@@ -12,6 +12,7 @@ use App\Helper\Shell\Environment;
 use App\Helper\Shell\Mysql;
 use App\Helper\Config;
 use App\Helper\Shell\Service;
+use App\Helper\Hardware;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -43,5 +44,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton('stool-shell-environment', Environment::class);
         $this->app->singleton('stool-shell-mysql', Mysql::class);
         $this->app->singleton('stool-shell-service', Service::class);
+
+        $this->app->singleton('stool-hardware', Hardware::class);
     }
 }
