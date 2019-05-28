@@ -53,7 +53,6 @@ class InstallationModulesCommand extends Command
         $this->openMenu('Node.js (version-manager)', 'node');
         $this->openMenu('yarn', 'yarn');
         $this->openMenu('Redis', 'redis');
-        $this->openMenu('vnStat', 'vnstat');
 
         $this->installSelectedPartials();
     }

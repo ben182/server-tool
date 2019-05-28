@@ -51,7 +51,7 @@ class InstallationRunCommand extends Command
         $sEmail = $this->ask('Administrator email?');
 
         // Swap
-        $bAddSwap = $this->confirm('Add Swap Space?');
+        $bAddSwap = $this->confirm('Add Swap Space?', true);
         if ($bAddSwap) {
             $iSwap = (int) $this->ask('How much (in GB)?');
         }
