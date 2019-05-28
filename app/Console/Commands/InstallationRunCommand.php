@@ -55,7 +55,7 @@ class InstallationRunCommand extends Command
         if ($bAddSwap) {
             $recommendedSize = (int) round(app(Hardware::class)->getTotalRam());
 
-            $iSwap = (int) $this->ask('How much in GB (Recommended is more than ' . $recommendedSize . 'GB ?');
+            $iSwap = (int) $this->ask('How much in GB (Recommended is >= than ' . $recommendedSize . 'GB) ?', $recommendedSize);
         }
 
         Setting::createKey('admin_email', $sEmail);

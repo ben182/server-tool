@@ -13,6 +13,7 @@ use App\Helper\Shell\Service;
 use App\Helper\Shell\Environment;
 use App\Observers\RepositoryObserver;
 use Illuminate\Support\ServiceProvider;
+use App\Helper\Check;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -46,5 +47,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton('stool-shell-service', Service::class);
 
         $this->app->singleton('stool-hardware', Hardware::class);
+        $this->app->singleton('stool-check', Check::class);
     }
 }
