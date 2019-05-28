@@ -4,16 +4,20 @@ namespace App\Helper\Shell;
 
 use Illuminate\Support\Str;
 use App\Helper\Password;
+use App\Helper\Increment;
 
 class Mysql
 {
     protected $shell;
     protected $password;
 
-    public function __construct(Shell $shell, Password $password)
+    protected $increment;
+
+    public function __construct(Shell $shell, Password $password, Increment $increment)
     {
         $this->shell = $shell;
         $this->password = $password;
+        $this->increment = $increment;
     }
 
     public function createDatabase($sDatabaseName, $bCheckIfExist = true)
@@ -22,7 +26,7 @@ class Mysql
 
         if ($this->doesDatabaseExist($sSluggedDatabaseName) && $bCheckIfExist) {
             do {
-                $sSluggedDatabaseName = $this->incrementName($sSluggedDatabaseName);
+                $sSluggedDatabaseName = $this->increment->increment($sSluggedDatabaseName);
 
                 $bExist = $this->doesDatabaseExist($sSluggedDatabaseName);
             } while ($bExist);
@@ -56,25 +60,6 @@ class Mysql
     {
         $this->shell->setQuitForNextCommand();
         return $this->shell->exec('mysql ' . getMysqlCredentials() . " -e \"$sCommand\"");
-    }
-
-    /**
-     * Increments a given name. If name has no number as a last character 2 will be appended. If it has a number (not 0) it will be incremented. Works only for the last character not for numbers >= 10. TODO: fix for larger numbers
-     *
-     * @param string $sName
-     *
-     * @return string
-     */
-    public function incrementName($sName)
-    {
-        $iLastChar = (int) substr($sName, -1);
-        if ($iLastChar === 0) {
-            return $sName . "2";
-        }
-
-        $sWithoutLastChar = substr($sName, 0, -1);
-
-        return $sWithoutLastChar . (++$iLastChar);
     }
 
     public function doesDatabaseExist($sDatabase)
