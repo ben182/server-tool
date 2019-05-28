@@ -47,6 +47,7 @@ class Mysql
 
     public function execCommand($sCommand)
     {
+        $this->shell->setQuitForNextCommand();
         return $this->shell->exec('mysql ' . getMysqlCredentials() . " -e \"$sCommand\"");
     }
 
@@ -76,6 +77,6 @@ class Mysql
 
     public function doesUserExist($user)
     {
-        return Str::contains($this->execCommand("SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = 'root')")->getLastOutput(), '1\n');
+        return Str::contains($this->execCommand("SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = '$user')")->getLastOutput(), "1\n");
     }
 }

@@ -6,13 +6,18 @@ class Shell
 {
     protected $lastOutput;
     protected $quiet = false;
+    protected $quietTemp = false;
 
     public function exec($sCommand)
     {
         $this->lastOutput = shell_exec($sCommand . ' 2>&1');
 
-        if (! $this->quiet) {
+        if (! $this->quiet && !$this->quietTemp) {
             echo $this->lastOutput;
+        }
+
+        if ($this->quietTemp) {
+            $this->quietTemp = false;
         }
 
         return $this;
@@ -26,6 +31,10 @@ class Shell
     public function setQuiet(bool $bool = true)
     {
         $this->quiet = $bool;
+    }
+
+    public function setQuitForNextCommand(bool $bool = true) {
+        $this->quietTemp = $bool;
     }
 
     public function bash($sName)
