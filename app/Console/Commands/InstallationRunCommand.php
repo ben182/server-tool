@@ -58,6 +58,7 @@ class InstallationRunCommand extends Command
 
         Setting::createKey('admin_email', $sEmail);
 
+        $this->shell->setQuiet();
         $this->shell->bash(scripts_path('partials/swap.sh') . ' ' . $iSwap . 'G');
     }
 }

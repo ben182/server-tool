@@ -4,54 +4,21 @@ namespace App\Helper\Shell;
 
 class Shell
 {
-    private $lastExecOutput;
-    private $aOutputs = [];
-    private $aErrors = [];
-    private $bDebug = false;
+    protected $quiet = false;
 
     public function exec($sCommand)
     {
-        $this->lastExecOutput = shell_exec($sCommand . ' 2>&1');
+        $output = shell_exec($sCommand . ' 2>&1');
 
-        if ($this->bDebug) {
-            $this->saveOutput();
+        if (!$this->quiet) {
+            echo $output;
         }
 
         return $this;
     }
 
-    public function getLastOutput()
-    {
-        return $this->lastExecOutput;
-    }
-
-    public function outputEveryCommand(bool $bData = true)
-    {
-        $this->bDebug = $bData;
-        return $this;
-    }
-
-    public function echo($sData)
-    {
-        $this->aOutputs[] = $sData;
-        return $this;
-    }
-
-    public function saveOutput()
-    {
-        $this->aOutputs[] = $this->lastExecOutput;
-        return $this;
-    }
-
-    public function getOutput()
-    {
-        return implode("\n", $this->aOutputs) . "\n";
-    }
-
-    public function flushOutput()
-    {
-        $this->aOutputs = [];
-        return $this;
+    public function setQuiet(bool $bool = true) {
+        $this->quiet = $bool;
     }
 
     public function bash($sName)
@@ -94,33 +61,6 @@ class Shell
 
     public function getFile($sFile) {
         $this->exec('sudo cat ' . $sFile);
-        return $this;
-    }
-
-    public function saveError($sError)
-    {
-        $this->aErrors[] = $sError;
-        return $this;
-    }
-
-    public function getErrors()
-    {
-        return implode("\n", $this->aErrors);
-    }
-
-    public function hasErrors()
-    {
-        return $this->countErrors() > 0;
-    }
-
-    public function countErrors()
-    {
-        return count($this->aErrors);
-    }
-
-    public function flushErrors()
-    {
-        $this->aErrors = [];
         return $this;
     }
 

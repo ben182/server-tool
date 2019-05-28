@@ -9,6 +9,7 @@ cat << "EOF"
 /____/\__/\____/\____/_/    |___/____(_)____(_)____/
 
             Created by Benjamin Bortels
+
 EOF
 
 source /etc/stool/scripts/helper.sh
