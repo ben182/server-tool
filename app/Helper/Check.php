@@ -18,8 +18,15 @@ class Check
         return (bool) preg_match('/^[0-9a-f]{40}$/i', $string);
     }
 
+    /**
+     * Gets all IPs from a string
+     *
+     * @param string $string
+     *
+     * @return array|false
+     */
     public function getIps($string) {
-        if (preg_match('/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/', $string, $ip_match)) {
+        if (preg_match_all('/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/', $string, $ip_match)) {
             return $ip_match[0];
         }
 

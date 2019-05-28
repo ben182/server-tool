@@ -73,4 +73,9 @@ class Mysql
     {
         return Str::contains($this->execCommand("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME =  '$sDatabase';")->getLastOutput(), $sDatabase);
     }
+
+    public function doesUserExist($user)
+    {
+        return Str::contains($this->execCommand("SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = 'root')")->getLastOutput(), '1\n');
+    }
 }
