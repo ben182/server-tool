@@ -3,14 +3,17 @@
 namespace App\Helper\Shell;
 
 use Illuminate\Support\Str;
+use App\Helper\Password;
 
 class Mysql
 {
     protected $shell;
+    protected $password;
 
-    public function __construct(Shell $shell)
+    public function __construct(Shell $shell, Password $password)
     {
         $this->shell = $shell;
+        $this->password = $password;
     }
 
     public function createDatabase($sDatabaseName, $bCheckIfExist = true)
@@ -33,11 +36,15 @@ class Mysql
     public function createUser($sName = null, $sPassword = null)
     {
         if (! $sName) {
-            $sName = Str::random(random_int(10, 15)); // TODO: is already taken?
+            do {
+                $sName = Str::random(random_int(10, 15));
+
+                $bExist = $this->doesUserExist($sName);
+            } while ($bExist);
         }
 
         if (! $sPassword) {
-            $sPassword = random_string_random_length();
+            $sPassword = $this->password->generate();
         }
 
         $this->execCommand("CREATE USER '$sName'@'localhost' IDENTIFIED BY '$sPassword';");

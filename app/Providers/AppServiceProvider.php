@@ -14,6 +14,8 @@ use App\Helper\Shell\Environment;
 use App\Observers\RepositoryObserver;
 use Illuminate\Support\ServiceProvider;
 use App\Helper\Check;
+use App\Helper\Password;
+use App\Helper\Increment;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -48,5 +50,7 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton('stool-hardware', Hardware::class);
         $this->app->singleton('stool-check', Check::class);
+        $this->app->singleton('stool-password', Password::class);
+        $this->app->singleton('stool-increment', Increment::class);
     }
 }
