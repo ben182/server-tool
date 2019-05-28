@@ -19,7 +19,11 @@ class Check
     }
 
     public function getIps($string) {
-        return preg_match('/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/', $string, $ip_match);
+        if (preg_match('/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/', $string, $ip_match)) {
+            return $ip_match[0];
+        }
+
+        return false;
     }
 
     /**
