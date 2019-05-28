@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use App\Helper\Shell\Shell;
 use App\Helper\Env;
+use App\Helper\Shell\Shell;
+use Illuminate\Console\Command;
 
 class InstallationInitCommand extends Command
 {
@@ -35,7 +35,7 @@ class InstallationInitCommand extends Command
         parent::__construct();
 
         $this->shell = $shell;
-        $this->env = $env;
+        $this->env   = $env;
     }
 
     /**
@@ -46,7 +46,7 @@ class InstallationInitCommand extends Command
     public function handle()
     {
         $databaseName = $this->shell->mysql()->createDatabase('stool');
-        $user = $this->shell->mysql()->createUser()->giveAccessToDatabase($databaseName);
+        $user         = $this->shell->mysql()->createUser()->giveAccessToDatabase($databaseName);
 
         $this->env->setKey('DB_DATABASE', $databaseName);
         $this->env->setKey('DB_USERNAME', $user->getName());

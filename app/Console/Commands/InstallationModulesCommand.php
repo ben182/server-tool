@@ -2,10 +2,9 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Helper\Config;
 use App\Helper\Shell\Shell;
-use App\Setting;
+use Illuminate\Console\Command;
 
 class InstallationModulesCommand extends Command
 {
@@ -38,7 +37,7 @@ class InstallationModulesCommand extends Command
         parent::__construct();
 
         $this->config = $config;
-        $this->shell = $shell;
+        $this->shell  = $shell;
     }
 
     /**
@@ -75,7 +74,8 @@ class InstallationModulesCommand extends Command
         }
     }
 
-    protected function installSelectedPartials(){
+    protected function installSelectedPartials()
+    {
         foreach ($this->aToInstall as $sFiles) {
             if ($sFiles === 'node') {
                 $this->shell->execScriptAsStool('partials/' . $sFiles);

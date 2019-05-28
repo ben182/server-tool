@@ -10,15 +10,16 @@ class MysqlUser
 
     public function __construct($sName, $sPassword, $mysql)
     {
-        $this->name = $sName;
+        $this->name     = $sName;
         $this->password = $sPassword;
-        $this->mysql = $mysql;
+        $this->mysql    = $mysql;
     }
 
     public function giveAccessToDatabase($sDatabase)
     {
         $this->mysql->execCommand("GRANT ALL PRIVILEGES ON $sDatabase.* To '{$this->name}'@'localhost'");
         $this->mysql->execCommand("FLUSH PRIVILEGES");
+
         return $this;
     }
 
@@ -26,6 +27,7 @@ class MysqlUser
     {
         $this->mysql->execCommand("GRANT ALL PRIVILEGES ON * . * TO '{$this->name}'@'localhost'");
         $this->mysql->execCommand("FLUSH PRIVILEGES");
+
         return $this;
     }
 

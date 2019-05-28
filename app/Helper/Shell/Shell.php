@@ -11,61 +11,76 @@ class Shell
     {
         $this->lastOutput = shell_exec($sCommand . ' 2>&1');
 
-        if (!$this->quiet) {
+        if (! $this->quiet) {
             echo $this->lastOutput;
         }
 
         return $this;
     }
 
-    public function getLastOutput() {
+    public function getLastOutput()
+    {
         return $this->lastOutput;
     }
 
-    public function setQuiet(bool $bool = true) {
+    public function setQuiet(bool $bool = true)
+    {
         $this->quiet = $bool;
     }
 
     public function bash($sName)
     {
         $this->exec('bash ' . $sName);
+
         return $this;
     }
 
     public function execScript($sName)
     {
         $this->exec('bash ' . scripts_path() . $sName . '.sh');
+
         return $this;
     }
 
     public function execScriptAsStool($sName)
     {
         $this->exec('sudo -H -u stool bash ' . scripts_path() . $sName . '.sh');
+
         return $this;
     }
 
-    public function copy($sFrom, $sTo) {
+    public function copy($sFrom, $sTo)
+    {
         $this->exec("sudo cp $sFrom $sTo");
+
         return $this;
     }
 
-    public function removeFile($sFile) {
+    public function removeFile($sFile)
+    {
         $this->exec("sudo rm $sFile");
+
         return $this;
     }
 
-    public function removeFolder($sFile) {
+    public function removeFolder($sFile)
+    {
         $this->exec("sudo rm -r $sFile");
+
         return $this;
     }
 
-    public function replaceStringInFile($sNeedle, $sReplace, $sFile) {
+    public function replaceStringInFile($sNeedle, $sReplace, $sFile)
+    {
         $this->exec('sudo sed -i "s|' . $sNeedle . '|' . $sReplace . '|g" ' . $sFile);
+
         return $this;
     }
 
-    public function getFile($sFile) {
+    public function getFile($sFile)
+    {
         $this->exec('sudo cat ' . $sFile);
+
         return $this;
     }
 

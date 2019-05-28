@@ -2,26 +2,27 @@
 
 namespace App\Helper;
 
-class Config {
-
-    public function install() {
+class Config
+{
+    public function install()
+    {
         return json_decode(file_get_contents(base_path('installation.json')), true);
     }
 
-    public function isInstalled($sKey) {
-
+    public function isInstalled($sKey)
+    {
         return $this->install()[$sKey] === 'true';
     }
 
-    public function editInstall($sKey, bool $value) {
-
+    public function editInstall($sKey, bool $value)
+    {
         $sOldValue = $this->install()[$sKey];
 
         $sFile = file_get_contents(base_path('installation.json'));
 
-        $aKeys = explode('.', $sKey);
+        $aKeys    = explode('.', $sKey);
         $sLastKey = $aKeys[count($aKeys) - 1];
-        $sValue = $value ? 'true' : 'false';
+        $sValue   = $value ? 'true' : 'false';
 
         return file_put_contents(base_path('installation.json'), str_replace(
             '"' . $sLastKey . '": "' . $sOldValue . '"',

@@ -65,6 +65,7 @@ class Mysql
         }
 
         $sWithoutLastChar = substr($sName, 0, -1);
+
         return $sWithoutLastChar . (++$iLastChar);
     }
 

@@ -2,17 +2,17 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use App\Observers\RepositoryObserver;
-use App\Repository;
 use App\Helper\Env;
+use App\Repository;
+use App\Helper\Config;
+use App\Helper\Hardware;
+use App\Helper\Shell\Mysql;
 use App\Helper\Shell\Shell;
 use App\Helper\Shell\Cronjob;
-use App\Helper\Shell\Environment;
-use App\Helper\Shell\Mysql;
-use App\Helper\Config;
 use App\Helper\Shell\Service;
-use App\Helper\Hardware;
+use App\Helper\Shell\Environment;
+use App\Observers\RepositoryObserver;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {

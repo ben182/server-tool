@@ -2,9 +2,10 @@
 
 namespace App\Helper;
 
-class Env {
-    public function setKey($sKey, $sValue, $sPath = null) {
-
+class Env
+{
+    public function setKey($sKey, $sValue, $sPath = null)
+    {
         $sPath = $sPath ?: base_path('.env');
 
         if (! file_exists($sPath)) {

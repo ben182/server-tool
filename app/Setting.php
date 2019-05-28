@@ -11,7 +11,8 @@ class Setting extends Model
         'value',
     ];
 
-    public static function createKey($key, $value) {
+    public static function createKey($key, $value)
+    {
         return static::create([
             'key'   => $key,
             'value' => $value,

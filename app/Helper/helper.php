@@ -12,15 +12,16 @@ function templates_path($sPath = '')
 
 function replace_string_in_file($filename, $string_to_replace, $replace_with)
 {
-    $content = file_get_contents($filename);
+    $content        = file_get_contents($filename);
     $content_chunks = explode($string_to_replace, $content);
-    $content = implode($replace_with, $content_chunks);
+    $content        = implode($replace_with, $content_chunks);
     file_put_contents($filename, $content);
 }
 
 function getStringBetween($str, $from, $to)
 {
     $sub = substr($str, strpos($str, $from) + strlen($from), strlen($str));
+
     return substr($sub, 0, strpos($sub, $to));
 }
 
@@ -52,7 +53,7 @@ function getMysqlCredentials()
 {
     $aMysql = getConfig()['mysql'];
 
-    $sMysqlUser = $aMysql['username'];
+    $sMysqlUser     = $aMysql['username'];
     $sMysqlPassword = $aMysql['password'];
 
     return "-u $sMysqlUser -p\"$sMysqlPassword\"";
@@ -130,7 +131,7 @@ function editConfigKey($sKey, $sValue)
 
     $sFile = file_get_contents(base_path('config.json'));
 
-    $aKeys = explode('.', $sKey);
+    $aKeys    = explode('.', $sKey);
     $sLastKey = $aKeys[count($aKeys) - 1];
 
     file_put_contents(base_path('config.json'), str_replace(
@@ -148,7 +149,7 @@ function editInstallationKey($sKey, $sValue)
 
     $sFile = file_get_contents(base_path('installation.json'));
 
-    $aKeys = explode('.', $sKey);
+    $aKeys    = explode('.', $sKey);
     $sLastKey = $aKeys[count($aKeys) - 1];
 
     file_put_contents(base_path('installation.json'), str_replace(
@@ -207,10 +208,12 @@ function isSubdomain($sDomain)
     return count(explode('.', $sDomain)) >= 3;
 }
 
-function getIp() {
+function getIp()
+{
     return str_replace(['http://', '/stool'], '', config('app.url'));
 }
 
-function is_sha1($str) {
+function is_sha1($str)
+{
     return (bool) preg_match('/^[0-9a-f]{40}$/i', $str);
 }
