@@ -25,6 +25,7 @@ class InstallationRunCommand extends Command
 
     protected $config;
     protected $shell;
+    protected $hardware;
 
     protected $aToInstall = [];
 
@@ -33,11 +34,12 @@ class InstallationRunCommand extends Command
      *
      * @return void
      */
-    public function __construct(Shell $shell)
+    public function __construct(Shell $shell, Hardware $hardware)
     {
         parent::__construct();
 
-        $this->shell = $shell;
+        $this->shell    = $shell;
+        $this->hardware = $hardware;
     }
 
     /**
@@ -53,7 +55,7 @@ class InstallationRunCommand extends Command
         // Swap
         $bAddSwap = $this->confirm('Add Swap Space?', true);
         if ($bAddSwap) {
-            $recommendedSize = (int) round(app(Hardware::class)->getTotalRam());
+            $recommendedSize = (int) round($this->hardware->getTotalRam());
 
             $iSwap = (int) $this->ask('How much in GB (Recommended is >= than ' . $recommendedSize . 'GB) ?', $recommendedSize);
         }
