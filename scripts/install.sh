@@ -105,6 +105,8 @@ mysqlInstall() {
     mysql -u root -p"$DATABASE_TEMP_PASS" -e "FLUSH PRIVILEGES"
 
     sudo sed -i "s|ROOT_PASSWORD_HERE|$NEW_DB_PASS|" $CONFIG_PATH
+
+    sudo apt-get install mysqltuner
 }
 echo "Installing and configuring MySQL Server..."
 mysqlInstall
