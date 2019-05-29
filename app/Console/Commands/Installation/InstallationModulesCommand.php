@@ -4,7 +4,7 @@ namespace App\Console\Commands\Installation;
 
 use App\Helper\Config;
 use App\Helper\Shell\Shell;
-use Illuminate\Console\Command;
+use App\Console\Command;
 
 class InstallationModulesCommand extends Command
 {
@@ -23,7 +23,6 @@ class InstallationModulesCommand extends Command
     protected $description = 'Command description';
 
     protected $config;
-    protected $shell;
 
     protected $aToInstall = [];
 
@@ -32,12 +31,11 @@ class InstallationModulesCommand extends Command
      *
      * @return void
      */
-    public function __construct(Config $config, Shell $shell)
+    public function __construct(Config $config)
     {
         parent::__construct();
 
         $this->config = $config;
-        $this->shell  = $shell;
     }
 
     /**

@@ -3,7 +3,7 @@
 namespace App\Console\Commands\General;
 
 use App\Helper\Shell\Shell;
-use Illuminate\Console\Command;
+use App\Console\Command;
 
 class UpdateCommand extends Command
 {
@@ -20,20 +20,6 @@ class UpdateCommand extends Command
      * @var string
      */
     protected $description = 'Updates stool';
-
-    protected $shell;
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct(Shell $shell)
-    {
-        parent::__construct();
-
-        $this->shell = $shell;
-    }
 
     /**
      * Execute the console command.

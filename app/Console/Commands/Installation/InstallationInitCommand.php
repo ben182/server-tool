@@ -4,7 +4,7 @@ namespace App\Console\Commands\Installation;
 
 use App\Helper\Env;
 use App\Helper\Shell\Shell;
-use Illuminate\Console\Command;
+use App\Console\Command;
 
 class InstallationInitCommand extends Command
 {
@@ -22,7 +22,6 @@ class InstallationInitCommand extends Command
      */
     protected $description = 'Command description';
 
-    protected $shell;
     protected $env;
 
     /**
@@ -30,11 +29,10 @@ class InstallationInitCommand extends Command
      *
      * @return void
      */
-    public function __construct(Shell $shell, Env $env)
+    public function __construct(Env $env)
     {
         parent::__construct();
 
-        $this->shell = $shell;
         $this->env   = $env;
     }
 
