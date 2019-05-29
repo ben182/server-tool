@@ -7,6 +7,11 @@ use Illuminate\Console\Command as CoreCommand;
 
 class Command extends CoreCommand
 {
+    /**
+     * Shell
+     *
+     * @var \App\Helper\Shell\Shell
+     */
     protected $shell;
 
     /**

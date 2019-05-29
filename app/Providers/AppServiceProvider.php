@@ -16,6 +16,7 @@ use App\Helper\Shell\Service;
 use App\Helper\Shell\Environment;
 use App\Observers\RepositoryObserver;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Console\Command;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -52,5 +53,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton('stool-check', Check::class);
         $this->app->singleton('stool-password', Password::class);
         $this->app->singleton('stool-increment', Increment::class);
+
+        Command::macro('abort', function ($sMessage) {
+            $this->error($sMessage);
+            exit();
+        });
     }
 }
