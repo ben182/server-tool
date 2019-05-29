@@ -39,7 +39,7 @@ class NodeUpdateCommand extends Command
     {
         $version = $this->argument('version');
 
-        $this->shell->exec(". ~/.nvm/nvm.sh && nvm alias default $version");
+        $this->shell->exec(". ~/.nvm/nvm.sh && nvm install $version && nvm alias default $version");
         $this->shell->exec('sudo ln -s -f "$(which node)" /usr/local/bin/node');
     }
 }
