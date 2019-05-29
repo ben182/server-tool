@@ -41,5 +41,7 @@ class NodeUpdateCommand extends Command
 
         $this->shell->exec(". ~/.nvm/nvm.sh && nvm install $version && nvm alias default $version");
         $this->shell->exec('sudo ln -s -f "$(which node)" /usr/local/bin/node');
+
+        $this->line('Successfully changed Node.js version to ' . $version . '. Please restart the shell!');
     }
 }
