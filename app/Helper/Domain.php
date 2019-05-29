@@ -42,7 +42,7 @@ class Domain
     public function createHtmlFolder()
     {
         if (! file_exists($this->getHtmlFolder())) {
-            mkdir($this->getHtmlFolder(), 755, true);
+            mkdir($this->getHtmlFolder(), 0755, true);
         }
     }
 
