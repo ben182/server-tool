@@ -39,8 +39,8 @@ class NodeUpdateCommand extends Command
     {
         $version = $this->argument('version');
 
-        $this->shell->exec("nvm install $version");
-        $this->shell->exec("nvm use $version");
+        $this->shell->exec(". ~/.nvm/nvm.sh && nvm install $version");
+        $this->shell->exec(". ~/.nvm/nvm.sh && nvm use $version");
         $this->shell->exec('sudo ln -s "$(which node)" /usr/local/bin/node');
     }
 }
