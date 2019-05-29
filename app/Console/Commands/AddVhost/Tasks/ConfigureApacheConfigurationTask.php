@@ -26,8 +26,6 @@ class ConfigureApacheConfigurationTask extends Task
 
         $this->shell->replaceStringInFile('webmaster@localhost', Setting::getValue('admin_email'), $this->bindings->domain->getApacheSite());
 
-        $this->shell->exec("sudo a2ensite {$this->options->domain}.conf -q");
-
         $this->bindings->domain->createHtmlFolder();
 
         $this->addConclusion('Configured www alias');
