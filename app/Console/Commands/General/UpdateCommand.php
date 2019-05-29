@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands\General;
 
-use App\Helper\Shell\Shell;
 use App\Console\Command;
 
 class UpdateCommand extends Command

@@ -3,7 +3,6 @@
 namespace App\Console\Commands\Installation;
 
 use App\Helper\Env;
-use App\Helper\Shell\Shell;
 use App\Console\Command;
 
 class InstallationInitCommand extends Command

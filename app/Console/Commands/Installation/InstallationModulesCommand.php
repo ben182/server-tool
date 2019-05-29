@@ -3,7 +3,6 @@
 namespace App\Console\Commands\Installation;
 
 use App\Helper\Config;
-use App\Helper\Shell\Shell;
 use App\Console\Command;
 
 class InstallationModulesCommand extends Command

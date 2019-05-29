@@ -42,7 +42,7 @@ class NodeUpdateCommand extends Command
         $output = $this->shell->exec(". ~/.nvm/nvm.sh && nvm install $version && nvm alias default $version")->getLastOutput();
 
         // we try to find the switched node version from the output because we can not know the exact version that has been switched to
-        if (!preg_match('/(?<=Now using node v)(.*)(?= \()/', $output, $match)) {
+        if (! preg_match('/(?<=Now using node v)(.*)(?= \()/', $output, $match)) {
             $this->abort('Error in finding version');
         }
 

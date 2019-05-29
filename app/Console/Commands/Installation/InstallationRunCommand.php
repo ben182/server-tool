@@ -3,9 +3,8 @@
 namespace App\Console\Commands\Installation;
 
 use App\Setting;
-use App\Helper\Hardware;
-use App\Helper\Shell\Shell;
 use App\Console\Command;
+use App\Helper\Hardware;
 
 class InstallationRunCommand extends Command
 {

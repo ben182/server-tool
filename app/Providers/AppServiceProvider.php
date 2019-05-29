@@ -13,10 +13,10 @@ use App\Helper\Shell\Mysql;
 use App\Helper\Shell\Shell;
 use App\Helper\Shell\Cronjob;
 use App\Helper\Shell\Service;
+use Illuminate\Console\Command;
 use App\Helper\Shell\Environment;
 use App\Observers\RepositoryObserver;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Console\Command;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -57,6 +57,9 @@ class AppServiceProvider extends ServiceProvider
         Command::macro('abort', function ($sMessage) {
             $this->error($sMessage);
             exit();
+        });
+        Command::macro('break', function () {
+            $this->line('');
         });
     }
 }
