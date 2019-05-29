@@ -13,18 +13,18 @@ use App\Helper\Domain;
 
 class AddVhostTaskManager extends TaskManager
 {
-    public $aTasks = [
+    public $tasks = [
         CreateApacheConfigurationTask::class,
         ConfigureApacheConfigurationTask::class,
         CreateSslCertificateTask::class,
         ConfigureRedirectsTask::class,
-        ApacheFinishTask::class, // TODO: not here yet
+        // ApacheFinishTask::class, // TODO: not here yet
     ];
 
     public function addVariableBinding() : array
     {
         return [
-            'domain' => new Domain($this->oOptions->domain),
+            'domain' => new Domain($this->options->domain),
         ];
     }
 
