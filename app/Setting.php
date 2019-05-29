@@ -18,4 +18,8 @@ class Setting extends Model
             'value' => $value,
         ]);
     }
+
+    public static function getKey($key) {
+        return static::where('key', $key)->value('value');
+    }
 }

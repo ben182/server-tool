@@ -41,11 +41,12 @@ class NodeUpdateCommand extends Command
 
         $output = $this->shell->exec(". ~/.nvm/nvm.sh && nvm install $version && nvm alias default $version")->getLastOutput();
 
+        // we try to find the switched node version from the output because we can not know the exact version that has been switched to
         if (!preg_match('/(?<=Now using node v)(.*)(?= \()/', $output, $match)) {
             $this->abort('Error in finding version');
         }
 
-        $this->shell->exec('. ~/.nvm/nvm.sh && sudo ln -s -f /home/stool/.nvm/versions/node/v' . $match[0] . '/bin/node /usr/local/bin/node');
+        $this->shell->exec('sudo ln -s -f /home/stool/.nvm/versions/node/v' . $match[0] . '/bin/node /usr/local/bin/node');
 
         $this->line('Successfully changed Node.js version to ' . $version . '. Please restart the shell!');
     }
