@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands\AddVhost;
+namespace App\Console\Commands\Test;
 
 use App\Console\TaskManager;
 use App\Console\Commands\Test\Tasks\TestTask;
