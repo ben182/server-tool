@@ -150,6 +150,8 @@ abstract class TaskManager
         if ($this->isNotRootManager()) {
             return;
         }
+
+        $this->command->break();
         $this->printConclusions();
     }
 }
