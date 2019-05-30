@@ -41,7 +41,7 @@ abstract class TaskManager
         $validator = Validator::make($aOptions, $this->validate());
 
         if ($validator->fails()) {
-            $errors = collect($validator->messages())->flatten()->each(function ($message) {
+            collect($validator->messages())->flatten()->each(function ($message) {
                 $this->command->error($message);
             });
             exit();
