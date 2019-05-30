@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Console\Commands\Test;
+namespace App\Console\Commands;
 
-use App\Console\Command;
-use App\Console\CommandHolder;
+use App\Console\ModCommand;
+use App\Console\Commands\Tasks\PhpOpcacheTaskManager;
 
-class Test extends Command
+class PhpOpcacheCommand extends ModCommand
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'test';
+    protected $signature = 'php:opcache {mode}';
 
     /**
      * The console command description.
@@ -38,10 +38,8 @@ class Test extends Command
      */
     public function handle()
     {
-        // dd(CommandHolder::$command);
-        // CommandHolder::getCommand()->line('test');
-        TestTaskManager::work([
-            'test' => 'test',
-        ]);
+        (new PhpOpcacheTaskManager([
+            'mode' => $this->argument('mode'),
+        ]))->work();
     }
 }

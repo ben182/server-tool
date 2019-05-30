@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Console\Commands\Test;
+namespace App\Console\Commands\FloatingIpCreate;
 
 use App\Console\Command;
-use App\Console\CommandHolder;
 
-class Test extends Command
+class FloatingIpCreate extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'test';
+    protected $signature = 'floatingip:create';
 
     /**
      * The console command description.
@@ -38,10 +37,16 @@ class Test extends Command
      */
     public function handle()
     {
-        // dd(CommandHolder::$command);
-        // CommandHolder::getCommand()->line('test');
-        TestTaskManager::work([
-            'test' => 'test',
-        ]);
+        $ip = $this->ask('IP?');
+
+        $encodedIp = sha1($ip);
+
+        $file = '/etc/network/interfaces.d/' . $encodedIp . '.cfg';
+
+        $this->shell->copy(templates_path('floating-ip.cfg'), $file);
+
+        $this->shell->replaceStringInFile('your.float.ing.ip', $ip, $file);
+
+        $this->shell->exec('sudo service networking restart');
     }
 }

@@ -125,7 +125,7 @@ abstract class TaskManager
             try {
                 $oTask->handle();
             } catch (Exception $e) {
-                $this->errorBag[$e];
+                $this->errorBag[] = $e->getMessage();
             }
 
             if ($this->isRootManager()) {

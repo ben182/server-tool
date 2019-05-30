@@ -20,7 +20,8 @@ class Test2Task extends Task
 
     public function handle()
     {
-        $this->command->line($this->bindings->key);
         // $this->errorBag->add('test');
+        throw new \Exception('test');
+        $this->command->line($this->bindings->key);
     }
 }

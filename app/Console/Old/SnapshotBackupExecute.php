@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Console\Commands\Test;
+namespace App\Console\Commands;
 
-use App\Console\Command;
-use App\Console\CommandHolder;
+use App\Console\ModCommand;
+use App\Console\Commands\Tasks\SnapshotBackupTaskManager;
 
-class Test extends Command
+class SnapshotBackupExecute extends ModCommand
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'test';
+    protected $signature = 'snapshot:backup
+                            {keep : The amount of backups to keep}';
 
     /**
      * The console command description.
@@ -38,10 +39,10 @@ class Test extends Command
      */
     public function handle()
     {
-        // dd(CommandHolder::$command);
-        // CommandHolder::getCommand()->line('test');
-        TestTaskManager::work([
-            'test' => 'test',
-        ]);
+        $iKeep = $this->argument('keep');
+
+        (new SnapshotBackupTaskManager([
+            'keep' => $iKeep,
+        ]))->work();
     }
 }

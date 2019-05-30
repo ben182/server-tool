@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Console\Commands\Test;
+namespace App\Console\Commands\RestartPhp;
 
 use App\Console\Command;
-use App\Console\CommandHolder;
 
-class Test extends Command
+class RestartPhpCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'test';
+    protected $signature = 'php:restart';
 
     /**
      * The console command description.
@@ -38,10 +37,6 @@ class Test extends Command
      */
     public function handle()
     {
-        // dd(CommandHolder::$command);
-        // CommandHolder::getCommand()->line('test');
-        TestTaskManager::work([
-            'test' => 'test',
-        ]);
+        RestartPhpTaskManager::work();
     }
 }

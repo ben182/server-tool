@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Console\Commands\Test;
+namespace App\Console\Commands;
 
-use App\Console\Command;
-use App\Console\CommandHolder;
+use App\Console\ModCommand;
+use Illuminate\Console\Command;
+use App\Console\Commands\Tasks\DeleteVhostTaskManager;
 
-class Test extends Command
+class DeleteVhostCommand extends ModCommand
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'test';
+    protected $signature = 'vhost:delete';
 
     /**
      * The console command description.
@@ -38,10 +39,13 @@ class Test extends Command
      */
     public function handle()
     {
-        // dd(CommandHolder::$command);
-        // CommandHolder::getCommand()->line('test');
-        TestTaskManager::work([
-            'test' => 'test',
-        ]);
+        $sDomain = $this->ask('Domain?');
+
+        $bDeleteDir = $this->confirm("Delete /home/stool/$sDomain?", 0);
+
+        (new DeleteVhostTaskManager([
+            'domain'             => $sDomain,
+            'deleteDomainFolder' => $bDeleteDir,
+        ]))->work();
     }
 }
