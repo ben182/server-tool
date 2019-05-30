@@ -10,6 +10,7 @@ use App\Console\Commands\AddVhost\Tasks\CreateSslCertificateTask;
 use App\Console\Commands\AddVhost\Tasks\CreateApacheConfigurationTask;
 use App\Console\Commands\AddVhost\Tasks\ConfigureApacheConfigurationTask;
 use App\Helper\Domain;
+use App\Console\Commands\Partials\RestartApacheTask;
 
 class AddVhostTaskManager extends TaskManager
 {
@@ -18,7 +19,7 @@ class AddVhostTaskManager extends TaskManager
         ConfigureApacheConfigurationTask::class,
         CreateSslCertificateTask::class,
         ConfigureRedirectsTask::class,
-        // ApacheFinishTask::class, // TODO: not here yet
+        RestartApacheTask::class,
     ];
 
     public function addVariableBinding() : array

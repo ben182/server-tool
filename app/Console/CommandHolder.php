@@ -18,6 +18,9 @@ class CommandHolder
         self::$command = $command;
     }
 
+    /**
+     * @return \App\Console\Command
+     */
     public static function getCommand()
     {
         return new self();

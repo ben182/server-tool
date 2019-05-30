@@ -14,16 +14,12 @@ abstract class Task
     public $errorBag;
     public $conclusions = [];
     public $systemRequirementsErrorMessage;
+    public $command;
 
     /**
      * @var \App\Helper\Shell\Shell
      */
     public $shell;
-
-    /**
-     * @var \App\Console\Command
-     */
-    public $command;
 
     public function __construct(object $aOptions, array $aVariableBinding, Collection $errorBag)
     {

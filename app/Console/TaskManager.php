@@ -8,6 +8,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
+use Exception;
 
 abstract class TaskManager
 {
@@ -15,17 +16,12 @@ abstract class TaskManager
     public $tasks          = [];
     public $customBindings = [];
     public $errorBag;
+    public $command;
 
     /**
      * @var \App\Helper\Shell\Shell
      */
     public $shell;
-
-
-    /**
-     * @var \App\Console\Command
-     */
-    public $command;
 
     /**
      * @var \App\Console\TaskManager
@@ -45,7 +41,10 @@ abstract class TaskManager
         $validator = Validator::make($aOptions, $this->validate());
 
         if ($validator->fails()) {
-            throw new \Exception($validator->errors()); // TODO pretty
+            $errors = collect($validator->messages())->flatten()->each(function($message) {
+                $this->command->error($message);
+            });
+            exit();
         }
 
         if (! self::$rootTaskManager) {
