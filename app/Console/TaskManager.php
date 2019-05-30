@@ -2,13 +2,13 @@
 
 namespace App\Console;
 
+use Exception;
 use App\Helper\Config;
 use App\Helper\Shell\Shell;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
-use Exception;
 
 abstract class TaskManager
 {
@@ -41,7 +41,7 @@ abstract class TaskManager
         $validator = Validator::make($aOptions, $this->validate());
 
         if ($validator->fails()) {
-            $errors = collect($validator->messages())->flatten()->each(function($message) {
+            $errors = collect($validator->messages())->flatten()->each(function ($message) {
                 $this->command->error($message);
             });
             exit();
@@ -124,7 +124,7 @@ abstract class TaskManager
 
             try {
                 $oTask->handle();
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->errorBag[$e];
             }
 

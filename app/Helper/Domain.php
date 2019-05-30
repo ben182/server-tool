@@ -11,11 +11,18 @@ class Domain
         $this->domain = $domain;
     }
 
-    public function getApacheSite() {
+    public function __toString()
+    {
+        return $this->domain;
+    }
+
+    public function getApacheSite()
+    {
         return "/etc/apache2/sites-enabled/{$this->domain}.conf";
     }
 
-    public function getApacheSslSite() {
+    public function getApacheSslSite()
+    {
         return "/etc/apache2/sites-enabled/{$this->domain}-le-ssl.conf";
     }
 
@@ -64,9 +71,5 @@ class Domain
     public function getFullUrl($sSubDir = null)
     {
         return $this->getProtocol() . $this->domain . ($sSubDir ? '/' . $sSubDir : '');
-    }
-
-    public function __toString() {
-        return $this->domain;
     }
 }

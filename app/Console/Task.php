@@ -25,9 +25,9 @@ abstract class Task
     {
         $this->options = $aOptions;
 
-        $this->shell    = app(Shell::class);
-        $this->command  = CommandHolder::getCommand();
-        $this->errorBag = $errorBag;
+        $this->shell                          = app(Shell::class);
+        $this->command                        = CommandHolder::getCommand();
+        $this->errorBag                       = $errorBag;
         $this->systemRequirementsErrorMessage = $this->systemRequirementsErrorMessage ?: $this->name . ' failed because it did not passed the system requirements';
 
         $this->bindings = new \stdclass();
@@ -44,7 +44,7 @@ abstract class Task
     public function addCustomBinding($sKey, $sItem)
     {
         $this->customBindings[$sKey] = $sItem;
-        $this->bindings->$sKey = $sItem;
+        $this->bindings->$sKey       = $sItem;
     }
 
     public function systemRequirements()

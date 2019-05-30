@@ -3,7 +3,6 @@
 namespace App\Console\Commands\AddVhost;
 
 use App\Console\Command;
-use App\Console\Commands\AddVhost\AddVhostTaskManager;
 
 class AddVhostCommand extends Command
 {

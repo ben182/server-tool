@@ -9,7 +9,6 @@
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  */
 
-
 namespace App{
 /**
  * App\Repository
@@ -18,7 +17,9 @@ namespace App{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Repository newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Repository query()
  */
-	class Repository extends \Eloquent {}
+    class Repository extends \Eloquent
+    {
+    }
 }
 
 namespace App{
@@ -29,7 +30,9 @@ namespace App{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Setting newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Setting query()
  */
-	class Setting extends \Eloquent {}
+    class Setting extends \Eloquent
+    {
+    }
 }
 
 namespace App{
@@ -40,6 +43,7 @@ namespace App{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Task newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Task query()
  */
-	class Task extends \Eloquent {}
+    class Task extends \Eloquent
+    {
+    }
 }
-

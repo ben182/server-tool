@@ -3,7 +3,6 @@
 namespace App\Console\Commands\SslAdd;
 
 use App\Console\Command;
-use App\Console\Commands\AddVhost\AddVhostTaskManager;
 
 class SslAddCommand extends Command
 {

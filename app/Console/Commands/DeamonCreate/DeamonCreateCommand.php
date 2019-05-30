@@ -2,10 +2,7 @@
 
 namespace App\Console\Commands\DeamonCreate;
 
-use App\Console\Commands\Tasks\CreateDeamonTaskManager;
-use App\Console\ModCommand;
 use App\Console\Command;
-use App\Console\Commands\DeamonCreate\DeamonCreateTaskManager;
 
 class DeamonCreateCommand extends Command
 {
@@ -40,7 +37,7 @@ class DeamonCreateCommand extends Command
      */
     public function handle()
     {
-        $sName = $this->ask('Name?');
+        $sName    = $this->ask('Name?');
         $sCommand = $this->ask('Command?');
 
         DeamonCreateTaskManager::work([

@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands\DeamonCreate;
 
-use App\Console\Commands\Tasks\CreateDeamon\CreateDeamonTask;
 use App\Console\TaskManager;
 use App\Console\Commands\DeamonCreate\Tasks\DeamonCreateTask;
 

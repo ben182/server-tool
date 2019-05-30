@@ -2,8 +2,6 @@
 
 namespace App\Console\Commands\SslAdd;
 
-use App\Console\Command;
-use App\Console\Commands\AddVhost\AddVhostTaskManager;
 use App\Console\TaskManager;
 use App\Console\Commands\AddVhost\Tasks\CreateSslCertificateTask;
 

@@ -20,8 +20,6 @@ class Test2Task extends Task
 
     public function handle()
     {
-
-
         $this->command->line($this->bindings->key);
         // $this->errorBag->add('test');
     }
