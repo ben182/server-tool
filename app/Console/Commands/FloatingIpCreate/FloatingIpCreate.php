@@ -47,6 +47,6 @@ class FloatingIpCreate extends Command
 
         $this->shell->replaceStringInFile('your.float.ing.ip', $ip, $file);
 
-        $this->shell->exec('sudo service networking restart');
+        $this->shell->service()->restart('networking');
     }
 }
