@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\AddVhost;
 
+use App\Helper\Check;
 use App\Console\Command;
 
 class AddVhostCommand extends Command
@@ -20,14 +21,18 @@ class AddVhostCommand extends Command
      */
     protected $description = 'Adds a vHost';
 
+    protected $check;
+
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Check $check)
     {
         parent::__construct();
+
+        $this->check = $check;
     }
 
     /**
@@ -45,7 +50,7 @@ class AddVhostCommand extends Command
             $bRedirectTo = $this->ask('To?');
         }
 
-        if (isSubdomain($sDomain)) {
+        if ($this->check->isSubdomain($sDomain)) {
             $bWww = false;
         } else {
             $bWww = $this->confirm('www Alias?', true);

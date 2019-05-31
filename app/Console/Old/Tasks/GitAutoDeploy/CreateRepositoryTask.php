@@ -3,7 +3,7 @@
 namespace App\Console\Commands\Tasks\GitAutoDeploy;
 
 use App\Repository;
-use App\Console\Commands\Tasks\Task;
+use App\Console\Task;
 
 class CreateRepositoryTask extends Task
 {

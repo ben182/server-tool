@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands\Tasks\ApplicationInstall;
 
-use App\Console\Commands\Tasks\Task;
+use App\Console\Task;
 
 class LinkApplication extends Task
 {

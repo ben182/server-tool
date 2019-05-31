@@ -3,8 +3,8 @@
 namespace App\Console\Commands\Tasks\GitAutoDeployNotificationSlack;
 
 use App\Setting;
+use App\Console\Task;
 use App\Services\ApiRequestService;
-use App\Console\Commands\Tasks\Task;
 use App\Console\Commands\GitAutoDeployNotificationSlack;
 
 class GitAutoDeployNotificationSlackTask extends Task

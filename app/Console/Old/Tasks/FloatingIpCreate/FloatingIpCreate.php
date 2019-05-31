@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands\Tasks\FloatingIpCreate;
 
-use App\Console\Commands\Tasks\Task;
+use App\Console\Task;
 
 class FloatingIpCreate extends Task
 {

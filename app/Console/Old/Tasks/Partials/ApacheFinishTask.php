@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands\Tasks\Partials;
 
-use App\Console\Commands\Tasks\Task;
+use App\Console\Task;
 
 class ApacheFinishTask extends Task
 {

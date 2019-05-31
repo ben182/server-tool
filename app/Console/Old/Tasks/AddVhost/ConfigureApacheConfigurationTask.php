@@ -3,7 +3,7 @@
 namespace App\Console\Commands\Tasks\AddVhost;
 
 use App\Setting;
-use App\Console\Commands\Tasks\Task;
+use App\Console\Task;
 
 class ConfigureApacheConfigurationTask extends Task
 {

@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands\Tasks\SnapshotBackupSetup;
 
-use App\Console\Commands\Tasks\Task;
+use App\Console\Task;
 
 class InstallDependenciesTask extends Task
 {

@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands\Tasks\PhpOpcache;
 
-use App\Console\Commands\Tasks\Task;
+use App\Console\Task;
 use App\Console\Commands\Tasks\RefreshPhpTaskManager;
 
 class PhpOpcacheTask extends Task

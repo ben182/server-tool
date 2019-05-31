@@ -3,7 +3,6 @@
 namespace App\Console\Commands\OpcacheChange\Tasks;
 
 use App\Console\Task;
-use App\Console\Commands\Tasks\RefreshPhpTaskManager;
 
 class OpcacheChangeTask extends Task
 {

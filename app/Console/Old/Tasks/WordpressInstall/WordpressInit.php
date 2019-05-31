@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands\Tasks\WordpressInstall;
 
+use App\Console\Task;
 use Illuminate\Support\Str;
-use App\Console\Commands\Tasks\Task;
 
 class WordpressInit extends Task
 {

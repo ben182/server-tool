@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands\Tasks\RedisBackup;
 
+use App\Console\Task;
 use App\Task as TaskModel;
 use App\Services\BackupService;
-use App\Console\Commands\Tasks\Task;
 
 class RedisBackupTask extends Task
 {

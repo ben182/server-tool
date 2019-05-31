@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands\Tasks\TestTest;
 
-use App\Console\Commands\Tasks\Task;
+use App\Console\Task;
 
 class TestTask2 extends Task
 {

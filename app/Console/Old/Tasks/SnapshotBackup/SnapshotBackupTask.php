@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands\Tasks\SnapshotBackup;
 
-use App\Console\Commands\Tasks\Task;
+use App\Console\Task;
 
 class SnapshotBackupTask extends Task
 {

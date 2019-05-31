@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands\Tasks\RefreshPhp;
 
-use App\Console\Commands\Tasks\Task;
+use App\Console\Task;
 
 class RefreshPhpTask extends Task
 {

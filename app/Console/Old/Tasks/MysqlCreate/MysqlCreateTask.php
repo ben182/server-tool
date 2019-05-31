@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands\Tasks\MysqlCreate;
 
-use App\Console\Commands\Tasks\Task;
+use App\Console\Task;
 
 class MysqlCreateTask extends Task
 {

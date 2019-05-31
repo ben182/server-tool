@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands\Tasks\DeleteVhost;
 
-use App\Console\Commands\Tasks\Task;
+use App\Console\Task;
 
 class DeleteDomainFolderTask extends Task
 {
