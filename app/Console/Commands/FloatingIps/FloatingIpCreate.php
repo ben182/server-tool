@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands\FloatingIpCreate;
+namespace App\Console\Commands\FloatingIps;
 
 use App\Console\Command;
 
