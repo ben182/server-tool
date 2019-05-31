@@ -52,7 +52,7 @@ class FloatingIpList extends Command
             return $this->check->isSha1($file);
         })
         ->map(function ($file) {
-            $output = shell_exec('cat /etc/network/interfaces.d/' . $file . '.cfg 2>&1');
+            $output = $this->shell->getFile('/etc/network/interfaces.d/' . $file . '.cfg');
 
             if ($ips = $this->check->getIps($output)) {
                 return $ips[0];

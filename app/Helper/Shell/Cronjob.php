@@ -13,6 +13,6 @@ class Cronjob
 
     public function create($Interval, $sCommand)
     {
-        $this->shell->exec('crontab -l | { cat; echo "' . $Interval . ' ' . $sCommand .  ' >> /dev/null 2>&1"; } | crontab -');
+        return $this->shell->exec('crontab -l | { cat; echo "' . $Interval . ' ' . $sCommand .  ' >> /dev/null 2>&1"; } | crontab -');
     }
 }

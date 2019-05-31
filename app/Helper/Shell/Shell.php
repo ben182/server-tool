@@ -23,6 +23,9 @@ class Shell
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getLastOutput()
     {
         return $this->lastOutput;
@@ -95,24 +98,36 @@ class Shell
     {
         $this->exec('sudo cat ' . $sFile);
 
-        return $this;
+        return $this->getLastOutput();
     }
 
+    /**
+     * @return \App\Helper\Shell\Cronjob
+     */
     public function cronjob()
     {
         return app(Cronjob::class);
     }
 
+    /**
+     * @return \App\Helper\Shell\Environment
+     */
     public function environment()
     {
         return app(Environment::class);
     }
 
+    /**
+     * @return \App\Helper\Shell\Mysql
+     */
     public function mysql()
     {
         return app(Mysql::class);
     }
 
+    /**
+     * @return \App\Helper\Shell\Service
+     */
     public function service()
     {
         return app(Service::class);

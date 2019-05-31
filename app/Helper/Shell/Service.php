@@ -13,6 +13,6 @@ class Service
 
     public function restart($name)
     {
-        $this->shell->exec("sudo service $name restart");
+        return $this->shell->exec("sudo service $name restart");
     }
 }

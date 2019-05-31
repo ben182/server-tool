@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Console\Commands\FloatingIps;
+namespace App\Console\Commands\OpcacheChange;
 
 use App\Console\Command;
 
-class FloatingIpCreate extends Command
+class OpcacheChangeCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'floatingip:create';
+    protected $signature = 'php:opcache {mode}';
 
     /**
      * The console command description.
@@ -37,18 +37,8 @@ class FloatingIpCreate extends Command
      */
     public function handle()
     {
-        $ip = $this->ask('IP?');
-
-        $encodedIp = sha1($ip);
-
-        $file = '/etc/network/interfaces.d/' . $encodedIp . '.cfg';
-
-        $this->shell->copy(templates_path('floating-ip.cfg'), $file);
-
-        $this->shell->replaceStringInFile('your.float.ing.ip', $ip, $file);
-
-        $this->shell->service()->restart('networking');
-
-        $this->info('Successfully created floating ip');
+        OpcacheChangeTaskManager::work([
+            'mode' => $this->argument('mode'),
+        ]);
     }
 }
