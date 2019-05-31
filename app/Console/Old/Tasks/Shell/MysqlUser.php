@@ -32,7 +32,7 @@ class MysqlUser
     }
 
     /**
-     * Get the value of name
+     * Get the value of name.
      */
     public function getName()
     {
@@ -40,7 +40,7 @@ class MysqlUser
     }
 
     /**
-     * Get the value of password
+     * Get the value of password.
      */
     public function getPassword()
     {

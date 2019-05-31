@@ -14,7 +14,7 @@ class Hardware
     }
 
     /**
-     * Gets the total available RAM in GB
+     * Gets the total available RAM in GB.
      *
      * @return float
      */
@@ -35,20 +35,21 @@ class Hardware
     }
 
     /**
-     * Checks if a specific port is already blocked
+     * Checks if a specific port is already blocked.
      *
      * @param int $iPort
-     * @return boolean
+     *
+     * @return bool
      */
     public function checkIfPortIsUsed($port)
     {
         $fp = @fsockopen('127.0.0.1', $port, $errno, $errstr, 5);
         if (! $fp) {
             return false;
-        } else {
-            fclose($fp);
-
-            return true;
         }
+
+        fclose($fp);
+
+        return true;
     }
 }

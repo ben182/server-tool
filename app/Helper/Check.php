@@ -5,11 +5,11 @@ namespace App\Helper;
 class Check
 {
     /**
-     * Checks if a string is sha1
+     * Checks if a string is sha1.
      *
      * @param string $string
      *
-     * @return boolean
+     * @return bool
      */
     public function isSha1($string)
     {
@@ -17,7 +17,7 @@ class Check
     }
 
     /**
-     * Gets all IPs from a string
+     * Gets all IPs from a string.
      *
      * @param string $string
      *
@@ -33,11 +33,11 @@ class Check
     }
 
     /**
-     * Checks if a given domain is a subdomain
+     * Checks if a given domain is a subdomain.
      *
      * @param string $sDomain
      *
-     * @return boolean
+     * @return bool
      */
     public function isSubdomain($domain)
     {

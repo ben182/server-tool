@@ -11,6 +11,7 @@ class RepositoryObserver
      * Handle the repository "saving" event.
      *
      * @param  \App\Repository  $repository
+     *
      * @return void
      */
     public function saving(Repository $repository)

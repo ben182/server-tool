@@ -48,7 +48,7 @@ class Mysql
     }
 
     /**
-     * Increments a given name. If name has no number as a last character 2 will be appended. If it has a number (not 0) it will be incremented. Works only for the last character not for numbers >= 10. TODO: fix for larger numbers
+     * Increments a given name. If name has no number as a last character 2 will be appended. If it has a number (not 0) it will be incremented. Works only for the last character not for numbers >= 10. TODO: fix for larger numbers.
      *
      * @param string $sName
      *

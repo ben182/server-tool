@@ -10,39 +10,39 @@
  */
 
 namespace App{
-/**
- * App\Repository
- *
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Repository newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Repository newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Repository query()
- */
+    /**
+     * App\Repository.
+     *
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Repository newModelQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Repository newQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Repository query()
+     */
     class Repository extends \Eloquent
     {
     }
 }
 
 namespace App{
-/**
- * App\Setting
- *
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Setting newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Setting newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Setting query()
- */
+    /**
+     * App\Setting.
+     *
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Setting newModelQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Setting newQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Setting query()
+     */
     class Setting extends \Eloquent
     {
     }
 }
 
 namespace App{
-/**
- * App\Task
- *
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Task newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Task newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Task query()
- */
+    /**
+     * App\Task.
+     *
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Task newModelQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Task newQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Task query()
+     */
     class Task extends \Eloquent
     {
     }

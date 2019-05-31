@@ -167,10 +167,11 @@ function buildBackupPath($sType, $sFilename)
 }
 
 /**
- * Checks if a specific port is already blocked
+ * Checks if a specific port is already blocked.
  *
  * @param int $iPort
- * @return boolean
+ *
+ * @return bool
  */
 function checkIfPortIsUsed($iPort)
 {

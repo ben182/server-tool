@@ -42,10 +42,11 @@ class VersionCheck extends Command
     }
 
     /**
-     * Gets the latest version of a Github repo
+     * Gets the latest version of a Github repo.
      *
      * @param string $sOwner
      * @param string $sRepo
+     *
      * @return mixed The version. False in case of failure
      */
     public function githubGetLatestVersion($sOwner, $sRepo)
@@ -73,10 +74,11 @@ class VersionCheck extends Command
     }
 
     /**
-     * Sanitizes a given version. v2.1.0 => 210
+     * Sanitizes a given version. v2.1.0 => 210.
      *
      * @param string $sVersion
-     * @return integer
+     *
+     * @return int
      */
     protected function sanitizeVersion($sVersion)
     {
@@ -84,9 +86,10 @@ class VersionCheck extends Command
     }
 
     /**
-     * Extracts the version from a string
+     * Extracts the version from a string.
      *
      * @param string $sPayload
+     *
      * @return mixed
      */
     protected function extractVersion($sPayload)
