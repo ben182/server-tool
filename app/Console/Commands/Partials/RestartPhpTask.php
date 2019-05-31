@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands\Tasks\RefreshPhp;
+namespace App\Console\Commands\Partials;
 
 use Exception;
 use App\Console\Task;
