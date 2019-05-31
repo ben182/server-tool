@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\FloatingIps;
 
 use App\Helper\Check;
 use App\Console\Command;
