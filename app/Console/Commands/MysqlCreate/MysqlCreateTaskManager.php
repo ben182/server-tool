@@ -3,10 +3,8 @@
 namespace App\Console\Commands\MysqlCreate;
 
 use App\Console\TaskManager;
-use App\Console\Commands\AddVhost\Tasks\CreateSslCertificateTask;
-use App\Console\Commands\MysqlCreate\Tasks\MysqlCreateTask;
 use App\Console\Commands\MysqlCreate\Tasks\CreateUserTask;
-use App\Rules\MysqlDatabaseExistNot;
+use App\Console\Commands\MysqlCreate\Tasks\MysqlCreateTask;
 
 class MysqlCreateTaskManager extends TaskManager
 {
@@ -20,7 +18,6 @@ class MysqlCreateTaskManager extends TaskManager
         return [
             'database'         => [
                 'required',
-                new MysqlDatabaseExistNot,
             ],
             'newUserAndAccess' => 'required|boolean',
         ];

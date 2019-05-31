@@ -2,8 +2,8 @@
 
 namespace App\Rules;
 
-use Illuminate\Contracts\Validation\Rule;
 use App\Helper\Shell\Shell;
+use Illuminate\Contracts\Validation\Rule;
 
 class MysqlDatabaseExistNot implements Rule
 {
@@ -16,7 +16,6 @@ class MysqlDatabaseExistNot implements Rule
      */
     public function __construct()
     {
-
         $this->shell = app(Shell::class);
     }
 
