@@ -47,6 +47,8 @@ class FloatingIpCreate extends Command
 
         $this->shell->replaceStringInFile('your.float.ing.ip', $ip, $file);
 
+        $this->shell->exec("sudo chmod -x $file");
+
         $this->shell->service()->restart('networking');
 
         $this->info('Successfully created floating ip');
