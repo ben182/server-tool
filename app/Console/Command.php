@@ -10,8 +10,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 class Command extends CoreCommand
 {
     /**
-     * Shell.
-     *
      * @var \App\Helper\Shell\Shell
      */
     protected $shell;
