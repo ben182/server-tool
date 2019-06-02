@@ -6,7 +6,7 @@ use App\Console\Task;
 
 class RestartApacheTask extends Task
 {
-    public $sName = 'Restarting Apache Server';
+    public $name = 'Restarting Apache Server';
 
     public function handle()
     {

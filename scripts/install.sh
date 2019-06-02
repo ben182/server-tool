@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# http://patorjk.com/software/taag/#p=display&v=0&f=Slant&t=stool%20v1.5.0
+# http://patorjk.com/software/taag/#p=display&v=0&f=Slant&t=stool%20v2.0.0
 cat << "EOF"
          __              __        ___    ____   ____
    _____/ /_____  ____  / /  _   _|__ \  / __ \ / __ \
