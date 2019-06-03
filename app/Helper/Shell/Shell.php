@@ -66,9 +66,13 @@ class Shell
         return $this;
     }
 
-    public function copy($sFrom, $sTo)
+    public function copy($sFrom, $sTo, $asStool = false)
     {
-        $this->exec("sudo cp $sFrom $sTo");
+        if ($asStool) {
+            $this->exec("cp $sFrom $sTo");
+        }else{
+            $this->exec("sudo cp $sFrom $sTo");
+        }
 
         return $this;
     }
