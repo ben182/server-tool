@@ -27,7 +27,7 @@ class WordpressInstallTaskManager extends TaskManager
     {
         $oDomain = new Domain($this->options->domain);
 
-        $sNameSlugged = Str::slug($this->options->name);
+        $sNameSlugged = Str::slug($this->options->name); // TODO: increment when folder exists
 
         return [
             'domain'          => $oDomain,

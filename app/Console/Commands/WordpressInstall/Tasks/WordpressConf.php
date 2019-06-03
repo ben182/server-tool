@@ -32,6 +32,7 @@ class WordpressConf extends Task
             $this->shell->exec("cd {$this->bindings->installationDir} && wp plugin install maintenance --activate");
 
             $this->shell->copy(templates_path('wordpress/robots_disallow_all.txt'), $this->bindings->installationDir . '/robots.txt', true);
+            $this->shell->exec('chmod -x ' . $this->bindings->installationDir . '/robots.txt');
         }
 
         if ($this->options->installPlugins) {
