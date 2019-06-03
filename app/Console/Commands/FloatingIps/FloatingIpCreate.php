@@ -3,6 +3,7 @@
 namespace App\Console\Commands\FloatingIps;
 
 use App\Console\Command;
+use App\Helper\Check;
 
 class FloatingIpCreate extends Command
 {
@@ -20,14 +21,17 @@ class FloatingIpCreate extends Command
      */
     protected $description = 'Command description';
 
+    protected $check;
+
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Check $check)
     {
         parent::__construct();
+        $this->check = $check;
     }
 
     /**
