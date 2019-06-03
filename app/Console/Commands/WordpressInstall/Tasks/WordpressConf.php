@@ -30,6 +30,8 @@ class WordpressConf extends Task
         if ($this->options->local) {
             $this->shell->exec("cd {$this->bindings->installationDir} && wp option update blog_public 0");
             $this->shell->exec("cd {$this->bindings->installationDir} && wp plugin install maintenance --activate");
+
+            $this->shell->copy(templates_path('wordpress/robots_disallow_all.txt'), $this->bindings->installationDir . '/robots.txt');
         }
 
         if ($this->options->installPlugins) {
