@@ -3,7 +3,9 @@
 namespace App\Console\Commands\SslAdd;
 
 use App\Console\TaskManager;
-use App\Console\Commands\AddVhost\Tasks\CreateSslCertificateTask;
+use App\Console\Commands\SslAdd\Tasks\CreateSslCertificateTask;
+use App\Rules\DomainExists;
+use App\Helper\Domain;
 
 class SslAddTaskManager extends TaskManager
 {
@@ -13,9 +15,19 @@ class SslAddTaskManager extends TaskManager
 
     public function addVariableBinding() : array
     {
-        // CreateSslCertificateTask checks if this is true so we spoof it
-        $this->options->ssl = true;
+        return [
+            'domain' => new Domain($this->options->domain),
+        ];
+    }
 
-        return [];
+    public function validate()
+    {
+        return [
+            'domain' => [
+                'required',
+                new DomainExists,
+            ],
+            'htaccess' => 'required|boolean',
+        ];
     }
 }

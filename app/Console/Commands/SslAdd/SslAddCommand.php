@@ -37,6 +37,13 @@ class SslAddCommand extends Command
      */
     public function handle()
     {
-        SslAddTaskManager::work();
+        $domain = $this->ask('Domain?');
+
+        $htaccess = $this->confirm('Non SSL to SSL Htaccess?');
+
+        SslAddTaskManager::work([
+            'domain' => $domain,
+            'htaccess' => $htaccess,
+        ]);
     }
 }

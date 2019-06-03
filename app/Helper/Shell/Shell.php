@@ -2,6 +2,8 @@
 
 namespace App\Helper\Shell;
 
+use Illuminate\Support\Str;
+
 class Shell
 {
     protected $lastOutput;
@@ -105,6 +107,14 @@ class Shell
         $this->exec('sudo cat ' . $sFile);
 
         return $this->getLastOutput();
+    }
+
+    public function isStringInFile($file, $needle) {
+        $this->setQuitForNextCommand();
+
+        $this->exec("cat $file | grep '$needle'");
+
+        return Str::contains($this->getLastOutput(), $needle);
     }
 
     /**
