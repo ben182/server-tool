@@ -33,7 +33,8 @@ class OpcacheChangeTask extends Task
         if ($this->options->mode) {
 
             if (preg_match_all('/opcache.validate_timestamps=([\d]+)/', file_get_contents($phpIniFile), $matches)) {
-                $validateTimestampValue = (int) array_pop($matches[1]);
+                $end = $matches[1];
+                $validateTimestampValue = (int) array_pop($end);
             }
         }
 
