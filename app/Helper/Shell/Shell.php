@@ -100,6 +100,8 @@ class Shell
 
     public function getFile($sFile)
     {
+        $this->setQuitForNextCommand();
+
         $this->exec('sudo cat ' . $sFile);
 
         return $this->getLastOutput();
