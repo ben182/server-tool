@@ -67,7 +67,9 @@ class FloatingIpCreate extends Command
             }
         })
         ->max();
-        $this->shell->replaceStringInFile('eth0:1', 'eth0:' . (++$ethNo), $file);
+        if ($ethNo) {
+            $this->shell->replaceStringInFile('eth0:1', 'eth0:' . (++$ethNo), $file);
+        }
 
         $this->shell->exec("sudo chmod -x $file");
 
