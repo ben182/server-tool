@@ -25,11 +25,20 @@ class OpcacheChangeTask extends Task
 
         $sVersion = getStringBetween($phpConfs[0], '/php', '-fpm.conf');
 
+        $phpIniFile = "/etc/php/$sVersion/fpm/php.ini";
+
         $iInvertedMode = (int) ! $this->options->mode;
-        $this->shell->replaceStringInFile("opcache.enable=$iInvertedMode", "opcache.enable=" . $this->options->mode, "/etc/php/$sVersion/fpm/php.ini");
+        $this->shell->replaceStringInFile("opcache.enable=$iInvertedMode", "opcache.enable=" . $this->options->mode, $phpIniFile);
+
+        if ($this->options->mode) {
+
+            if (preg_match_all('/opcache.validate_timestamps=([\d]+)/', file_get_contents($phpIniFile), $matches)) {
+                $validateTimestampValue = (int) array_pop($matches[1]);
+            }
+        }
 
         if ($this->options->validateTimestamps) {
-            $this->shell->replaceStringInFile("opcache.validate_timestamps=0", "opcache.validate_timestamps=1", "/etc/php/$sVersion/fpm/php.ini");
+            $this->shell->replaceStringInFile("opcache.validate_timestamps=$validateTimestampValue", "opcache.validate_timestamps=" . (int) $this->options->validateTimestamps, $phpIniFile);
         }
 
         $this->addConclusion(($this->options->mode == 0 ? 'Disabled' : 'Enabled') . " Opcache");
