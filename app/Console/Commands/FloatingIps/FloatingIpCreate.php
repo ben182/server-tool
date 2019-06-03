@@ -47,12 +47,23 @@ class FloatingIpCreate extends Command
 
         $this->shell->replaceStringInFile('your.float.ing.ip', $ip, $file);
 
+        $floatingIps = collect(glob('/etc/network/interfaces.d/*.cfg'));
+        $ethNo = $floatingIps
+        ->map(function ($file) {
+            return str_replace('.cfg', '', basename($file));
+        })
+        ->filter(function ($file) {
+            return $this->check->isSha1($file);
+        })
+        ->map(function ($file) {
+            $output = $this->shell->getFile('/etc/network/interfaces.d/' . $file . '.cfg');
 
-        if (preg_match('/eth0:([\d]+)/', file_get_contents($file), $matches)) {
-            $ethNo = $matches[1];
-        }
-
-        $this->shell->replaceStringInFile('eth0:' . $ethNo, 'eth0:' . (++$ethNo), $file);
+            if (preg_match('/eth0:([\d]+)/', $output, $matches)) {
+                return $matches[1];
+            }
+        })
+        ->max();
+        $this->shell->replaceStringInFile('eth0:1', 'eth0:' . (++$ethNo), $file);
 
         $this->shell->exec("sudo chmod -x $file");
 
