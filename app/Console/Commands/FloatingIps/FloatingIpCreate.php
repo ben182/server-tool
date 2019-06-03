@@ -47,9 +47,6 @@ class FloatingIpCreate extends Command
 
         $file = '/etc/network/interfaces.d/' . $encodedIp . '.cfg';
 
-        $this->shell->copy(templates_path('floating-ip.cfg'), $file);
-
-        $this->shell->replaceStringInFile('your.float.ing.ip', $ip, $file);
 
         $floatingIps = collect(glob('/etc/network/interfaces.d/*.cfg'));
         $ethNo = $floatingIps
@@ -67,6 +64,11 @@ class FloatingIpCreate extends Command
             }
         })
         ->max();
+
+        $this->shell->copy(templates_path('floating-ip.cfg'), $file);
+
+        $this->shell->replaceStringInFile('your.float.ing.ip', $ip, $file);
+
         if ($ethNo) {
             $this->shell->replaceStringInFile('eth0:1', 'eth0:' . (++$ethNo), $file);
         }
