@@ -47,6 +47,13 @@ class FloatingIpCreate extends Command
 
         $this->shell->replaceStringInFile('your.float.ing.ip', $ip, $file);
 
+
+        if (preg_match('/eth0:([\d]+)/', file_get_contents($file), $matches)) {
+            $ethNo = $matches[1];
+        }
+
+        $this->shell->replaceStringInFile('eth0:' . $ethNo, 'eth0:' . (++$ethNo), $file);
+
         $this->shell->exec("sudo chmod -x $file");
 
         $this->shell->service()->restart('networking');
