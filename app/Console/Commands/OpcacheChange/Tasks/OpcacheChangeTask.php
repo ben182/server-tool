@@ -36,9 +36,8 @@ class OpcacheChangeTask extends Task
                 $end = $matches[1];
                 $validateTimestampValue = (int) array_pop($end);
             }
+            $this->shell->replaceStringInFile("opcache.validate_timestamps=$validateTimestampValue", "opcache.validate_timestamps=" . (int) $this->options->validateTimestamps, $phpIniFile);
         }
-
-        $this->shell->replaceStringInFile("opcache.validate_timestamps=$validateTimestampValue", "opcache.validate_timestamps=" . (int) $this->options->validateTimestamps, $phpIniFile);
 
         $this->addConclusion(($this->options->mode == 0 ? 'Disabled' : 'Enabled') . " Opcache");
     }
