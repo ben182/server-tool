@@ -15,7 +15,7 @@ class WordpressConf extends Task
         $email    = $this->options->pioneersConfig ? 'it@elbpioneers.de' : Setting::getValue('admin_email');
         $password = app(Password::class)->generate();
 
-        $this->shell->exec("cd {$this->bindings->installationDir} && wp core install --url={$this->bindings->domain->getFullUrl()} --title={$this->options->name} --admin_user=admin --admin_password='$password' --admin_email=$email --skip-email");
+        $this->shell->exec("cd {$this->bindings->installationDir} && wp core install --url={$this->bindings->domain->getFullUrl()} --title='{$this->options->name}' --admin_user=admin --admin_password='$password' --admin_email=$email --skip-email");
 
         $this->shell->exec("cd {$this->bindings->installationDir} && wp language core install de_DE");
         $this->shell->exec("cd {$this->bindings->installationDir} && wp language core activate de_DE");
