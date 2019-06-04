@@ -42,7 +42,9 @@ class WelcomeMessageCommand extends Command
         $this->line('stool v' . Stool::version());
 
         if (Stool::updateAvailable()) {
-            $this->line('An update for stool is available (' . Stool::versionOnRemote() . ')');
+            $this->error('An update for stool is available (' . Stool::versionOnRemote() . ')');
         }
+
+        $this->line('');
     }
 }
