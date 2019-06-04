@@ -99,8 +99,10 @@ abstract class TaskManager
 
     public function _work()
     {
+        $startBindings = $this->addVariableBinding();
+
         foreach ($this->tasks as $cTask) {
-            $oTask = new $cTask($this->options, array_merge($this->addVariableBinding(), $this->customBindings), $this->errorBag);
+            $oTask = new $cTask($this->options, array_merge($startBindings, $this->customBindings), $this->errorBag);
 
             $mSystemRequirements = $oTask->systemRequirements();
 
