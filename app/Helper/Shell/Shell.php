@@ -117,6 +117,14 @@ class Shell
         return Str::contains($this->getLastOutput(), $needle);
     }
 
+    public function doesFolderExist($folder) {
+        $this->setQuitForNextCommand();
+
+        $this->exec('[ -d "' . $folder . '" ] && echo "exists"');
+
+        return Str::contains($this->getLastOutput(), 'exists');
+    }
+
     /**
      * @return \App\Helper\Shell\Cronjob
      */
