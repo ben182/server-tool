@@ -31,9 +31,8 @@ class OpcacheChangeTask extends Task
         $this->shell->replaceStringInFile("opcache.enable=$iInvertedMode", "opcache.enable=" . $this->options->mode, $phpIniFile);
 
         if ($this->options->mode) {
-
             if (preg_match_all('/opcache.validate_timestamps=([\d]+)/', file_get_contents($phpIniFile), $matches)) {
-                $end = $matches[1];
+                $end                    = $matches[1];
                 $validateTimestampValue = (int) array_pop($end);
             }
             $this->shell->replaceStringInFile("opcache.validate_timestamps=$validateTimestampValue", "opcache.validate_timestamps=" . (int) $this->options->validateTimestamps, $phpIniFile);

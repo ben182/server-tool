@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands\FloatingIps;
 
-use App\Console\Command;
 use App\Helper\Check;
+use App\Console\Command;
 
 class FloatingIpCreate extends Command
 {
@@ -49,7 +49,7 @@ class FloatingIpCreate extends Command
 
 
         $floatingIps = collect(glob('/etc/network/interfaces.d/*.cfg'));
-        $ethNo = $floatingIps
+        $ethNo       = $floatingIps
         ->map(function ($file) {
             return str_replace('.cfg', '', basename($file));
         })

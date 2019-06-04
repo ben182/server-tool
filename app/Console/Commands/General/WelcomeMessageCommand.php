@@ -40,5 +40,9 @@ class WelcomeMessageCommand extends Command
     {
         $this->line('This server was provisioned by stool | created by Benjamin Bortels');
         $this->line('stool v' . Stool::version());
+
+        if (Stool::updateAvailable()) {
+            $this->line('An update for stool is available (' . Stool::versionOnRemote() . ')');
+        }
     }
 }

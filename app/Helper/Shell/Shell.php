@@ -72,7 +72,7 @@ class Shell
     {
         if ($asStool) {
             $this->exec("cp $sFrom $sTo");
-        }else{
+        } else {
             $this->exec("sudo cp $sFrom $sTo");
         }
 
@@ -109,7 +109,8 @@ class Shell
         return $this->getLastOutput();
     }
 
-    public function isStringInFile($file, $needle) {
+    public function isStringInFile($file, $needle)
+    {
         $this->setQuitForNextCommand();
 
         $this->exec("cat $file | grep '$needle'");
@@ -117,7 +118,8 @@ class Shell
         return Str::contains($this->getLastOutput(), $needle);
     }
 
-    public function doesFolderExist($folder) {
+    public function doesFolderExist($folder)
+    {
         $this->setQuitForNextCommand();
 
         $this->exec('[ -d "' . $folder . '" ] && echo "exists"');

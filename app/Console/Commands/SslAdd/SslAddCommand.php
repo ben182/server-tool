@@ -42,7 +42,7 @@ class SslAddCommand extends Command
         $htaccess = $this->confirm('Non SSL to SSL Htaccess?');
 
         SslAddTaskManager::work([
-            'domain' => $domain,
+            'domain'   => $domain,
             'htaccess' => $htaccess,
         ]);
     }

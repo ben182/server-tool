@@ -16,7 +16,7 @@ class OpcacheChangeTaskManager extends TaskManager
     public function validate()
     {
         return [
-            'mode' => 'required|boolean',
+            'mode'               => 'required|boolean',
             'validateTimestamps' => 'boolean',
         ];
     }

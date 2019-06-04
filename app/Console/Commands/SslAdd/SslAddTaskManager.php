@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands\SslAdd;
 
+use App\Helper\Domain;
+use App\Rules\DomainExists;
 use App\Console\TaskManager;
 use App\Console\Commands\SslAdd\Tasks\CreateSslCertificateTask;
-use App\Rules\DomainExists;
-use App\Helper\Domain;
 
 class SslAddTaskManager extends TaskManager
 {

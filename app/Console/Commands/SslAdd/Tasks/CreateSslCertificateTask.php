@@ -29,6 +29,5 @@ class CreateSslCertificateTask extends Task
 
             $this->addConclusion('Configured redirect from http://' . $this->options->domain . ' to https://' . $this->options->domain);
         }
-
     }
 }

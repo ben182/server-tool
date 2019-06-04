@@ -6,6 +6,7 @@ use App\Helper\Env;
 use App\Repository;
 use App\Helper\Check;
 use App\Helper\Config;
+use App\Helper\Github;
 use App\Helper\Hardware;
 use App\Helper\Password;
 use App\Helper\Increment;
@@ -53,6 +54,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton('stool-check', Check::class);
         $this->app->singleton('stool-password', Password::class);
         $this->app->singleton('stool-increment', Increment::class);
+        $this->app->singleton('stool-github', Github::class);
 
         Command::macro('abort', function ($sMessage) {
             $this->error($sMessage);

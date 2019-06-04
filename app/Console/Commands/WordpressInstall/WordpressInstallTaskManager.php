@@ -3,6 +3,7 @@
 namespace App\Console\Commands\WordpressInstall;
 
 use App\Helper\Domain;
+use App\Helper\Increment;
 use App\Rules\DomainExists;
 use Illuminate\Support\Str;
 use App\Console\TaskManager;
@@ -12,7 +13,6 @@ use App\Console\Commands\WordpressInstall\Tasks\WordpressConf;
 use App\Console\Commands\WordpressInstall\Tasks\WordpressInit;
 use App\Console\Commands\WordpressInstall\Tasks\LinkApplication;
 use App\Console\Commands\WordpressInstall\Tasks\DownloadWordpress;
-use App\Helper\Increment;
 
 class WordpressInstallTaskManager extends TaskManager
 {
@@ -29,11 +29,11 @@ class WordpressInstallTaskManager extends TaskManager
         $oDomain = new Domain($this->options->domain);
 
         $nameSlugged = Str::slug('wp-' . $this->options->name);
-        $installDir = $oDomain->getBaseFolder() . "/{$nameSlugged}";
+        $installDir  = $oDomain->getBaseFolder() . "/{$nameSlugged}";
 
         while ($this->shell->doesFolderExist($installDir)) {
             $nameSlugged = app(Increment::class)->increment($nameSlugged);
-            $installDir = $oDomain->getBaseFolder() . "/{$nameSlugged}";
+            $installDir  = $oDomain->getBaseFolder() . "/{$nameSlugged}";
         }
 
         return [
