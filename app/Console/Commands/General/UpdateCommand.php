@@ -37,6 +37,6 @@ class UpdateCommand extends Command
      */
     public function handle()
     {
-        $this->shell->exec('cd /etc/stool && sudo git reset --hard && sudo git pull');
+        $this->shell->exec('cd /etc/stool && sudo git reset --hard && sudo git pull && sudo chmod 755 ' . base_path('artisan'));
     }
 }
