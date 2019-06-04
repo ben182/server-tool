@@ -35,7 +35,7 @@ class Github
     }
 
     /**
-     * Extracts the version from a string.
+     * Extracts a version from a string.
      *
      * @param string $sPayload
      *

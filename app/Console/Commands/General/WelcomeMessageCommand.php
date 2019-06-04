@@ -45,6 +45,6 @@ class WelcomeMessageCommand extends Command
             $this->error('An update for stool is available (' . Stool::versionOnRemote() . ')');
         }
 
-        $this->line('');
+        $this->break();
     }
 }

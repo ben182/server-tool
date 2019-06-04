@@ -14,8 +14,6 @@ sudo chown -R stool:stool ${ABSOLUTE_PATH}
 sudo chmod -R 755 ${ABSOLUTE_PATH}
 stool config:cache
 
-sudo supervisorctl restart stool-deploy
-
 sudo cp ${TEMPLATES_PATH}.bash_aliases /home/stool/.bash_aliases
 
 sudo cp ${TEMPLATES_PATH}git/post-merge-this ${ABSOLUTE_PATH}.git/hooks/post-merge
