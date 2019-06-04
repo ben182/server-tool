@@ -16,6 +16,9 @@ echo "AllowUsers stool" >> /etc/ssh/sshd_config
 echo "Port 12920" >> /etc/ssh/sshd_config
 sudo ufw allow 12920/tcp
 
+# DISABLE ROOT LOGIN
+sudo sed -i "s|PermitRootLogin yes|PermitRootLogin no|" /etc/ssh/sshd_config
+
 sudo systemctl restart ssh
 
 sudo -Hu stool ssh-keygen -f "/home/stool/.ssh/id_rsa" -t rsa -b 4096 -N ''
