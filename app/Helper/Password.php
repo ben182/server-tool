@@ -21,8 +21,7 @@ class Password
           ->setUppercase()
           ->setLowercase()
           ->setNumbers()
-          ->setSymbols(true)
-          ->setLength(random_int(15, 20));
+          ->setLength(random_int(18, 25));
 
         return $generator->generatePassword();
     }
