@@ -23,5 +23,12 @@ class CreateSslCertificateTask extends Task
         $this->shell->exec("sudo certbot --non-interactive --agree-tos --email $sAdminEmail --apache -d {$this->options->domain}" . ($www ? " -d www.{$this->options->domain}" : ''));
 
         $this->addConclusion('Provisioned SSL certificate for https://' . $this->options->domain . ($www ? " and https://www.{$this->options->domain}" : ''));
+
+        if ($this->options->htaccess) {
+            $this->shell->replaceStringInFile('</VirtualHost>', 'Include ' . templates_path('apache/nonSSL_to_SSL.htaccess') . '\\n</VirtualHost>', $this->bindings->domain->getApacheSite());
+
+            $this->addConclusion('Configured redirect from http://' . $this->options->domain . ' to https://' . $this->options->domain);
+        }
+
     }
 }

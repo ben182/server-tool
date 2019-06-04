@@ -62,6 +62,6 @@ class ConfigureRedirectsTask extends Task
             $aStringFrom[] = 'from ' . $aEachFrom[0] . ' to ' . $aEachFrom[1];
         }
 
-        $this->addConclusion('Configured ' . (empty($aFrom) ? 'no ' : '') . 'Redirect ' . (empty($aFrom) ? '' : implode(' and ', $aStringFrom)));
+        $this->addConclusion('Configured ' . (empty($aFrom) ? 'no ' : '') . 'redirect ' . (empty($aFrom) ? '' : implode(' and ', $aStringFrom)));
     }
 }
