@@ -29,11 +29,12 @@ class WordpressInstallTaskManager extends TaskManager
         $oDomain = new Domain($this->options->domain);
 
         $nameSlugged = Str::slug('wp-' . $this->options->name);
+        $installDir = $oDomain->getBaseFolder() . "/{$nameSlugged}";
 
-        do {
-            $nameSlugged = app(Increment::class)->increment($this->options->name);
+        while ($this->shell->doesFolderExist($installDir)) {
+            $nameSlugged = app(Increment::class)->increment($nameSlugged);
             $installDir = $oDomain->getBaseFolder() . "/{$nameSlugged}";
-        } while ($this->shell->doesFolderExist($installDir));
+        }
 
         return [
             'domain'          => $oDomain,

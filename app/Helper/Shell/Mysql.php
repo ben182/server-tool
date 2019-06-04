@@ -26,12 +26,10 @@ class Mysql
     {
         $sSluggedDatabaseName = Str::slug($sDatabaseName, null);
 
-        if ($this->doesDatabaseExist($sSluggedDatabaseName) && $bCheckIfExist) {
-            do {
+        if ($bCheckIfExist) {
+            while ($this->doesDatabaseExist($sSluggedDatabaseName)) {
                 $sSluggedDatabaseName = $this->increment->increment($sSluggedDatabaseName);
-
-                $bExist = $this->doesDatabaseExist($sSluggedDatabaseName);
-            } while ($bExist);
+            }
         }
 
         $this->execCommand("CREATE DATABASE $sSluggedDatabaseName;");
