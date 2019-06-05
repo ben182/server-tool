@@ -3,8 +3,9 @@
 namespace App\Console\Commands\WordpressInstall;
 
 use App\Console\Command;
+use App\Helper\Apache;
 
-class WordpressInstall extends Command
+class WordpressInstallCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -20,14 +21,18 @@ class WordpressInstall extends Command
      */
     protected $description = 'Command description';
 
+    protected $apache;
+
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Apache $apache)
     {
         parent::__construct();
+
+        $this->apache = $apache;
     }
 
     /**
@@ -39,7 +44,7 @@ class WordpressInstall extends Command
     {
         $sName = $this->ask('Name of Wordpress Site?');
 
-        $sDomain = $this->ask('Domain?');
+        $sDomain = $this->anticipate('Domain?', $this->apache->getAllDomainsEnabled());
 
         $sSubDir    = '';
         $sRootOrSub = $this->choice('Root or Subdirectory?', ['Root', 'Sub']);

@@ -3,6 +3,7 @@
 namespace App\Console\Commands\SslAdd;
 
 use App\Console\Command;
+use App\Helper\Apache;
 
 class SslAddCommand extends Command
 {
@@ -20,14 +21,18 @@ class SslAddCommand extends Command
      */
     protected $description = 'Adds an SSL certificate';
 
+    protected $apache;
+
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Apache $apache)
     {
         parent::__construct();
+
+        $this->apache = $apache;
     }
 
     /**
@@ -37,7 +42,7 @@ class SslAddCommand extends Command
      */
     public function handle()
     {
-        $domain = $this->ask('Domain?');
+        $domain = $this->anticipate('Domain?', $this->apache->getAllDomainsEnabled());
 
         $htaccess = $this->confirm('Non SSL to SSL Htaccess?');
 
