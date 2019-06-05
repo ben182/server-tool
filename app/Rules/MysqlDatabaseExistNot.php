@@ -16,7 +16,7 @@ class MysqlDatabaseExistNot implements Rule
      */
     public function __construct()
     {
-        $this->shell = app(Shell::class);
+        $this->shell = app('stool-shell');
     }
 
     /**

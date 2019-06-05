@@ -22,7 +22,6 @@ class TestTask extends Task
     {
         $this->addCustomBinding('key', 'value');
 
-        dump('handle');
         $this->shell->exec('pwd');
 
 

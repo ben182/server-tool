@@ -32,7 +32,7 @@ class WordpressInstallTaskManager extends TaskManager
         $installDir  = $oDomain->getBaseFolder() . "/{$nameSlugged}";
 
         while ($this->shell->doesFolderExist($installDir)) {
-            $nameSlugged = app(Increment::class)->increment($nameSlugged);
+            $nameSlugged = app('stool-increment')->increment($nameSlugged);
             $installDir  = $oDomain->getBaseFolder() . "/{$nameSlugged}";
         }
 

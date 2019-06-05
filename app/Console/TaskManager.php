@@ -33,7 +33,7 @@ abstract class TaskManager
     {
         $this->options = (object) $aOptions;
 
-        $this->shell   = app(Shell::class);
+        $this->shell   = app('stool-shell');
         $this->command = CommandHolder::getCommand();
 
         $this->errorBag = new Collection;

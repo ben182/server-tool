@@ -20,7 +20,7 @@ class Stool
      */
     public static function versionOnRemote()
     {
-        return static::$versionOnRemote ?: static::$versionOnRemote = app(Github::class)->getLatestVersion('ben182', 'server-tool');
+        return static::$versionOnRemote ?: static::$versionOnRemote = app('stool-github')->getLatestVersion('ben182', 'server-tool');
     }
 
     /**

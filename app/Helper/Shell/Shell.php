@@ -9,11 +9,12 @@ class Shell
     protected $lastOutput;
     protected $quiet     = false;
     protected $quietTemp = false;
+    protected $outputEveryCommand = false;
 
     public function exec($sCommand)
     {
-        if (config('app.debug')) {
-            echo $sCommand . ' 2>&1';
+        if ($this->outputEveryCommand) {
+            echo $sCommand . " 2>&1\n";
         }
 
         $this->lastOutput = shell_exec($sCommand . ' 2>&1');
@@ -47,6 +48,12 @@ class Shell
     public function setQuitForNextCommand(bool $bool = true)
     {
         $this->quietTemp = $bool;
+
+        return $this;
+    }
+
+    public function setOutputEveryCommand(bool $bool = true) {
+        $this->outputEveryCommand = $bool;
 
         return $this;
     }
@@ -143,7 +150,7 @@ class Shell
      */
     public function cronjob()
     {
-        return app(Cronjob::class);
+        return app('stool-shell-cronjob');
     }
 
     /**
@@ -151,7 +158,7 @@ class Shell
      */
     public function environment()
     {
-        return app(Environment::class);
+        return app('stool-shell-environment');
     }
 
     /**
@@ -159,7 +166,7 @@ class Shell
      */
     public function mysql()
     {
-        return app(Mysql::class);
+        return app('stool-shell-mysql');
     }
 
     /**
@@ -167,6 +174,6 @@ class Shell
      */
     public function service()
     {
-        return app(Service::class);
+        return app('stool-shell-service');
     }
 }

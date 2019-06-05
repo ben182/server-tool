@@ -23,21 +23,31 @@ class Command extends CoreCommand
     {
         parent::__construct();
 
-        $this->shell = app(Shell::class);
+        $this->shell = app('stool-shell');
+
+        // add the debug option to the default options
+        $this->getDefinition()->addOption(new \Symfony\Component\Console\Input\InputOption(
+            'debug',
+            'd',
+            null,
+            'Display all shell commands'
+        ));
     }
 
     /**
-     * Run the console command.
+     * Execute the console command.
      *
      * @param  \Symfony\Component\Console\Input\InputInterface  $input
      * @param  \Symfony\Component\Console\Output\OutputInterface  $output
-     *
-     * @return int
+     * @return mixed
      */
-    public function run(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
         CommandHolder::setCommand($this);
+        if ($this->option('debug') === true) {
+            $this->shell->setOutputEveryCommand();
+        }
 
-        parent::run($input, $output);
+        return parent::execute($input, $output);
     }
 }
