@@ -29,3 +29,4 @@ chmod 600 /home/stool/.ssh/authorized_keys
 chmod 400 /home/stool/.ssh/id_rsa
 
 mkdir /home/stool/.stool
+sudo chown -R stool:stool /home/stool/.stool/
