@@ -9,9 +9,14 @@ class Shell
     protected $lastOutput;
     protected $quiet     = false;
     protected $quietTemp = false;
+    protected $outputEveryCommand = false;
 
     public function exec($sCommand)
     {
+        if ($this->outputEveryCommand) {
+            echo $sCommand . ' 2>&1';
+        }
+
         $this->lastOutput = shell_exec($sCommand . ' 2>&1');
 
         if (! $this->quiet && ! $this->quietTemp) {
@@ -45,6 +50,10 @@ class Shell
         $this->quietTemp = $bool;
 
         return $this;
+    }
+
+    public function setOutputEveryCommand(bool $bool = true) {
+        $this->outputEveryCommand = $bool;
     }
 
     public function bash($sName)

@@ -6,6 +6,7 @@ use App\Helper\Shell\Shell;
 use Illuminate\Console\Command as CoreCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Input\InputOption;
 
 class Command extends CoreCommand
 {
@@ -24,6 +25,14 @@ class Command extends CoreCommand
         parent::__construct();
 
         $this->shell = app(Shell::class);
+
+        // add the debug option to the default options
+        $this->getDefinition()->addOption(new InputOption(
+            'debug',
+            'd',
+            null,
+            'Display all shell commands'
+        ));
     }
 
     /**
@@ -37,6 +46,10 @@ class Command extends CoreCommand
     public function run(InputInterface $input, OutputInterface $output)
     {
         CommandHolder::setCommand($this);
+
+        if ($this->option('debug') === true) {
+            $this->shell->setOutputEveryCommand();
+        }
 
         parent::run($input, $output);
     }
