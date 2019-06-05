@@ -95,6 +95,13 @@ class Shell
 
     public function replaceStringInFile($sNeedle, $sReplace, $sFile)
     {
+        // escaping
+        $sNeedle = str_replace('\"', '"', $sNeedle);
+        $sNeedle = preg_quote($sNeedle, '"');
+
+        $sReplace = str_replace('\"', '"', $sReplace);
+        $sReplace = preg_quote($sReplace, '"');
+
         $this->exec('sudo sed -i "s|' . $sNeedle . '|' . $sReplace . '|g" ' . $sFile);
 
         return $this;
