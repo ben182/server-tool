@@ -9,12 +9,14 @@ use Illuminate\Support\Str;
 
 class Mysql
 {
+    protected $shell;
     protected $password;
     protected $increment;
     protected $config;
 
-    public function __construct(Password $password, Increment $increment, Config $config)
+    public function __construct(Shell $shell, Password $password, Increment $increment, Config $config)
     {
+        $this->shell     = $shell;
         $this->password  = $password;
         $this->increment = $increment;
         $this->config    = $config;
@@ -56,9 +58,9 @@ class Mysql
 
     public function execCommand($sCommand)
     {
-        app('stool-shell')->setQuitForNextCommand();
+        $this->shell->setQuitForNextCommand();
 
-        return app('stool-shell')->exec('mysql ' . $this->credentials() . " -e \"$sCommand\"");
+        return $this->shell->exec('mysql ' . $this->credentials() . " -e \"$sCommand\"");
     }
 
     public function doesDatabaseExist($sDatabase)
