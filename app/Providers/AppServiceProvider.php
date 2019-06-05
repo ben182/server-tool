@@ -18,6 +18,7 @@ use Illuminate\Console\Command;
 use App\Helper\Shell\Environment;
 use App\Observers\RepositoryObserver;
 use Illuminate\Support\ServiceProvider;
+use App\Helper\Apache;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -55,6 +56,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton('stool-password', Password::class);
         $this->app->singleton('stool-increment', Increment::class);
         $this->app->singleton('stool-github', Github::class);
+        $this->app->singleton('stool-apache', Apache::class);
 
         Command::macro('abort', function ($sMessage) {
             $this->error($sMessage);

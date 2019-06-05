@@ -19,8 +19,8 @@ class VhostBasicAuthTask extends Task
 
         $this->shell->replaceStringInFile('Require all granted', 'AuthType Basic\\nAuthName "Restricted Content"\\nAuthUserFile ' . $htpasswd . '\\nRequire valid-user\\n# Require all granted', $this->bindings->domain->getApacheSite());
 
-        // if () {
-
-        // }
+        if ($this->bindings->domain->isSSL()) {
+            $this->shell->replaceStringInFile('Require all granted', 'AuthType Basic\\nAuthName "Restricted Content"\\nAuthUserFile ' . $htpasswd . '\\nRequire valid-user\\n# Require all granted', $this->bindings->domain->getApacheSslSite());
+        }
     }
 }
