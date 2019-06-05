@@ -22,6 +22,9 @@ class TestTask extends Task
     {
         $this->addCustomBinding('key', 'value');
 
+        dump('handle');
+        $this->shell->exec('pwd');
+
 
         $this->command->line($this->bindings->key);
         // $this->errorBag->add('test');
