@@ -38,6 +38,7 @@ class Test extends Command
      */
     public function handle()
     {
+        dump('handle');
         // dd(CommandHolder::$command);
         // CommandHolder::getCommand()->line('test');
         TestTaskManager::work([

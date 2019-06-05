@@ -6,13 +6,6 @@ use App\Helper\Shell\Shell;
 
 class Hardware
 {
-    protected $shell;
-
-    public function __construct(Shell $shell)
-    {
-        $this->shell = $shell;
-    }
-
     /**
      * Gets the total available RAM in GB.
      *
