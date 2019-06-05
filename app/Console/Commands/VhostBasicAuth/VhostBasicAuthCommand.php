@@ -4,6 +4,7 @@ namespace App\Console\Commands\VhostBasicAuth;
 
 use App\Helper\Check;
 use App\Console\Command;
+use App\Helper\Apache;
 
 class VhostBasicAuthCommand extends Command
 {
@@ -22,17 +23,19 @@ class VhostBasicAuthCommand extends Command
     protected $description = 'Adds a basic auth password protection to a domain';
 
     protected $check;
+    protected $apache;
 
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct(Check $check)
+    public function __construct(Check $check, Apache $apache)
     {
         parent::__construct();
 
         $this->check = $check;
+        $this->apache = $apache;
     }
 
     /**
@@ -42,7 +45,7 @@ class VhostBasicAuthCommand extends Command
      */
     public function handle()
     {
-        $domain = $this->ask('Domain?');
+        $domain = $this->anticipate('Domain?', $this->apache->getAllDomainsEnabled());
         $user = $this->ask('User?');
         $password = $this->secret('Password?');
         $password_again = $this->secret('Password again?');
