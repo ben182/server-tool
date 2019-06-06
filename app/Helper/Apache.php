@@ -17,7 +17,10 @@ class Apache
         $output = $this->shell->setQuitForNextCommand()->exec('sudo apache2ctl -t -D DUMP_VHOSTS')->getLastOutput();
 
         if (preg_match_all('/(?<=namevhost ).\S*/', $output, $matches)) {
-            return $matches[0];
+            return array_diff($matches[0], [
+                'localhost',
+                $this->getOwnPublicIp(),
+            ]);
         }
 
         return [];
@@ -35,5 +38,9 @@ class Apache
         }
 
         return getStringBetween($phpConfs[0], '/php', '-fpm.conf');
+    }
+
+    public function getOwnPublicIp() {
+        return file_get_contents('https://ipinfo.io/ip');
     }
 }
