@@ -3,24 +3,29 @@
 namespace App\Helper;
 
 use App\Helper\Shell\Shell;
+use App\Helper\Check;
 
 class Apache
 {
     protected $shell;
+    protected $check;
 
-    public function __construct(Shell $shell)
+    public function __construct(Shell $shell, Check $check)
     {
         $this->shell = $shell;
+        $this->check = $check;
     }
 
     public function getAllDomainsEnabled() {
         $output = $this->shell->setQuitForNextCommand()->exec('sudo apache2ctl -t -D DUMP_VHOSTS')->getLastOutput();
 
+        $ignore = $this->check->getIps($output);
+        $ignore = array_merge($ignore, [
+            'localhost',
+        ]);
+
         if (preg_match_all('/(?<=namevhost ).\S*/', $output, $matches)) {
-            return array_diff($matches[0], [
-                'localhost',
-                $this->getOwnPublicIp(),
-            ]);
+            return array_diff($matches[0], $ignore);
         }
 
         return [];
