@@ -43,7 +43,7 @@ class DomainsCommand extends Command
     public function handle()
     {
         foreach ($this->apache->getAllDomainsEnabled() as $domain) {
-            $this->line($domain);
+            $this->info($domain);
         }
     }
 }
