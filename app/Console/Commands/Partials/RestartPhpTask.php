@@ -13,18 +13,12 @@ class RestartPhpTask extends Task
 
     public function systemRequirements()
     {
-        return ! empty(glob("/etc/apache2/conf-enabled/php*-fpm.conf"));
+        return app('stool-apache')->getEnabledPhpVersion() !== false;
     }
 
     public function handle()
     {
-        $phpConfs = glob("/etc/apache2/conf-enabled/php*-fpm.conf");
-
-        if (count($phpConfs) > 1) {
-            throw new Exception('There are two or more PHP apache version configurations enabled');
-        }
-
-        $version = getStringBetween($phpConfs[0], '/php', '-fpm.conf');
+        $version = app('stool-apache')->getEnabledPhpVersion();
 
         $this->shell->exec("sudo /etc/init.d/php$version-fpm restart");
 

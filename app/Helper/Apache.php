@@ -22,4 +22,18 @@ class Apache
 
         return [];
     }
+
+    public function getEnabledPhpVersion() {
+        $phpConfs = glob("/etc/apache2/conf-enabled/php*-fpm.conf");
+
+        if (empty($phpConfs)) {
+            return false;
+        }
+
+        if (count($phpConfs) > 1) {
+            throw new Exception('There are two or more PHP apache version configurations enabled');
+        }
+
+        return getStringBetween($phpConfs[0], '/php', '-fpm.conf');
+    }
 }

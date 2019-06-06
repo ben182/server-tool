@@ -12,20 +12,14 @@ class OpcacheChangeTask extends Task
 
     public function systemRequirements()
     {
-        return ! empty(glob("/etc/apache2/conf-enabled/php*-fpm.conf"));
+        return app('stool-apache')->getEnabledPhpVersion() !== false;
     }
 
     public function handle()
     {
-        $phpConfs = glob("/etc/apache2/conf-enabled/php*-fpm.conf");
+        $version = app('stool-apache')->getEnabledPhpVersion();
 
-        if (count($phpConfs) > 1) {
-            throw new Exception('There are two or more PHP apache version configurations enabled');
-        }
-
-        $sVersion = getStringBetween($phpConfs[0], '/php', '-fpm.conf');
-
-        $phpIniFile = "/etc/php/$sVersion/fpm/php.ini";
+        $phpIniFile = "/etc/php/$version/fpm/php.ini";
 
         $iInvertedMode = (int) ! $this->options->mode;
         $this->shell->replaceStringInFile("opcache.enable=$iInvertedMode", "opcache.enable=" . $this->options->mode, $phpIniFile);
