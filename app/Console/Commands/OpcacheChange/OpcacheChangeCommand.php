@@ -39,7 +39,7 @@ class OpcacheChangeCommand extends Command
     {
         $validateTimestamps = false;
         if ($this->argument('mode')) {
-            $validateTimestamps = $this->confirm('Validate timestamp on files');
+            $validateTimestamps = $this->confirm('Validate timestamp on files', true);
         }
         OpcacheChangeTaskManager::work([
             'mode'               => $this->argument('mode'),
