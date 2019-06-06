@@ -1,0 +1,4 @@
+
+if [ -f "$HOME/composer-autocomplete" ] ; then
+    . $HOME/composer-autocomplete
+fi

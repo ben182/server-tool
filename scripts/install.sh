@@ -88,6 +88,11 @@ phpInstall
 composerInstall () {
     curl -sS https://getcomposer.org/installer | php
     mv composer.phar /usr/bin/composer
+
+    curl -#L https://github.com/bramus/composer-autocomplete/tarball/master | tar -xzv --strip-components 1 --exclude={LICENSE,README.md}
+    mv ./composer-autocomplete ~/composer-autocomplete
+
+    sudo cat ${TEMPLATES_PATH}php/composer-autocomplete >> /home/stool/.profile
 }
 echo "Installing Composer..."
 composerInstall
