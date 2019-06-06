@@ -35,9 +35,8 @@ finish () {
     # SENDMAIL
     sudo apt-get install sendmail -y
 
-    # APACHE PERMISSIONS
-    # apache_permissions
-    # service apache2 reload
+    # NCDU (FILE SIZE PROGRAM)
+    sudo apt-get install ncdu
 
     bash ${SCRIPTS_PATH}partials/systemUpdate.sh
 }
