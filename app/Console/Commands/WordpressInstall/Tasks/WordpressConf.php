@@ -36,9 +36,9 @@ class WordpressConf extends Task
         }
 
         if ($this->options->installPlugins) {
-            $this->shell->exec("cd {$this->bindings->installationDir} && wp plugin install wordpress-seo all-in-one-wp-migration wp-smushit wordfence wps-hide-login --activate");
+            $this->shell->exec("cd {$this->bindings->installationDir} && wp plugin install wordpress-seo wp-smushit wordfence wps-hide-login --activate");
 
-            $this->shell->exec("cd {$this->bindings->installationDir} && wp plugin install w3-total-cache cloudflare");
+            $this->shell->exec("cd {$this->bindings->installationDir} && wp plugin install all-in-one-wp-migration w3-total-cache cloudflare");
         }
 
         if ($this->options->pioneersConfig) {
