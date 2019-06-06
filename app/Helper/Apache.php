@@ -41,6 +41,6 @@ class Apache
     }
 
     public function getOwnPublicIp() {
-        return file_get_contents('https://ipinfo.io/ip');
+        return trim(file_get_contents('https://ipinfo.io/ip'));
     }
 }
