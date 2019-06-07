@@ -20,12 +20,12 @@ class TestTask extends Task
 
     public function handle()
     {
-        $this->addCustomBinding('key', 'value');
+        // $this->addCustomBinding('key', 'value');
 
-        $this->shell->exec('pwd');
+        // $this->shell->exec('pwd');
 
 
-        $this->command->line($this->bindings->key);
+        // $this->command->line("\n");
         // $this->errorBag->add('test');
     }
 }
