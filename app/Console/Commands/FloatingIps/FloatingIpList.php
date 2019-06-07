@@ -42,9 +42,17 @@ class FloatingIpList extends Command
      */
     public function handle()
     {
+        $this
+        ->getAllIps()
+        ->each(function ($ip) {
+            $this->line($ip);
+        });
+    }
+
+    public static function getAllIps() {
         $floatingIps = collect(glob('/etc/network/interfaces.d/*.cfg'));
 
-        $floatingIps
+        return $floatingIps
         ->map(function ($file) {
             return str_replace('.cfg', '', basename($file));
         })
@@ -61,9 +69,6 @@ class FloatingIpList extends Command
             return null;
         })
         ->filter()
-        ->values()
-        ->each(function ($ip) {
-            $this->line($ip);
-        });
+        ->values();
     }
 }
