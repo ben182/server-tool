@@ -57,6 +57,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton('stool-increment', Increment::class);
         $this->app->singleton('stool-github', Github::class);
         $this->app->singleton('stool-apache', Apache::class);
+        $this->app->singleton('stool-floating-ip', FloatingIp::class);
 
         Command::macro('abort', function ($sMessage) {
             $this->error($sMessage);

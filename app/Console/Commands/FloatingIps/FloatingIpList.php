@@ -4,6 +4,7 @@ namespace App\Console\Commands\FloatingIps;
 
 use App\Helper\Check;
 use App\Console\Command;
+use App\Helper\FloatingIp;
 
 class FloatingIpList extends Command
 {
@@ -22,17 +23,19 @@ class FloatingIpList extends Command
     protected $description = 'Command description';
 
     protected $check;
+    protected $floatingIp;
 
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct(Check $check)
+    public function __construct(Check $check, FloatingIp $floatingIp)
     {
         parent::__construct();
 
         $this->check = $check;
+        $this->floatingIp = $floatingIp;
     }
 
     /**
@@ -43,32 +46,10 @@ class FloatingIpList extends Command
     public function handle()
     {
         $this
+        ->floatingIp
         ->getAllIps()
         ->each(function ($ip) {
             $this->line($ip);
         });
-    }
-
-    public static function getAllIps() {
-        $floatingIps = collect(glob('/etc/network/interfaces.d/*.cfg'));
-
-        return $floatingIps
-        ->map(function ($file) {
-            return str_replace('.cfg', '', basename($file));
-        })
-        ->filter(function ($file) {
-            return $this->check->isSha1($file);
-        })
-        ->map(function ($file) {
-            $output = $this->shell->getFile('/etc/network/interfaces.d/' . $file . '.cfg');
-
-            if ($ips = $this->check->getIps($output)) {
-                return $ips[0];
-            }
-
-            return null;
-        })
-        ->filter()
-        ->values();
     }
 }

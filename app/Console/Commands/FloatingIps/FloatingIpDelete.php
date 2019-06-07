@@ -4,6 +4,7 @@ namespace App\Console\Commands\FloatingIps;
 
 use App\Helper\Check;
 use App\Console\Command;
+use App\Helper\FloatingIp;
 
 class FloatingIpDelete extends Command
 {
@@ -22,16 +23,18 @@ class FloatingIpDelete extends Command
     protected $description = 'Command description';
 
     protected $check;
+    protected $floatingIp;
 
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct(Check $check)
+    public function __construct(Check $check, FloatingIp $floatingIp)
     {
         parent::__construct();
         $this->check = $check;
+        $this->floatingIp = $floatingIp;
     }
 
     /**
@@ -41,7 +44,7 @@ class FloatingIpDelete extends Command
      */
     public function handle()
     {
-        $ip = $this->anticipate('IP?', FloatingIpList::getAllIps()->toArray());
+        $ip = $this->anticipate('IP?', $this->floatingIp->getAllIps()->toArray());
 
         $encodedIp = sha1($ip);
 
