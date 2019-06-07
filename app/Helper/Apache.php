@@ -25,10 +25,10 @@ class Apache
         ]);
 
         if (preg_match_all('/(?<=namevhost ).\S*/', $output, $matches)) {
-            return array_diff($matches[0], $ignore);
+            return collect(array_diff($matches[0], $ignore));
         }
 
-        return [];
+        return collect();
     }
 
     public function getEnabledPhpVersion() {

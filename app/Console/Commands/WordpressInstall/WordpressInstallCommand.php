@@ -44,7 +44,7 @@ class WordpressInstallCommand extends Command
     {
         $sName = $this->ask('Name of Wordpress Site?');
 
-        $sDomain = $this->choice('Domain?', $this->apache->getAllDomainsEnabled());
+        $sDomain = $this->choice('Domain?', $this->apache->getAllDomainsEnabled()->toArray());
 
         $sSubDir    = '';
         $sRootOrSub = $this->choice('Root or Subdirectory?', ['Root', 'Sub']);

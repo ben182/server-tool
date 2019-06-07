@@ -45,7 +45,7 @@ class VhostBasicAuthCommand extends Command
      */
     public function handle()
     {
-        $domain = $this->anticipate('Domain?', $this->apache->getAllDomainsEnabled());
+        $domain = $this->choice('Domain?', $this->apache->getAllDomainsEnabled()->toArray());
         $user = $this->ask('User?');
         $password = $this->secret('Password?');
         $password_again = $this->secret('Password again?');
