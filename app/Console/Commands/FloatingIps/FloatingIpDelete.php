@@ -44,7 +44,7 @@ class FloatingIpDelete extends Command
      */
     public function handle()
     {
-        $ip = $this->anticipate('IP?', $this->floatingIp->getAllIps()->toArray());
+        $ip = $this->choice('IP?', $this->floatingIp->getAllIps()->toArray());
 
         $encodedIp = sha1($ip);
 
