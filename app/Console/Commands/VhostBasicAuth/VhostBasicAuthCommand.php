@@ -3,8 +3,8 @@
 namespace App\Console\Commands\VhostBasicAuth;
 
 use App\Helper\Check;
-use App\Console\Command;
 use App\Helper\Apache;
+use App\Console\Command;
 
 class VhostBasicAuthCommand extends Command
 {
@@ -34,7 +34,7 @@ class VhostBasicAuthCommand extends Command
     {
         parent::__construct();
 
-        $this->check = $check;
+        $this->check  = $check;
         $this->apache = $apache;
     }
 
@@ -45,15 +45,15 @@ class VhostBasicAuthCommand extends Command
      */
     public function handle()
     {
-        $domain = $this->choice('Domain?', $this->apache->getAllDomainsEnabled()->toArray());
-        $user = $this->ask('User?');
-        $password = $this->secret('Password?');
+        $domain         = $this->choice('Domain?', $this->apache->getAllDomainsEnabled()->toArray());
+        $user           = $this->ask('User?');
+        $password       = $this->secret('Password?');
         $password_again = $this->secret('Password again?');
 
         VhostBasicAuthTaskManager::work([
-            'domain'      => $domain,
-            'user'         => $user,
-            'password'    => $password,
+            'domain'         => $domain,
+            'user'           => $user,
+            'password'       => $password,
             'password_again' => $password_again,
         ]);
     }

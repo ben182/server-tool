@@ -4,7 +4,6 @@ namespace App\Console\Commands\WordpressInstall\Tasks;
 
 use App\Setting;
 use App\Console\Task;
-use App\Helper\Password;
 
 class WordpressConf extends Task
 {

@@ -34,7 +34,7 @@ class FloatingIpList extends Command
     {
         parent::__construct();
 
-        $this->check = $check;
+        $this->check      = $check;
         $this->floatingIp = $floatingIp;
     }
 

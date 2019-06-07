@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands\Domains;
 
-use Illuminate\Console\Command;
 use App\Helper\Apache;
+use Illuminate\Console\Command;
 
 class DomainsCommand extends Command
 {
@@ -42,7 +42,7 @@ class DomainsCommand extends Command
      */
     public function handle()
     {
-        $this->apache->getAllDomainsEnabled()->each(function($domain) {
+        $this->apache->getAllDomainsEnabled()->each(function ($domain) {
             $this->info($domain);
         });
     }

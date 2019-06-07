@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands\SslAdd;
 
-use App\Console\Command;
 use App\Helper\Apache;
+use App\Console\Command;
 
 class SslAddCommand extends Command
 {

@@ -3,7 +3,6 @@
 namespace App\Helper;
 
 use App\Helper\Shell\Shell;
-use App\Helper\Check;
 
 class Apache
 {
@@ -16,7 +15,8 @@ class Apache
         $this->check = $check;
     }
 
-    public function getAllDomainsEnabled() {
+    public function getAllDomainsEnabled()
+    {
         $output = $this->shell->setQuitForNextCommand()->exec('sudo apache2ctl -t -D DUMP_VHOSTS')->getLastOutput();
 
         $ignore = $this->check->getIps($output);
@@ -31,7 +31,8 @@ class Apache
         return collect();
     }
 
-    public function getEnabledPhpVersion() {
+    public function getEnabledPhpVersion()
+    {
         $phpConfs = glob("/etc/apache2/conf-enabled/php*-fpm.conf");
 
         if (empty($phpConfs)) {
@@ -45,7 +46,8 @@ class Apache
         return getStringBetween($phpConfs[0], '/php', '-fpm.conf');
     }
 
-    public function getOwnPublicIp() {
+    public function getOwnPublicIp()
+    {
         return trim(file_get_contents('https://ipinfo.io/ip'));
     }
 }

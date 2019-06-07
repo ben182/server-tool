@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands\VhostBasicAuth\Tasks;
 
-use App\Setting;
 use App\Console\Task;
 
 class VhostBasicAuthTask extends Task

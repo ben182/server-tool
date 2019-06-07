@@ -3,7 +3,6 @@
 namespace App\Console\Commands\WordpressInstall;
 
 use App\Helper\Domain;
-use App\Helper\Increment;
 use App\Rules\DomainExists;
 use Illuminate\Support\Str;
 use App\Console\TaskManager;

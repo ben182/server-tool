@@ -3,7 +3,6 @@
 namespace App\Helper;
 
 use App\Helper\Shell\Shell;
-use App\Helper\Check;
 
 class FloatingIp
 {
@@ -16,7 +15,8 @@ class FloatingIp
         $this->check = $check;
     }
 
-    public function getAllIps() {
+    public function getAllIps()
+    {
         $floatingIps = collect(glob('/etc/network/interfaces.d/*.cfg'));
 
         return $floatingIps

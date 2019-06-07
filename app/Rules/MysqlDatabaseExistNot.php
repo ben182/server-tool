@@ -2,7 +2,6 @@
 
 namespace App\Rules;
 
-use App\Helper\Shell\Shell;
 use Illuminate\Contracts\Validation\Rule;
 
 class MysqlDatabaseExistNot implements Rule

@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands\Partials;
 
-use Exception;
 use App\Console\Task;
 
 class RestartPhpTask extends Task

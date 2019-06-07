@@ -7,8 +7,8 @@ use Illuminate\Support\Str;
 class Shell
 {
     protected $lastOutput;
-    protected $quiet     = false;
-    protected $quietTemp = false;
+    protected $quiet              = false;
+    protected $quietTemp          = false;
     protected $outputEveryCommand = false;
 
     public function exec($sCommand)
@@ -52,7 +52,8 @@ class Shell
         return $this;
     }
 
-    public function setOutputEveryCommand(bool $bool = true) {
+    public function setOutputEveryCommand(bool $bool = true)
+    {
         $this->outputEveryCommand = $bool;
 
         return $this;

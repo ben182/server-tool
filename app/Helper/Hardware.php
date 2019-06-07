@@ -2,8 +2,6 @@
 
 namespace App\Helper;
 
-use App\Helper\Shell\Shell;
-
 class Hardware
 {
     /**

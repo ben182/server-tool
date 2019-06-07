@@ -33,7 +33,7 @@ class FloatingIpDelete extends Command
     public function __construct(Check $check, FloatingIp $floatingIp)
     {
         parent::__construct();
-        $this->check = $check;
+        $this->check      = $check;
         $this->floatingIp = $floatingIp;
     }
 

@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands\WordpressInstall;
 
-use App\Console\Command;
 use App\Helper\Apache;
+use App\Console\Command;
 
 class WordpressInstallCommand extends Command
 {

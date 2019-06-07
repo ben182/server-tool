@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Helper\Env;
 use App\Repository;
 use App\Helper\Check;
+use App\Helper\Apache;
 use App\Helper\Config;
 use App\Helper\Github;
 use App\Helper\Hardware;
@@ -18,7 +19,6 @@ use Illuminate\Console\Command;
 use App\Helper\Shell\Environment;
 use App\Observers\RepositoryObserver;
 use Illuminate\Support\ServiceProvider;
-use App\Helper\Apache;
 
 class AppServiceProvider extends ServiceProvider
 {
