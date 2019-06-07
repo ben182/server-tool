@@ -42,7 +42,7 @@ class SslAddCommand extends Command
      */
     public function handle()
     {
-        $domain = $this->anticipate('Domain?', $this->apache->getAllDomainsEnabled());
+        $domain = $this->choice('Domain?', $this->apache->getAllDomainsEnabled());
 
         $htaccess = $this->confirm('Non SSL to SSL Htaccess?');
 
