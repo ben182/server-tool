@@ -4,20 +4,17 @@ namespace App\Rules;
 
 use App\Helper\Domain;
 use Illuminate\Contracts\Validation\Rule;
-use App\Helper\Apache;
 
 class DomainExists implements Rule
 {
-    protected $apache;
-
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct(Apache $apache)
+    public function __construct()
     {
-        $this->apache = $apache;
+        //
     }
 
     /**
@@ -30,7 +27,7 @@ class DomainExists implements Rule
      */
     public function passes($attribute, $value)
     {
-        return $this->apache->getAllDomainsEnabled()->contains($value);
+        return app('stool-apache')->getAllDomainsEnabled()->contains($value);
     }
 
     /**
