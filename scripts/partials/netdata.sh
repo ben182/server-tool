@@ -16,3 +16,5 @@ a2ensite netdata.conf
 htpasswd -c -b /etc/netdata/.htpasswd $HTACCESS_USER $HTACCESS_PASS
 sudo sed -i "s|NETDATA_HTACCESS_USERNAME|$HTACCESS_USER|" $CONFIG_PATH
 sudo sed -i "s|NETDATA_HTACCESS_PASSWORD|$HTACCESS_PASS|" $CONFIG_PATH
+
+service apache2 restart
