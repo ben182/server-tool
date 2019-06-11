@@ -7,7 +7,7 @@ echo "Netdata..."
 HTACCESS_USER=$(passwordgen);
 HTACCESS_PASS=$(passwordgen);
 
-sudo apt-get install netdata -y
+bash <(curl -Ss https://my-netdata.io/kickstart.sh)
 
 echo "        history = 43200" >> /etc/netdata/netdata.conf
 echo "        access log = none" >> /etc/netdata/netdata.conf
