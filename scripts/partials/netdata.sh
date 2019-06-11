@@ -10,8 +10,9 @@ HTACCESS_PASS=$(passwordgen);
 sudo apt-get update -y
 bash <(curl -Ss https://my-netdata.io/kickstart.sh) --dont-wait --stable-channel
 
-echo "        history = 43200" >> /etc/netdata/netdata.conf
-echo "        access log = none" >> /etc/netdata/netdata.conf
+sudo sed -i "s|# history = 3996|history = 43200|" /etc/netdata/netdata.conf
+
+sudo /etc/netdata/edit-config health_alarm_notify.conf
 
 sudo service netdata restart
 
