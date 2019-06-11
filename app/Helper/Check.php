@@ -21,7 +21,7 @@ class Check
      *
      * @param string $string
      *
-     * @return array|false
+     * @return array
      */
     public function getIps($string)
     {
@@ -29,7 +29,7 @@ class Check
             return $ip_match[0];
         }
 
-        return false;
+        return [];
     }
 
     /**

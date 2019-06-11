@@ -27,7 +27,7 @@ class DomainExists implements Rule
      */
     public function passes($attribute, $value)
     {
-        return (new Domain($value))->doesExist();
+        return app('stool-apache')->getAllDomainsEnabled()->contains($value);
     }
 
     /**
