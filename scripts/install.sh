@@ -53,6 +53,10 @@ apacheInstall() {
     sudo sed -i "s|IP_HERE|$PUBLIC_IP|" /etc/apache2/sites-available/ip.conf
     # a2ensite ip.conf
 
+    cp ${TEMPLATES_PATH}apache/dir.conf /etc/apache2/mods-enabled/dir.conf
+
+    sudo rm /var/www/html/index.html
+
     sudo a2enmod expires
     sudo a2enmod http2
 

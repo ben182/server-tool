@@ -4,6 +4,7 @@ namespace App\Console\Commands\Installation;
 
 use App\Helper\Config;
 use App\Console\Command;
+use App\Helper\Password;
 
 class InstallationModulesCommand extends Command
 {
@@ -22,21 +23,24 @@ class InstallationModulesCommand extends Command
     protected $description = 'Command description';
 
     protected $config;
+    protected $password;
 
-    protected $aToInstall = [];
-    protected $bindings = [];
+    protected $aToInstall                 = [];
+    protected $bindings                   = [];
     protected $callbacksAfterInstallation = [];
+
 
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct(Config $config)
+    public function __construct(Config $config, Password $password)
     {
         parent::__construct();
 
-        $this->config = $config;
+        $this->config   = $config;
+        $this->password = $password;
     }
 
     /**
@@ -51,18 +55,26 @@ class InstallationModulesCommand extends Command
         $this->openMenu('Node.js (version-manager)', 'node');
         $this->openMenu('yarn', 'yarn');
         $this->openMenu('Redis', 'redis');
-        $this->openMenu('Netdata', 'netdata', function() {
+        $this->openMenu('Netdata', 'netdata', function () {
             $this->bindings['netdata']['standalone'] = $this->confirm('Run standalone version?');
 
-            if (!$this->bindings['netdata']['standalone']) {
+            if (! $this->bindings['netdata']['standalone']) {
                 $this->line('Okay it will run in cluster mode');
 
                 $this->bindings['netdata']['master'] = $this->confirm('Is this your master server?');
             }
 
             $this->bindings['netdata']['slack_webhook'] = $this->ask('Slack Notifications Webhook? (leave empty to disable)');
-        }, function() {
+        }, function () {
             $this->shell->replaceStringInFile('SLACK_WEBHOOK_URL=""', 'SLACK_WEBHOOK_URL="' . $this->bindings['netdata']['slack_webhook'] . '"', '/etc/netdata/health_alarm_notify.conf');
+
+            // MYSQL CONF
+            $mysqlPass = $this->password->generate();
+            $this->shell->mysql()->execCommand('GRANT USAGE ON *.* TO netdata@localhost IDENTIFIED BY \'' . $mysqlPass . '\';');
+            $this->shell->mysql()->execCommand('FLUSH PRIVILEGES;');
+
+            $this->shell->copy(templates_path('netdata/python.d/mysql.conf'), '/etc/netdata/python.d/mysql.conf');
+            $this->shell->replaceStringInFile('<password>', $mysqlPass, '/etc/netdata/python.d/mysql.conf');
         });
 
         $this->installSelectedPartials();

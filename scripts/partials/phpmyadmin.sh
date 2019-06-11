@@ -16,7 +16,6 @@ phpmyadminInstall () {
     apt-get install -y phpmyadmin
 
     cp ${TEMPLATES_PATH}apache/phpmyadmin.conf /etc/apache2/conf-available/phpmyadmin.conf
-    cp ${TEMPLATES_PATH}apache/dir.conf /etc/apache2/mods-enabled/dir.conf
 
     sudo sed -i "s|</VirtualHost>|Include /etc/apache2/conf-available/phpmyadmin.conf\n</VirtualHost>|" /etc/apache2/sites-available/ip.conf
     a2disconf phpmyadmin
