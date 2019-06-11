@@ -7,7 +7,7 @@ echo "Netdata..."
 HTACCESS_USER=$(passwordgen);
 HTACCESS_PASS=$(passwordgen);
 
-bash <(curl -Ss https://my-netdata.io/kickstart.sh)
+bash <(curl -Ss https://my-netdata.io/kickstart.sh) --dont-wait --stable-channel
 
 echo "        history = 43200" >> /etc/netdata/netdata.conf
 echo "        access log = none" >> /etc/netdata/netdata.conf
