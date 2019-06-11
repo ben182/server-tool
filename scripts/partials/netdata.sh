@@ -19,6 +19,11 @@ sudo service netdata restart
 sudo ufw allow 20000
 sudo ufw reload
 
+# MYSQL
+sudo apt-get install python-mysqldb -y
+
+
+
 # APACHE PROXY
 
 sudo cp ${TEMPLATES_PATH}apache/netdata.conf /etc/apache2/sites-available/netdata.conf

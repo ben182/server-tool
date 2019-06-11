@@ -24,6 +24,8 @@ class InstallationModulesCommand extends Command
     protected $config;
 
     protected $aToInstall = [];
+    protected $bindings = [];
+    protected $callbacksAfterInstallation = [];
 
     /**
      * Create a new command instance.
@@ -49,12 +51,24 @@ class InstallationModulesCommand extends Command
         $this->openMenu('Node.js (version-manager)', 'node');
         $this->openMenu('yarn', 'yarn');
         $this->openMenu('Redis', 'redis');
-        $this->openMenu('Netdata', 'netdata');
+        $this->openMenu('Netdata', 'netdata', function() {
+            $this->bindings['netdata']['standalone'] = $this->confirm('Run standalone version?');
+
+            if (!$this->bindings['netdata']['standalone']) {
+                $this->line('Okay it will run in cluster mode');
+
+                $this->bindings['netdata']['master'] = $this->confirm('Is this your master server?');
+            }
+
+            $this->bindings['netdata']['slack_webhook'] = $this->ask('Slack Notifications Webhook? (leave empty to disable)');
+        }, function() {
+            $this->shell->replaceStringInFile('SLACK_WEBHOOK_URL=""', 'SLACK_WEBHOOK_URL="' . $this->bindings['netdata']['slack_webhook'] . '"', '/etc/netdata/health_alarm_notify.conf');
+        });
 
         $this->installSelectedPartials();
     }
 
-    protected function openMenu($sTitle, $sKey)
+    protected function openMenu($sTitle, $sKey, $callbackWhenYes = null, $callbackAfterInstallation = null)
     {
         if ($this->config->isInstalled($sKey)) {
             return;
@@ -69,6 +83,14 @@ class InstallationModulesCommand extends Command
 
         if ($option === 0) {
             $this->aToInstall[] = $sKey;
+
+            if ($callbackWhenYes) {
+                $callbackWhenYes();
+            }
+
+            if ($callbackAfterInstallation) {
+                $this->callbacksAfterInstallation[] = $callbackAfterInstallation;
+            }
         }
     }
 
@@ -80,6 +102,10 @@ class InstallationModulesCommand extends Command
                 continue;
             }
             $this->shell->execScript('partials/' . $sFiles);
+        }
+
+        foreach ($this->callbacksAfterInstallation as $callback) {
+            $callback();
         }
     }
 }
