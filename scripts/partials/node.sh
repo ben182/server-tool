@@ -16,4 +16,4 @@ nodeInstall () {
     sudo ln -s "$(which node)" /usr/local/bin/node
 }
 echo "Installing Node JS..."
-nodeInstall &> /dev/null
+nodeInstall

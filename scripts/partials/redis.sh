@@ -34,4 +34,4 @@ redisInstall () {
     gem install redis-dump
 }
 echo "Installing Redis..."
-redisInstall &> /dev/null
+redisInstall

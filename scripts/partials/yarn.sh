@@ -10,4 +10,4 @@ yarnInstall () {
     sudo apt-get install yarn -y
 }
 echo "Installing Yarn..."
-yarnInstall &> /dev/null
+yarnInstall

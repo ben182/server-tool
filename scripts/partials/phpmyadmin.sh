@@ -30,4 +30,4 @@ phpmyadminInstall () {
     service apache2 restart
 }
 echo "Installing phpMyAdmin..."
-phpmyadminInstall &> /dev/null
+phpmyadminInstall
