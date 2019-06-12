@@ -5,7 +5,6 @@ namespace App\Console\Commands\Installation;
 use App\Helper\Config;
 use App\Console\Command;
 use App\Helper\Password;
-use App\Console\Commands\Installation\NetdataTaskManager;
 
 class InstallationModulesCommand extends Command
 {

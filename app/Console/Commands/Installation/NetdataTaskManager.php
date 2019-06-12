@@ -10,7 +10,7 @@ use App\Console\Commands\Installation\Tasks\StandaloneTask;
 use App\Console\Commands\Installation\Tasks\MasterTask;
 use App\Console\Commands\Installation\Tasks\ClientTask;
 
-class RestartPhpTaskManager extends TaskManager
+class NetdataTaskManager extends TaskManager
 {
     public $tasks = [
         SetUpNotificationsTask::class,
