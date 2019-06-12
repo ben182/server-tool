@@ -111,9 +111,5 @@ class InstallationModulesCommand extends Command
             }
             $this->shell->execScript('partials/' . $sFiles);
         }
-
-        foreach ($this->callbacksAfterInstallation as $callback) {
-            $callback();
-        }
     }
 }
