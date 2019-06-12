@@ -26,6 +26,7 @@ class InstallationModulesCommand extends Command
     protected $password;
 
     protected $aToInstall = [];
+    protected $additional = [];
 
 
     /**
@@ -92,12 +93,11 @@ class InstallationModulesCommand extends Command
         if ($option === 0) {
             $this->aToInstall[] = $sKey;
 
-            if ($callbackWhenYes) {
-                $options = $callbackWhenYes();
-
-                if ($taskManager) {
-                    $taskManager::work($options);
-                }
+            if ($callbackWhenYes && $taskManager) {
+                $this->additional[] = [
+                    'taskmanager' => $taskManager,
+                    'options' => $callbackWhenYes(),
+                ];
             }
         }
     }
@@ -110,6 +110,11 @@ class InstallationModulesCommand extends Command
                 continue;
             }
             $this->shell->execScript('partials/' . $sFiles);
+        }
+
+        foreach ($this->additional as $additional) {
+            $class = $additional['taskmanager'];
+            $class::work($additional['options']);
         }
     }
 }
