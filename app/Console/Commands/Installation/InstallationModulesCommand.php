@@ -88,8 +88,6 @@ class InstallationModulesCommand extends Command
             'no',
         ])->disableDefaultItems()->open();
 
-        $this->config->editInstall($sKey, $option === 0);
-
         if ($option === 0) {
             $this->aToInstall[] = $sKey;
 
@@ -110,6 +108,8 @@ class InstallationModulesCommand extends Command
                 continue;
             }
             $this->shell->execScript('partials/' . $sFiles);
+
+            $this->config->editInstall($sFiles, true);
         }
 
         foreach ($this->additional as $additional) {
