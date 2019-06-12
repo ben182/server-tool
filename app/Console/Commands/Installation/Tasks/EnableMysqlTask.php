@@ -15,7 +15,7 @@ class EnableMysqlTask extends Task
         $this->shell->mysql()->execCommand('FLUSH PRIVILEGES;');
 
         $this->shell->copy(templates_path('netdata/python.d/mysql.conf'), '/etc/netdata/python.d/mysql.conf');
-        $this->shell->replaceStringInFile('<password>', $mysqlPass, '/etc/netdata/python.d/mysql.conf');
+        $this->shell->replaceStringInFile('PASSWORD_HERE', $mysqlPass, '/etc/netdata/python.d/mysql.conf');
 
         $this->shell->service()->restart('netdata');
     }

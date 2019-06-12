@@ -19,13 +19,13 @@ class Shell
 
         $this->lastOutput = $this->liveExecuteCommand($sCommand)['output'];
 
-        if (! $this->quiet && ! $this->quietTemp) {
-            echo $this->lastOutput;
-        }
+        // if (! $this->quiet && ! $this->quietTemp) {
+        //     echo $this->lastOutput;
+        // }
 
-        if ($this->quietTemp) {
-            $this->quietTemp = false;
-        }
+        // if ($this->quietTemp) {
+        //     $this->quietTemp = false;
+        // }
 
         return $this;
     }
