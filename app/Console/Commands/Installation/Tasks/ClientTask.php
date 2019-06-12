@@ -21,5 +21,7 @@ class ClientTask extends Task
         $this->shell->replaceStringInFile('# allow connections from = localhost *', 'allow connections from = localhost ' . $this->options->master_domain, '/etc/netdata/netdata.conf');
 
         $this->shell->service()->restart('netdata');
+
+        $this->addConclusion('Add "' . app('stool-apache')->getOwnPublicIp() . ' ' . gethostname() . '" to masters hosts file');
     }
 }

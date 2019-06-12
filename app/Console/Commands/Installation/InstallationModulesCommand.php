@@ -70,6 +70,9 @@ class InstallationModulesCommand extends Command
             }
 
             $return['slack_webhook'] = $this->ask('Slack Notifications Webhook? (leave empty to disable)');
+            if ($return['slack_webhook']) {
+                $return['slack_recipient'] = $this->ask('Slack Notifications Recipient?');
+            }
 
             return $return;
         }, NetdataTaskManager::class);
