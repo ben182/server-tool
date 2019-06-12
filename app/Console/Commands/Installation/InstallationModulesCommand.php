@@ -65,7 +65,7 @@ class InstallationModulesCommand extends Command
                 $return['master'] = $this->confirm('Is this your master server?');
 
                 // if (!$return['master']) {
-                    $return['master_domain'] = $this->ask('What is the Master Servers Domain?');
+                $return['master_domain'] = $this->ask('What is the Master Servers Domain?');
                 // }
             }
 
@@ -94,7 +94,7 @@ class InstallationModulesCommand extends Command
             if ($callbackWhenYes && $taskManager) {
                 $this->additional[] = [
                     'taskmanager' => $taskManager,
-                    'options' => $callbackWhenYes(),
+                    'options'     => $callbackWhenYes(),
                 ];
             }
         }

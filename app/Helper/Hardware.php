@@ -43,4 +43,18 @@ class Hardware
 
         return true;
     }
+
+    public function getSwapSizeRecommendation()
+    {
+        $ram = (int) round($this->hardware->getTotalRam());
+        if ($ram < 2) {
+            return $ram * 2;
+        }
+
+        if ($ram > 8) {
+            return 8;
+        }
+
+        return $ram;
+    }
 }

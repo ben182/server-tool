@@ -49,9 +49,9 @@ class InstallationRunCommand extends Command
         // Swap
         $bAddSwap = $this->confirm('Add Swap Space?', true);
         if ($bAddSwap) {
-            $recommendedSize = (int) round($this->hardware->getTotalRam());
+            $recommendedSize = $this->hardware->getSwapSizeRecommendation();
 
-            $iSwap = (int) $this->ask('How much in GB (Recommended is >= than ' . $recommendedSize . 'GB) ?', $recommendedSize);
+            $iSwap = (int) $this->ask('How much in GB (Recommended is >= ' . $recommendedSize . 'GB) ?', $recommendedSize);
         }
 
         Setting::createKey('admin_email', $sEmail);

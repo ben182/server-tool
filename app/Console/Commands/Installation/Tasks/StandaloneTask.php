@@ -20,7 +20,7 @@ class StandaloneTask extends Task
         $this->shell->exec('sudo chmod -x /etc/apache2/sites-available/netdata.conf');
         $this->shell->exec('sudo a2ensite netdata.conf');
 
-        $user = app('stool-password')->generate();
+        $user     = app('stool-password')->generate();
         $password = app('stool-password')->generate();
         $this->shell->exec('sudo htpasswd -c -b /etc/netdata/.htpasswd ' . $user . ' ' . $password);
         $this->shell->replaceStringInFile('NETDATA_HTACCESS_USERNAME', $user, base_path('config.json'));
