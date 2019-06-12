@@ -46,7 +46,7 @@ class Hardware
 
     public function getSwapSizeRecommendation()
     {
-        $ram = (int) round($this->hardware->getTotalRam());
+        $ram = (int) round($this->getTotalRam());
         if ($ram < 2) {
             return $ram * 2;
         }

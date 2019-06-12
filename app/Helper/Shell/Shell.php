@@ -17,7 +17,7 @@ class Shell
             echo $sCommand . " 2>&1\n";
         }
 
-        $this->lastOutput = $this->liveExecuteCommand($sCommand)['output'];
+        $this->lastOutput = $this->liveExecuteCommand($sCommand);
 
         // if (! $this->quiet && ! $this->quietTemp) {
         //     echo $this->lastOutput;

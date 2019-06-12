@@ -90,6 +90,7 @@ class InstallationModulesCommand extends Command
 
         if ($option === 0) {
             $this->aToInstall[] = $sKey;
+            $this->config->editInstall($sKey, true);
 
             if ($callbackWhenYes && $taskManager) {
                 $this->additional[] = [
@@ -107,9 +108,8 @@ class InstallationModulesCommand extends Command
                 $this->shell->execScriptAsStool('partials/' . $sFiles);
                 continue;
             }
-            $this->shell->execScript('partials/' . $sFiles);
 
-            $this->config->editInstall($sFiles, true);
+            $this->shell->execScript('partials/' . $sFiles);
         }
 
         foreach ($this->additional as $additional) {
