@@ -64,9 +64,7 @@ class InstallationModulesCommand extends Command
 
                 $return['master'] = $this->confirm('Is this your master server?');
 
-                // if (!$return['master']) {
-                $return['master_domain'] = $this->ask('What is the Master Servers Domain?');
-                // }
+                $return['master_domain'] = $return['master'] ? $this->ask('What is the Master Servers Domain?') : $this->ask('What is the Master Servers IP?');
             }
 
             $return['slack_webhook'] = $this->ask('Slack Notifications Webhook? (leave empty to disable)');

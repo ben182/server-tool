@@ -166,8 +166,12 @@ vnstatInstall () {
 echo "Installing vnStat..."
 vnstatInstall &> /dev/null
 
+bash ${SCRIPTS_PATH}partials/finish.sh
+
 stool installation:run
 stool installation:modules
 
-bash ${SCRIPTS_PATH}partials/finish.sh
+echo "All sensitive data is written to $CONFIG_PATH"
+echo 'Important! Please log out of this ssh session and start a new one!'
+echo 'Type "stool installation:test" to test your installation'
 echo "Visit your welcome page at http://$PUBLIC_IP?token=$WELCOMEPAGE_TOKEN"
