@@ -26,6 +26,13 @@ class MasterTask extends Task
         $this->shell->replaceStringInFile('NETDATA_HTACCESS_USERNAME', $user, base_path('config.json'));
         $this->shell->replaceStringInFile('NETDATA_HTACCESS_PASSWORD', $password, base_path('config.json'));
 
+        // SSL
+        if (app('stool-check')->isIp($this->options->master_domain)) {
+            $sAdminEmail = Setting::getValue('admin_email');
+            $this->shell->exec("sudo certbot --non-interactive --agree-tos --email $sAdminEmail --apache -d {$this->options->master_domain}");
+            $this->shell->replaceStringInFile('</VirtualHost>', 'Include ' . templates_path('apache/nonSSL_to_SSL.htaccess') . '\\n</VirtualHost>', '/etc/apache2/sites-enabled/netdata.conf');
+        }
+
         $this->shell->service()->restart('apache2');
     }
 }

@@ -33,6 +33,17 @@ class Check
     }
 
     /**
+     * Checks if a string is an IP
+     *
+     * @param string $string
+     *
+     * @return boolean
+     */
+    public function isIp($string) {
+        return !empty($this->getIps($string));
+    }
+
+    /**
      * Checks if a given domain is a subdomain.
      *
      * @param string $sDomain
