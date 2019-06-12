@@ -52,7 +52,7 @@ class InstallationModulesCommand extends Command
     {
         $this->openMenu('phpMyAdmin', 'phpmyadmin');
         $this->openMenu('Node.js (version-manager)', 'node');
-        if ($this->toInstall['node']) {
+        if (isset($this->toInstall['node'])) {
             $this->openMenu('yarn', 'yarn');
         }
         $this->openMenu('Redis', 'redis');
