@@ -22,9 +22,9 @@ class NetdataTaskManager extends TaskManager
     public function validate()
     {
         return [
-            'standalone'    => 'required|boolean',
-            'master'        => 'required_without:standalone|boolean',
-            'master_domain' => 'required_without:standalone',
+            'standalone'      => 'required|boolean',
+            'master'          => 'required_without:standalone|boolean',
+            'master_domain'   => 'required_without:standalone',
             'slack_recipient' => 'required_with:slack_webhook',
         ];
     }

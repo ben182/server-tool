@@ -11,6 +11,7 @@ use App\Helper\Github;
 use App\Helper\Hardware;
 use App\Helper\Password;
 use App\Helper\Increment;
+use App\Helper\FloatingIp;
 use App\Helper\Shell\Mysql;
 use App\Helper\Shell\Shell;
 use App\Helper\Shell\Cronjob;

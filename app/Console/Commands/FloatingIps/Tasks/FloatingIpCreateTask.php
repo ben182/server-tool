@@ -3,7 +3,6 @@
 namespace App\Console\Commands\FloatingIps\Tasks;
 
 use App\Console\Task;
-use Illuminate\Support\Str;
 
 class FloatingIpCreateTask extends Task
 {

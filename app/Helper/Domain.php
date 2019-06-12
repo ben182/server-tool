@@ -73,23 +73,24 @@ class Domain
         return $this->getProtocol() . $this->domain . ($sSubDir ? '/' . $sSubDir : '');
     }
 
-    public function getARecord() {
-
+    public function getARecord()
+    {
         $dns = dns_get_record($this->domain);
-        if (!$dns) {
+        if (! $dns) {
             return false;
         }
 
         $a = collect($dns)->firstWhere('type', 'A');
 
-        if (!$a) {
+        if (! $a) {
             return false;
         }
 
         return $a['ip'];
     }
 
-    public function isBoundToThisServer() {
+    public function isBoundToThisServer()
+    {
         return app('stool-apache')->getOwnPublicIp() === $this->getARecord();
     }
 }

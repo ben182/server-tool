@@ -33,14 +33,15 @@ class Check
     }
 
     /**
-     * Checks if a string is an IP
+     * Checks if a string is an IP.
      *
      * @param string $string
      *
-     * @return boolean
+     * @return bool
      */
-    public function isIp($string) {
-        return !empty($this->getIps($string));
+    public function isIp($string)
+    {
+        return ! empty($this->getIps($string));
     }
 
     /**

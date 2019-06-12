@@ -3,9 +3,9 @@
 namespace App\Console\Commands\Installation;
 
 use App\Helper\Config;
+use App\Helper\Domain;
 use App\Console\Command;
 use App\Helper\Password;
-use App\Helper\Domain;
 
 class InstallationModulesCommand extends Command
 {
@@ -26,7 +26,7 @@ class InstallationModulesCommand extends Command
     protected $config;
     protected $password;
 
-    protected $toInstall = [];
+    protected $toInstall  = [];
     protected $additional = [];
 
 
@@ -76,12 +76,10 @@ class InstallationModulesCommand extends Command
                     $isBoundToThisSystem = $domain->isBoundToThisServer();
                     $isBoundToAFloatingIpOnThisServer = app('stool-floating-ip')->getAllIps()->contains($domain->getARecord());
 
-                    if (!$isBoundToThisSystem && !$isBoundToAFloatingIpOnThisServer) {
-
+                    if (! $isBoundToThisSystem && ! $isBoundToAFloatingIpOnThisServer) {
                         $return['create_floating_ip'] = $this->confirm('This domain is not bound to your system directly or via a floating ip. Should I create a floating ip for ' . $domain->getARecord() . '?');
                     }
                 }
-
             }
 
             $return['slack_webhook'] = $this->ask('Slack Notifications Webhook? (leave empty to disable)');

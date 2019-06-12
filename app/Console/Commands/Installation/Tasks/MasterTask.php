@@ -28,8 +28,7 @@ class MasterTask extends Task
         $this->shell->replaceStringInFile('NETDATA_HTACCESS_PASSWORD', $password, base_path('config.json'));
 
         // SSL
-        if (!app('stool-check')->isIp($this->options->master_domain)) {
-
+        if (! app('stool-check')->isIp($this->options->master_domain)) {
             if ($this->options->create_floating_ip) {
                 FloatingIpCreateTaskManager::work([
                     'ip' => (new Domain($this->options->master_domain))->getARecord(),
