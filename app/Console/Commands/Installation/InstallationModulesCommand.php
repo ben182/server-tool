@@ -77,7 +77,7 @@ class InstallationModulesCommand extends Command
                     $isBoundToAFloatingIpOnThisServer = app('stool-floating-ip')->getAllIps()->contains($domain->getARecord());
 
                     if (! $isBoundToThisSystem && ! $isBoundToAFloatingIpOnThisServer) {
-                        $return['create_floating_ip'] = $this->confirm('This domain is not bound to your system directly or via a floating ip. Should I create a floating ip for ' . $domain->getARecord() . '?');
+                        $return['create_floating_ip'] = $this->confirm('This domain is not bound to your system directly or via a floating ip. Should I create a floating ip for ' . $domain->getARecord() . '?', true);
                     }
                 }
             }

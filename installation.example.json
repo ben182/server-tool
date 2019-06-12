@@ -1,6 +1,5 @@
 {
     "phpmyadmin": "false",
-    "certbot": "false",
     "node": "false",
     "yarn": "false",
     "redis": "false",
