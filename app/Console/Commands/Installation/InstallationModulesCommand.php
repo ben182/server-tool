@@ -5,6 +5,7 @@ namespace App\Console\Commands\Installation;
 use App\Helper\Config;
 use App\Console\Command;
 use App\Helper\Password;
+use App\Helper\Domain;
 
 class InstallationModulesCommand extends Command
 {
@@ -25,7 +26,7 @@ class InstallationModulesCommand extends Command
     protected $config;
     protected $password;
 
-    protected $aToInstall = [];
+    protected $toInstall = [];
     protected $additional = [];
 
 
@@ -50,12 +51,15 @@ class InstallationModulesCommand extends Command
     public function handle()
     {
         $this->openMenu('phpMyAdmin', 'phpmyadmin');
-        $this->openMenu('certbot', 'certbot');
         $this->openMenu('Node.js (version-manager)', 'node');
-        $this->openMenu('yarn', 'yarn');
+        if ($this->toInstall['node']) {
+            $this->openMenu('yarn', 'yarn');
+        }
         $this->openMenu('Redis', 'redis');
         $this->openMenu('Netdata', 'netdata', function () {
             $return = [];
+
+            $return['create_floating_ip'] = false;
 
             $return['standalone'] = $this->confirm('Run standalone version?');
 
@@ -65,6 +69,19 @@ class InstallationModulesCommand extends Command
                 $return['master'] = $this->confirm('Is this your master server?');
 
                 $return['master_domain'] = $return['master'] ? $this->ask('What is the Master Servers Domain?') : $this->ask('What is the Master Servers IP?');
+
+                if ($return['master']) {
+                    $domain = new Domain($return['master_domain']);
+
+                    $isBoundToThisSystem = $domain->isBoundToThisServer();
+                    $isBoundToAFloatingIpOnThisServer = app('stool-floating-ip')->getAllIps()->contains($domain->getARecord());
+
+                    if (!$isBoundToThisSystem && !$isBoundToAFloatingIpOnThisServer) {
+
+                        $return['create_floating_ip'] = $this->confirm('This domain is not bound to your system directly or via a floating ip. Should I create a floating ip for ' . $domain->getARecord() . '?');
+                    }
+                }
+
             }
 
             $return['slack_webhook'] = $this->ask('Slack Notifications Webhook? (leave empty to disable)');
@@ -90,7 +107,7 @@ class InstallationModulesCommand extends Command
         ])->disableDefaultItems()->open();
 
         if ($option === 0) {
-            $this->aToInstall[] = $sKey;
+            $this->toInstall[] = $sKey;
             $this->config->editInstall($sKey, true);
 
             if ($callbackWhenYes && $taskManager) {
@@ -104,7 +121,7 @@ class InstallationModulesCommand extends Command
 
     protected function installSelectedPartials()
     {
-        foreach ($this->aToInstall as $sFiles) {
+        foreach ($this->toInstall as $sFiles) {
             if ($sFiles === 'node') {
                 $this->shell->execScriptAsStool('partials/' . $sFiles);
                 continue;

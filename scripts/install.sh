@@ -72,6 +72,8 @@ apacheInstall() {
 echo "Installing and configuring Apache Server..."
 apacheInstall
 
+bash ${SCRIPTS_PATH}partials/certbot.sh
+
 phpInstall () {
     bash /etc/stool/scripts/php/setup.sh
     bash /etc/stool/scripts/php/switch-to-php-7.3.sh
