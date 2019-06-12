@@ -8,6 +8,11 @@ class StandaloneTask extends Task
 {
     public $name = 'Set up Apache Configuration';
 
+    public function localRequirements()
+    {
+        return $this->options->standalone;
+    }
+
     public function handle()
     {
         $this->shell->copy(templates_path('netdata/apache/standalone.conf'), '/etc/apache2/sites-available/netdata.conf');

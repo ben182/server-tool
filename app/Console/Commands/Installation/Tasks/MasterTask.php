@@ -10,7 +10,7 @@ class MasterTask extends Task
 
     public function localRequirements()
     {
-        return isset($this->options->master);
+        return isset($this->options->master) && $this->options->master === true;
     }
 
     public function handle()

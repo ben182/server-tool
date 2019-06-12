@@ -8,6 +8,7 @@ use App\Console\Commands\Installation\Tasks\SetUpNotificationsTask;
 use App\Console\Commands\Installation\Tasks\EnableMysqlTask;
 use App\Console\Commands\Installation\Tasks\StandaloneTask;
 use App\Console\Commands\Installation\Tasks\MasterTask;
+use App\Console\Commands\Installation\Tasks\ClientTask;
 
 class RestartPhpTaskManager extends TaskManager
 {
@@ -16,6 +17,7 @@ class RestartPhpTaskManager extends TaskManager
         EnableMysqlTask::class,
         StandaloneTask::class,
         MasterTask::class,
+        ClientTask::class,
     ];
 
     public function validate()
