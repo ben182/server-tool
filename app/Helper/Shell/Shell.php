@@ -109,10 +109,12 @@ class Shell
     {
         // escaping
         $sNeedle = str_replace('\"', '"', $sNeedle);
-        $sNeedle = preg_quote($sNeedle, '"');
+        $sNeedle = str_replace('"', '\"', $sNeedle);
+        // $sNeedle = preg_quote($sNeedle, '"');
 
         $sReplace = str_replace('\"', '"', $sReplace);
-        $sReplace = preg_quote($sReplace, '"');
+        $sReplace = str_replace('"', '\"', $sReplace);
+        // $sReplace = preg_quote($sReplace, '"');
 
         $this->exec('sudo sed -i "s|' . $sNeedle . '|' . $sReplace . '|g" ' . $sFile);
 
