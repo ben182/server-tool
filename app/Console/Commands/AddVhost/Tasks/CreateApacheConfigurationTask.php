@@ -10,7 +10,9 @@ class CreateApacheConfigurationTask extends Task
 
     public function handle()
     {
-        $this->shell->copy(templates_path('apache/vhost.conf'), $this->bindings->domain->getApacheSite());
+        $this->shell->copy(templates_path('apache/vhost.conf'), $this->bindings->domain->getApacheAvailableSite());
+
+        $this->shell->exec('sudo ln -s ' . $this->bindings->domain->getApacheAvailableSite() . ' ' . $this->bindings->domain->getApacheSite());
 
         $this->addConclusion('Created vHost for domain: ' . $this->options->domain);
     }

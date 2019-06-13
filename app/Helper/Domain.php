@@ -21,6 +21,11 @@ class Domain
         return "/etc/apache2/sites-enabled/{$this->domain}.conf";
     }
 
+    public function getApacheAvailableSite()
+    {
+        return "/etc/apache2/sites-available/{$this->domain}.conf";
+    }
+
     public function getApacheSslSite()
     {
         return "/etc/apache2/sites-enabled/{$this->domain}-le-ssl.conf";
