@@ -10,7 +10,7 @@ class SetUpNotificationsTask extends Task
 
     public function localRequirements()
     {
-        return !!$this->options->slack_webhook;
+        return ! ! $this->options->slack_webhook;
     }
 
     public function handle()

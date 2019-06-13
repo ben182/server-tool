@@ -20,7 +20,7 @@ class FloatingIpCreateTask extends Task
             return str_replace('.cfg', '', basename($file));
         })
         ->filter(function ($file) {
-            return $this->check->isSha1($file);
+            return app('stool-check')->isSha1($file);
         })
         ->map(function ($file) {
             $output = $this->shell->getFile('/etc/network/interfaces.d/' . $file . '.cfg');

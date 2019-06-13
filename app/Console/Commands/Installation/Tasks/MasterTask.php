@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands\Installation\Tasks;
 
+use App\Setting;
 use App\Console\Task;
 use App\Helper\Domain;
 use App\Console\Commands\FloatingIps\FloatingIpCreateTaskManager;
-use App\Setting;
 
 class MasterTask extends Task
 {
