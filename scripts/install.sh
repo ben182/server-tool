@@ -64,6 +64,7 @@ apacheInstall() {
     wget https://dl-ssl.google.com/dl/linux/direct/mod-pagespeed-stable_current_amd64.deb -P /tmp
     dpkg -i /tmp/mod-pagespeed-stable_current_amd64.deb
     apt-get -f install
+    wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 
     sudo sed -i "s|ModPagespeed on|ModPagespeed unplugged|" /etc/apache2/mods-available/pagespeed.conf
 

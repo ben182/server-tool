@@ -22,6 +22,7 @@ class ClientTask extends Task
 
         $this->shell->service()->restart('netdata');
 
-        $this->addConclusion('Add "' . app('stool-apache')->getOwnPublicIp() . ' ' . gethostname() . '" to masters hosts file');
+        $this->addConclusion('Execute this command on your master server:');
+        $this->addConclusion('echo "' . app('stool-apache')->getOwnPublicIp() . ' ' . gethostname() . '" | sudo tee -a /etc/hosts');
     }
 }
