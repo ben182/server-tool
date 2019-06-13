@@ -146,6 +146,15 @@ class Shell
         return Str::contains($this->getLastOutput(), 'exists');
     }
 
+    public function doesFileExist($file)
+    {
+        $this->setQuitForNextCommand();
+
+        $this->exec('[ -f "' . $file . '" ] && echo "exists"');
+
+        return Str::contains($this->getLastOutput(), 'exists');
+    }
+
     /**
      * @return \App\Helper\Shell\Cronjob
      */

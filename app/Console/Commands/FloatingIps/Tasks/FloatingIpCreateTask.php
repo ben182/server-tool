@@ -14,6 +14,10 @@ class FloatingIpCreateTask extends Task
 
         $file = '/etc/network/interfaces.d/' . $encodedIp . '.cfg';
 
+        if ($this->shell->doesFileExist($file)) {
+            throw new Exception('Floating IP is already bound to this server');
+        }
+
         $floatingIps = collect(glob('/etc/network/interfaces.d/*.cfg'));
         $ethNo       = $floatingIps
         ->map(function ($file) {
