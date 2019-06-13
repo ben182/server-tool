@@ -9,11 +9,6 @@ class CreateSslCertificateTask extends Task
 {
     public $name = 'Setting up SSL';
 
-    public function systemRequirements()
-    {
-        return 'certbot';
-    }
-
     public function localRequirements()
     {
         return  $this->options->ssl;
