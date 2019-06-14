@@ -19,13 +19,9 @@ class Shell
 
         $this->lastOutput = $this->liveExecuteCommand($sCommand);
 
-        // if (! $this->quiet && ! $this->quietTemp) {
-        //     echo $this->lastOutput;
-        // }
-
-        // if ($this->quietTemp) {
-        //     $this->quietTemp = false;
-        // }
+        if ($this->quietTemp) {
+            $this->quietTemp = false;
+        }
 
         return $this;
     }
@@ -209,7 +205,11 @@ class Shell
         while (! feof($proc)) {
             $live_output     = fread($proc, 4096);
             $complete_output = $complete_output . $live_output;
-            echo $live_output;
+
+            if (! $this->quiet && ! $this->quietTemp) {
+                echo $live_output;
+            }
+
             @ flush();
         }
 
