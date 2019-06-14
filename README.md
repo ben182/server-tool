@@ -1,4 +1,4 @@
-![alt text](logo_min.png "Logo")
+![alt text](stool_v2.png "Logo")
 
 A fully featured LAMP+ installer and management tool for Ubuntu servers
 
