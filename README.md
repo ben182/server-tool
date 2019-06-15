@@ -18,14 +18,15 @@ This script is supposed to be run on a fresh Ubuntu machine. It will install:
 
 * Apache
 * MySQL
-* phpMyAdmin
 * PHP 5.6, 7.0, 7.1, 7.2, 7.3
 * Composer
 * Certbot
-* Node.js
-* Yarn
-* Redis
 * vnStat
+* phpMyAdmin (optional)
+* Node.js (optional)
+* Yarn (optional)
+* Redis (optional)
+* Netdata (optional)
 
 Furthermore it will configure the complete server to be as secure as it can get:
 * MySQL Secure Installation
