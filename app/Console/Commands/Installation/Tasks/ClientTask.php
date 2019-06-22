@@ -18,7 +18,7 @@ class ClientTask extends Task
         $this->shell->exec('sudo ufw allow 19999');
         $this->shell->exec('sudo ufw reload');
 
-        $this->shell->replaceStringInFile('# allow connections from = localhost *', 'allow connections from = localhost ' . $this->options->master_domain, '/etc/netdata/netdata.conf');
+        $this->shell->replaceStringInFile('# allow connections from = localhost \*', 'allow connections from = localhost ' . $this->options->master_domain, '/etc/netdata/netdata.conf');
 
         $this->shell->service()->restart('netdata');
 
