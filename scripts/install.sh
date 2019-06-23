@@ -51,7 +51,7 @@ apacheInstall() {
 
     cp ${TEMPLATES_PATH}apache/ip.conf /etc/apache2/sites-available/ip.conf
     sudo sed -i "s|IP_HERE|$PUBLIC_IP|" /etc/apache2/sites-available/ip.conf
-    # a2ensite ip.conf
+    a2ensite ip.conf
 
     cp ${TEMPLATES_PATH}apache/dir.conf /etc/apache2/mods-enabled/dir.conf
 
