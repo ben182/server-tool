@@ -6,8 +6,6 @@ use App\Helper\Github;
 
 class Stool
 {
-    protected static $versionOnRemote;
-
     public static function version()
     {
         return '2.0.0';
@@ -20,7 +18,9 @@ class Stool
      */
     public static function versionOnRemote()
     {
-        return static::$versionOnRemote ?: static::$versionOnRemote = app('stool-github')->getLatestVersion('ben182', 'server-tool');
+        return once(function() {
+            return app('stool-github')->getLatestVersion('ben182', 'server-tool');
+        });
     }
 
     /**

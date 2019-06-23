@@ -48,6 +48,8 @@ class Apache
 
     public function getOwnPublicIp()
     {
-        return trim(file_get_contents('https://ipinfo.io/ip'));
+        return once(function() {
+            return trim(file_get_contents('https://ipinfo.io/ip'));
+        });
     }
 }
