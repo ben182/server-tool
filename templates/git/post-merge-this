@@ -18,5 +18,5 @@ sudo cp ${TEMPLATES_PATH}.bash_aliases /home/stool/.bash_aliases
 sudo cp ${TEMPLATES_PATH}git/post-merge-this ${ABSOLUTE_PATH}.git/hooks/post-merge
 sudo chmod +x ${ABSOLUTE_PATH}.git/hooks/post-merge
 
-cp ${TEMPLATES_PATH}update-motd.d/99-stool /etc/update-motd.d/99-stool
+sudo cp ${TEMPLATES_PATH}update-motd.d/99-stool /etc/update-motd.d/99-stool
 sudo chmod +x /etc/update-motd.d/99-stool
