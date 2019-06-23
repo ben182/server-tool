@@ -10,9 +10,10 @@ nodeInstall () {
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
     nvm install node
-    nvm use node
+    nvm alias default node
+    nvm use default
 
     sudo ln -s "$(which node)" /usr/local/bin/node
 }
 echo "Installing Node JS..."
-nodeInstall &> /dev/null
+nodeInstall

@@ -4,11 +4,11 @@ passwordgen() {
     tr -dc A-Za-z0-9 < /dev/urandom | head -c ${l} | xargs
 }
 
-apache_permissions() {
-    chown -R stool:stool /home/stool
-    chmod -R 755 /home/stool
-    chmod g+s /home/stool
-}
+# apache_permissions() {
+#     chown -R stool:stool /home/stool
+#     chmod -R 755 /home/stool
+#     chmod g+s /home/stool
+# }
 
 ABSOLUTE_PATH=/etc/stool/
 CONFIG_PATH=${ABSOLUTE_PATH}config.json

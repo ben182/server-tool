@@ -2,57 +2,27 @@
 
 namespace App\Providers;
 
-use App\Console\Commands\Tasks\Shell\ShellTask;
-use App\Helper\Shell;
-use App\Observers\RepositoryObserver;
+use App\Helper\Env;
 use App\Repository;
+use App\Helper\Check;
+use App\Helper\Apache;
+use App\Helper\Config;
+use App\Helper\Github;
+use App\Helper\Hardware;
+use App\Helper\Password;
+use App\Helper\Increment;
+use App\Helper\FloatingIp;
+use App\Helper\Shell\Mysql;
+use App\Helper\Shell\Shell;
+use App\Helper\Shell\Cronjob;
+use App\Helper\Shell\Service;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Schema;
+use App\Helper\Shell\Environment;
+use App\Observers\RepositoryObserver;
 use Illuminate\Support\ServiceProvider;
-use App\Services\ApiRequestService;
-use App\Services\Slack;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        Schema::defaultStringLength(191);
-
-        Repository::observe(RepositoryObserver::class);
-        Route::model('repository', \App\Repository::class);
-
-        Command::macro('abort', function ($sMessage) {
-            $this->error($sMessage);
-            exit();
-        });
-        Command::macro('fixApachePermissions', function () {
-            // quietCommand('chown -R stool:stool /var/www');
-            // quietCommand('chmod -R 755 /var/www');
-            // quietCommand('chmod g+s /var/www');
-            // quietCommand('chmod -R 700 /var/www/.ssh');
-            return $this;
-        });
-        Command::macro('restartApache', function () {
-            quietCommand('service apache2 reload');
-            return $this;
-        });
-        $this->app->singleton('Shell', function ($app) {
-            return new Shell();
-        });
-
-        $this->app->singleton('ShellTask', function ($app) {
-            return new ShellTask();
-        });
-        $this->app->singleton(ApiRequestService::class);
-        $this->app->singleton(Slack::class);
-    }
-
     /**
      * Register any application services.
      *
@@ -61,5 +31,41 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
+    }
+
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        Repository::observe(RepositoryObserver::class);
+
+        $this->app->singleton('stool-env', Env::class);
+
+        $this->app->singleton('stool-config', Config::class);
+
+        $this->app->singleton('stool-shell', Shell::class);
+        $this->app->singleton('stool-shell-cronjob', Cronjob::class);
+        $this->app->singleton('stool-shell-environment', Environment::class);
+        $this->app->singleton('stool-shell-mysql', Mysql::class);
+        $this->app->singleton('stool-shell-service', Service::class);
+
+        $this->app->singleton('stool-hardware', Hardware::class);
+        $this->app->singleton('stool-check', Check::class);
+        $this->app->singleton('stool-password', Password::class);
+        $this->app->singleton('stool-increment', Increment::class);
+        $this->app->singleton('stool-github', Github::class);
+        $this->app->singleton('stool-apache', Apache::class);
+        $this->app->singleton('stool-floating-ip', FloatingIp::class);
+
+        Command::macro('abort', function ($sMessage) {
+            $this->error($sMessage);
+            exit();
+        });
+        Command::macro('break', function () {
+            $this->line('');
+        });
     }
 }

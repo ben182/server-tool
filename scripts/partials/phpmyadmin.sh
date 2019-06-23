@@ -2,8 +2,8 @@
 
 source /etc/stool/scripts/helper.sh
 
-PHPMYADMIN_HTACCESS_USER=$(passwordgen);
-PHPMYADMIN_HTACCESS_PASS=$(passwordgen);
+HTACCESS_USER=$(passwordgen);
+HTACCESS_PASS=$(passwordgen);
 
 # PHPMYADMIN
 phpmyadminInstall () {
@@ -16,18 +16,17 @@ phpmyadminInstall () {
     apt-get install -y phpmyadmin
 
     cp ${TEMPLATES_PATH}apache/phpmyadmin.conf /etc/apache2/conf-available/phpmyadmin.conf
-    cp ${TEMPLATES_PATH}apache/dir.conf /etc/apache2/mods-enabled/dir.conf
 
     sudo sed -i "s|</VirtualHost>|Include /etc/apache2/conf-available/phpmyadmin.conf\n</VirtualHost>|" /etc/apache2/sites-available/ip.conf
     a2disconf phpmyadmin
 
     cp ${TEMPLATES_PATH}phpmyadmin/.htaccess /usr/share/phpmyadmin/.htaccess
-    htpasswd -c -b /etc/phpmyadmin/.htpasswd $PHPMYADMIN_HTACCESS_USER $PHPMYADMIN_HTACCESS_PASS
+    htpasswd -c -b /etc/phpmyadmin/.htpasswd $HTACCESS_USER $HTACCESS_PASS
 
-    sudo sed -i "s|PHPMYADMIN_HTACCESS_USERNAME|$PHPMYADMIN_HTACCESS_USER|" $CONFIG_PATH
-    sudo sed -i "s|PHPMYADMIN_HTACCESS_PASSWORD|$PHPMYADMIN_HTACCESS_PASS|" $CONFIG_PATH
+    sudo sed -i "s|PHPMYADMIN_HTACCESS_USERNAME|$HTACCESS_USER|" $CONFIG_PATH
+    sudo sed -i "s|PHPMYADMIN_HTACCESS_PASSWORD|$HTACCESS_PASS|" $CONFIG_PATH
 
     service apache2 restart
 }
 echo "Installing phpMyAdmin..."
-phpmyadminInstall &> /dev/null
+phpmyadminInstall

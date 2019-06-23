@@ -4,48 +4,68 @@ namespace App\Helper;
 
 class Domain
 {
-    protected $sName;
+    protected $domain;
 
-    public function __construct($sName)
+    public function __construct($domain)
     {
-        $this->sName = $sName;
+        $this->domain = $domain;
+    }
+
+    public function __toString()
+    {
+        return $this->domain;
+    }
+
+    public function getApacheSite()
+    {
+        return "/etc/apache2/sites-enabled/{$this->domain}.conf";
+    }
+
+    public function getApacheAvailableSite()
+    {
+        return "/etc/apache2/sites-available/{$this->domain}.conf";
+    }
+
+    public function getApacheSslSite()
+    {
+        return "/etc/apache2/sites-enabled/{$this->domain}-le-ssl.conf";
     }
 
     public function doesExist()
     {
-        return file_exists("/etc/apache2/sites-enabled/$this->sName.conf");
+        return file_exists($this->getApacheSite());
     }
 
     public function doesNotExist()
     {
-        return ! file_exists("/etc/apache2/sites-enabled/$this->sName.conf");
+        return ! file_exists($this->getApacheSite());
     }
 
     public function isSSL()
     {
-        return file_exists("/etc/apache2/sites-enabled/$this->sName-le-ssl.conf");
+        return file_exists($this->getApacheSslSite());
     }
 
     public function isNotSSL()
     {
-        return ! file_exists("/etc/apache2/sites-enabled/$this->sName-le-ssl.conf");
+        return ! file_exists($this->getApacheSslSite());
     }
 
     public function createHtmlFolder()
     {
-        if (! file_exists("/home/stool/$this->sName/html")) {
-            mkdir("/home/stool/$this->sName/html", 755, true);
+        if (! file_exists($this->getHtmlFolder())) {
+            mkdir($this->getHtmlFolder(), 0755, true);
         }
     }
 
     public function getHtmlFolder()
     {
-        return "/home/stool/$this->sName/html";
+        return $this->getBaseFolder() . "/html";
     }
 
     public function getBaseFolder()
     {
-        return "/home/stool/$this->sName";
+        return "/home/stool/{$this->domain}";
     }
 
     public function getProtocol()
@@ -55,6 +75,27 @@ class Domain
 
     public function getFullUrl($sSubDir = null)
     {
-        return $this->getProtocol() . $this->sName . ($sSubDir ? '/' . $sSubDir : '');
+        return $this->getProtocol() . $this->domain . ($sSubDir ? '/' . $sSubDir : '');
+    }
+
+    public function getARecord()
+    {
+        $dns = dns_get_record($this->domain);
+        if (! $dns) {
+            return false;
+        }
+
+        $a = collect($dns)->firstWhere('type', 'A');
+
+        if (! $a) {
+            return false;
+        }
+
+        return $a['ip'];
+    }
+
+    public function isBoundToThisServer()
+    {
+        return app('stool-apache')->getOwnPublicIp() === $this->getARecord();
     }
 }

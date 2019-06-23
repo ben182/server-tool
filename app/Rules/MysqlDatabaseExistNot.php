@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Rule;
 
 class MysqlDatabaseExistNot implements Rule
 {
-    public $shell;
+    protected $shell;
 
     /**
      * Create a new rule instance.
@@ -15,7 +15,7 @@ class MysqlDatabaseExistNot implements Rule
      */
     public function __construct()
     {
-        $this->shell = resolve('ShellTask');
+        $this->shell = app('stool-shell');
     }
 
     /**
@@ -23,6 +23,7 @@ class MysqlDatabaseExistNot implements Rule
      *
      * @param  string  $attribute
      * @param  mixed  $value
+     *
      * @return bool
      */
     public function passes($attribute, $value)

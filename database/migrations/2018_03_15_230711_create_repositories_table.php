@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class CreateRepositoriesTable extends Migration
 {
@@ -14,7 +14,7 @@ class CreateRepositoriesTable extends Migration
     public function up()
     {
         Schema::create('repositories', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('dir');
             $table->string('branch');
             $table->string('secret');

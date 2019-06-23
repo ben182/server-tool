@@ -8,4 +8,4 @@ certbotInstall () {
     crontab -l | { cat; echo "0 */12 * * * certbot renew --post-hook \"systemctl reload apache2\""; } | crontab -
 }
 echo "Installing Certbot..."
-certbotInstall &> /dev/null
+certbotInstall

@@ -2,7 +2,6 @@
 
 namespace App\Rules;
 
-use App\Helper\Domain;
 use Illuminate\Contracts\Validation\Rule;
 
 class DomainExists implements Rule
@@ -22,11 +21,12 @@ class DomainExists implements Rule
      *
      * @param  string  $attribute
      * @param  mixed  $value
+     *
      * @return bool
      */
     public function passes($attribute, $value)
     {
-        return (new Domain($value))->doesExist();
+        return app('stool-apache')->getAllDomainsEnabled()->contains($value);
     }
 
     /**
