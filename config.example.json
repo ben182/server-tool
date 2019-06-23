@@ -12,5 +12,11 @@
     },
     "redis": {
         "password": "REDIS_PASSWORD"
+    },
+    "netdata": {
+        "htaccess": {
+            "username": "NETDATA_HTACCESS_USERNAME",
+            "password": "NETDATA_HTACCESS_PASSWORD"
+        }
     }
 }

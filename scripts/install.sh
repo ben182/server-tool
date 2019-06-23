@@ -1,12 +1,14 @@
 #!/bin/bash
 
-# http://patorjk.com/software/taag/#p=display&v=0&f=Slant&t=stool%20v1.5.0
+# http://patorjk.com/software/taag/#p=display&v=0&f=Slant&t=stool%20v2.0.0
 cat << "EOF"
-         __              __        ___  ______ ____
-   _____/ /_____  ____  / /  _   _<  / / ____// __ \
-  / ___/ __/ __ \/ __ \/ /  | | / / / /___ \ / / / /
- (__  ) /_/ /_/ / /_/ / /   | |/ / / ____/ // /_/ /
-/____/\__/\____/\____/_/    |___/_(_)_____(_)____/
+         __              __        ___    ____   ____
+   _____/ /_____  ____  / /  _   _|__ \  / __ \ / __ \
+  / ___/ __/ __ \/ __ \/ /  | | / /_/ / / / / // / / /
+ (__  ) /_/ /_/ / /_/ / /   | |/ / __/_/ /_/ // /_/ /
+/____/\__/\____/\____/_/    |___/____(_)____(_)____/
+
+            Created by Benjamin Bortels
 
 EOF
 
@@ -15,14 +17,15 @@ source /etc/stool/scripts/helper.sh
 # VARS
 echo "Initialization..."
 
-start=`date +%s`
-
 DATABASE_TEMP_PASS=root
 NEW_DB_PASS=$(passwordgen);
 WELCOMEPAGE_TOKEN=$(passwordgen);
 
 bash ${SCRIPTS_PATH}partials/init.sh
 bash ${SCRIPTS_PATH}partials/user.sh
+
+# START
+sudo apt-get install unzip -y
 
 # APACHE
 apacheInstall() {
@@ -48,7 +51,11 @@ apacheInstall() {
 
     cp ${TEMPLATES_PATH}apache/ip.conf /etc/apache2/sites-available/ip.conf
     sudo sed -i "s|IP_HERE|$PUBLIC_IP|" /etc/apache2/sites-available/ip.conf
-    a2ensite ip.conf
+    # a2ensite ip.conf
+
+    cp ${TEMPLATES_PATH}apache/dir.conf /etc/apache2/mods-enabled/dir.conf
+
+    sudo rm /var/www/html/index.html
 
     sudo a2enmod expires
     sudo a2enmod http2
@@ -57,6 +64,7 @@ apacheInstall() {
     wget https://dl-ssl.google.com/dl/linux/direct/mod-pagespeed-stable_current_amd64.deb -P /tmp
     dpkg -i /tmp/mod-pagespeed-stable_current_amd64.deb
     apt-get -f install
+    wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 
     sudo sed -i "s|ModPagespeed on|ModPagespeed unplugged|" /etc/apache2/mods-available/pagespeed.conf
 
@@ -64,6 +72,8 @@ apacheInstall() {
 }
 echo "Installing and configuring Apache Server..."
 apacheInstall
+
+bash ${SCRIPTS_PATH}partials/certbot.sh
 
 phpInstall () {
     bash /etc/stool/scripts/php/setup.sh
@@ -85,6 +95,11 @@ phpInstall
 composerInstall () {
     curl -sS https://getcomposer.org/installer | php
     mv composer.phar /usr/bin/composer
+
+    curl -#L https://github.com/bramus/composer-autocomplete/tarball/master | tar -xzv --strip-components 1 --exclude={LICENSE,README.md}
+    mv ./composer-autocomplete /home/stool/composer-autocomplete
+
+    sudo cat ${TEMPLATES_PATH}php/composer-autocomplete >> /home/stool/.profile
 }
 echo "Installing Composer..."
 composerInstall
@@ -102,6 +117,8 @@ mysqlInstall() {
     mysql -u root -p"$DATABASE_TEMP_PASS" -e "FLUSH PRIVILEGES"
 
     sudo sed -i "s|ROOT_PASSWORD_HERE|$NEW_DB_PASS|" $CONFIG_PATH
+
+    sudo apt-get install mysqltuner
 }
 echo "Installing and configuring MySQL Server..."
 mysqlInstall
@@ -124,8 +141,7 @@ servertoolInstall() {
     chmod -R 755 /etc/stool
     crontab -l | { cat; echo "* * * * * stool schedule:run >> /dev/null 2>&1"; } | crontab -
     crontab -l | { cat; echo "0 0 * * * composer self-update >> /dev/null 2>&1"; } | crontab -
-    crontab -l | { cat; echo "0 0 * * 0 apt-get autoremove && apt-get autoclean -y >> /dev/null 2>&1"; } | crontab -
-    stool init
+    stool installation:init
     stool migrate --force
 
     stool view:cache
@@ -145,7 +161,19 @@ apt install ruby ruby-dev make gcc -y
 apt-get install supervisor -y
 service supervisor restart
 
-stool installation:run
-stool installation:finish
+# VNSTAT
+vnstatInstall () {
+    sudo apt-get install vnstat -y
+    sudo service vnstat start
+}
+echo "Installing vnStat..."
+vnstatInstall &> /dev/null
+
 bash ${SCRIPTS_PATH}partials/finish.sh
+
+stool installation:run
+stool installation:modules
+
+echo "All sensitive data is written to $CONFIG_PATH"
+echo 'Important! Please log out of this ssh session and start a new one!'
 echo "Visit your welcome page at http://$PUBLIC_IP?token=$WELCOMEPAGE_TOKEN"

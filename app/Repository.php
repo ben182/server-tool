@@ -14,9 +14,4 @@ class Repository extends Model
         'branch',
         'secret',
     ];
-
-    public function _setSecret()
-    {
-        $this->attributes['secret'] = random_string_random_length();
-    }
 }

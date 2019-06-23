@@ -23,6 +23,7 @@ class Task extends Model
      *
      * @param string  $key
      * @param  mixed  $value
+     *
      * @return mixed
      */
     protected function castAttribute($key, $value)

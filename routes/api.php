@@ -11,5 +11,3 @@
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::match(['post'], '/gad/{repository}', 'RepositoryController@index')->name('api.gad.deploy');

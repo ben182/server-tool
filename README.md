@@ -1,21 +1,32 @@
-![alt text](logo_min.png "Logo")
+![alt text](stool_v2_min.png "Logo")
 
-A fully featured LAMP+ installer and management tool optimized for DigitalOcean & Laravel
+A fully featured LAMP+ installer and management tool for Ubuntu servers
 
 ## Install
+
+**Latest stable version**
+
 `bash <(curl -s https://raw.githubusercontent.com/ben182/server-tool/master/scripts/get.sh)`
 
-This script is supposed to be run on a fresh ubuntu maschine. It will install:
+**Nightly builds**
+
+`bash <(curl -s https://raw.githubusercontent.com/ben182/server-tool/master/scripts/get_develop.sh)`
+
+`bash <(curl -s https://raw.githubusercontent.com/ben182/server-tool/feature/v2/scripts/get_v2.sh)`
+
+This script is supposed to be run on a fresh Ubuntu machine. It will install:
+
 * Apache
 * MySQL
-* phpMyAdmin
-* PHP 5.6, 7.0, 7.1, 7.2
+* PHP 5.6, 7.0, 7.1, 7.2, 7.3
 * Composer
 * Certbot
-* A Github SSH Key
-* Node.js
-* Redis
 * vnStat
+* phpMyAdmin (optional)
+* Node.js (optional)
+* Yarn (optional)
+* Redis (optional)
+* Netdata (optional)
 
 Furthermore it will configure the complete server to be as secure as it can get:
 * MySQL Secure Installation
@@ -24,14 +35,12 @@ Furthermore it will configure the complete server to be as secure as it can get:
 * Redis Password
 
 In the everyday usage the server-tools can also manage your server:
-* Automatic Backups
-    * MySQL
-    * Redis
-    * Complete Server Backups through Snapshots
-* Backups can be stored on DigitalOcean Spaces
-* Git Auto Deploy
-* Version Check for Node.js etc.
 * Adding vHosts
 * Adding SSL
-* Application Installs (Set up vHost, clone Git repo, laravel specific configuration, create mysql database, npm install, create git post hook)
-* PHP Switch
+* PHP version switch
+* Creating deamons
+* Managing Floating IP's
+* Create MySQL databases and users
+* Change PHP settings
+* Adding Basic Auth protection to vHosts
+* Installing and configuring Wordpress
