@@ -3,6 +3,7 @@
 namespace App\Console\Commands\FloatingIps\Tasks;
 
 use App\Console\Task;
+use Exception;
 
 class FloatingIpCreateTask extends Task
 {
