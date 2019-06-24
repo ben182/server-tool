@@ -47,6 +47,7 @@ class NodeUpdateCommand extends Command
         }
 
         $this->shell->exec('sudo ln -s -f /home/stool/.nvm/versions/node/v' . $match[0] . '/bin/node /usr/local/bin/node');
+        $this->shell->exec('sudo ln -s -f /home/stool/.nvm/versions/node/v' . $match[0] . '/bin/npm /usr/local/bin/npm');
 
         $this->line('Successfully changed Node.js version to ' . $version . '. Please restart the shell!');
     }

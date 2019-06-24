@@ -14,6 +14,7 @@ nodeInstall () {
     nvm use default
 
     sudo ln -s "$(which node)" /usr/local/bin/node
+    sudo ln -s "$(which npm)" /usr/local/bin/npm
 }
 echo "Installing Node JS..."
 nodeInstall
