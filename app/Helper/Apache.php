@@ -3,6 +3,7 @@
 namespace App\Helper;
 
 use App\Helper\Shell\Shell;
+use Exception;
 
 class Apache
 {
