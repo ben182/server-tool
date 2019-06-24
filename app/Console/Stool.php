@@ -8,7 +8,7 @@ class Stool
 {
     public static function version()
     {
-        return '2.0.2';
+        return '2.0.3';
     }
 
     /**
