@@ -8,9 +8,9 @@ class Stool
 {
     public static function versionString()
     {
-        $commitHash = trim(exec('git log --pretty="%h" -n1 HEAD'));
+        $commitHash = trim(exec('cd /etc/stool && git log --pretty="%h" -n1 HEAD'));
 
-        $commitDate = new \DateTime(trim(exec('git log -n1 --pretty=%ci HEAD')));
+        $commitDate = new \DateTime(trim(exec('cd /etc/stool && git log -n1 --pretty=%ci HEAD')));
         $commitDate->setTimezone(new \DateTimeZone('UTC'));
 
         return sprintf('v%s-%s (%s)', self::version(), $commitHash, $commitDate->format('Y-m-d H:i:s'));
@@ -18,7 +18,7 @@ class Stool
 
     public static function version()
     {
-        return trim(exec('git describe --tags --abbrev=0'));
+        return trim(exec('cd /etc/stool && git describe --tags --abbrev=0'));
     }
 
     /**
