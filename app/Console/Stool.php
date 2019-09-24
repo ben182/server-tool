@@ -6,9 +6,19 @@ use App\Helper\Github;
 
 class Stool
 {
+    public static function versionString()
+    {
+        $commitHash = trim(exec('git log --pretty="%h" -n1 HEAD'));
+
+        $commitDate = new \DateTime(trim(exec('git log -n1 --pretty=%ci HEAD')));
+        $commitDate->setTimezone(new \DateTimeZone('UTC'));
+
+        return sprintf('v%s-%s (%s)', self::version(), $commitHash, $commitDate->format('Y-m-d H:i:s'));
+    }
+
     public static function version()
     {
-        return '2.0.3';
+        return trim(exec('git describe --tags --abbrev=0'));
     }
 
     /**
