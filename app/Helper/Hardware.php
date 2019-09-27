@@ -11,7 +11,7 @@ class Hardware
      */
     public function getTotalRam()
     {
-        return once(function() {
+        return once(function () {
             $fh  = fopen('/proc/meminfo', 'r');
             $mem = 0;
             while ($line = fgets($fh)) {
