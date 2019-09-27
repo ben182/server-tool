@@ -16,7 +16,7 @@ This script is supposed to be run on a fresh Ubuntu machine. It will install:
 
 * Apache
 * MySQL
-* PHP 5.6, 7.0, 7.1, 7.2, 7.3
+* PHP 7.1, 7.2, 7.3
 * Composer
 * Certbot
 * vnStat
@@ -27,12 +27,14 @@ This script is supposed to be run on a fresh Ubuntu machine. It will install:
 * Netdata (optional)
 
 Furthermore it will configure the complete server to be as secure as it can get:
+
 * MySQL Secure Installation
 * phpMyAdmin with Basic Authentication
 * Secure Apache Configuration
 * Redis Password
 
 In the everyday usage the server-tools can also manage your server:
+
 * Adding vHosts
 * Adding SSL
 * PHP version switch
