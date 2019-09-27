@@ -28,7 +28,7 @@ class Stool
      */
     public static function versionOnRemote()
     {
-        return once(function() {
+        return once(function () {
             return app('stool-github')->getLatestVersion('ben182', 'server-tool');
         });
     }

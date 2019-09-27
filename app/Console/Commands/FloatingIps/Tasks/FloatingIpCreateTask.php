@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands\FloatingIps\Tasks;
 
-use App\Console\Task;
 use Exception;
+use App\Console\Task;
 
 class FloatingIpCreateTask extends Task
 {

@@ -2,8 +2,8 @@
 
 namespace App\Helper;
 
-use App\Helper\Shell\Shell;
 use Exception;
+use App\Helper\Shell\Shell;
 
 class Apache
 {
@@ -49,7 +49,7 @@ class Apache
 
     public function getOwnPublicIp()
     {
-        return once(function() {
+        return once(function () {
             return trim(file_get_contents('https://ipinfo.io/ip'));
         });
     }
