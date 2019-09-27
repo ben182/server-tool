@@ -169,6 +169,7 @@ vnstatInstall () {
 echo "Installing vnStat..."
 vnstatInstall &> /dev/null
 
+bash ${SCRIPTS_PATH}partials/mails.sh
 bash ${SCRIPTS_PATH}partials/finish.sh
 
 stool installation:run
