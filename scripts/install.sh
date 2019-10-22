@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# http://patorjk.com/software/taag/#p=display&v=0&f=Slant&t=stool%20v2.0.3
+# http://patorjk.com/software/taag/#p=display&v=0&f=Slant&t=stool%20v2.1.0
 cat << "EOF"
-         __              __        ___    ____   _____
-   _____/ /_____  ____  / /  _   _|__ \  / __ \ |__  /
-  / ___/ __/ __ \/ __ \/ /  | | / /_/ / / / / /  /_ <
- (__  ) /_/ /_/ / /_/ / /   | |/ / __/_/ /_/ / ___/ /
-/____/\__/\____/\____/_/    |___/____(_)____(_)____/
+         __              __        ___    ___ ____
+   _____/ /_____  ____  / /  _   _|__ \  <  // __ \
+  / ___/ __/ __ \/ __ \/ /  | | / /_/ /  / // / / /
+ (__  ) /_/ /_/ / /_/ / /   | |/ / __/_ / // /_/ /
+/____/\__/\____/\____/_/    |___/____(_)_(_)____/
 
             Created by Benjamin Bortels
 
@@ -169,6 +169,7 @@ vnstatInstall () {
 echo "Installing vnStat..."
 vnstatInstall &> /dev/null
 
+bash ${SCRIPTS_PATH}partials/mails.sh
 bash ${SCRIPTS_PATH}partials/finish.sh
 
 stool installation:run

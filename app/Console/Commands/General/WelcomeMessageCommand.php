@@ -39,7 +39,7 @@ class WelcomeMessageCommand extends Command
     public function handle()
     {
         $this->line('This server was provisioned by stool | created by Benjamin Bortels');
-        $this->line('stool v' . Stool::version());
+        $this->line('stool ' . Stool::versionString());
 
         if (Stool::updateAvailable()) {
             $this->error('An update for stool is available (' . Stool::versionOnRemote() . ')');

@@ -6,9 +6,19 @@ use App\Helper\Github;
 
 class Stool
 {
+    public static function versionString()
+    {
+        $commitHash = trim(exec('cd /etc/stool && git log --pretty="%h" -n1 HEAD'));
+
+        $commitDate = new \DateTime(trim(exec('cd /etc/stool && git log -n1 --pretty=%ci HEAD')));
+        $commitDate->setTimezone(new \DateTimeZone('UTC'));
+
+        return sprintf('v%s-%s (%s)', self::version(), $commitHash, $commitDate->format('Y-m-d H:i:s'));
+    }
+
     public static function version()
     {
-        return '2.0.3';
+        return trim(exec('cd /etc/stool && git describe --tags --abbrev=0'));
     }
 
     /**
@@ -18,7 +28,7 @@ class Stool
      */
     public static function versionOnRemote()
     {
-        return once(function() {
+        return once(function () {
             return app('stool-github')->getLatestVersion('ben182', 'server-tool');
         });
     }

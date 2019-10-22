@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+
 function scripts_path($sPath = '')
 {
     return str_replace('\\', '/', base_path('scripts')) . '/' . $sPath;
@@ -46,7 +49,7 @@ function getInstallationConfigKey($sKey)
 
 function random_string_random_length()
 {
-    return str_random(random_int(15, 30));
+    return Str::random(random_int(15, 30));
 }
 
 function getMysqlCredentials()
@@ -74,7 +77,7 @@ function buildMysqlCommand($sCommand, $bOutIn = false)
 
 function createMysqlDatabase($sDatabase)
 {
-    $sDatabase = str_slug($sDatabase, null);
+    $sDatabase = Str::slug($sDatabase, null);
 
     buildMysqlCommand("CREATE DATABASE $sDatabase;");
 
@@ -127,7 +130,7 @@ function editEnvKey($sPath, $sKey, $sValue)
 
 function editConfigKey($sKey, $sValue)
 {
-    $sOldValue = array_get(getConfig(), $sKey);
+    $sOldValue = Arr::get(getConfig(), $sKey);
 
     $sFile = file_get_contents(base_path('config.json'));
 
@@ -145,7 +148,7 @@ function editConfigKey($sKey, $sValue)
 
 function editInstallationKey($sKey, $sValue)
 {
-    $sOldValue = array_get(getInstallationConfig(), $sKey);
+    $sOldValue = Arr::get(getInstallationConfig(), $sKey);
 
     $sFile = file_get_contents(base_path('installation.json'));
 
@@ -178,7 +181,7 @@ function checkIfPortIsUsed($iPort)
     exec('netstat -tulnp', $results);
 
     foreach ($results as $result) {
-        if (str_contains($result, ':' . $iPort) && str_contains($result, 'LISTEN')) {
+        if (Str::contains($result, ':' . $iPort) && Str::contains($result, 'LISTEN')) {
             return true;
         }
     }
