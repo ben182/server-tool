@@ -44,7 +44,7 @@ class SslAddCommand extends Command
     {
         $domain = $this->choice('Domain?', $this->apache->getAllDomainsEnabled()->toArray());
 
-        $htaccess = $this->confirm('Non SSL to SSL Htaccess?');
+        $htaccess = $this->confirm('Non SSL to SSL Htaccess?', true);
 
         SslAddTaskManager::work([
             'domain'   => $domain,
