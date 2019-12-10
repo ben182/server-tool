@@ -16,7 +16,7 @@ This script is supposed to be run on a fresh Ubuntu machine. It will install:
 
 * Apache
 * MySQL
-* PHP 7.1, 7.2, 7.3
+* PHP 7.2, 7.3, 7.4
 * Composer
 * Certbot
 * vnStat

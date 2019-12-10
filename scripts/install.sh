@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# http://patorjk.com/software/taag/#p=display&v=0&f=Slant&t=stool%20v2.1.0
+# http://patorjk.com/software/taag/#p=display&v=0&f=Slant&t=stool%20v2.2.0
 cat << "EOF"
-         __              __        ___    ___ ____
-   _____/ /_____  ____  / /  _   _|__ \  <  // __ \
-  / ___/ __/ __ \/ __ \/ /  | | / /_/ /  / // / / /
- (__  ) /_/ /_/ / /_/ / /   | |/ / __/_ / // /_/ /
-/____/\__/\____/\____/_/    |___/____(_)_(_)____/
+         __              __        ___    ___    ____
+   _____/ /_____  ____  / /  _   _|__ \  |__ \  / __ \
+  / ___/ __/ __ \/ __ \/ /  | | / /_/ /  __/ / / / / /
+ (__  ) /_/ /_/ / /_/ / /   | |/ / __/_ / __/_/ /_/ /
+/____/\__/\____/\____/_/    |___/____(_)____(_)____/
 
             Created by Benjamin Bortels
 
@@ -77,7 +77,7 @@ bash ${SCRIPTS_PATH}partials/certbot.sh
 
 phpInstall () {
     bash /etc/stool/scripts/php/setup.sh
-    bash /etc/stool/scripts/php/switch-to-php-7.3.sh
+    bash /etc/stool/scripts/php/switch-to-php-7.4.sh
     sudo phpenmod mbstring
 
     sudo a2dismod mpm_prefork
@@ -86,7 +86,6 @@ phpInstall () {
     sudo a2enmod proxy_fcgi setenvif
 
     service apache2 reload
-    sudo service php7.3-fpm restart
 }
 echo "Installing and configuring PHP..."
 phpInstall
@@ -177,4 +176,3 @@ stool installation:modules
 
 echo "All sensitive data is written to $CONFIG_PATH"
 echo 'Important! Please log out of this ssh session and start a new one!'
-echo "Visit your welcome page at http://$PUBLIC_IP?token=$WELCOMEPAGE_TOKEN"

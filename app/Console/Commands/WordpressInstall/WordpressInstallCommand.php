@@ -47,7 +47,7 @@ class WordpressInstallCommand extends Command
         $sDomain = $this->choice('Domain?', $this->apache->getAllDomainsEnabled()->toArray());
 
         $sSubDir    = '';
-        $sRootOrSub = $this->choice('Root or Subdirectory?', ['Root', 'Sub']);
+        $sRootOrSub = $this->choice('Root or Subdirectory?', ['Root', 'Sub'], 'Root');
         if ($sRootOrSub === 'Sub') {
             $sSubDir = $this->ask('Which one (relative to ' . $sDomain . '/?');
         }

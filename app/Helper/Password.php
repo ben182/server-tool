@@ -8,7 +8,7 @@ use Hackzilla\PasswordGenerator\RandomGenerator\Php7RandomGenerator;
 class Password
 {
     /**
-     * Generates a secure 15 - 20 character password with letters and numbers.
+     * Generates a secure 18 - 25 character password with letters and numbers.
      *
      * @return string
      */
