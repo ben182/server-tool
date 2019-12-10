@@ -14,7 +14,7 @@ redisInstall () {
     sudo sed -i "s|# requirepass foobared|requirepass $REDIS_PASS|" /etc/redis/redis.conf
     sudo sed -i "s|REDIS_PASSWORD|$REDIS_PASS|" $CONFIG_PATH
 
-    sudo systemctl restart redis
+    sudo systemctl restart redis-server
 }
 echo "Installing Redis..."
 redisInstall
