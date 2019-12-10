@@ -1,12 +1,12 @@
 #!/bin/bash
 
-echo "* Disabling Apache PHP 7.1 module..."
-sudo a2disconf php7.1-fpm > /dev/null
-sudo service php7.1-fpm stop
-
 echo "* Disabling Apache PHP 7.3 module..."
 sudo a2disconf php7.3-fpm > /dev/null
 sudo service php7.3-fpm stop
+
+echo "* Disabling Apache PHP 7.4 module..."
+sudo a2disconf php7.4-fpm > /dev/null
+sudo service php7.4-fpm stop
 
 echo "* Enabling Apache PHP 7.2 module..."
 sudo a2enconf php7.2-fpm > /dev/null

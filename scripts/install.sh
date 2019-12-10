@@ -177,4 +177,3 @@ stool installation:modules
 
 echo "All sensitive data is written to $CONFIG_PATH"
 echo 'Important! Please log out of this ssh session and start a new one!'
-echo "Visit your welcome page at http://$PUBLIC_IP?token=$WELCOMEPAGE_TOKEN"
