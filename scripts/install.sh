@@ -77,7 +77,7 @@ bash ${SCRIPTS_PATH}partials/certbot.sh
 
 phpInstall () {
     bash /etc/stool/scripts/php/setup.sh
-    bash /etc/stool/scripts/php/switch-to-php-7.3.sh
+    bash /etc/stool/scripts/php/switch-to-php-7.4.sh
     sudo phpenmod mbstring
 
     sudo a2dismod mpm_prefork
@@ -86,7 +86,6 @@ phpInstall () {
     sudo a2enmod proxy_fcgi setenvif
 
     service apache2 reload
-    sudo service php7.3-fpm restart
 }
 echo "Installing and configuring PHP..."
 phpInstall
