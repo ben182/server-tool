@@ -2,19 +2,16 @@
 
 source /etc/stool/scripts/helper.sh
 
-# NODE
-nodeInstall () {
-    curl -o- -sS https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+curl -o- -sS https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.2/install.sh | bash
 
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
-    nvm install node
-    nvm alias default node
-    nvm use default
+nvm install node
+nvm alias default node
+nvm use default
 
-    sudo ln -s "$(which node)" /usr/local/bin/node
-    sudo ln -s "$(which npm)" /usr/local/bin/npm
-}
-echo "Installing Node JS..."
-nodeInstall
+sudo ln -s "$(which node)" /usr/local/bin/node
+sudo ln -s "$(which npm)" /usr/local/bin/npm
+
+npm install pm2@latest -g
