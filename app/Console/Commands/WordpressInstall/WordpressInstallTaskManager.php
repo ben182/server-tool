@@ -8,11 +8,11 @@ use Illuminate\Support\Str;
 use App\Console\TaskManager;
 use Illuminate\Validation\Rule;
 use App\Console\Commands\WordpressInstall\Tasks\Database;
+use App\Console\Commands\WordpressInstall\Tasks\PageBuilder;
 use App\Console\Commands\WordpressInstall\Tasks\WordpressConf;
 use App\Console\Commands\WordpressInstall\Tasks\WordpressInit;
 use App\Console\Commands\WordpressInstall\Tasks\LinkApplication;
 use App\Console\Commands\WordpressInstall\Tasks\DownloadWordpress;
-use App\Console\Commands\WordpressInstall\Tasks\PageBuilder;
 
 class WordpressInstallTaskManager extends TaskManager
 {

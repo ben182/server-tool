@@ -3,7 +3,6 @@
 namespace App\Console\Commands\WordpressInstall\Tasks;
 
 use App\Console\Task;
-use Illuminate\Support\Str;
 
 class PageBuilder extends Task
 {
@@ -17,12 +16,8 @@ class PageBuilder extends Task
     public function handle()
     {
         switch ($this->options->pageBuilder) {
-            case 'Divi':
-
-                break;
             case 'Elementor':
-
-                $this->shell->exec("cd {$this->bindings->installationDir} && wp plugin install elementor");
+                $this->shell->exec("cd {$this->bindings->installationDir} && wp plugin install elementor --activate");
                 break;
         }
     }

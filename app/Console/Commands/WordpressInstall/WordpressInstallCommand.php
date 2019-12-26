@@ -57,7 +57,10 @@ class WordpressInstallCommand extends Command
         $bLocal                     = $this->confirm('Is this a local or stage site?', true);
 
         // PAGE BUILDER
-        $pageBuilder = $this->choice('Install Page Builder?', ['Divi', 'Elementor', 'None'], 'Elementor');
+        $pageBuilder = $this->choice('Install Page Builder?', [
+            'Elementor',
+            'None',
+        ], 'Elementor');
 
         WordpressInstallTaskManager::work([
             'domain'         => $sDomain,
@@ -67,7 +70,7 @@ class WordpressInstallCommand extends Command
             'installPlugins' => $bInstallRecommendedPlugins,
             'pioneersConfig' => $bPioneersConfig,
             'local'          => $bLocal,
-            'pageBuilder' => $pageBuilder,
+            'pageBuilder'    => $pageBuilder,
         ]);
     }
 }
