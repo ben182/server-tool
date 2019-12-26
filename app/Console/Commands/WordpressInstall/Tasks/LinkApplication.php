@@ -18,14 +18,14 @@ class LinkApplication extends Task
                     $this->addConclusion("There is already an html folder so I moved it to html_backup");
                 }
 
-                $this->shell->exec("sudo ln -s -f {$this->bindings->installationDir} {$this->bindings->domain->getHtmlFolder()}");
+                $this->shell->exec("ln -s -f {$this->bindings->installationDir} {$this->bindings->domain->getHtmlFolder()}");
 
                 break;
             case 'Sub':
 
                 $this->bindings->domain->createHtmlFolder();
 
-                $this->shell->exec("sudo ln -s -f {$this->bindings->installationDir} {$this->bindings->domain->getHtmlFolder()}/{$this->options->subDir}");
+                $this->shell->exec("ln -s -f {$this->bindings->installationDir} {$this->bindings->domain->getHtmlFolder()}/{$this->options->subDir}");
 
                 break;
         }
