@@ -35,9 +35,13 @@ class WordpressInstallTaskManager extends TaskManager
             $installDir  = $oDomain->getBaseFolder() . "/{$nameSlugged}";
         }
 
+        $initials = app('stool-initials')->generate($this->options->name);
+        $initials = strtolower($initials);
+
         return [
             'domain'          => $oDomain,
             'installationDir' => $installDir,
+            'adminUrl' => $initials . '-admin',
         ];
     }
 

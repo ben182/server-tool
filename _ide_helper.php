@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 6.6.2 on 2019-12-10 10:33:04.
+ * Generated for Laravel 6.9.0 on 2019-12-26 20:42:23.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -10096,8 +10096,8 @@ namespace Illuminate\Support\Facades {
          * Retrieve an input item from the request.
          *
          * @param string|null $key
-         * @param string|array|null $default
-         * @return string|array|null 
+         * @param mixed $default
+         * @return mixed 
          * @static 
          */ 
         public static function input($key = null, $default = null)
