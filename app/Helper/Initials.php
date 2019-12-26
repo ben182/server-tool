@@ -5,9 +5,10 @@ namespace App\Helper;
 class Initials
 {
     /**
-     * Generate initials from a name
+     * Generate initials from a name.
      *
      * @param string $name
+     *
      * @return string
      */
     public function generate(string $name) : string
@@ -16,13 +17,15 @@ class Initials
         if (count($words) >= 2) {
             return strtoupper(substr($words[0], 0, 1) . substr(end($words), 0, 1));
         }
+
         return $this->makeInitialsFromSingleWord($name);
     }
 
     /**
-     * Make initials from a word with no spaces
+     * Make initials from a word with no spaces.
      *
      * @param string $name
+     *
      * @return string
      */
     protected function makeInitialsFromSingleWord(string $name) : string
@@ -31,6 +34,7 @@ class Initials
         if (count($capitals[1]) >= 2) {
             return substr(implode('', $capitals[1]), 0, 2);
         }
+
         return strtoupper(substr($name, 0, 2));
     }
 }

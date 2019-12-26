@@ -12,6 +12,7 @@ use App\Console\Commands\WordpressInstall\Tasks\WordpressConf;
 use App\Console\Commands\WordpressInstall\Tasks\WordpressInit;
 use App\Console\Commands\WordpressInstall\Tasks\LinkApplication;
 use App\Console\Commands\WordpressInstall\Tasks\DownloadWordpress;
+use App\Console\Commands\WordpressInstall\Tasks\PageBuilder;
 
 class WordpressInstallTaskManager extends TaskManager
 {
@@ -20,6 +21,7 @@ class WordpressInstallTaskManager extends TaskManager
         WordpressInit::class,
         Database::class,
         WordpressConf::class,
+        PageBuilder::class,
         LinkApplication::class,
     ];
 
@@ -41,7 +43,7 @@ class WordpressInstallTaskManager extends TaskManager
         return [
             'domain'          => $oDomain,
             'installationDir' => $installDir,
-            'adminUrl' => $initials . '-admin',
+            'adminUrl'        => $initials . '-admin',
         ];
     }
 
@@ -64,6 +66,13 @@ class WordpressInstallTaskManager extends TaskManager
             'installPlugins' => 'required|boolean',
             'pioneersConfig' => 'required|boolean',
             'local'          => 'required|boolean',
+            'pageBuilder'    => [
+                Rule::in([
+                    'Divi',
+                    'Elementor',
+                    'None',
+                ]),
+            ],
         ];
     }
 }

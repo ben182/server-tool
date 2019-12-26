@@ -49,5 +49,6 @@ class WordpressConf extends Task
         $this->addConclusion("Configured Wordpress");
         $this->addConclusion("Email: $email");
         $this->addConclusion("Password: $password");
+        $this->addConclusion("Login URL is {$this->bindings->domain->getFullUrl()}" . ($this->options->subDir ? '/' . $this->options->subDir : '') . '/' . $this->bindings->adminUrl);
     }
 }
