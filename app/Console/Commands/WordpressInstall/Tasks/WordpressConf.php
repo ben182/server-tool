@@ -41,7 +41,7 @@ class WordpressConf extends Task
         }
 
         if ($this->options->pioneersConfig) {
-            $this->shell->exec("cd {$this->bindings->installationDir} && wp option update whl_page mp-admin");
+            $this->shell->exec("cd {$this->bindings->installationDir} && wp option update whl_page {$this->bindings->adminUrl}");
         } else {
             $this->shell->exec("cd {$this->bindings->installationDir} && wp plugin deactivate wps-hide-login");
         }
@@ -49,5 +49,6 @@ class WordpressConf extends Task
         $this->addConclusion("Configured Wordpress");
         $this->addConclusion("Email: $email");
         $this->addConclusion("Password: $password");
+        $this->addConclusion("Login URL is {$this->bindings->domain->getFullUrl()}" . ($this->options->subDir ? '/' . $this->options->subDir : '') . '/' . $this->bindings->adminUrl);
     }
 }

@@ -9,6 +9,7 @@ use App\Helper\Apache;
 use App\Helper\Config;
 use App\Helper\Github;
 use App\Helper\Hardware;
+use App\Helper\Initials;
 use App\Helper\Password;
 use App\Helper\Increment;
 use App\Helper\FloatingIp;
@@ -59,6 +60,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton('stool-github', Github::class);
         $this->app->singleton('stool-apache', Apache::class);
         $this->app->singleton('stool-floating-ip', FloatingIp::class);
+        $this->app->singleton('stool-initials', Initials::class);
 
         Command::macro('abort', function ($sMessage) {
             $this->error($sMessage);

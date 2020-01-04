@@ -56,6 +56,12 @@ class WordpressInstallCommand extends Command
         $bPioneersConfig            = $this->confirm('Apply Pioneers specific config?', true);
         $bLocal                     = $this->confirm('Is this a local or stage site?', true);
 
+        // PAGE BUILDER
+        $pageBuilder = $this->choice('Install Page Builder?', [
+            'Elementor',
+            'None',
+        ], 'Elementor');
+
         WordpressInstallTaskManager::work([
             'domain'         => $sDomain,
             'rootOrSub'      => $sRootOrSub,
@@ -64,6 +70,7 @@ class WordpressInstallCommand extends Command
             'installPlugins' => $bInstallRecommendedPlugins,
             'pioneersConfig' => $bPioneersConfig,
             'local'          => $bLocal,
+            'pageBuilder'    => $pageBuilder,
         ]);
     }
 }
