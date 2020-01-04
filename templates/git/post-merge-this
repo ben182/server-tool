@@ -8,7 +8,7 @@ check_run() {
 	echo "$changed_files" | grep --quiet "$1" && eval "$2"
 }
 
-check_run composer.lock "composer install"
+check_run composer.lock "composer update"
 sudo chown -R stool:stool ${ABSOLUTE_PATH}
 sudo chmod -R 755 ${ABSOLUTE_PATH}
 stool config:cache

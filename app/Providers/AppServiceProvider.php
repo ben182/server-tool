@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use App\Helper\Env;
-use App\Repository;
 use App\Helper\Check;
 use App\Helper\Apache;
 use App\Helper\Config;
@@ -19,7 +18,6 @@ use App\Helper\Shell\Cronjob;
 use App\Helper\Shell\Service;
 use Illuminate\Console\Command;
 use App\Helper\Shell\Environment;
-use App\Observers\RepositoryObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -41,8 +39,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Repository::observe(RepositoryObserver::class);
-
         $this->app->singleton('stool-env', Env::class);
 
         $this->app->singleton('stool-config', Config::class);
